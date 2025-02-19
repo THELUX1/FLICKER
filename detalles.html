@@ -73,43 +73,48 @@
             </div>
         </div>
     </section>
-
+    <script src="app.js"></script>
     <script>
-        // Obtener el título de la película desde la URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const movieTitle = urlParams.get('title');
+    // Obtener el título de la película desde la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const movieTitle = urlParams.get('title');
 
-        // Cargar los datos de la película desde el archivo JSON
-        fetch('data.json')
-            .then(response => response.json())
-            .then(data => {
-                const allMovies = Object.values(data).flat();
-                const movie = allMovies.find(m => m.title === movieTitle);
+    // Cargar los datos de la película desde el archivo JSON
+    fetch('data.json')
+        .then(response => response.json())
+        .then(data => {
+            const allMovies = Object.values(data).flat();
+            const movie = allMovies.find(m => m.title === movieTitle);
 
-                if (movie) {
-                    // Actualizar el fondo desenfocado
-                    document.querySelector('.movie-backdrop').style.backgroundImage = `url('${movie.backdrop}')`;
+            if (movie) {
+                // Actualizar el fondo desenfocado
+                document.querySelector('.movie-backdrop').style.backgroundImage = `url('${movie.backdrop}')`;
 
-                    // Actualizar los detalles de la película
-                    document.querySelector(".movie-title-detail").innerText = movie.title;
-                    document.querySelector(".movie-year").innerText = `Año: ${movie.year}`;
-                    document.querySelector(".movie-rating").innerText = `Rating: ${movie.rating}`;
-                    document.querySelector(".movie-duration").innerText = `Duración: ${movie.duration}`;
-                    document.querySelector(".movie-genre").innerText = `Género: ${movie.genre}`;
-                     document.querySelector(".movie-synopsis").innerText = movie.synopsis;
-                    document.querySelector(".movie-poster").src = movie.poster;
-                    document.querySelector(".movie-trailer").src = movie.trailer;
+                // Actualizar los detalles de la película
+                document.querySelector(".movie-title-detail").innerText = movie.title;
+                document.querySelector(".movie-year").innerText = `Año: ${movie.year}`;
+                document.querySelector(".movie-rating").innerText = `Rating: ${movie.rating}`;
+                document.querySelector(".movie-duration").innerText = `Duración: ${movie.duration}`;
+                document.querySelector(".movie-genre").innerText = `Género: ${movie.genre}`;
+                document.querySelector(".movie-synopsis").innerText = movie.synopsis;
+                document.querySelector(".movie-poster").src = movie.poster;
+                document.querySelector(".movie-trailer").src = movie.trailer;
 
-                    // Asignar la URL dinámica del video al botón de reproducción
-                    document.getElementById("playButton").href = `../../Reproductor.html?video=${encodeURIComponent(movie.videoUrl)}`;
-                } else {
-                    document.querySelector('.movie-content').innerHTML = '<p>Película no encontrada</p>';
-                }
-            })
-            .catch(error => {
-                console.error('Error al cargar los datos de la película:', error);
-                document.querySelector('.movie-content').innerHTML = '<p>Error al cargar los detalles de la película.</p>';
-            });
-    </script>
+                // Asignar la URL dinámica del video al botón de reproducción
+                document.getElementById("playButton").href = `../../Reproductor.html?video=${encodeURIComponent(movie.videoUrl)}`;
+
+                // Añadir evento al botón "Me gusta"
+                document.getElementById('mark-watched-detail').addEventListener('click', () => {
+                    markAsLiked(movie);
+                });
+            } else {
+                document.querySelector('.movie-content').innerHTML = '<p>Película no encontrada</p>';
+            }
+        })
+        .catch(error => {
+            console.error('Error al cargar los datos de la película:', error);
+            document.querySelector('.movie-content').innerHTML = '<p>Error al cargar los detalles de la película.</p>';
+        });
+</script>
 </body>
 </html>

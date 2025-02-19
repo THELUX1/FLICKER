@@ -1,1 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles - CineStream</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <div class="logo-glass">
+                <h1 class="logo">CINESTREAM</h1>
+            </div>
+        </div>
+        <button class="menu-hamburguesa">☰</button>
+        <nav class="nav-menu">
+            <button class="close-menu">×</button>
+            <a href="index.html" class="nav-link">Inicio</a>
+            <a href="#" class="nav-link">Series</a>
+            <a href="#" class="nav-link">Películas</a>
+            <a href="#" class="nav-link">Me gusta</a>
+        </nav>
+    </header>
 
+    <section class="movie-detail-container">
+        <!-- Fondo Desenfocado -->
+        <div class="movie-backdrop" style="background-image: url('https://pics.filmaffinity.com/Nosferatu-417207191-large.jpg'); filter: blur(10px); position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center;"></div>
+        
+        <div class="movie-content">
+            <button class="back-button" onclick="window.history.back()">‹ Volver</button>
+            
+            <div class="main-info">
+                <div class="movie-poster-container">
+                    <img src="" alt="Poster" class="movie-poster">
+                </div>
+                
+                <div class="movie-info">
+                    <h1 class="movie-title-detail"></h1>
+                    <div class="movie-meta">
+                        <span class="movie-rating"></span>
+                        <span class="movie-year"></span>
+                        <span class="movie-duration"></span>
+                    </div>
+                    <p class="movie-synopsis"></p>
+                    <div class="movie-actions">
+                        <!-- Enlace con la URL dinámica del video -->
+                        <a id="playButton">
+                            <button class="play-button">
+                                <svg class="play-icon" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z" />
+                                </svg>
+                                Reproducir
+                            </button> 
+                        </a>
+                        <button class="add-list-button" id="mark-watched-detail">
+                            <svg class="add-icon" viewBox="0 0 24 24">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                            </svg>
+                            Me gusta
+                        </button>                                             
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenedor del tráiler -->
+            <div class="trailer-container">
+                <div class="trailer-wrapper">
+                    <iframe class="movie-trailer" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Simulación de datos de la película/serie
+        const movieData = {
+            title: "Nosferatu",
+            year: "2024",
+            rating: "7.3/10",
+            duration: "2h 2m",
+            synopsis: "Una historia gótica de obsesión entre una joven encantada en la Alemania del siglo XIX y el antiguo vampiro de Transilvania que la acecha y trae consigo un horror incalculable.",
+            poster: "https://www.lavanguardia.com/andro4all/hero/2024/12/nosferatu-portada.jpg?width=768&aspect_ratio=16:9&format=nowebp",
+            backdrop: "https://www.cineralia.com/wp-content/uploads/2025/02/Abismo-secreto-poster-520x273.jpg",
+            trailer: "https://www.youtube.com/embed/oyg3LUvqSDE",
+            videoUrl: "https://s9xshtqmeip.cdn-centaurus.com/hls2/01/08173/i42154tvh5ks_,l,n,h,.urlset/index-f3-v1-a1.m3u8?t=i75s5Yoo14HU6ntpawlMuecBMY9-Z9IrLv5h1Bp_420&s=1739832556&e=129600&f=40869690&srv=zfio3if6w0x&i=0.4&sp=500&p1=zfio3if6w0x&p2=zfio3if6w0x&asn=264619"
+        };
+
+        // Cargar los datos en la página
+        document.querySelector(".movie-title-detail").innerText = movieData.title;
+        document.querySelector(".movie-year").innerText = movieData.year;
+        document.querySelector(".movie-rating").innerText = movieData.rating;
+        document.querySelector(".movie-duration").innerText = movieData.duration;
+        document.querySelector(".movie-synopsis").innerText = movieData.synopsis;
+        document.querySelector(".movie-poster").src = movieData.poster;
+        document.querySelector(".movie-trailer").src = movieData.trailer;
+
+        // Asignar la URL dinámica del video al botón de reproducción
+        document.getElementById("playButton").href = `../../Reproductor.html?video=${encodeURIComponent(movieData.videoUrl)}`;
+    </script>
+</body>
+</html>

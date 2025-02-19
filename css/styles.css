@@ -1,1 +1,338 @@
+/* ESTILOS GENERALES */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
 
+body {
+    background-color: #141414;
+    color: white;
+    min-height: 100vh;
+}
+
+/* HEADER */
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 1rem 5%;
+    z-index: 1000;
+    background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(10px);
+}
+
+.logo-glass {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 12px 25px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.logo {
+    color: #E50914;
+    font-size: 2rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* MENÚ HAMBURGUESA */
+.menu-hamburguesa {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.8rem;
+    cursor: pointer;
+    z-index: 1001;
+    padding: 10px;
+    transition: all 0.3s ease;
+}
+
+.nav-menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 280px;
+    background: rgba(20, 20, 20, 0.98);
+    backdrop-filter: blur(20px);
+    flex-direction: column;
+    padding: 6rem 2rem;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
+    transform: translateX(100%);
+    transition: transform 0.3s ease-out;
+    z-index: 1001;
+}
+
+.nav-menu.active {
+    transform: translateX(0);
+}
+
+.close-menu {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* PÁGINA DE DETALLES */
+.movie-detail-container {
+    position: relative;
+    padding-top: 100px;
+    min-height: 100vh;
+}
+
+.movie-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    filter: blur(8px);
+    z-index: 0;
+}
+
+.movie-backdrop::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.movie-content {
+    position: relative;
+    z-index: 2;
+    padding: 20px 5%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.back-button {
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 25px;
+    cursor: pointer;
+    margin-bottom: 30px;
+    transition: all 0.3s ease;
+}
+
+.movie-poster {
+    max-width: 300px;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    margin-bottom: 1rem;
+}
+
+.main-info {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.movie-poster-container {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+}
+
+.movie-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.movie-title-detail {
+    font-size: 2.8rem;
+    line-height: 1.1;
+}
+
+.movie-meta {
+    display: flex;
+    gap: 15px;
+    color: #ccc;
+}
+
+.movie-synopsis {
+    color: #aaa;
+    line-height: 1.6;
+}
+
+.movie-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.play-button, .add-list-button {
+    position: relative;
+    padding: 14px 32px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.play-button {
+    background: linear-gradient(135deg, #E50914 0%, #B00710 100%);
+    color: white;
+}
+
+.add-list-button {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+.play-icon, .add-icon {
+    width: 24px;
+    height: 24px;
+    fill: white;
+    transition: transform 0.3s ease;
+}
+
+.play-button:hover .play-icon {
+    transform: scale(1.2);
+}
+
+.add-list-button:hover .add-icon {
+    transform: rotate(90deg);
+}
+
+.play-button:active .play-icon, .add-list-button:active .add-icon {
+    transform: scale(0.9);
+}
+
+/* TOAST NOTIFICATION */
+.toast {
+    position: fixed;
+    bottom: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    font-size: 1rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 10000;
+    opacity: 0;
+    transition: all 0.5s ease;
+}
+
+.toast.show {
+    bottom: 20px;
+    opacity: 1;
+}
+
+.toast-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.toast-message {
+    flex: 1;
+}
+
+/* TRAILER */
+.trailer-container {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: 2rem auto;
+    border-radius: 12px;
+    overflow: hidden;
+    aspect-ratio: 16/9;
+    box-shadow: 0 0 30px rgba(229, 9, 20, 0.4);
+    border: 2px solid #E50914;
+    background: #000;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.trailer-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.movie-trailer {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .main-info {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .movie-poster-container {
+        max-width: 250px;
+        margin: 0 auto;
+    }
+
+    .movie-title-detail {
+        font-size: 2rem;
+    }
+
+    .play-button, .add-list-button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .trailer-container {
+        margin: 1rem auto;
+    }
+}
+/* Eliminar el contorno azul al hacer clic */
+button, a, img {
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* También para elementos con focus */
+button:focus, a:focus, img:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Si hay botones con hover, asegurarse de que no cambie el color */
+button:hover, a:hover {
+    background-color: inherit;
+}

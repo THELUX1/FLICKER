@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles - CineStream</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <div class="logo-glass">
+                <h1 class="logo">CINESTREAM</h1>
+            </div>
+        </div>
+        <button class="menu-hamburguesa">☰</button>
+        <nav class="nav-menu">
+            <button class="close-menu">×</button>
+            <a href="index.html" class="nav-link">Inicio</a>
+            <a href="#" class="nav-link">Series</a>
+            <a href="#" class="nav-link">Películas</a>
+            <a href="#" class="nav-link">Me gusta</a>
+        </nav>
+    </header>
+
+    <section class="movie-detail-container">
+        <!-- Fondo Desenfocado -->
+        <div class="movie-backdrop" style="background-image: url('https://pics.filmaffinity.com/Los_Simpson_The_Past_and_the_Furious_TV-616588707-large.jpg'); filter: blur(10px); position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center;"></div>
+        
+        <div class="movie-content">
+            <button class="back-button" onclick="window.history.back()">‹ Volver</button>
+            
+            <div class="main-info">
+                <div class="movie-poster-container">
+                    <img src="" alt="Poster" class="movie-poster">
+                </div>
+                
+                <div class="movie-info">
+                    <h1 class="movie-title-detail"></h1>
+                    <div class="movie-meta">
+                        <span class="movie-rating"></span>
+                        <span class="movie-year"></span>
+                        <span class="movie-duration"></span>
+                    </div>
+                    <p class="movie-synopsis"></p>
+                    <div class="movie-actions">
+                        <!-- Enlace con la URL dinámica del video -->
+                        <a id="playButton">
+                            <button class="play-button">
+                                <svg class="play-icon" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z" />
+                                </svg>
+                                Reproducir
+                            </button> 
+                        </a>
+                        <button class="add-list-button" id="mark-watched-detail">
+                            <svg class="add-icon" viewBox="0 0 24 24">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                            </svg>
+                            Me gusta
+                        </button>                                             
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenedor del tráiler -->
+            <div class="trailer-container">
+                <div class="trailer-wrapper">
+                    <iframe class="movie-trailer" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Simulación de datos de la película/serie
+        const movieData = {
+            title: "Los Simpson Pasado Furioso",
+            year: "2025",
+            rating: "5.6/10",
+            duration: "22m",
+            synopsis: "Lisa viaja al pasado hasta 1923. Allí descubre que los alces de Springfield, que en su día fueron clave para el ecosistema de la ciudad, fueron aniquilados en 1925, lo que provocó el colapso del medio ambiente de la ciudad. Lisa une fuerzas junto al joven Monty Burns para salvar a los alces, pero sus acciones convierten involuntariamente a Burns en un despiadado magnate.",
+            poster: "https://pics.filmaffinity.com/Los_Simpson_The_Past_and_the_Furious_TV-616588707-large.jpg",            
+            trailer: "https://www.youtube.com/embed/fuzi0BPcNDY",
+            videoUrl: "https://be2719.rcr22.ams01.cdn255.com/hls2/01/08238/a8etzk2baxvk_h/index-v1-a1.m3u8?t=bD42zFg2w68RyAHVUtjpCtYCsMHaTeNWVETjQXOKnto&s=1739854002&e=10800&f=41193119&srv=06&asn=264619&sp=4000&p="
+        };
+
+        // Cargar los datos en la página
+        document.querySelector(".movie-title-detail").innerText = movieData.title;
+        document.querySelector(".movie-year").innerText = movieData.year;
+        document.querySelector(".movie-rating").innerText = movieData.rating;
+        document.querySelector(".movie-duration").innerText = movieData.duration;
+        document.querySelector(".movie-synopsis").innerText = movieData.synopsis;
+        document.querySelector(".movie-poster").src = movieData.poster;
+        document.querySelector(".movie-trailer").src = movieData.trailer;
+
+        // Asignar la URL dinámica del video al botón de reproducción
+        document.getElementById("playButton").href = `../../Reproductor.html?video=${encodeURIComponent(movieData.videoUrl)}`;
+    </script>
+</body>
+                          </html>

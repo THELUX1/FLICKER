@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta name="google-adsense-account" content="ca-pub-4072476306388219"> -->
+    <title>CineStream</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- <script type='text/javascript' src='//pl25864769.effectiveratecpm.com/30/d1/90/30d1909a5d65233a011b836b05fb0fd3.js'></script> -->
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <div class="logo-glass">
+                <h1 class="logo">CINESTREAM</h1>
+            </div>
+        </div>
+
+        <!-- Sistema de Búsqueda -->
+        <div class="search-container">
+            <div class="search-wrapper">
+                <input type="text" class="search-input" placeholder="Buscar películas y series...">
+                <button class="search-button">
+                    <i class="fas fa-search search-icon"></i>
+                    <i class="fas fa-times close-icon"></i>
+                </button>
+            </div>
+            <div class="search-results"></div>
+        </div>
+
+        <button class="menu-hamburguesa">☰</button>
+        <!-- Menú de Navegación -->
+        <nav class="nav-menu">
+            <button class="close-menu">×</button>
+            <a href="#" class="nav-link">Inicio</a>
+            <a href="#" class="nav-link">Series</a>
+            <a href="#" class="nav-link">Películas</a>
+            
+             <!-- Cambiado aquí -->
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="image-container">
+                <img src="https://pics.filmaffinity.com/Capitaan_Amaerica_Brave_New_World-108007469-large.jpg" 
+                     alt="Portada destacada" 
+                     class="featured-image">
+            </div>
+            <h1 class="hero-title">Película Destacada</h1>
+            <div class="hero-actions">
+                <button class="hero-button">▶ Reproducir</button>
+                <button class="hero-button secondary" id="mark-liked">ᥫ᭡ Me gusta</button> <!-- Cambiado aquí -->
+            </div>
+        </div>
+    </section>
+
+    <main class="content" id="content"></main>
+
+    <!-- Modal de confirmación personalizado -->
+    <div id="confirm-modal" class="modal">
+        <div class="modal-content">
+            <p id="confirm-message">¿Estás seguro de que quieres eliminar esta película de la lista de Me gusta?</p> <!-- Cambiado aquí -->
+            <div class="modal-buttons">
+                <button id="confirm-yes" class="modal-button confirm">Sí, eliminar</button>
+                <button id="confirm-no" class="modal-button cancel">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script type="text/javascript">
+        atOptions = {
+            'key' : 'bcc23ee0b5570ba2c46f49ea1e8ec9d0',
+            'format' : 'iframe',
+            'height' : 50,
+            'width' : 320,
+            'params' : {}
+        };
+    </script>
+    <!-- <script type="text/javascript" src="//www.highperformanceformat.com/bcc23ee0b5570ba2c46f49ea1e8ec9d0/invoke.js"></script>
+    <script async="async" data-cfasync="false" src="//pl25864797.effectiveratecpm.com/e8742a7c8dd34849afe095f4f64fd7d5/invoke.js"></script>
+    <div id="container-e8742a7c8dd34849afe095f4f64fd7d5"></div> -->
+</body>
+</html>

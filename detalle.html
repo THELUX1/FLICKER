@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-adsense-account" content="ca-pub-4072476306388219">
+    <title>Detalles - CineStream</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4072476306388219"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <div class="logo-glass">
+                <h1 class="logo">CINESTREAM</h1>
+            </div>
+        </div>
+        <button class="menu-hamburguesa">☰</button>
+        <nav class="nav-menu">
+            <button class="close-menu">×</button>
+            <a href="index.html" class="nav-link">Inicio</a>
+            <a href="#" class="nav-link">Series</a>
+            <a href="#" class="nav-link">Películas</a>
+            <a href="#" class="nav-link">Me gusta</a>
+        </nav>
+    </header>
+
+    <section class="movie-detail-container">
+        <div class="movie-backdrop"></div>
+        
+        <div class="movie-content">
+            <button class="back-button" onclick="window.history.back()">‹ Volver</button>
+            
+            <div class="main-info">
+                <div class="movie-poster-container">
+                    <img src="" alt="Poster" class="movie-poster">
+                </div>
+                
+                <div class="movie-info">
+                    <h1 class="movie-title-detail"></h1>
+                    <div class="movie-meta">
+                        <span class="movie-rating"></span>
+                        <span class="movie-year"></span>
+                        <span class="movie-duration"></span>
+                    </div>
+                    <p class="movie-synopsis"></p>
+                    <div class="movie-actions">
+                        <a href="Reproductor/reproductor.html">
+                            <button class="play-button">
+                                <svg class="play-icon" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z" />
+                                </svg>
+                                Reproducir
+                            </button> 
+                        </a> 
+                        <a href="">
+                            <button class="add-list-button" id="mark-watched-detail">
+                                <svg class="add-icon" viewBox="0 0 24 24">
+                                    <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                                </svg>
+                                Me gusta
+                            </button> 
+                        </a>                                             
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenedor del tráiler en la parte inferior -->
+            <div class="trailer-container">
+                <div class="trailer-wrapper">
+                    <iframe class="movie-trailer"
+                            allowfullscreen
+                            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <div class="toast-content">
+            <span class="toast-message"></span>
+        </div>
+    </div>
+
+    <script src="js/detail.js"></script>
+</body>
+</html>

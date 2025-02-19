@@ -1,0 +1,42 @@
+{
+    "Tendencias": [
+        {
+            "title": "Capitán América: Un Nuevo Mundo",
+            "year": 2025,
+            "rating": "8.5/10",
+            "duration": "2h 10m",
+            "synopsis": "Steve Rogers regresa para enfrentarse a nuevas amenazas en un mundo cambiado.",
+            "poster": "https://pics.filmaffinity.com/Capitaan_Amaerica_Brave_New_World-108007469-large.jpg",
+            "backdrop": "https://tse3.mm.bing.net/th?id=OIP.0FCA-tsCNZkZaLx5qAhJwQHaNK&pid=Api",
+            "trailer": "https://www.youtube.com/embed/RXoqRPP-y5c",
+            "videoUrl": "https://zte054upd8.guardstorage.net/hls_3/m7xRpfOTH7U_jpz19n7TKk35mE7HzR-C6mzUyo5N1hyNPMB47VQt-7LvHm9OouHx3XlN7ihWv-A6hke_xyO4gQtRhrA7GTKBMVM7bxrzb0S1oQZpSwdaHndr-7B4TjeyFnVC9a131NiGRF_y_J-4UMzN0MigwCrAgIxo-5kLiRuJMxfhGXmrwgTNsvuxqsPr1Rrv5yUfYX7fw0sJ7I0j_Q/index-f2-v1-a1.m3u8?sig=fpPNtGgfXmit5l4KaUFc6w&expires=1739852556",
+            "genre": "Acción"
+        },
+        {
+            "title": "El Abismo Secreto",
+            "year": 2025,
+            "rating": "7.8/10",
+            "duration": "1h 55m",
+            "synopsis": "Un grupo de exploradores descubre un mundo oculto en las profundidades del océano.",
+            "poster": "https://image.tmdb.org/t/p/w342//bJToUFSmdyDR1qx2hmjXFJld5vK.jpg",
+            "backdrop": "https://tse3.mm.bing.net/th?id=OIP.0FCA-tsCNZkZaLx5qAhJwQHaNK&pid=Api",
+            "trailer": "https://www.youtube.com/embed/XYZ12345678",
+            "videoUrl": "https://zte054upd8.guardstorage.net/hls_3/xyz12345678/index.m3u8?sig=abc123&expires=1739852556",
+            "genre": "Acción,Romance,Suspenso"
+        }
+    ],
+    "Drama": [
+        {
+            "title": "Nosferatu",
+            "year": 2024,
+            "rating": "7.2/10",
+            "duration": "1h 45m",
+            "synopsis": "Una nueva adaptación del clásico del cine mudo sobre el vampiro Nosferatu.",
+            "poster": "https://pics.filmaffinity.com/Nosferatu-417207191-large.jpg",
+            "backdrop": "https://tse3.mm.bing.net/th?id=OIP.0FCA-tsCNZkZaLx5qAhJwQHaNK&pid=Api",
+            "trailer": "https://www.youtube.com/embed/XYZ12345678",
+            "videoUrl": "https://zte054upd8.guardstorage.net/hls_3/xyz12345678/index.m3u8?sig=abc123&expires=1739852556",
+            "genre": "Terror"
+        }
+    ]
+}

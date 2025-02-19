@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles - CineStream</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <div class="logo-glass">
+                <h1 class="logo">CINESTREAM</h1>
+            </div>
+        </div>
+        <button class="menu-hamburguesa">☰</button>
+        <nav class="nav-menu">
+            <button class="close-menu">×</button>
+            <a href="index.html" class="nav-link">Inicio</a>
+            <a href="#" class="nav-link">Series</a>
+            <a href="#" class="nav-link">Películas</a>
+            <a href="#" class="nav-link">Me gusta</a>
+        </nav>
+    </header>
+
+    <section class="movie-detail-container">
+        <!-- Fondo Desenfocado -->
+        <div class="movie-backdrop" style="background-image: url(''); filter: blur(10px); position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center;"></div>
+        
+        <div class="movie-content">
+            <button class="back-button" onclick="window.history.back()">‹ Volver</button>
+            
+            <div class="main-info">
+                <div class="movie-poster-container">
+                    <img src="" alt="Poster" class="movie-poster">
+                </div>
+                
+                <div class="movie-info">
+                    <h1 class="movie-title-detail"></h1>
+                    <div class="movie-meta">
+                        <span class="movie-rating"></span>
+                        <span class="movie-year"></span>
+                        <span class="movie-duration"></span>
+                        <span class="movie-genre"></span>
+                        <span class="movie-cast"></span>
+                    </div>
+                    <p class="movie-synopsis"></p>
+                    <div class="movie-actions">
+                        <!-- Enlace con la URL dinámica del video -->
+                        <a id="playButton">
+                            <button class="play-button">
+                                <svg class="play-icon" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z" />
+                                </svg>
+                                Reproducir
+                            </button> 
+                        </a>
+                        <button class="add-list-button" id="mark-watched-detail">
+                            <svg class="add-icon" viewBox="0 0 24 24">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                            </svg>
+                            Me gusta
+                        </button>                                             
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenedor del tráiler -->
+            <div class="trailer-container">
+                <div class="trailer-wrapper">
+                    <iframe class="movie-trailer" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Obtener el título de la película desde la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const movieTitle = urlParams.get('title');
+
+        // Cargar los datos de la película desde el archivo JSON
+        fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                const allMovies = Object.values(data).flat();
+                const movie = allMovies.find(m => m.title === movieTitle);
+
+                if (movie) {
+                    // Actualizar el fondo desenfocado
+                    document.querySelector('.movie-backdrop').style.backgroundImage = `url('${movie.backdrop}')`;
+
+                    // Actualizar los detalles de la película
+                    document.querySelector(".movie-title-detail").innerText = movie.title;
+                    document.querySelector(".movie-year").innerText = `Año: ${movie.year}`;
+                    document.querySelector(".movie-rating").innerText = `Rating: ${movie.rating}`;
+                    document.querySelector(".movie-duration").innerText = `Duración: ${movie.duration}`;
+                    document.querySelector(".movie-genre").innerText = `Género: ${movie.genre}`;
+                     document.querySelector(".movie-synopsis").innerText = movie.synopsis;
+                    document.querySelector(".movie-poster").src = movie.poster;
+                    document.querySelector(".movie-trailer").src = movie.trailer;
+
+                    // Asignar la URL dinámica del video al botón de reproducción
+                    document.getElementById("playButton").href = `../../Reproductor.html?video=${encodeURIComponent(movie.videoUrl)}`;
+                } else {
+                    document.querySelector('.movie-content').innerHTML = '<p>Película no encontrada</p>';
+                }
+            })
+            .catch(error => {
+                console.error('Error al cargar los datos de la película:', error);
+                document.querySelector('.movie-content').innerHTML = '<p>Error al cargar los detalles de la película.</p>';
+            });
+    </script>
+</body>
+</html>

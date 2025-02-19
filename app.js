@@ -1,195 +1,43 @@
-// Datos de películas
-const moviesData = {
-    "Tendencias": [
-        {
-         title: "Capitán América: Un Nuevo Mundo",
-         image: "https://pics.filmaffinity.com/Capitaan_Amaerica_Brave_New_World-108007469-large.jpg",
-        link: `Películas/Capitán América Un Nuevo Mundo/Capitán América Un Nuevo Mundo D.html?title=${encodeURIComponent("Capitán América: Un Nuevo Mundo")}`,
-        "year": 2025,
-        "genre": "Acción",
-        "cast": "Chris Evans, Sebastian Stan"
-    },
-    {
-         title: "El Abismo Secreto",
-         image: "https://image.tmdb.org/t/p/w342//bJToUFSmdyDR1qx2hmjXFJld5vK.jpg",
-        link: `Películas/El Abismo Secreto/El Abismo Secreto D.html?title=${encodeURIComponent("El Abismo Secreto")}`,
-        "year": 2025,
-        "genre": "Acción,Romance,Suspenso",
-        "cast": "Adam Scott-Rowley, Alessandro Garcia, Anya Taylor-Joy, Greta Hansen, James Marlowe"
-    },
-    {
-        "title":"Ne Zha 2(próx)",
-        "image": "https://tse1.mm.bing.net/th?id=OIP.qEWofGqDIVSafLreQ7IoTQEJF4&pid=Api",
-        "link": `Películas/Ne Zha 2/Ne Zha 2 D.html?title=${encodeURIComponent("Ne Zha 2")}`,
-        "year": 2025,
-        "genre": "Animación, Fantasía",
-        "cast": "Voces en chino"
-    },
-    {
-        "title": "Mickey 17(próximamente)",
-        "image": "https://tse3.mm.bing.net/th?id=OIP.yUW6TAMCr6q9NtLv6IeTXQHaK-&pid=Api",
-        "link": `#?title=${encodeURIComponent("Mickey 17")}`,
-        "year": 2025,
-        "genre": "Ciencia Ficción, Drama",
-        "cast": "Robert Pattinson, Steven Yeun"
-    },
-    {
-         title: "The Order",
-         image: "https://pics.filmaffinity.com/The_Order_La_hermandad_silenciosa-654856932-large.jpg",
-        link: `Películas/The Order/The Order D.html?title=${encodeURIComponent("The Order")}`,
-        "year": 2024,
-        "genre": "Thriller",
-        "cast": "Jude Law, Nicholas Hoult, Tye Sheridan, Jurnee Smollett, Alison Oliver, Marc Maron"
-    },
-    {
-            title: "La Acompañante",
-            image: "https://pics.filmaffinity.com/La_acompaanante-438784716-large.jpg", // URL de la imagen de Nosferatu
-            link: `Películas/La Acompañante/La Acompañante D.html?title=${encodeURIComponent("La Acompañante")}`,
-            year: 2025,
-            genre: "Ci-Fi, Thriller",
-            cast: "Sophie Thatcher, Jack Quaid, Lukas Gage"
-    },
-    {
-            title: "Nosferatu",
-            image: "https://pics.filmaffinity.com/Nosferatu-417207191-large.jpg", // URL de la imagen de Nosferatu
-            link: `Películas/Nosferatu/Nosferatu D.html?title=${encodeURIComponent("Nosferatu")}`,
-            year: 2024,
-            genre: "Terror, Misterio",
-            cast: "Lily-Rose DeppNicholas HoultBill Skarsgård"
-        },
-        {
-            title: "Gladiator II",
-            image: "https://pics.filmaffinity.com/Gladiator_II-152686913-large.jpg", // URL de la imagen de Nosferatu
-            link: `Películas/Gladiator II/Gladiator II D.html?title=${encodeURIComponent("Gladiator II")}`,
-            year: 2024,
-            genre: "Acción, Aventura, Drama",
-            cast: "Abdelmoula Ait Sidi Lhassan, Alec Utgoff, Alexander Karim, Alexander Simkin, Alfie Tempest"
-        },
-    /* {
-        "title": "Emilia Pérez",
-        "image": "https://tse3.mm.bing.net/th?id=OIP.0FCA-tsCNZkZaLx5qAhJwQHaNK&pid=Api",
-        "link": `Películas/Emilia Pérez/Emilia Pérez D.html?title=${encodeURIComponent("Emilia Pérez")}`,
-        "year": 2025,
-        "genre": "Musical, Drama",
-        "cast": "Karla Sofía Gascón, Selena Gomez"
-    }, */
-    /* {
-        "title": "The Brutalist",
-        "image": "https://tse3.mm.bing.net/th?id=OIP.MeJY9us9gm164XxfCOFgEgHaEK&pid=Api",
-        "link": `#?title=${encodeURIComponent("The Brutalist")}`,
-        "year": 2025,
-        "genre": "Drama",
-        "cast": "Adrien Brody, Felicity Jones"
-      }, */ 
-     ],   
-    "Drama": [
-        {
-            title: "Nosferatu",
-            image: "https://pics.filmaffinity.com/Nosferatu-417207191-large.jpg", // URL de la imagen de Nosferatu
-            link: `Películas/Nosferatu/Nosferatu D.html?title=${encodeURIComponent("Nosferatu")}`,
-            year: 2024,
-            genre: "Terror",
-            cast: "Max Schreck, Gustav von Wangenheim"
-        },
-        {
-            title: "La Sociedad De La Nieve",
-            image: "https://pics.filmaffinity.com/La_sociedad_de_la_nieve-323264210-large.jpg", // URL de la imagen de Cadena Perpetua
-            link: `Películas/La Sociedad De La Nieve/La Sociedad De La Nieve D.html?title=${encodeURIComponent("La Sociedad De La Nieve")}`,
-            year: 2023,
-            genre: "Drama",
-            cast: "Enzo Vogrincic, Agustín Pardella, Matías Recalt"
-        }, 
-        {
-            title: "Cadena Perpetua",
-            image: "https://pics.filmaffinity.com/Cadena_perpetua-187366518-large.jpg", // URL de la imagen de Cadena Perpetua
-            link: `#?title=${encodeURIComponent("Cadena Perpetua")}`,
-            year: 1994,
-            genre: "Drama",
-            cast: "Tim Robbins, Morgan Freeman"
-        },                 
-    ], 
-    "Lo Nuevo Del 2025": [
-        {
-            title: "Los Simpson Pasado Furioso",
-            image: "https://pics.filmaffinity.com/Los_Simpson_The_Past_and_the_Furious_TV-616588707-large.jpg", // URL de la imagen de Nosferatu
-            link: `Películas/Los Simpson Pasado Furioso/Los Simpson Pasado Furioso D.html?title=${encodeURIComponent("Los Simpson Pasado Furioso")}`,
-            year: 2025,
-            genre: "Comedia, Animación",
-            cast: "Los Simpson"
-        },
-        {
-         title: "Capitán América: Un Nuevo Mundo",
-         image: "https://pics.filmaffinity.com/Capitaan_Amaerica_Brave_New_World-108007469-large.jpg",
-        link: `Películas/Capitán América Un Nuevo Mundo/Capitán América Un Nuevo Mundo D.html?title=${encodeURIComponent("Capitán América: Un Nuevo Mundo")}`,
-        "year": 2025,
-        "genre": "Acción",
-        "cast": "Chris Evans, Sebastian Stan"
-        },
-        {
-         title: "El Abismo Secreto",
-         image: "https://image.tmdb.org/t/p/w342//bJToUFSmdyDR1qx2hmjXFJld5vK.jpg",
-        link: `Películas/El Abismo Secreto/El Abismo Secreto D.html?title=${encodeURIComponent("El Abismo Secreto")}`,
-        "year": 2025,
-        "genre": "Acción,Romance,Suspenso",
-        "cast": "Adam Scott-Rowley, Alessandro Garcia, Anya Taylor-Joy, Greta Hansen, James Marlowe"
-        },
-        {
-            title: "La Acompañante",
-            image: "https://pics.filmaffinity.com/La_acompaanante-438784716-large.jpg", // URL de la imagen de Nosferatu
-            link: `Películas/La Acompañante/La Acompañante D.html?title=${encodeURIComponent("La Acompañante")}`,
-            year: 2025,
-            genre: "Ci-Fi, Thriller",
-            cast: "Sophie Thatcher, Jack Quaid, Lukas Gage"
-        },
-        
-                         
-    ],
-    "Acción": [
-        {
-            title: "Mad Max: Fury Road",
-            image: "https://m.media-amazon.com/images/M/MV5BN2EwM2I5OWMtMGQyMi00Zjg1LWJkNTctZTdjYTA4OGUwZjMyXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_FMjpg_UX1000_.jpg",
-            link: `#?title=${encodeURIComponent("Mad Max: Fury Road")}`,
-            year: 2015,
-            genre: "Acción",
-            cast: "Tom Hardy, Charlize Theron"
-        },
-        {
-            title: "John Wick",
-            image: "https://m.media-amazon.com/images/M/MV5BMTU2NjA1ODgzMF5BMl5BanBnXkFtZTgwMTM2MTI4MjE@._V1_FMjpg_UX1000_.jpg",
-            link: `Películas/John Wick/John Wick D.html?title=${encodeURIComponent("John Wick")}`,
-            year: 2014,
-            genre: "Acción",
-            cast: "Keanu Reeves, Michael Nyqvist"
-        },
-        {
-            title: "Gladiador II",
-            image: "https://pics.filmaffinity.com/Gladiator_II-152686913-large.jpg", 
-            link: `Películas/Gladiator II/Gladiator II D.html?title=${encodeURIComponent("Gladiator II")}`,
-            year: 2024, // Año de estreno
-            genre: "Acción",
-            cast: "Paul Mescal, Denzel Washington"
-        }
-    ],
-    "Fantasía": [
-        {
-            title: "El Señor de los Anillos: La Comunidad del Anillo",
-            image: "https://m.media-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_.jpg",
-            link: `#?title=${encodeURIComponent("El Señor de los Anillos: La Comunidad del Anillo")}`,
-            year: 2001,
-            genre: "Fantasía",
-            cast: "Elijah Wood, Ian McKellen, Viggo Mortensen"
-        },
-        {
-            title: "Harry Potter y la Piedra Filosofal",
-            image: "https://m.media-amazon.com/images/M/MV5BNjQ3NWNlNmQtMTE5ZS00MDdmLTlkZjUtZTBlM2UxMGFiMTU3XkEyXkFqcGdeQXVyNjUwNzk3NDc@._V1_FMjpg_UX1000_.jpg",
-            link: `#?title=${encodeURIComponent("Harry Potter y la Piedra Filosofal")}`,
-            year: 2001,
-            genre: "Fantasía",
-            cast: "Daniel Radcliffe, Emma Watson, Rupert Grint"
-        }
-    ],
-     
+// ==================================================
+// Función para exportar el JSON desde localStorage
+// ==================================================
+function exportMoviesData() {
+    const moviesData = localStorage.getItem('moviesData');
+    if (!moviesData) {
+        alert('No hay datos para exportar');
+        return;
+    }
+
+    // Crear un Blob con los datos
+    const blob = new Blob([moviesData], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+
+    // Crear un enlace de descarga
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'data.json'; // Nombre del archivo a descargar
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+// ==================================================
+// Fin de la función de exportación
+// ==================================================
+
+let moviesData = JSON.parse(localStorage.getItem('moviesData')) || {
+    Tendencias: [],
+    Drama: [],
+    Acción: [],
+    Estrenos: [],
+    Fantasía: [],
+    Comedia: [],
+    Terror: []
 };
+
+// Actualizar la interfaz de usuario
+updateContent();
 
 // Cargar películas "Me gusta" desde localStorage
 function loadLikedMovies() {
@@ -272,8 +120,8 @@ function removeFromLiked(movieTitle) {
 function createMovieCard(movie, isLiked = false) {
     return `
         <div class="movie-card">
-            <a href="${movie.link}">
-                <img src="${movie.image}" alt="${movie.title}">
+            <a href="detalles.html?title=${encodeURIComponent(movie.title)}">
+                <img src="${movie.poster}" alt="${movie.title}">
                 <div class="movie-title">${movie.title}</div>
             </a>
             ${isLiked ? `
@@ -289,9 +137,9 @@ function createMovieCard(movie, isLiked = false) {
 function generarContenido(container) {
     const likedMovies = loadLikedMovies();
     const data = {
-    "Me gusta": likedMovies,
-    ...moviesData
-};
+        "Me gusta": likedMovies,
+        ...moviesData
+    };
 
     container.innerHTML = Object.entries(data).map(([category, movies]) => {
         const isLiked = category === "Me gusta";
@@ -429,14 +277,14 @@ function setupSearch() {
             const item = document.createElement('div');
             item.className = 'search-result-item';
             item.innerHTML = `
-                <img src="${movie.image}" alt="${movie.title}">
+                <img src="${movie.poster}" alt="${movie.title}">
                 <div class="search-result-info">
                     <h3>${movie.title}</h3>
                     ${movie.year ? `<p>${movie.year} • ${movie.genre || ''}</p>` : ''}
                 </div>
             `;
             item.addEventListener('click', () => {
-                window.location.href = movie.link;
+                window.location.href = `detalles.html?title=${encodeURIComponent(movie.title)}`;
             });
             searchResults.appendChild(item);
         });
@@ -450,6 +298,54 @@ function setupSearch() {
         searchResults.style.display = 'none';
     }
 }
+
+// ==================================================
+// Nuevo código para manejar el formulario de películas
+// ==================================================
+
+document.getElementById('add-movie-form')?.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    // Obtener los valores del formulario
+    const newMovie = {
+        title: document.getElementById('movie-title').value,
+        year: document.getElementById('movie-year').value,
+        rating: document.getElementById('movie-rating').value,
+        duration: document.getElementById('movie-duration').value,
+        synopsis: document.getElementById('movie-synopsis').value,
+        poster: document.getElementById('movie-poster').value,
+        backdrop: document.getElementById('movie-backdrop').value,
+        trailer: document.getElementById('movie-trailer').value,
+        videoUrl: document.getElementById('movie-videoUrl').value,
+        genre: document.getElementById('movie-genre').value,
+        cast: document.getElementById('movie-cast').value
+    };
+
+    // Obtener las categorías seleccionadas
+    const categoriesSelect = document.getElementById('movie-categories');
+    const selectedCategories = Array.from(categoriesSelect.selectedOptions).map(option => option.value);
+
+    // Agregar la película a las categorías seleccionadas
+    selectedCategories.forEach(category => {
+        if (!moviesData[category]) {
+            moviesData[category] = []; // Crear la categoría si no existe
+        }
+        moviesData[category].push(newMovie);
+    });
+
+    // Guardar el JSON actualizado en localStorage
+    localStorage.setItem('moviesData', JSON.stringify(moviesData));
+
+    // Actualizar la interfaz de usuario
+    updateContent();
+
+    alert('Película agregada correctamente.');
+    document.getElementById('add-movie-form').reset(); // Limpiar el formulario
+});
+
+// ==================================================
+// Fin del nuevo código
+// ==================================================
 
 // Inicialización
 document.addEventListener('DOMContentLoaded', () => {

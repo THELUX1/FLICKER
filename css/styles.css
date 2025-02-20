@@ -130,7 +130,7 @@ body {
     padding: 12px 25px;
     border-radius: 25px;
     cursor: pointer;
-    margin-bottom: 30px;
+    margin-bottom: 5px;
     transition: all 0.3s ease;
 }
 
@@ -183,7 +183,9 @@ body {
     gap: 15px;
 }
 
-.play-button, .add-list-button {
+.play-button {
+    background: linear-gradient(135deg, #E50914 0%, #B00710 100%);
+    color: white;
     position: relative;
     padding: 14px 32px;
     border: none;
@@ -197,12 +199,25 @@ body {
     gap: 12px;
 }
 
-.play-button {
+.add-list-button {
     background: linear-gradient(135deg, #E50914 0%, #B00710 100%);
     color: white;
+    position: relative;
+    padding: 10px 32px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
 }
 
-.add-list-button {
+  
+}
+.add-list-button:hover {
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.3);
     color: white;

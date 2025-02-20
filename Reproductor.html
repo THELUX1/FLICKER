@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproductor M3U8</title>
+    
+    <!-- Font Awesome desde CDNJS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script> 
+
+    <style>
+        /* Estilo para el cuerpo */
+        body {
+            background: #121212;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Contenedor del video */
+        .video-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100vw;
+            height: 100vh;
+            background: black;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 10px;
+            outline: none;
+            display: none;
+        }
+
+        /* Miniatura */
+        .thumbnail {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .play-overlay {
+            font-size: 60px;
+            color: white;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            padding: 20px;
+        }
+
+        /* Controles */
+        .controls {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            transition: opacity 0.3s ease;
+            opacity: 1;
+        }
+
+        .controls.hidden {
+            opacity: 0;
+            pointer-events: none; /* Evita que los controles bloqueen interacciones cuando están ocultos */
+        }
+
+        button {
+            background: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        button i {
+            font-size: 20px;
+        }
+
+        input[type="range"] {
+            width: 40%;
+            cursor: pointer;
+        }
+
+        /* Menú de calidad */
+        .quality-container {
+            position: absolute;
+            right: 10px;
+            bottom: 50px;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 5px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .quality-option {
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .quality-option:last-child {
+            border-bottom: none;
+        }
+
+        .quality-option:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+<div class="video-container" id="videoContainer">
+    <!-- Miniatura -->
+    <div class="thumbnail" id="thumbnail" style="background-image: url('assets/thumbnail.jpg');">
+        <i class="fas fa-play play-overlay"></i>
+    </div>
+
+    <video id="video" playsinline></video>
+
+    <div class="controls" id="customControls">
+        <button id="play-btn"><i class="fas fa-play"></i></button>
+        <input type="range" id="timeline" min="0" value="0">
+        <span id="time-display">00:00</span>
+        <button id="fullscreen-btn"><i class="fas fa-expand"></i></button>
+        <button id="fit-screen-btn"><i class="fas fa-expand-arrows-alt"></i></button>
+        <button id="quality-btn"><i class="fas fa-cog"></i></button>
+    </div>
+
+    <!-- Menú de calidad -->
+    <div class="quality-container" id="quality-container"></div>
+</div>
+
+<script>
+    const video = document.getElementById("video");
+    const controls = document.getElementById("customControls");
+    let timeout;
+
+    // Obtener la URL del video desde los parámetros de la URL
+    const videoUrl = new URLSearchParams(window.location.search).get('video'); // Aquí se obtiene la URL dinámica del video
+
+    // Usamos Hls.js para reproducir videos m3u8
+    if (Hls.isSupported()) {
+        const hls = new Hls();
+        hls.loadSource(videoUrl); // Cargamos la URL del video
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, function () {
+            addQualityOptions();
+        });
+    } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+        video.src = videoUrl;
+    }
+
+    document.getElementById("thumbnail").addEventListener("click", () => {
+        document.getElementById("thumbnail").style.display = "none";
+        video.style.display = "block";
+        video.play();
+        document.getElementById("play-btn").innerHTML = '<i class="fas fa-pause"></i>';
+    });
+
+    document.getElementById("play-btn").addEventListener("click", () => {
+        if (video.paused) {
+            video.play();
+            document.getElementById("play-btn").innerHTML = '<i class="fas fa-pause"></i>';
+        } else {
+            video.pause();
+            document.getElementById("play-btn").innerHTML = '<i class="fas fa-play"></i>';
+        }
+    });
+
+    video.addEventListener("timeupdate", () => {
+        document.getElementById("timeline").value = (video.currentTime / video.duration) * 100;
+        let minutes = Math.floor(video.currentTime / 60);
+        let seconds = Math.floor(video.currentTime % 60);
+        document.getElementById("time-display").innerText = `${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+    });
+
+    document.getElementById("fullscreen-btn").addEventListener("click", () => {
+        if (!document.fullscreenElement) {
+            document.getElementById("videoContainer").requestFullscreen();
+        } else {
+            document.exitFullscreen();
+        }
+    });
+
+    // Función para mostrar y ocultar controles
+    function showControls() {
+        controls.classList.remove("hidden");
+        clearTimeout(timeout);
+        timeout = setTimeout(hideControls, 3000);
+    }
+
+    function hideControls() {
+        controls.classList.add("hidden");
+    }
+
+    video.addEventListener("mousemove", showControls);
+    video.addEventListener("touchstart", showControls);
+    video.addEventListener("click", showControls);
+    controls.addEventListener("mousemove", showControls);
+
+    showControls();
+</script>
+
+</body>
+</html>

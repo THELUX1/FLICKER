@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles - CineStream</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <section class="movie-detail-container">
+        <!-- Fondo Desenfocado -->
+        <div class="movie-backdrop" id="movie-backdrop" style="filter: blur(10px); position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center;"></div>
+        
+        <div class="movie-content">
+            <button class="back-button" onclick="window.history.back()">‹ Volver</button>
+            
+            <div class="main-info">
+                <!-- Contenedor del tráiler como elemento principal -->
+                <div class="trailer-container featured-trailer">
+                    <div class="trailer-wrapper">
+                        <iframe class="movie-trailer" id="movie-trailer" allowfullscreen></iframe>
+                    </div>
+                </div>
+                
+                <div class="movie-info">
+                    <h1 class="movie-title-detail" id="movie-title"></h1>
+                    <div class="movie-meta">
+                        <span class="movie-rating" id="movie-rating"></span>
+                        <span class="movie-year" id="movie-year"></span>
+                        <span class="movie-duration" id="movie-duration"></span>
+                    </div>
+                    <p class="movie-synopsis" id="movie-synopsis"></p>
+                    <div class="movie-actions">
+                        <a id="playButton">
+                            <button class="play-button">
+                                <svg class="play-icon" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z" />
+                                </svg>
+                                Reproducir
+                            </button> 
+                        </a>
+                        <button class="add-list-button" id="mark-watched-detail">
+                            <svg class="add-icon" viewBox="0 0 24 24">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                            </svg>
+                            <span id="like-text">Me gusta</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+   
+    <script>
+    const apiKey = '995449ccaf6d840acc029f95c7d210dd'; // ¡Reemplaza con tu API Key de TMDb!
+
+    // Variable global para almacenar los detalles de la película
+    let movie = null;
+
+    // Funciones de "Me gusta" y localStorage
+    function loadLikedMovies() {
+        const storedMovies = localStorage.getItem('likedMovies');
+        return storedMovies ? JSON.parse(storedMovies) : [];
+    }
+
+    function saveLikedMovies(movies) {
+        localStorage.setItem('likedMovies', JSON.stringify(movies));
+    }
+
+    function showToast(message, type = 'success') {
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        toast.innerHTML = `
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-times-circle'}"></i>
+            ${message}
+        `;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.classList.add('show'), 100);
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+
+    function toggleLike() {
+        if (!movie) {
+            console.error('Película no definida');
+            return;
+        }
+
+        const likedMovies = loadLikedMovies();
+        const isLiked = likedMovies.some(m => m.title === movie.title);
+        
+        if (isLiked) {
+            const updatedMovies = likedMovies.filter(m => m.title !== movie.title);
+            saveLikedMovies(updatedMovies);
+            document.getElementById("like-text").innerText = "Me gusta";
+            showToast(`${movie.title} eliminada de Me gusta`, 'success');
+        } else {
+            likedMovies.unshift(movie);
+            saveLikedMovies(likedMovies);
+            document.getElementById("like-text").innerText = "No me gusta";
+            showToast(`${movie.title} añadida a Me gusta`, 'success');
+        }
+    }
+
+    // Función para cargar trailers.json
+    async function loadTrailers() {
+    try {
+        const response = await fetch('trailers.json');
+        if (!response.ok) throw new Error('Error al cargar el archivo trailers.json');
+        const data = await response.json();
+        
+        // Aplanar estructura
+        const trailers = {};
+        Object.values(data).forEach(category => {
+            category.forEach(movie => {
+                trailers[movie.id] = movie.trailer;
+            });
+        });
+
+        return trailers;
+    } catch (error) {
+        console.error('Error loading trailers:', error);
+        return {};
+    }
+}
+
+    // Función para obtener detalles de TMDb
+    async function fetchMovieDetails(title) {
+        try {
+            // Cargar tráilers desde el archivo JSON
+            const trailers = await loadTrailers();
+
+            // Buscar película por título
+            const searchResponse = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(title)}&language=es-MX`);
+            const searchData = await searchResponse.json();
+            
+            if (searchData.results.length === 0) return null;
+            
+            const movieId = searchData.results[0].id;
+            
+            // Obtener detalles completos
+            const detailsResponse = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&language=es-MX`);
+            const details = await detailsResponse.json();
+            
+            // Buscar tráiler en trailers.json
+            let trailer = '';
+            if (trailers[movieId]) {
+                trailer = trailers[movieId];
+            } else {
+                // Si no está en el JSON, buscar en la API
+                const videosResponse = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${apiKey}&language=es-MX`);
+                const videosData = await videosResponse.json();
+                const trailerData = videosData.results.find(video => video.type === 'Trailer');
+                if (trailerData) {
+                    trailer = `https://www.youtube.com/embed/${trailerData.key}`;
+                }
+            }
+
+            return {
+                title: details.title,
+                year: details.release_date?.split('-')[0] || 'N/A',
+                rating: details.vote_average ? `${details.vote_average}/10` : 'N/A',
+                duration: details.runtime ? `${Math.floor(details.runtime / 60)}h ${details.runtime % 60}m` : 'N/A',
+                synopsis: details.overview || "Sin sinopsis disponible.",
+                image: `https://image.tmdb.org/t/p/w500${details.poster_path}`,
+                trailer: trailer,
+                videoUrl: 'N/A' // Mantenemos tu estructura
+            };
+        } catch (error) {
+            console.error('Error fetching details:', error);
+            return null;
+        }
+    }
+
+    // Cargar detalles de la película
+    const urlParams = new URLSearchParams(window.location.search);
+    const movieTitle = urlParams.get('title');
+
+    if (movieTitle) {
+        fetchMovieDetails(decodeURIComponent(movieTitle)).then(movieData => {
+            if (movieData) {
+                // Asignar los detalles de la película a la variable global
+                movie = movieData;
+
+                // Configurar elementos de la página
+                document.getElementById("movie-title").innerText = movie.title;
+                document.getElementById("movie-rating").innerText = movie.rating;
+                document.getElementById("movie-year").innerText = movie.year;
+                document.getElementById("movie-duration").innerText = movie.duration;
+                document.getElementById("movie-trailer").src = movie.trailer; // Asignar el tráiler
+                document.getElementById("movie-backdrop").style.backgroundImage = `url('${movie.image}')`;
+                document.getElementById("movie-synopsis").innerText = movie.synopsis;
+
+                // Mantener funcionalidad de reproducción
+                if (movie.videoUrl) {
+                    document.getElementById("playButton").href = `Reproductor.html?video=${encodeURIComponent(movie.videoUrl)}`;
+                } else {
+                    document.getElementById("playButton").style.display = "none";
+                }
+
+                // Estado inicial del botón "Me gusta"
+                const isLiked = loadLikedMovies().some(m => m.title === movie.title);
+                document.getElementById("like-text").innerText = isLiked ? "No me gusta" : "Me gusta";
+                document.getElementById("mark-watched-detail").addEventListener("click", toggleLike);
+            } else {
+                // Mostrar mensaje de error si no se encuentra la película
+                document.querySelector(".movie-content").innerHTML = `
+                    <div class="error-message">
+                        <p>Película no encontrada</p>
+                        <a href="index.html" class="back-button">Volver al inicio</a>
+                    </div>
+                `;
+            }
+        });
+    }
+</script>
+</body>
+</html>

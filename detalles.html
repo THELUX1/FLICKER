@@ -174,11 +174,96 @@
                     document.getElementById("movie-backdrop").style.backgroundImage = `url('${movie.image}')`;
                     document.getElementById("movie-synopsis").innerText = movie.synopsis;
                     configurarEnlaceReproductor(movieData);
+
+                    // Verificar si la película ya está en "Me gusta"
+                    const likedMovies = loadLikedMovies();
+                    const isLiked = likedMovies.some(m => m.title === movie.title);
+                    updateLikeButton(isLiked);
                 } else {
                     document.getElementById("movie-title").innerText = "Error al cargar la película";
                     document.getElementById("movie-synopsis").innerText = "No se pudieron cargar los detalles de la película.";
                 }
             });
+        }
+
+        // Función para actualizar el estado del botón "Me gusta"
+        function updateLikeButton(isLiked) {
+            const likeButton = document.getElementById('mark-watched-detail');
+            const likeText = document.getElementById('like-text');
+            if (isLiked) {
+                likeText.innerText = "No me gusta";
+                likeButton.classList.add('liked');
+            } else {
+                likeText.innerText = "Me gusta";
+                likeButton.classList.remove('liked');
+            }
+        }
+
+        // Función para marcar una película como "Me gusta" o eliminarla
+        function toggleLike(movie) {
+            const likedMovies = loadLikedMovies();
+            const isLiked = likedMovies.some(m => m.title === movie.title);
+
+            if (isLiked) {
+                // Eliminar la película de "Me gusta"
+                const updatedMovies = likedMovies.filter(m => m.title !== movie.title);
+                saveLikedMovies(updatedMovies);
+                showToast(`${movie.title} ha sido eliminada de Me gusta.`, 'success');
+            } else {
+                // Agregar la película a "Me gusta"
+                likedMovies.unshift(movie);
+                saveLikedMovies(likedMovies);
+                showToast(`${movie.title} ha sido añadida a Me gusta.`, 'success');
+            }
+
+            updateLikeButton(!isLiked);
+            updateContent(); // Actualizar la lista de "Me gusta"
+        }
+
+        // Función para cargar las películas "Me gusta" desde localStorage
+        function loadLikedMovies() {
+            const storedMovies = localStorage.getItem('likedMovies');
+            return storedMovies ? JSON.parse(storedMovies) : [];
+        }
+
+        // Función para guardar las películas "Me gusta" en localStorage
+        function saveLikedMovies(movies) {
+            localStorage.setItem('likedMovies', JSON.stringify(movies));
+        }
+
+        // Función para mostrar notificaciones toast
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-times-circle'}"></i>
+                ${message}
+            `;
+            document.body.appendChild(toast);
+
+            // Mostrar el toast
+            setTimeout(() => toast.classList.add('show'), 100);
+
+            // Ocultar el toast después de 3 segundos
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300); // Eliminar el toast del DOM
+            }, 3000);
+        }
+
+        // Configurar el evento de clic en el botón "Me gusta"
+        document.getElementById('mark-watched-detail')?.addEventListener('click', () => {
+            const movie = {
+                title: document.getElementById('movie-title').innerText,
+                image: document.getElementById('movie-backdrop').style.backgroundImage.slice(5, -2),
+                link: window.location.href
+            };
+            toggleLike(movie);
+        });
+
+        // Función vacía para evitar errores (si no está definida en moviesData.js)
+        function updateContent() {
+            console.log('Actualizando contenido...');
         }
     </script>
 </body>

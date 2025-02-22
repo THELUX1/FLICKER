@@ -303,7 +303,6 @@ body {
 
 .movie-card:hover {
     transform: scale(1.1);
-    
 }
 
 .movie-card:hover img {
@@ -474,11 +473,11 @@ body {
         z-index: 1000;
         display: none;
     }
-    
+
     .search-container.active {
         display: block;
     }
-    
+
     .search-results {
         max-height: 60vh;
     }
@@ -539,6 +538,7 @@ body {
 
 /* Carrusel Me gusta */
 .liked-container {
+    margin-top: 90px;
     display: flex;
     overflow-x: auto; /* Permite desplazamiento horizontal */
     gap: 1px; /* Espaciado entre tarjetas */
@@ -546,6 +546,15 @@ body {
     padding: 20px 0;
     white-space: nowrap;
     align-items: stretch;
+}
+.section-title {
+    position: absolute;
+    margin-top: -6px;
+    left: 8px;
+    font-size: 24px;
+    color: #fff;
+    margin-bottom: 20px;
+    z-index: 10000;
 }
 
 .liked-carousel {
@@ -701,6 +710,7 @@ body {
 .modal-button.cancel:hover {
     background: rgba(89, 89, 89, 0.7);
 }
+
 /* Eliminar el contorno azul al hacer clic */
 button, a, img {
     outline: none;
@@ -717,6 +727,7 @@ button:focus, a:focus, img:focus {
 button:hover, a:hover {
     background-color: inherit;
 }
+
 /* Transiciones para cambios de página */
 .page {
     transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
@@ -741,6 +752,7 @@ button:hover, a:hover {
     opacity: 0;
     transform: translateY(-20px);
 }
+
 /* Estilos para el botón "Volver" */
 .back-button {
     position: absolute;

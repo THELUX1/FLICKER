@@ -58,7 +58,6 @@ async function fetchMovies(endpoint) {
 }
 
 // Función para obtener tráiler desde la API de TMDb
-// Función corregida para obtener tráiler desde TMDb
 async function fetchMovieTrailer(movieId) {
     const languages = ['es-MX', 'es-ES', 'en-US'];
     try {
@@ -87,7 +86,6 @@ let moviesData = {
 // Cargar películas y actualizar interfaz
 async function loadMovies() {
     moviesData["Tendencias"] = await fetchMovies('movie/popular');
-     // Ejemplo: 4 películas recientes
     moviesData["Mejor calificadas"] = await fetchMovies('movie/top_rated'); // Cargar películas mejor calificadas
     moviesData["Próximos estrenos"] = await fetchMovies('movie/upcoming'); // Cargar próximos estrenos
     moviesData["En cartelera"] = await fetchMovies('movie/now_playing'); // Cargar películas en cartelera
@@ -96,8 +94,6 @@ async function loadMovies() {
 
 // Llamar a loadMovies() al cargar la página
 loadMovies();
-
-// ... (resto del código)
 
 // Cargar películas "Me gusta" desde localStorage
 function loadLikedMovies() {
@@ -195,44 +191,24 @@ function createMovieCard(movie, isLiked = false) {
 
 // Generar contenido principal
 function generarContenido(container) {
-    const likedMovies = loadLikedMovies();
     const data = {
-        "Me gusta": likedMovies,
-        ...moviesData
+        "Tendencias": moviesData["Tendencias"],
+        "Mejor calificadas": moviesData["Mejor calificadas"],
+        "Próximos estrenos": moviesData["Próximos estrenos"],
+        "En cartelera": moviesData["En cartelera"]
+        // No incluir "Me gusta" aquí
     };
 
     container.innerHTML = Object.entries(data).map(([category, movies]) => {
-    const isLiked = category === "Me gusta";
-    return `
-        <section class="movie-section ${isLiked ? 'liked-section' : ''}">
-            <h2 class="section-title">${category}</h2>
-            ${movies.length > 0 ? `
-                <div class="${isLiked ? 'liked-container' : 'movies-container'}">
-                    ${isLiked ? `
-                        <div class="liked-carousel">
-                            ${movies.map(movie => createMovieCard(movie, isLiked)).join('')}
-                        </div>
-                        <div class="liked-controls">
-                            <button class="liked-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
-                            <button class="liked-btn next-btn"><i class="fas fa-chevron-right"></i></button>
-                        </div>
-                    ` : `
-                        ${movies.map(movie => createMovieCard(movie)).join('')}
-                    `}
+        return `
+            <section class="movie-section">
+                <h2 class="section-title">${category}</h2>
+                <div class="movies-container">
+                    ${movies.map(movie => createMovieCard(movie)).join('')}
                 </div>
-            ` : isLiked ? `
-                <div class="liked-empty">
-                    <i class="fas fa-heart"></i>
-                    <p>No has añadido ninguna película a Me gusta todavía</p>
-                </div>
-            ` : ''}
-        </section>
-    `;
-}).join('');
-
-    if (likedMovies.length > 0) {
-        setupCarouselControls();
-    }
+            </section>
+        `;
+    }).join('');
 }
 
 // Configurar controles del carrusel
@@ -367,50 +343,7 @@ function setupSearch() {
         searchResults.style.display = 'none';
     }
 }
-// Función para cargar una página dinámicamente
-async function loadPage(url) {
-    const response = await fetch(url);
-    const html = await response.text();
-    const parser = new DOMParser();
-    const newDocument = parser.parseFromString(html, 'text/html');
-    const newContent = newDocument.querySelector('.content').innerHTML;
 
-    // Animación de salida
-    const currentPage = document.querySelector('.content');
-    currentPage.classList.add('page-exit');
-
-    setTimeout(() => {
-        // Reemplazar el contenido
-        document.querySelector('.content').innerHTML = newContent;
-        // Animación de entrada
-        document.querySelector('.content').classList.add('page-enter');
-    }, 500); // Duración de la transición
-}
-
-// Manejar clics en enlaces
-document.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        loadPage(link.href);
-    });
-});
-
-// Manejar el botón "Atrás" del navegador
-window.addEventListener('popstate', () => {
-    loadPage(window.location.href);
-});
-
-// Precargar páginas cuando el usuario pasa el mouse sobre un enlace
-document.querySelectorAll('a').forEach(link => {
-    link.addEventListener('mouseover', () => {
-        preloadPage(link.href);
-    });
-});
-
-// Función para precargar páginas
-function preloadPage(url) {
-    fetch(url).then(response => response.text());
-}
 // Inicialización
 document.addEventListener('DOMContentLoaded', () => {
     updateContent();
@@ -426,4 +359,4 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         markAsLiked(featuredMovie);
     });
-});;
+});

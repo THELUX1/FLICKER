@@ -9,33 +9,24 @@
 </head>
 <body>
     <header class="header">
-        <div class="logo-container">
-            <div class="logo-glass">
-                <h1 class="logo">Flicker</h1>
-            </div>
+    <div class="logo-container">
+        <div class="logo-glass">
+            <h1 class="logo">Flicker</h1>
         </div>
+    </div>
 
-        <!-- Sistema de Búsqueda -->
-        <div class="search-container">
-            <div class="search-wrapper">
-                <input type="text" class="search-input" placeholder="Buscar películas y series...">
-                <button class="search-button">
-                    <i class="fas fa-search search-icon"></i>
-                    <i class="fas fa-times close-icon"></i>
-                </button>
-            </div>
-            <div class="search-results"></div>
+    <!-- Sistema de Búsqueda -->
+    <div class="search-container">
+        <div class="search-wrapper">
+            <input type="text" class="search-input" placeholder="Buscar películas y series...">
+            <button class="search-button">
+                <i class="fas fa-search search-icon"></i>
+                <i class="fas fa-times close-icon"></i>
+            </button>
         </div>
-        <button class="menu-hamburguesa">☰</button>
-        <!-- Menú de Navegación -->
-        <nav class="nav-menu">
-            <button class="close-menu">×</button>
-            <a href="index.html" class="nav-link">Inicio</a>
-            <a href="#" class="nav-link">Series</a>
-            <a href="#" class="nav-link">Películas</a>
-            <a href="me-gusta.html" class="nav-link">Me gusta</a> <!-- Enlace a la página de "Me gusta" -->
-        </nav>
-    </header>
+        <div class="search-results"></div>
+    </div>
+</header>
 
     <section class="hero">
         <div class="hero-content">
@@ -53,6 +44,22 @@
     </section>
 
     <main class="content" id="content"></main>
+
+    <!-- Barra de navegación inferior -->
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-icon">
+            <i class="fas fa-home"></i>
+            <span>Inicio</span>
+        </a>
+        <a href="me-gusta.html" class="nav-icon">
+            <i class="fas fa-heart"></i>
+            <span>Me gusta</span>
+        </a>
+        <a href="#" class="nav-icon">
+            <i class="fas fa-cog"></i>
+            <span>Configuración</span>
+        </a>
+    </nav>
 
     <!-- Modal de confirmación personalizado -->
     <div id="confirm-modal" class="modal">

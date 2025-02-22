@@ -14,7 +14,6 @@ body {
 
 /* HEADER */
 
-
 /* PÁGINA DE DETALLES */
 .movie-detail-container {
     position: relative;
@@ -53,7 +52,7 @@ body {
     margin: 0 auto;
 }
 
-.back-button {
+.back-button .btn2{
     background: rgba(0, 0, 0, 0.7);
     border: 1px solid rgba(255, 255, 255, 0.3);
     color: white;
@@ -145,8 +144,6 @@ body {
     gap: 12px;
 }
 
-  
-}
 .add-list-button:hover {
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.3);
@@ -265,14 +262,15 @@ body {
         margin: 1rem auto;
     }
 }
+
 /* Eliminar el contorno azul al hacer clic */
-button, a, img {
+button, a, input, div {
     outline: none;
     -webkit-tap-highlight-color: transparent;
 }
 
 /* También para elementos con focus */
-button:focus, a:focus, img:focus {
+button:focus, a:focus, input:focus, div:focus {
     outline: none;
     box-shadow: none;
 }

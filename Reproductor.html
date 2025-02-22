@@ -19,7 +19,7 @@
     <button class="back-btn" id="back-btn">‹ Volver</button>
 
     <!-- Notificación -->
-    <div class="notification" id="notification">Estás viendo <span id="movie-title-notification"></span></div>
+    <div class="notification" id="notification">Estás viendo: <span id="movie-title-notification"></span></div>
 
     <!-- Miniatura -->
     <div class="thumbnail" id="thumbnail" style="background-image: url('assets/thumbnail.jpg');">
@@ -46,195 +46,196 @@
 
 <script>
     const video = document.getElementById("video");
-    const controls = document.getElementById("customControls");
-    const loader = document.getElementById("loader");
-    const qualityContainer = document.getElementById("quality-container");
-    const qualityBtn = document.getElementById("quality-btn");
-    const backBtn = document.getElementById("back-btn"); // Botón Volver
-    const notification = document.getElementById("notification"); // Notificación
-    const movieTitleNotification = document.getElementById("movie-title-notification"); // Título de la película en la notificación
-    let hls; // Declarar hls en ámbito global
-    let timeout;
+const controls = document.getElementById("customControls");
+const loader = document.getElementById("loader");
+const qualityContainer = document.getElementById("quality-container");
+const qualityBtn = document.getElementById("quality-btn");
+const backBtn = document.getElementById("back-btn"); // Botón Volver
+const notification = document.getElementById("notification"); // Notificación
+const movieTitleNotification = document.getElementById("movie-title-notification"); // Título de la película en la notificación
+let hls; // Declarar hls en ámbito global
+let timeout;
 
-    // Ocultar el botón "Volver" después de 4 segundos
+// Función para mostrar los controles y el botón "Volver"
+function showControls() {
+    controls.classList.remove("hidden");
+    backBtn.style.display = "block"; // Mostrar el botón "Volver"
+    clearTimeout(timeout);
+    timeout = setTimeout(hideControls, 3000); // Ocultar después de 3 segundos de inactividad
+}
+
+// Función para ocultar los controles y el botón "Volver"
+function hideControls() {
+    controls.classList.add("hidden");
+    backBtn.style.display = "none"; // Ocultar el botón "Volver"
+}
+
+// Mostrar controles y botón "Volver" al interactuar con la pantalla
+video.addEventListener("mousemove", showControls);
+video.addEventListener("touchstart", showControls);
+controls.addEventListener("mousemove", showControls);
+
+// Ocultar los controles y el botón "Volver" inicialmente después de 4 segundos
+setTimeout(() => {
+    hideControls(); // Ocultar controles y botón "Volver"
+}, 4000);
+
+// Obtener la URL del video desde los parámetros de la URL
+const videoUrl = new URLSearchParams(window.location.search).get('video');
+const movieId = new URLSearchParams(window.location.search).get('movieId'); // Obtener movieId
+
+// Función para obtener la URL del video según la calidad seleccionada
+function getMovieVideoUrl(movieId, quality) {
+    return movieVideos[movieId]?.[quality] || videoUrl; // Si no existe la calidad, usar la URL por defecto
+}
+
+// Configurar el botón "Volver" para redirigir a detalles.html con el título de la película
+backBtn.addEventListener("click", () => {
+    const movieTitle = movieVideos[movieId]?.title || "Película"; // Obtener el título de la película
+    window.location.href = `detalles.html?title=${encodeURIComponent(movieTitle)}`;
+});
+
+// Función para mostrar la notificación
+function showNotification(title) {
+    movieTitleNotification.innerText = title; // Establecer el título de la película
+    notification.style.display = "block"; // Mostrar la notificación
     setTimeout(() => {
-        backBtn.style.display = "none";
-    }, 4000); // 4000 milisegundos = 4 segundos
+        notification.style.display = "none"; // Ocultar la notificación después de 6 segundos
+    }, 6000); // Aumentar de 3000ms (3s) a 6000ms (6s)
+}
 
-    // Obtener la URL del video desde los parámetros de la URL
-    const videoUrl = new URLSearchParams(window.location.search).get('video');
-    const movieId = new URLSearchParams(window.location.search).get('movieId'); // Obtener movieId
+// Obtener el título de la película desde movieVideos
+const movieTitle = movieVideos[movieId]?.title || "Película"; // Si no hay título, usar "Película"
 
-    // Función para obtener la URL del video según la calidad seleccionada
-    function getMovieVideoUrl(movieId, quality) {
-        return movieVideos[movieId]?.[quality] || videoUrl; // Si no existe la calidad, usar la URL por defecto
-    }
-
-    // Configurar el botón "Volver" para redirigir a detalles.html con el título de la película
-    backBtn.addEventListener("click", () => {
-        const movieTitle = movieVideos[movieId]?.title || "Película"; // Obtener el título de la película
-        window.location.href = `detalles.html?title=${encodeURIComponent(movieTitle)}`;
+// Usamos Hls.js para reproducir videos m3u8
+if (Hls.isSupported()) {
+    hls = new Hls();
+    hls.loadSource(videoUrl); // Cargamos la URL del video
+    hls.attachMedia(video);
+    hls.on(Hls.Events.MANIFEST_PARSED, function () {
+        addQualityOptions();
     });
-
-    // Función para mostrar la notificación
-    function showNotification(title) {
-        movieTitleNotification.innerText = title; // Establecer el título de la película
-        notification.style.display = "block"; // Mostrar la notificación
-        setTimeout(() => {
-            notification.style.display = "none"; // Ocultar la notificación después de 6 segundos
-        }, 6000); // Aumentar de 3000ms (3s) a 6000ms (6s)
-    }
-
-    // Obtener el título de la película desde movieVideos
-    const movieTitle = movieVideos[movieId]?.title || "Película"; // Si no hay título, usar "Película"
-
-    // Usamos Hls.js para reproducir videos m3u8
-    if (Hls.isSupported()) {
-        hls = new Hls();
-        hls.loadSource(videoUrl); // Cargamos la URL del video
-        hls.attachMedia(video);
-        hls.on(Hls.Events.MANIFEST_PARSED, function () {
-            addQualityOptions();
-        });
-        hls.on(Hls.Events.ERROR, function (event, data) {
-            console.error("Error en HLS:", data);
-            if (data.fatal) {
-                switch (data.type) {
-                    case Hls.ErrorTypes.NETWORK_ERROR:
-                        console.error("Error de red, intentando recuperar...");
-                        hls.startLoad();
-                        break;
-                    case Hls.ErrorTypes.MEDIA_ERROR:
-                        console.error("Error de media, intentando recuperar...");
-                        hls.recoverMediaError();
-                        break;
-                    default:
-                        console.error("Error fatal, no se puede recuperar.");
-                        hls.destroy();
-                        break;
-                }
+    hls.on(Hls.Events.ERROR, function (event, data) {
+        console.error("Error en HLS:", data);
+        if (data.fatal) {
+            switch (data.type) {
+                case Hls.ErrorTypes.NETWORK_ERROR:
+                    console.error("Error de red, intentando recuperar...");
+                    hls.startLoad();
+                    break;
+                case Hls.ErrorTypes.MEDIA_ERROR:
+                    console.error("Error de media, intentando recuperar...");
+                    hls.recoverMediaError();
+                    break;
+                default:
+                    console.error("Error fatal, no se puede recuperar.");
+                    hls.destroy();
+                    break;
             }
-        });
-    } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-        video.src = videoUrl;
-    }
-
-    // Mostrar el loader mientras el video se está cargando
-    video.addEventListener("waiting", () => {
-        loader.style.display = "block";
+        }
     });
+} else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+    video.src = videoUrl;
+}
 
-    // Ocultar el loader cuando el video esté listo para reproducirse
-    video.addEventListener("canplay", () => {
-        loader.style.display = "none";
-    });
+// Mostrar el loader mientras el video se está cargando
+video.addEventListener("waiting", () => {
+    loader.style.display = "block";
+});
 
-    document.getElementById("thumbnail").addEventListener("click", () => {
-        document.getElementById("thumbnail").style.display = "none";
-        video.style.display = "block";
+// Ocultar el loader cuando el video esté listo para reproducirse
+video.addEventListener("canplay", () => {
+    loader.style.display = "none";
+});
+
+document.getElementById("thumbnail").addEventListener("click", () => {
+    document.getElementById("thumbnail").style.display = "none";
+    video.style.display = "block";
+    video.play();
+    document.getElementById("play-btn").innerHTML = '<i class="fas fa-pause"></i>';
+    showNotification(movieTitle); // Mostrar notificación con el título de la película
+});
+
+document.getElementById("play-btn").addEventListener("click", () => {
+    if (video.paused) {
         video.play();
         document.getElementById("play-btn").innerHTML = '<i class="fas fa-pause"></i>';
         showNotification(movieTitle); // Mostrar notificación con el título de la película
-    });
-
-    document.getElementById("play-btn").addEventListener("click", () => {
-        if (video.paused) {
-            video.play();
-            document.getElementById("play-btn").innerHTML = '<i class="fas fa-pause"></i>';
-            showNotification(movieTitle); // Mostrar notificación con el título de la película
-        } else {
-            video.pause();
-            document.getElementById("play-btn").innerHTML = '<i class="fas fa-play"></i>';
-        }
-    });
-
-    video.addEventListener("timeupdate", () => {
-        document.getElementById("timeline").value = (video.currentTime / video.duration) * 100;
-        let minutes = Math.floor(video.currentTime / 60);
-        let seconds = Math.floor(video.currentTime % 60);
-        document.getElementById("time-display").innerText = `${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
-    });
-
-    document.getElementById("fullscreen-btn").addEventListener("click", () => {
-        if (!document.fullscreenElement) {
-            document.getElementById("videoContainer").requestFullscreen();
-        } else {
-            document.exitFullscreen();
-        }
-    });
-
-    // Función para mostrar y ocultar controles
-    function showControls() {
-        controls.classList.remove("hidden");
-        clearTimeout(timeout);
-        timeout = setTimeout(hideControls, 3000);
+    } else {
+        video.pause();
+        document.getElementById("play-btn").innerHTML = '<i class="fas fa-play"></i>';
     }
+});
 
-    function hideControls() {
-        controls.classList.add("hidden");
+video.addEventListener("timeupdate", () => {
+    document.getElementById("timeline").value = (video.currentTime / video.duration) * 100;
+    let minutes = Math.floor(video.currentTime / 60);
+    let seconds = Math.floor(video.currentTime % 60);
+    document.getElementById("time-display").innerText = `${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+});
+
+document.getElementById("fullscreen-btn").addEventListener("click", () => {
+    if (!document.fullscreenElement) {
+        document.getElementById("videoContainer").requestFullscreen();
+    } else {
+        document.exitFullscreen();
     }
+});
 
-    video.addEventListener("mousemove", showControls);
-    video.addEventListener("touchstart", showControls);
-    video.addEventListener("click", showControls);
-    controls.addEventListener("mousemove", showControls);
+// Función para agregar opciones de calidad
+function addQualityOptions() {
+    qualityContainer.innerHTML = '';
+    const qualities = Object.keys(movieVideos[movieId] || {"720p": "default"});
 
-    showControls();
-
-    // Función para agregar opciones de calidad
-    function addQualityOptions() {
-        qualityContainer.innerHTML = '';
-        const qualities = Object.keys(movieVideos[movieId] || {"720p": "default"});
-
-        qualities.forEach(quality => {
-            if (quality !== "title") { // Excluir el campo "title"
-                const option = document.createElement("div");
-                option.className = "quality-option";
-                option.innerText = `Calidad: ${quality}`;
-                option.addEventListener("click", () => {
-                    const newUrl = getMovieVideoUrl(movieId, quality);
-                    
-                    if (Hls.isSupported()) {
-                        hls.destroy(); // Destruir instancia anterior
-                        hls = new Hls();
-                        hls.loadSource(newUrl);
-                        hls.attachMedia(video);
-                        video.play();
-                    } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-                        video.src = newUrl;
-                        video.play();
-                    }
-                    qualityContainer.style.display = "none";
-                });
-                qualityContainer.appendChild(option);
-            }
-        });
-    }
-
-    qualityBtn.addEventListener("click", () => {
-        qualityContainer.style.display = qualityContainer.style.display === "block" ? "none" : "block";
-    });
-
-    // Detectar cambio de orientación y evitar recarga
-    let isOrientationChanging = false;
-
-    window.addEventListener("orientationchange", () => {
-        isOrientationChanging = true;
-        // Guardar el estado actual del reproductor
-        const currentTime = video.currentTime;
-        const isPaused = video.paused;
-
-        // Restaurar el estado después de la recarga
-        window.addEventListener("load", () => {
-            if (isOrientationChanging) {
-                video.currentTime = currentTime;
-                if (!isPaused) {
+    qualities.forEach(quality => {
+        if (quality !== "title") { // Excluir el campo "title"
+            const option = document.createElement("div");
+            option.className = "quality-option";
+            option.innerText = `Calidad: ${quality}`;
+            option.addEventListener("click", () => {
+                const newUrl = getMovieVideoUrl(movieId, quality);
+                
+                if (Hls.isSupported()) {
+                    hls.destroy(); // Destruir instancia anterior
+                    hls = new Hls();
+                    hls.loadSource(newUrl);
+                    hls.attachMedia(video);
+                    video.play();
+                } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+                    video.src = newUrl;
                     video.play();
                 }
-                isOrientationChanging = false;
-            }
-        });
+                qualityContainer.style.display = "none";
+            });
+            qualityContainer.appendChild(option);
+        }
     });
+}
+
+qualityBtn.addEventListener("click", () => {
+    qualityContainer.style.display = qualityContainer.style.display === "block" ? "none" : "block";
+});
+
+// Detectar cambio de orientación y evitar recarga
+let isOrientationChanging = false;
+
+window.addEventListener("orientationchange", () => {
+    isOrientationChanging = true;
+    // Guardar el estado actual del reproductor
+    const currentTime = video.currentTime;
+    const isPaused = video.paused;
+
+    // Restaurar el estado después de la recarga
+    window.addEventListener("load", () => {
+        if (isOrientationChanging) {
+            video.currentTime = currentTime;
+            if (!isPaused) {
+                video.play();
+            }
+            isOrientationChanging = false;
+        }
+    });
+});
 </script>
 
 </body>

@@ -1,0 +1,193 @@
+/* Estilo para el cuerpo */
+body {
+    background: #121212;
+    color: white;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* Contenedor del video */
+.video-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+    height: 100vh;
+    background: black; /* Fondo negro para todo el contenedor */
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 10px;
+    outline: none;
+    background: black; /* Aseguramos que el video tenga fondo negro */
+    display: none;
+}
+
+/* Miniatura */
+.thumbnail {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.play-overlay {
+    font-size: 60px;
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    padding: 20px;
+}
+
+/* Loader */
+.loader {
+    position: absolute;
+    top: 50%;
+    left: 186px;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    border: 8px solid rgba(255, 0, 0, 0.3); /* Borde rojo claro */
+    border-top: 8px solid red; /* Borde superior rojo brillante */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* Animación de giro */
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Controles */
+.controls {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    transition: opacity 0.3s ease;
+    opacity: 1;
+}
+
+.controls.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+button {
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+button i {
+    font-size: 20px;
+}
+
+input[type="range"] {
+    width: 40%;
+    cursor: pointer;
+}
+
+/* Menú de calidad */
+.quality-container {
+    position: absolute;
+    right: 10px;
+    bottom: 50px;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 5px;
+    border-radius: 5px;
+    display: none;
+}
+
+.quality-option {
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.quality-option:last-child {
+    border-bottom: none;
+}
+
+.quality-option:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Botón Volver */
+.back-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    z-index: 10;
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Notificación estilo Netflix */
+.notification {
+    position: absolute;
+    top: 20px; /* Cambiar a posición superior */
+    left: 50%; /* Centrar horizontalmente */
+    transform: translateX(-50%); /* Ajustar centrado */
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    display: none;
+    z-index: 10;
+    animation: fadeInOut 6s ease-in-out; /* Aumentar de 3s a 6s */
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* Media Queries para dispositivos móviles */
+@media (max-width: 768px) and (orientation: portrait) {
+    .notification {
+        top: 10px; /* Ajustar posición en modo vertical */
+        font-size: 12px; /* Reducir tamaño de fuente */
+        padding: 8px 16px; /* Reducir padding */
+    }
+}

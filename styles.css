@@ -10,7 +10,7 @@
 }
 
 body {
-    background-color: black;
+    background-color: #242424;
     color: white;
     min-height: 200vh;
     overflow-x: hidden;
@@ -235,12 +235,12 @@ body {
 /* Carrusel de Películas */
 .movies-container {
     display: flex;
-    gap:0.7rem;
-    overflow-x: auto;
+    overflow-x: auto; /* Permite desplazamiento horizontal */
+    gap: 1px; /* Espaciado entre tarjetas */
     scroll-snap-type: x mandatory;
-    padding: 1.5rem 0;
-    scrollbar-width: none;
-    cursor: grab;
+    padding: 20px 0;
+    white-space: nowrap;
+    align-items: stretch; /* Asegura que las tarjetas se estiren en altura */
 }
 
 .movies-container::-webkit-scrollbar {
@@ -248,12 +248,15 @@ body {
 }
 
 .movie-card {
-    flex: 0 0 180px;
-    scroll-snap-align: start;
-    border-radius: 6px;
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
+    flex: 0 0 180px; /* Ancho fijo de la tarjeta */
+    height: 100%; /* Asegura que la tarjeta ocupe toda la altura disponible en el contenedor */
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.6s ease, box-shadow 0.6s ease;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Estilos para los enlaces dentro de las tarjetas de películas */
@@ -272,34 +275,44 @@ body {
 }
 
 .movie-card img {
-    width: 100%;
+    width: 90%; /* Ajusta este valor según lo que necesites */
     height: 100%;
     object-fit: cover;
-    transition: transform 0.8s ease;
+    display: block;
+    border-radius: 10px;
+    transition: transform 1.0s;
+    margin: 0 auto; /* Centrar la imagen */
 }
 
 .movie-title {
-    
-    padding: 0.5rem;
-    text-align: center;
-    font-size: 0.9rem;
-    opacity: 0.8;
-    transition: opacity 0.8s ease;
-        
+    position: absolute;
+    bottom: 1px; /* Ajusta según el lugar donde desees que aparezca */
+    left: 10px;
+    right: 10px;
+    font-size: 16px; /* Ajusta el tamaño según lo necesites */
+    font-weight: bold;
+    color: white; /* Asegura que el texto sea legible */
+    background: rgba(0, 0, 0, 0.6); /* Fondo semitransparente para contraste */
+    padding: 5px;
+    border-radius: 4px;
+    z-index: 1; /* Asegura que el título esté sobre la imagen */
+    overflow: hidden;
+    word-wrap: break-word; /* Permite que el texto se divida en varias líneas */
+    white-space: normal; /* Permite que el texto se rompa y se ajuste a varias líneas */
 }
 
 .movie-card:hover {
-    transform: scale(1.0);
-    z-index: 10;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    transform: scale(1.1);
+    
 }
 
 .movie-card:hover img {
-    transform: scale(1.40);
+    transform: scale(1.30);
 }
 
 .movie-card:hover .movie-title {
     opacity: 1;
+    transform: translateY(0);
 }
 
 .movies-container::after {
@@ -697,4 +710,47 @@ button:focus, a:focus, img:focus {
 /* Si hay botones con hover, asegurarse de que no cambie el color */
 button:hover, a:hover {
     background-color: inherit;
+}
+/* Transiciones para cambios de página */
+.page {
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.page-enter {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.page-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.page-exit {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.page-exit-active {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+/* Estilos para el botón "Volver" */
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.back-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
 }

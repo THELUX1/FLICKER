@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +12,9 @@
     <section class="movie-detail-container">
         <div class="movie-backdrop" id="movie-backdrop"></div>
         <div class="movie-content">
-            <button class="back-button" onclick="window.history.back()">‹ Volver</button>
+           <a href="index.html" class="back-button">
+              <button class="btn2">‹ Volver</button>
+           </a>
             <div class="main-info">
                 <div class="trailer-container featured-trailer">
                     <div class="trailer-wrapper">
@@ -45,110 +48,138 @@
                 </div>
             </div>
         </div>
-    </section><script>
-const apiKey = '995449ccaf6d840acc029f95c7d210dd';
-let movie = null;
+    </section>
+    <script>
+        const apiKey = '995449ccaf6d840acc029f95c7d210dd'; // Asegúrate de que esta API Key sea válida
+        let movie = null;
 
-async function loadTrailers() {
-    try {
-        const response = await fetch('trailers.json');
-        if (!response.ok) throw new Error('Error al cargar trailers.json');
-        const data = await response.json();
-        const trailers = {};
-        Object.values(data).forEach(category => {
-            category.forEach(movie => {
-                trailers[movie.id] = movie.trailer;
-            });
-        });
-        return trailers;
-    } catch (error) {
-        console.error('Error loading trailers:', error);
-        return {};
-    }
-}
-
-async function fetchMovieDetails(title) {
-    try {
-        const trailers = await loadTrailers();
-        const searchResponse = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(title)}&language=es-MX`);
-        const searchData = await searchResponse.json();
-        if (searchData.results.length === 0) return null;
-        
-        const movieId = searchData.results[0].id;
-        const detailsResponse = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&language=es-MX`);
-        const details = await detailsResponse.json();
-        
-        let trailer = trailers[movieId] || "N/A";
-        const videoUrl = getMovieVideoUrl(movieId);
-        
-        return {
-            id: movieId,
-            title: details.title,
-            year: details.release_date?.split('-')[0] || 'N/A',
-            rating: details.vote_average ? `${details.vote_average}/10` : 'N/A',
-            duration: details.runtime ? `${Math.floor(details.runtime / 60)}h ${details.runtime % 60}m` : 'N/A',
-            synopsis: details.overview || "Sin sinopsis disponible.",
-            image: `https://image.tmdb.org/t/p/w500${details.poster_path}`,
-            videoUrl: videoUrl,
-            trailer: trailer
-        };
-    } catch (error) {
-        console.error('Error obteniendo detalles de la película:', error);
-        return null;
-    }
-}
-
-function configurarEnlaceReproductor(movieData) {
-    const videoUrl = movieData.videoUrl;
-    if (videoUrl && videoUrl !== 'N/A') {
-        document.getElementById("playButton").href = `Reproductor.html?video=${encodeURIComponent(videoUrl)}`;
-    } else {
-        document.getElementById("playButton").style.display = "none";
-    }
-}
-
-function toggleLike() {
-    if (!movie) return;
-    const likedMovies = loadLikedMovies();
-    const isLiked = likedMovies.some(m => m.id === movie.id);
-    if (isLiked) {
-        saveLikedMovies(likedMovies.filter(m => m.id !== movie.id));
-        document.getElementById("like-text").innerText = "Me gusta";
-    } else {
-        likedMovies.push(movie);
-        saveLikedMovies(likedMovies);
-        document.getElementById("like-text").innerText = "No me gusta";
-    }
-}
-
-function loadLikedMovies() {
-    return JSON.parse(localStorage.getItem('likedMovies')) || [];
-}
-function saveLikedMovies(movies) {
-    localStorage.setItem('likedMovies', JSON.stringify(movies));
-}
-
-document.getElementById("mark-watched-detail").addEventListener("click", toggleLike);
-
-const urlParams = new URLSearchParams(window.location.search);
-const movieTitle = urlParams.get('title');
-
-if (movieTitle) {
-    fetchMovieDetails(decodeURIComponent(movieTitle)).then(movieData => {
-        if (movieData) {
-            movie = movieData;
-            document.getElementById("movie-title").innerText = movie.title;
-            document.getElementById("movie-rating").innerText = movie.rating;
-            document.getElementById("movie-year").innerText = movie.year;
-            document.getElementById("movie-duration").innerText = movie.duration;
-            document.getElementById("movie-trailer").src = `${movie.trailer}?autoplay=1&mute=1`;
-            document.getElementById("movie-backdrop").style.backgroundImage = `url('${movie.image}')`;
-            document.getElementById("movie-synopsis").innerText = movie.synopsis;
-            configurarEnlaceReproductor(movieData);
+        // Función para cargar los tráilers desde trailers.json
+        async function loadTrailers() {
+            try {
+                const response = await fetch('trailers.json');
+                if (!response.ok) throw new Error('Error al cargar trailers.json');
+                const data = await response.json();
+                const trailers = {};
+                Object.values(data).forEach(category => {
+                    category.forEach(movie => {
+                        trailers[movie.id] = movie.trailer;
+                    });
+                });
+                return trailers;
+            } catch (error) {
+                console.error('Error cargando tráilers:', error);
+                return {};
+            }
         }
-    });
-}
-</script>
 
+        // Función para obtener los detalles de la película desde TMDb
+        async function fetchMovieDetails(title) {
+            try {
+                const trailers = await loadTrailers(); // Cargar tráilers
+                const searchResponse = await fetch(
+                    `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(title)}&language=es-MX`
+                );
+                if (!searchResponse.ok) throw new Error('Error al buscar la película en TMDb');
+                const searchData = await searchResponse.json();
+
+                if (searchData.results.length === 0) {
+                    console.error('No se encontraron resultados para la película:', title);
+                    return null;
+                }
+
+                const movieId = searchData.results[0].id; // Obtener el ID de la película
+                const detailsResponse = await fetch(
+                    `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&language=es-MX`
+                );
+                if (!detailsResponse.ok) throw new Error('Error al obtener detalles de la película');
+                const details = await detailsResponse.json();
+
+                // Obtener el tráiler desde trailers.json o TMDb
+                let trailer = trailers[movieId] || await fetchMovieTrailer(movieId);
+
+                // Obtener las URLs de video desde movieVideos
+                const videoUrls = movieVideos[movieId] || {
+                    "360p": "N/A",
+                    "720p": "N/A",
+                    "1080p": "N/A"
+                };
+
+                return {
+                    id: movieId,
+                    title: details.title,
+                    year: details.release_date?.split('-')[0] || 'N/A',
+                    rating: details.vote_average ? `${details.vote_average}/10` : 'N/A',
+                    duration: details.runtime ? `${Math.floor(details.runtime / 60)}h ${details.runtime % 60}m` : 'N/A',
+                    synopsis: details.overview || "Sin sinopsis disponible.",
+                    image: `https://image.tmdb.org/t/p/w500${details.poster_path}`,
+                    videoUrls: videoUrls, // URLs de video para cada resolución
+                    trailer: trailer
+                };
+            } catch (error) {
+                console.error('Error obteniendo detalles de la película:', error);
+                return null;
+            }
+        }
+
+        // Función para obtener el tráiler desde TMDb
+        async function fetchMovieTrailer(movieId) {
+            const languages = ['es-MX', 'es-ES', 'en-US']; // Idiomas preferidos
+            try {
+                for (const lang of languages) {
+                    const response = await fetch(
+                        `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${apiKey}&language=${lang}`
+                    );
+                    if (!response.ok) throw new Error(`Error al obtener tráiler en ${lang}`);
+                    const data = await response.json();
+                    const trailer = data.results.find(video => video.type === 'Trailer');
+                    if (trailer) return `https://www.youtube.com/embed/${trailer.key}`;
+                }
+                return ''; // Si no se encuentra tráiler
+            } catch (error) {
+                console.error('Error obteniendo tráiler:', error);
+                return '';
+            }
+        }
+
+        // Función para configurar el enlace del reproductor
+        function configurarEnlaceReproductor(movieData) {
+            const videoUrls = movieData.videoUrls;
+            if (videoUrls && videoUrls["720p"] !== "N/A") {
+                // Usar la resolución más alta disponible (1080p)
+                document.getElementById("playButton").href = 
+                    `Reproductor.html?video=${encodeURIComponent(videoUrls["1080p"])}&movieId=${movieData.id}`;
+            } else {
+                document.getElementById("playButton").style.display = "none";
+            }
+        }
+
+        // Obtener el título de la película desde la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const movieTitle = urlParams.get('title');
+
+        // Cargar detalles de la película
+        if (movieTitle) {
+            fetchMovieDetails(decodeURIComponent(movieTitle)).then(movieData => {
+                if (movieData) {
+                    movie = movieData;
+                    document.getElementById("movie-title").innerText = movie.title;
+                    document.getElementById("movie-rating").innerText = movie.rating;
+                    document.getElementById("movie-year").innerText = movie.year;
+                    document.getElementById("movie-duration").innerText = movie.duration;
+                    if (movie.trailer) {
+                        document.getElementById("movie-trailer").src = `${movie.trailer}?autoplay=1&mute=1`;
+                    } else {
+                        document.getElementById("movie-trailer").style.display = "none";
+                    }
+                    document.getElementById("movie-backdrop").style.backgroundImage = `url('${movie.image}')`;
+                    document.getElementById("movie-synopsis").innerText = movie.synopsis;
+                    configurarEnlaceReproductor(movieData);
+                } else {
+                    document.getElementById("movie-title").innerText = "Error al cargar la película";
+                    document.getElementById("movie-synopsis").innerText = "No se pudieron cargar los detalles de la película.";
+                }
+            });
+        }
+    </script>
 </body>
 </html>

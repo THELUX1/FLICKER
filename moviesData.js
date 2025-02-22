@@ -58,20 +58,18 @@ async function fetchMovies(endpoint) {
 }
 
 // Función para obtener tráiler desde la API de TMDb
+// Función corregida para obtener tráiler desde TMDb
 async function fetchMovieTrailer(movieId) {
-    const languages = ['es-MX', 'es-ES', 'en-US']; // Orden de preferencia
+    const languages = ['es-MX', 'es-ES', 'en-US'];
     try {
         for (const lang of languages) {
             const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${apiKey}&language=${lang}`);
             if (!response.ok) throw new Error(`Error al obtener tráiler en ${lang}`);
-            
             const data = await response.json();
-            let trailer = data.results.find(video => video.type === 'Trailer');
-
-            // Si encuentra tráiler, devolver el link
+            const trailer = data.results.find(video => video.type === 'Trailer');
             if (trailer) return `https://www.youtube.com/embed/${trailer.key}`;
         }
-        return ''; // Si no encuentra tráiler en ningún idioma, devolver vacío
+        return '';
     } catch (error) {
         console.error('Error fetching trailer:', error);
         return '';
@@ -369,7 +367,50 @@ function setupSearch() {
         searchResults.style.display = 'none';
     }
 }
+// Función para cargar una página dinámicamente
+async function loadPage(url) {
+    const response = await fetch(url);
+    const html = await response.text();
+    const parser = new DOMParser();
+    const newDocument = parser.parseFromString(html, 'text/html');
+    const newContent = newDocument.querySelector('.content').innerHTML;
 
+    // Animación de salida
+    const currentPage = document.querySelector('.content');
+    currentPage.classList.add('page-exit');
+
+    setTimeout(() => {
+        // Reemplazar el contenido
+        document.querySelector('.content').innerHTML = newContent;
+        // Animación de entrada
+        document.querySelector('.content').classList.add('page-enter');
+    }, 500); // Duración de la transición
+}
+
+// Manejar clics en enlaces
+document.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        loadPage(link.href);
+    });
+});
+
+// Manejar el botón "Atrás" del navegador
+window.addEventListener('popstate', () => {
+    loadPage(window.location.href);
+});
+
+// Precargar páginas cuando el usuario pasa el mouse sobre un enlace
+document.querySelectorAll('a').forEach(link => {
+    link.addEventListener('mouseover', () => {
+        preloadPage(link.href);
+    });
+});
+
+// Función para precargar páginas
+function preloadPage(url) {
+    fetch(url).then(response => response.text());
+}
 // Inicialización
 document.addEventListener('DOMContentLoaded', () => {
     updateContent();
@@ -385,4 +426,4 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         markAsLiked(featuredMovie);
     });
-});
+});;

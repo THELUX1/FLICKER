@@ -7,135 +7,20 @@
     
     <!-- Font Awesome desde CDNJS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Archivo CSS externo -->
+    <link rel="stylesheet" href="repro.css">
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script> 
-
-    <style>
-        /* Estilo para el cuerpo */
-        body {
-            background: #121212;
-            color: white;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            overflow: hidden;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-
-        /* Contenedor del video */
-        .video-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100vw;
-            height: 100vh;
-            background: black;
-            border-radius: 10px;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        video {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            border-radius: 10px;
-            outline: none;
-            display: none;
-        }
-
-        /* Miniatura */
-        .thumbnail {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .play-overlay {
-            font-size: 60px;
-            color: white;
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 50%;
-            padding: 20px;
-        }
-
-        /* Controles */
-        .controls {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 10px;
-            transition: opacity 0.3s ease;
-            opacity: 1;
-        }
-
-        .controls.hidden {
-            opacity: 0;
-            pointer-events: none; /* Evita que los controles bloqueen interacciones cuando están ocultos */
-        }
-
-        button {
-            background: transparent;
-            border: none;
-            color: white;
-            cursor: pointer;
-            font-size: 18px;
-        }
-
-        button i {
-            font-size: 20px;
-        }
-
-        input[type="range"] {
-            width: 40%;
-            cursor: pointer;
-        }
-
-        /* Menú de calidad */
-        .quality-container {
-            position: absolute;
-            right: 10px;
-            bottom: 50px;
-            background: rgba(0, 0, 0, 0.9);
-            padding: 5px;
-            border-radius: 5px;
-            display: none;
-        }
-
-        .quality-option {
-            padding: 5px 10px;
-            cursor: pointer;
-            font-size: 14px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .quality-option:last-child {
-            border-bottom: none;
-        }
-
-        .quality-option:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-    </style>
+    <script src="videos.js"></script> <!-- Añadir referencia a videos.js -->
 </head>
 <body>
 
 <div class="video-container" id="videoContainer">
+    <!-- Botón Volver -->
+    <button class="back-btn" id="back-btn">‹ Volver</button>
+
+    <!-- Notificación -->
+    <div class="notification" id="notification">Estás viendo <span id="movie-title-notification"></span></div>
+
     <!-- Miniatura -->
     <div class="thumbnail" id="thumbnail" style="background-image: url('assets/thumbnail.jpg');">
         <i class="fas fa-play play-overlay"></i>
@@ -154,39 +39,109 @@
 
     <!-- Menú de calidad -->
     <div class="quality-container" id="quality-container"></div>
+
+    <!-- Loader -->
+    <div class="loader" id="loader"></div>
 </div>
 
 <script>
     const video = document.getElementById("video");
     const controls = document.getElementById("customControls");
+    const loader = document.getElementById("loader");
+    const qualityContainer = document.getElementById("quality-container");
+    const qualityBtn = document.getElementById("quality-btn");
+    const backBtn = document.getElementById("back-btn"); // Botón Volver
+    const notification = document.getElementById("notification"); // Notificación
+    const movieTitleNotification = document.getElementById("movie-title-notification"); // Título de la película en la notificación
+    let hls; // Declarar hls en ámbito global
     let timeout;
 
+    // Ocultar el botón "Volver" después de 4 segundos
+    setTimeout(() => {
+        backBtn.style.display = "none";
+    }, 4000); // 4000 milisegundos = 4 segundos
+
     // Obtener la URL del video desde los parámetros de la URL
-    const videoUrl = new URLSearchParams(window.location.search).get('video'); // Aquí se obtiene la URL dinámica del video
+    const videoUrl = new URLSearchParams(window.location.search).get('video');
+    const movieId = new URLSearchParams(window.location.search).get('movieId'); // Obtener movieId
+
+    // Función para obtener la URL del video según la calidad seleccionada
+    function getMovieVideoUrl(movieId, quality) {
+        return movieVideos[movieId]?.[quality] || videoUrl; // Si no existe la calidad, usar la URL por defecto
+    }
+
+    // Configurar el botón "Volver" para redirigir a detalles.html con el título de la película
+    backBtn.addEventListener("click", () => {
+        const movieTitle = movieVideos[movieId]?.title || "Película"; // Obtener el título de la película
+        window.location.href = `detalles.html?title=${encodeURIComponent(movieTitle)}`;
+    });
+
+    // Función para mostrar la notificación
+    function showNotification(title) {
+        movieTitleNotification.innerText = title; // Establecer el título de la película
+        notification.style.display = "block"; // Mostrar la notificación
+        setTimeout(() => {
+            notification.style.display = "none"; // Ocultar la notificación después de 6 segundos
+        }, 6000); // Aumentar de 3000ms (3s) a 6000ms (6s)
+    }
+
+    // Obtener el título de la película desde movieVideos
+    const movieTitle = movieVideos[movieId]?.title || "Película"; // Si no hay título, usar "Película"
 
     // Usamos Hls.js para reproducir videos m3u8
     if (Hls.isSupported()) {
-        const hls = new Hls();
+        hls = new Hls();
         hls.loadSource(videoUrl); // Cargamos la URL del video
         hls.attachMedia(video);
         hls.on(Hls.Events.MANIFEST_PARSED, function () {
             addQualityOptions();
         });
+        hls.on(Hls.Events.ERROR, function (event, data) {
+            console.error("Error en HLS:", data);
+            if (data.fatal) {
+                switch (data.type) {
+                    case Hls.ErrorTypes.NETWORK_ERROR:
+                        console.error("Error de red, intentando recuperar...");
+                        hls.startLoad();
+                        break;
+                    case Hls.ErrorTypes.MEDIA_ERROR:
+                        console.error("Error de media, intentando recuperar...");
+                        hls.recoverMediaError();
+                        break;
+                    default:
+                        console.error("Error fatal, no se puede recuperar.");
+                        hls.destroy();
+                        break;
+                }
+            }
+        });
     } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
         video.src = videoUrl;
     }
+
+    // Mostrar el loader mientras el video se está cargando
+    video.addEventListener("waiting", () => {
+        loader.style.display = "block";
+    });
+
+    // Ocultar el loader cuando el video esté listo para reproducirse
+    video.addEventListener("canplay", () => {
+        loader.style.display = "none";
+    });
 
     document.getElementById("thumbnail").addEventListener("click", () => {
         document.getElementById("thumbnail").style.display = "none";
         video.style.display = "block";
         video.play();
         document.getElementById("play-btn").innerHTML = '<i class="fas fa-pause"></i>';
+        showNotification(movieTitle); // Mostrar notificación con el título de la película
     });
 
     document.getElementById("play-btn").addEventListener("click", () => {
         if (video.paused) {
             video.play();
             document.getElementById("play-btn").innerHTML = '<i class="fas fa-pause"></i>';
+            showNotification(movieTitle); // Mostrar notificación con el título de la película
         } else {
             video.pause();
             document.getElementById("play-btn").innerHTML = '<i class="fas fa-play"></i>';
@@ -225,6 +180,61 @@
     controls.addEventListener("mousemove", showControls);
 
     showControls();
+
+    // Función para agregar opciones de calidad
+    function addQualityOptions() {
+        qualityContainer.innerHTML = '';
+        const qualities = Object.keys(movieVideos[movieId] || {"720p": "default"});
+
+        qualities.forEach(quality => {
+            if (quality !== "title") { // Excluir el campo "title"
+                const option = document.createElement("div");
+                option.className = "quality-option";
+                option.innerText = `Calidad: ${quality}`;
+                option.addEventListener("click", () => {
+                    const newUrl = getMovieVideoUrl(movieId, quality);
+                    
+                    if (Hls.isSupported()) {
+                        hls.destroy(); // Destruir instancia anterior
+                        hls = new Hls();
+                        hls.loadSource(newUrl);
+                        hls.attachMedia(video);
+                        video.play();
+                    } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+                        video.src = newUrl;
+                        video.play();
+                    }
+                    qualityContainer.style.display = "none";
+                });
+                qualityContainer.appendChild(option);
+            }
+        });
+    }
+
+    qualityBtn.addEventListener("click", () => {
+        qualityContainer.style.display = qualityContainer.style.display === "block" ? "none" : "block";
+    });
+
+    // Detectar cambio de orientación y evitar recarga
+    let isOrientationChanging = false;
+
+    window.addEventListener("orientationchange", () => {
+        isOrientationChanging = true;
+        // Guardar el estado actual del reproductor
+        const currentTime = video.currentTime;
+        const isPaused = video.paused;
+
+        // Restaurar el estado después de la recarga
+        window.addEventListener("load", () => {
+            if (isOrientationChanging) {
+                video.currentTime = currentTime;
+                if (!isPaused) {
+                    video.play();
+                }
+                isOrientationChanging = false;
+            }
+        });
+    });
 </script>
 
 </body>

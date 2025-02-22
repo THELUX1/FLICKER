@@ -4,6 +4,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Arial', sans-serif;
+    -webkit-tap-highlight-color: transparent; /* Eliminar el resaltado al tocar en móviles */
 }
 
 body {
@@ -52,7 +53,7 @@ body {
     margin: 0 auto;
 }
 
-.back-button .btn2{
+.back-button .btn2 {
     background: rgba(0, 0, 0, 0.7);
     border: 1px solid rgba(255, 255, 255, 0.3);
     color: white;
@@ -61,6 +62,7 @@ body {
     cursor: pointer;
     margin-bottom: 5px;
     transition: all 0.3s ease;
+    
 }
 
 .movie-poster {
@@ -263,19 +265,52 @@ body {
     }
 }
 
-/* Eliminar el contorno azul al hacer clic */
-button, a, input, div {
-    outline: none;
-    -webkit-tap-highlight-color: transparent;
+/* Eliminar el efecto azul al hacer clic en los controles del reproductor */
+#customControls button,
+#customControls input,
+#customControls div,
+#back-btn {
+    -webkit-tap-highlight-color: transparent; /* Eliminar el resaltado azul en móviles */
+    outline: none; /* Eliminar el contorno en el foco */
+    box-shadow: none; /* Eliminar sombras no deseadas */
+    user-select: none; /* Evitar la selección de texto */
+    -webkit-user-select: none; /* Compatibilidad con navegadores WebKit */
+    -moz-user-select: none; /* Compatibilidad con Firefox */
+    -ms-user-select: none; /* Compatibilidad con Internet Explorer/Edge */
 }
 
-/* También para elementos con focus */
-button:focus, a:focus, input:focus, div:focus {
+/* Eliminar el efecto azul en los botones de los controles */
+#play-btn,
+#fullscreen-btn,
+#fit-screen-btn,
+#quality-btn {
+    -webkit-tap-highlight-color: transparent;
     outline: none;
     box-shadow: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
-/* Si hay botones con hover, asegurarse de que no cambie el color */
-button:hover, a:hover {
-    background-color: inherit;
+/* Eliminar el efecto azul en el input de la línea de tiempo */
+#timeline {
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+    box-shadow: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/* Eliminar el efecto azul en el botón "Volver" */
+#back-btn {
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+    box-shadow: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }

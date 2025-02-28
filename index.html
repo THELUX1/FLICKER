@@ -5,28 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CineStream</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="moviesData.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <header class="header">
-    <div class="logo-container">
-        <div class="logo-glass">
-            <h1 class="logo">Flicker</h1>
-        </div>
+    <!-- Contenedor de búsqueda fuera del header -->
+    <div class="search-overlay">
+    <!-- Ícono de búsqueda -->
+    <button class="search-icon-button">
+        <i class="fas fa-search"></i>
+    </button>
+
+    <!-- Barra de búsqueda (oculta inicialmente) -->
+    <div class="search-wrapper" style="display: none;">
+        <input type="text" class="search-input" placeholder="Buscar películas y series...">
+        <button class="search-button close-search">
+            <i class="fas fa-times"></i> <!-- Icono de "X" -->
+        </button>
     </div>
 
-    <!-- Sistema de Búsqueda -->
-    <div class="search-container">
-        <div class="search-wrapper">
-            <input type="text" class="search-input" placeholder="Buscar películas y series...">
-            <button class="search-button">
-                <i class="fas fa-search search-icon"></i>
-                <i class="fas fa-times close-icon"></i>
-            </button>
+    <!-- Resultados de búsqueda -->
+    <div class="search-results"></div>
+</div>
+
+    <header class="header">
+        <div class="logo-container">
+            <div class="logo-glass">
+                <h1 class="logo">Flicker</h1>
+            </div>
         </div>
-        <div class="search-results"></div>
-    </div>
-</header>
+    </header>
 
     <section class="hero">
         <div class="hero-content">
@@ -55,23 +63,6 @@
             <i class="fas fa-heart"></i>
             <span>Me gusta</span>
         </a>
-        <a href="#" class="nav-icon">
-            <i class="fas fa-cog"></i>
-            <span>Configuración</span>
-        </a>
     </nav>
-
-    <!-- Modal de confirmación personalizado -->
-    <div id="confirm-modal" class="modal">
-        <div class="modal-content">
-            <p id="confirm-message">¿Estás seguro de que quieres eliminar esta película de la lista de Me gusta?</p>
-            <div class="modal-buttons">
-                <button id="confirm-yes" class="modal-button confirm">Sí, eliminar</button>
-                <button id="confirm-no" class="modal-button cancel">Cancelar</button>
-            </div>
-        </div>
-    </div>
-
-    <script src="moviesData.js"></script>
 </body>
 </html>

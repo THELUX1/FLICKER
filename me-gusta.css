@@ -10,7 +10,7 @@
 }
 
 body {
-    background-color: #121212;
+    background-color: black;
     color: white;
     min-height: 200vh;
     overflow-x: hidden;
@@ -23,7 +23,7 @@ body {
     width: 100%;
     padding: 1rem 5%;
     z-index: 1000;
-    background: transparent;
+    background: #0300335e;
     backdrop-filter: blur(10px);
     display: flex;
     justify-content: space-between;
@@ -39,7 +39,7 @@ body {
 }
 
 .logo {
-    color: #E50914;
+    color: #00abff;
     font-size: 2rem;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
 }

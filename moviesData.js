@@ -22,6 +22,35 @@ async function loadTrailers() {
     }
 }
 
+// Función para obtener series de TMDb
+async function fetchTVShows(endpoint) {
+    try {
+        const response = await fetch(`https://api.themoviedb.org/3/${endpoint}?api_key=${apiKey}&language=es-MX&page=1`);
+        if (!response.ok) throw new Error('Error al obtener datos de la API');
+        const data = await response.json();
+
+        const trailers = await loadTrailers();
+
+        const tvShows = await Promise.all(data.results.map(async (show) => {
+            const trailer = trailers[show.id] || await fetchTVShowTrailer(show.id);
+            return {
+                title: show.name, // ¡Usar .name en lugar de .title!
+                image: `https://image.tmdb.org/t/p/w500${show.poster_path}`,
+                link: `detalles.html?title=${encodeURIComponent(show.name)}`,
+                year: show.first_air_date?.split('-')[0] || 'N/A',
+                rating: show.vote_average ? `${show.vote_average}/10` : 'N/A',
+                genre: show.genres && show.genres.length > 0 ? 'TV: ' + show.genres[0].name : 'TV: Serie', // 👈 Verificación de genres
+                synopsis: show.overview || "Sin sinopsis disponible.",
+                trailer: trailer
+            };
+        }));
+
+        return tvShows;
+    } catch (error) {
+        console.error('Error fetching TV shows:', error);
+        return [];
+    }
+}
 // Función genérica para obtener películas de TMDb
 async function fetchMovies(endpoint) {
     try {
@@ -57,6 +86,23 @@ async function fetchMovies(endpoint) {
     }
 }
 
+// Función para obtener tráiler de series desde la API
+async function fetchTVShowTrailer(tvShowId) {
+    const languages = ['es-MX', 'es-ES', 'en-US'];
+    try {
+        for (const lang of languages) {
+            const response = await fetch(`https://api.themoviedb.org/3/tv/${tvShowId}/videos?api_key=${apiKey}&language=${lang}`);
+            if (!response.ok) throw new Error(`Error al obtener tráiler en ${lang}`);
+            const data = await response.json();
+            const trailer = data.results.find(video => video.type === 'Trailer');
+            if (trailer) return `https://www.youtube.com/embed/${trailer.key}`;
+        }
+        return '';
+    } catch (error) {
+        console.error('Error fetching TV show trailer:', error);
+        return '';
+    }
+}
 // Función para obtener tráiler desde la API de TMDb
 async function fetchMovieTrailer(movieId) {
     const languages = ['es-MX', 'es-ES', 'en-US'];
@@ -78,19 +124,22 @@ async function fetchMovieTrailer(movieId) {
 // Datos iniciales (se actualizarán con TMDb)
 let moviesData = {
     "Tendencias": [],
-    "Mejor calificadas": [], // Nueva categoría
-    "Próximos estrenos": [], // Nueva categoría
-    "En cartelera": [] // Nueva categoría
+    "Mejor calificadas": [],
+    "Series mejor clasificadas": [], // Nueva categoría
+    "Próximos estrenos": [],
+    "En cartelera": []
 };
 
 // Cargar películas y actualizar interfaz
 async function loadMovies() {
     moviesData["Tendencias"] = await fetchMovies('movie/popular');
-    moviesData["Mejor calificadas"] = await fetchMovies('movie/top_rated'); // Cargar películas mejor calificadas
-    moviesData["Próximos estrenos"] = await fetchMovies('movie/upcoming'); // Cargar próximos estrenos
-    moviesData["En cartelera"] = await fetchMovies('movie/now_playing'); // Cargar películas en cartelera
+    moviesData["Mejor calificadas"] = await fetchMovies('movie/top_rated');
+    moviesData["Series mejor clasificadas"] = await fetchTVShows('tv/top_rated'); // Nueva función para obtener series
+    moviesData["Próximos estrenos"] = await fetchMovies('movie/upcoming');
+    moviesData["En cartelera"] = await fetchMovies('movie/now_playing');
     updateContent(); // Actualizar la interfaz
 }
+
 
 // Llamar a loadMovies() al cargar la página
 loadMovies();
@@ -194,9 +243,9 @@ function generarContenido(container) {
     const data = {
         "Tendencias": moviesData["Tendencias"],
         "Mejor calificadas": moviesData["Mejor calificadas"],
+        "Series mejor clasificadas": moviesData["Series mejor clasificadas"], // 👈 Incluir la nueva categoría
         "Próximos estrenos": moviesData["Próximos estrenos"],
         "En cartelera": moviesData["En cartelera"]
-        // No incluir "Me gusta" aquí
     };
 
     container.innerHTML = Object.entries(data).map(([category, movies]) => {
@@ -247,47 +296,41 @@ function updateContent() {
     if (content) generarContenido(content);
 }
 
-// Configuración del menú
-function setupMenu() {
-    const menuBtn = document.querySelector('.menu-hamburguesa');
-    const navMenu = document.querySelector('.nav-menu');
-    const closeBtn = document.querySelector('.close-menu');
-
-    if (menuBtn && navMenu && closeBtn) {
-        menuBtn.addEventListener('click', () => {
-            navMenu.classList.add('active'); // Mostrar el menú
-        });
-
-        closeBtn.addEventListener('click', () => {
-            navMenu.classList.remove('active'); // Ocultar el menú
-        });
-    } else {
-        console.error('Elementos del menú no encontrados.');
-    }
-}
-
 // Configuración de búsqueda
 function setupSearch() {
-    const searchContainer = document.querySelector('.search-container');
-    const searchInput = document.querySelector('.search-input');
-    const searchButton = document.querySelector('.search-button');
-    const searchResults = document.querySelector('.search-results');
+    const searchIconButton = document.querySelector('.search-icon-button'); // Ícono de búsqueda
+    const searchWrapper = document.querySelector('.search-wrapper'); // Contenedor de la barra de búsqueda
+    const searchInput = document.querySelector('.search-input'); // Campo de entrada de búsqueda
+    const searchButton = document.querySelector('.search-button.close-search'); // Botón para cerrar la búsqueda
+    const searchResults = document.querySelector('.search-results'); // Contenedor de resultados
     let searchTimeout;
 
+    // Mostrar la barra de búsqueda al hacer clic en el ícono de búsqueda
+    searchIconButton?.addEventListener('click', (e) => {
+        e.preventDefault();
+        searchWrapper.style.display = 'flex';
+        searchInput.focus();
+    });
+
+    // Ocultar la barra de búsqueda al hacer clic en el botón de cerrar (X)
     searchButton?.addEventListener('click', (e) => {
         e.preventDefault();
-        searchContainer.classList.toggle('active');
-        if (searchContainer.classList.contains('active')) {
-            searchInput.focus();
-        } else {
-            clearSearch();
+        hideSearch();
+    });
+
+    // Ocultar la barra de búsqueda al hacer clic fuera de ella (solo si no hay resultados o no se ha buscado nada)
+    document.addEventListener('click', (e) => {
+        const isClickInsideSearch = searchWrapper.contains(e.target) || searchIconButton.contains(e.target);
+        if (!isClickInsideSearch && searchInput.value.trim() === '' && searchResults.innerHTML === '') {
+            hideSearch();
         }
     });
 
+    // Lógica de búsqueda al escribir en el campo de búsqueda
     searchInput?.addEventListener('input', (e) => {
         clearTimeout(searchTimeout);
         const query = e.target.value.trim().toLowerCase();
-        
+
         if (query.length === 0) {
             clearSearch();
             return;
@@ -299,6 +342,20 @@ function setupSearch() {
         }, 300);
     });
 
+    // Función para ocultar la barra de búsqueda
+    function hideSearch() {
+        searchWrapper.style.display = 'none';
+        clearSearch();
+    }
+
+    // Función para limpiar la búsqueda
+    function clearSearch() {
+        searchInput.value = '';
+        searchResults.innerHTML = '';
+        searchResults.style.display = 'none';
+    }
+
+    // Función para buscar películas
     function searchMovies(query) {
         const allMovies = Object.values(moviesData).flat();
         return allMovies.filter(movie => {
@@ -309,9 +366,10 @@ function setupSearch() {
         });
     }
 
+    // Función para mostrar los resultados de búsqueda
     function displayResults(results) {
         searchResults.innerHTML = '';
-        
+
         if (results.length === 0) {
             searchResults.innerHTML = '<div class="no-results">No se encontraron resultados</div>';
             searchResults.style.display = 'block';
@@ -337,6 +395,8 @@ function setupSearch() {
         searchResults.style.display = 'block';
     }
 
+
+    // Función para limpiar la búsqueda
     function clearSearch() {
         searchInput.value = '';
         searchResults.innerHTML = '';
@@ -347,9 +407,8 @@ function setupSearch() {
 // Inicialización
 document.addEventListener('DOMContentLoaded', () => {
     updateContent();
-    setupMenu();
-    setupSearch();
-    
+    setupSearch(); // Configura la búsqueda
+
     // Marcar película destacada como "Me gusta"
     document.getElementById('mark-liked')?.addEventListener('click', () => {
         const featuredMovie = {

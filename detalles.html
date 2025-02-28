@@ -30,24 +30,49 @@
                     </div>
                     <p id="movie-synopsis"></p>
                     <div class="movie-actions">
-                        <a id="playButton">
-                            <button class="play-button">
-                                <svg class="play-icon" viewBox="0 0 24 24">
-                                    <path d="M8 5v14l11-7z" />
-                                </svg>
-                                Reproducir
-                            </button>
-                        </a>
-                        <button class="add-list-button" id="mark-watched-detail">
-                            <svg class="add-icon" viewBox="0 0 24 24">
-                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-                            </svg>
-                            <span id="like-text">Me gusta</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
+    <a id="playButton">
+        <button class="play-button">
+            <svg class="play-icon" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z" />
+            </svg>
+            Reproducir
+        </button>
+    </a>
+    <button class="add-list-button" id="mark-watched-detail">
+        <svg class="add-icon" viewBox="0 0 24 24">
+            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+        </svg>
+        <span id="like-text">Me gusta</span>
+    </button>
+</div>
+
+<!-- Sección de temporadas y episodios -->
+<div class="seasons-container">
+    <h2>Temporadas</h2>
+    <select id="season-select" class="season-select">
+        <option value="1">Temporada 1</option>
+        <option value="2">Temporada 2</option>
+        <!-- Agrega más opciones según sea necesario -->
+    </select>
+</div>
+
+<div class="episodes-container" id="episodes-container">
+    <div class="episode">
+        <img src="https://via.placeholder.com/150" alt="Episodio 1" class="episode-thumbnail">
+        <div class="episode-info">
+            <span class="episode-number">Episodio 1</span>
+            <p class="episode-synopsis">Sinopsis del episodio 1. Este es un resumen breve del contenido del episodio.</p>
         </div>
+    </div>
+    <div class="episode">
+        <img src="https://via.placeholder.com/150" alt="Episodio 2" class="episode-thumbnail">
+        <div class="episode-info">
+            <span class="episode-number">Episodio 2</span>
+            <p class="episode-synopsis">Sinopsis del episodio 2. Este es un resumen breve del contenido del episodio.</p>
+        </div>
+    </div>
+    <!-- Agrega más episodios según sea necesario -->
+</div>
     </section>
     <script>
         const apiKey = '995449ccaf6d840acc029f95c7d210dd'; // Asegúrate de que esta API Key sea válida

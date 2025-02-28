@@ -54,8 +54,8 @@ body {
 }
 
 .back-button .btn2 {
-    background: rgba(0, 0, 0, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: #00d5ff4a;
+    border: 1px solid #00d5ff;
     color: white;
     padding: 12px 25px;
     border-radius: 25px;
@@ -115,7 +115,7 @@ body {
 }
 
 .play-button {
-    background: linear-gradient(135deg, #E50914 0%, #B00710 100%);
+    background: linear-gradient(135deg, #00d5ff7a 0%, #00d5ff7a 100%);
     color: white;
     position: relative;
     padding: 14px 32px;
@@ -216,8 +216,8 @@ body {
     border-radius: 12px;
     overflow: hidden;
     aspect-ratio: 16/9;
-    box-shadow: 0 0 30px rgba(229, 9, 20, 0.4);
-    border: 2px solid #E50914;
+    box-shadow: 0 0 30px #0096ff;
+    border: 2px solid #00eaff;
     background: #000;
     margin-top: 40px;
     margin-bottom: 40px;
@@ -313,4 +313,102 @@ body {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
+}
+/* Estilos para el selector de temporadas */
+.seasons-container {
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.seasons-container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.season-select {
+    background-color: #333;
+    color: white;
+    padding: 10px 15px;
+    border: 1px solid #555;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.season-select:hover {
+    background-color: #444;
+    border-color: #666;
+}
+
+/* Estilos para el selector de temporadas */
+.seasons-container {
+    margin-top: 20px; /* Reducir el margen superior */
+    margin-bottom: 20px;
+}
+
+.seasons-container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.season-select {
+    background-color: #333;
+    color: white;
+    padding: 10px 15px;
+    border: 1px solid #555;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.season-select:hover {
+    background-color: #444;
+    border-color: #666;
+}
+
+/* Estilos para la lista de episodios */
+.episodes-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Reducir el espacio entre episodios */
+    margin-top: 15px; /* Reducir el margen superior */
+}
+
+.episode {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Reducir el espacio entre la miniatura y la información */
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 12px; /* Reducir el padding */
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.episode:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.episode-thumbnail {
+    width: 80px; /* Reducir el tamaño de la miniatura */
+    height: auto;
+    border-radius: 6px;
+}
+
+.episode-info {
+    flex: 1;
+}
+
+.episode-number {
+    font-size: 1.1rem; /* Reducir el tamaño de la fuente */
+    font-weight: 600;
+    color: #00d5ff;
+}
+
+.episode-synopsis {
+    color: #aaa;
+    line-height: 1.4;
+    margin-top: 5px;
+    font-size: 0.9rem; /* Reducir el tamaño de la fuente */
 }

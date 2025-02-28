@@ -36,7 +36,7 @@ async function fetchTVShows(endpoint) {
             return {
                 title: show.name, // ¡Usar .name en lugar de .title!
                 image: `https://image.tmdb.org/t/p/w500${show.poster_path}`,
-                link: `detalles.html?title=${encodeURIComponent(show.name)}`,
+                link: `detallesseries.html?title=${encodeURIComponent(show.name)}`,
                 year: show.first_air_date?.split('-')[0] || 'N/A',
                 rating: show.vote_average ? `${show.vote_average}/10` : 'N/A',
                 genre: show.genres && show.genres.length > 0 ? 'TV: ' + show.genres[0].name : 'TV: Serie', // 👈 Verificación de genres

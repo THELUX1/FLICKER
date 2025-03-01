@@ -167,7 +167,7 @@
                     document.getElementById("movie-year").innerText = movie.year;
                     document.getElementById("movie-duration").innerText = movie.duration;
                     if (movie.trailer) {
-                        document.getElementById("movie-trailer").src = `${movie.trailer}?autoplay=1&mute=1`;
+                        document.getElementById("movie-trailer").src = `${movie.trailer}?autoplay=1`;
                     } else {
                         document.getElementById("movie-trailer").style.display = "none";
                     }

@@ -54,8 +54,8 @@ body {
 }
 
 .back-button .btn2 {
-    background: #00d5ff4a;
-    border: 1px solid #00d5ff;
+    background: #ffffff50;
+    border: 1px solid #ffffff;
     color: white;
     padding: 12px 25px;
     border-radius: 25px;
@@ -115,7 +115,7 @@ body {
 }
 
 .play-button {
-    background: linear-gradient(135deg, #00d5ff7a 0%, #00d5ff7a 100%);
+    background: linear-gradient(135deg, #d80009 0%, #ff0a00 100%);
     color: white;
     position: relative;
     padding: 14px 32px;
@@ -131,7 +131,7 @@ body {
 }
 
 .add-list-button {
-    background: linear-gradient(135deg, #E50914 0%, #B00710 100%);
+    background: linear-gradient(135deg, #d80009 0%, #ff0a00 100%);
     color: white;
     position: relative;
     padding: 10px 32px;
@@ -216,8 +216,7 @@ body {
     border-radius: 12px;
     overflow: hidden;
     aspect-ratio: 16/9;
-    box-shadow: 0 0 30px #0096ff;
-    border: 2px solid #00eaff;
+    border: 1px solid #ff000a;    
     background: #000;
     margin-top: 40px;
     margin-bottom: 40px;

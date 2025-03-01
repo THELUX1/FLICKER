@@ -502,6 +502,21 @@ body {
     text-align: center;
     color: rgba(255, 255, 255, 0.5);
 } 
+/* Eliminar outline y tap highlight */
+.movie-card a:focus {
+    outline: none;
+}
+
+/* Para navegadores WebKit (Chrome, Safari) */
+.movie-card a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Opcional: mantener accesibilidad con estilo alternativo */
+.movie-card a:focus-visible {
+    outline: 2px solid #ffffff90;
+    outline-offset: 2px;
+}
 
 /* Responsive */
 @media (max-width: 768px) {

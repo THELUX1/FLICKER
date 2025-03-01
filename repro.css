@@ -237,3 +237,12 @@ div:active {
     outline: none;
     box-shadow: none;
 }
+/* Agregar al CSS existente */
+video[style*="cover"] {
+    transform: scale(1.1); /* Efecto de zoom suave */
+    transition: transform 0.3s ease;
+}
+
+#fit-screen-btn.active {
+    background: rgba(255, 255, 255, 0.2);
+}

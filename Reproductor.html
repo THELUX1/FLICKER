@@ -4,24 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reproductor M3U8</title>
-    
-    <!-- Font Awesome desde CDNJS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Archivo CSS externo -->
     <link rel="stylesheet" href="repro.css">
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script> 
-    <script src="videos.js"></script> <!-- Añadir referencia a videos.js -->
+    <script src="videos.js"></script>
 </head>
 <body>
 
 <div class="video-container" id="videoContainer">
-    <!-- Botón Volver -->
     <button class="back-btn" id="back-btn">‹ Volver</button>
-
-    <!-- Notificación -->
     <div class="notification" id="notification">Estás viendo: <span id="movie-title-notification"></span></div>
 
-    <!-- Miniatura -->
     <div class="thumbnail" id="thumbnail" style="background-image: url('assets/thumbnail.jpg');">
         <i class="fas fa-play play-overlay"></i>
     </div>
@@ -37,98 +30,126 @@
         <button id="quality-btn"><i class="fas fa-cog"></i></button>
     </div>
 
-    <!-- Menú de calidad -->
     <div class="quality-container" id="quality-container"></div>
-
-    <!-- Loader -->
     <div class="loader" id="loader"></div>
 </div>
 
 <script>
-    const video = document.getElementById("video");
+const video = document.getElementById("video");
 const controls = document.getElementById("customControls");
 const loader = document.getElementById("loader");
 const qualityContainer = document.getElementById("quality-container");
 const qualityBtn = document.getElementById("quality-btn");
-const backBtn = document.getElementById("back-btn"); // Botón Volver
-const notification = document.getElementById("notification"); // Notificación
-const movieTitleNotification = document.getElementById("movie-title-notification"); // Título de la película en la notificación
-let hls; // Declarar hls en ámbito global
+const backBtn = document.getElementById("back-btn");
+const notification = document.getElementById("notification");
+const movieTitleNotification = document.getElementById("movie-title-notification");
+let hls;
 let timeout;
 
-// Función para mostrar los controles y el botón "Volver"
+// Funcionalidad de la barra de tiempo
+document.getElementById("timeline").addEventListener("input", function(e) {
+    const seekTime = (e.target.value / 100) * video.duration;
+    video.currentTime = seekTime;
+});
+
+// Doble toque/clic para saltar 15 segundos
+let lastTap = 0;
+video.addEventListener("touchend", function(e) {
+    const currentTime = new Date().getTime();
+    const tapLength = currentTime - lastTap;
+    if (tapLength < 300 && tapLength > 0) {
+        const tapPosition = e.changedTouches[0].clientX;
+        const screenWidth = window.innerWidth;
+        
+        if (tapPosition < screenWidth / 2) {
+            video.currentTime = Math.max(0, video.currentTime - 15);
+        } else {
+            video.currentTime = Math.min(video.duration, video.currentTime + 15);
+        }
+    }
+    lastTap = currentTime;
+});
+
+let lastClick = 0;
+video.addEventListener("dblclick", function(e) {
+    const clickPosition = e.clientX;
+    const screenWidth = window.innerWidth;
+    
+    if (clickPosition < screenWidth / 2) {
+        video.currentTime = Math.max(0, video.currentTime - 15);
+    } else {
+        video.currentTime = Math.min(video.duration, video.currentTime + 15);
+    }
+});
+
+// Botón de ajuste de pantalla
+document.getElementById("fit-screen-btn").addEventListener("click", function() {
+    if (video.style.objectFit === "contain") {
+        video.style.objectFit = "cover";
+        this.innerHTML = '<i class="fas fa-compress-arrows-alt"></i>';
+    } else {
+        video.style.objectFit = "contain";
+        this.innerHTML = '<i class="fas fa-expand-arrows-alt"></i>';
+    }
+});
+
+// Resto del código original
 function showControls() {
     controls.classList.remove("hidden");
-    backBtn.style.display = "block"; // Mostrar el botón "Volver"
+    backBtn.style.display = "block";
     clearTimeout(timeout);
-    timeout = setTimeout(hideControls, 3000); // Ocultar después de 3 segundos de inactividad
+    timeout = setTimeout(hideControls, 3000);
 }
 
-// Función para ocultar los controles y el botón "Volver"
 function hideControls() {
     controls.classList.add("hidden");
-    backBtn.style.display = "none"; // Ocultar el botón "Volver"
+    backBtn.style.display = "none";
 }
 
-// Mostrar controles y botón "Volver" al interactuar con la pantalla
 video.addEventListener("mousemove", showControls);
 video.addEventListener("touchstart", showControls);
 controls.addEventListener("mousemove", showControls);
 
-// Ocultar los controles y el botón "Volver" inicialmente después de 4 segundos
-setTimeout(() => {
-    hideControls(); // Ocultar controles y botón "Volver"
-}, 4000);
+setTimeout(() => { hideControls(); }, 4000);
 
-// Obtener la URL del video desde los parámetros de la URL
 const videoUrl = new URLSearchParams(window.location.search).get('video');
-const movieId = new URLSearchParams(window.location.search).get('movieId'); // Obtener movieId
+const movieId = new URLSearchParams(window.location.search).get('movieId');
 
-// Función para obtener la URL del video según la calidad seleccionada
 function getMovieVideoUrl(movieId, quality) {
-    return movieVideos[movieId]?.[quality] || videoUrl; // Si no existe la calidad, usar la URL por defecto
+    return movieVideos[movieId]?.[quality] || videoUrl;
 }
 
-// Configurar el botón "Volver" para redirigir a detalles.html con el título de la película
 backBtn.addEventListener("click", () => {
-    const movieTitle = movieVideos[movieId]?.title || "Película"; // Obtener el título de la película
+    const movieTitle = movieVideos[movieId]?.title || "Película";
     window.location.href = `detalles.html?title=${encodeURIComponent(movieTitle)}`;
 });
 
-// Función para mostrar la notificación
 function showNotification(title) {
-    movieTitleNotification.innerText = title; // Establecer el título de la película
-    notification.style.display = "block"; // Mostrar la notificación
-    setTimeout(() => {
-        notification.style.display = "none"; // Ocultar la notificación después de 6 segundos
-    }, 6000); // Aumentar de 3000ms (3s) a 6000ms (6s)
+    movieTitleNotification.innerText = title;
+    notification.style.display = "block";
+    setTimeout(() => { notification.style.display = "none"; }, 6000);
 }
 
-// Obtener el título de la película desde movieVideos
-const movieTitle = movieVideos[movieId]?.title || "Película"; // Si no hay título, usar "Película"
+const movieTitle = movieVideos[movieId]?.title || "Película";
 
-// Usamos Hls.js para reproducir videos m3u8
 if (Hls.isSupported()) {
     hls = new Hls();
-    hls.loadSource(videoUrl); // Cargamos la URL del video
+    hls.loadSource(videoUrl);
     hls.attachMedia(video);
-    hls.on(Hls.Events.MANIFEST_PARSED, function () {
+    hls.on(Hls.Events.MANIFEST_PARSED, function() {
         addQualityOptions();
     });
-    hls.on(Hls.Events.ERROR, function (event, data) {
+    hls.on(Hls.Events.ERROR, function(event, data) {
         console.error("Error en HLS:", data);
         if (data.fatal) {
             switch (data.type) {
                 case Hls.ErrorTypes.NETWORK_ERROR:
-                    console.error("Error de red, intentando recuperar...");
                     hls.startLoad();
                     break;
                 case Hls.ErrorTypes.MEDIA_ERROR:
-                    console.error("Error de media, intentando recuperar...");
                     hls.recoverMediaError();
                     break;
                 default:
-                    console.error("Error fatal, no se puede recuperar.");
                     hls.destroy();
                     break;
             }
@@ -138,29 +159,22 @@ if (Hls.isSupported()) {
     video.src = videoUrl;
 }
 
-// Mostrar el loader mientras el video se está cargando
-video.addEventListener("waiting", () => {
-    loader.style.display = "block";
-});
-
-// Ocultar el loader cuando el video esté listo para reproducirse
-video.addEventListener("canplay", () => {
-    loader.style.display = "none";
-});
+video.addEventListener("waiting", () => { loader.style.display = "block"; });
+video.addEventListener("canplay", () => { loader.style.display = "none"; });
 
 document.getElementById("thumbnail").addEventListener("click", () => {
     document.getElementById("thumbnail").style.display = "none";
     video.style.display = "block";
     video.play();
     document.getElementById("play-btn").innerHTML = '<i class="fas fa-pause"></i>';
-    showNotification(movieTitle); // Mostrar notificación con el título de la película
+    showNotification(movieTitle);
 });
 
 document.getElementById("play-btn").addEventListener("click", () => {
     if (video.paused) {
         video.play();
         document.getElementById("play-btn").innerHTML = '<i class="fas fa-pause"></i>';
-        showNotification(movieTitle); // Mostrar notificación con el título de la película
+        showNotification(movieTitle);
     } else {
         video.pause();
         document.getElementById("play-btn").innerHTML = '<i class="fas fa-play"></i>';
@@ -171,7 +185,8 @@ video.addEventListener("timeupdate", () => {
     document.getElementById("timeline").value = (video.currentTime / video.duration) * 100;
     let minutes = Math.floor(video.currentTime / 60);
     let seconds = Math.floor(video.currentTime % 60);
-    document.getElementById("time-display").innerText = `${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+    document.getElementById("time-display").innerText = 
+        `${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
 });
 
 document.getElementById("fullscreen-btn").addEventListener("click", () => {
@@ -182,21 +197,19 @@ document.getElementById("fullscreen-btn").addEventListener("click", () => {
     }
 });
 
-// Función para agregar opciones de calidad
 function addQualityOptions() {
     qualityContainer.innerHTML = '';
     const qualities = Object.keys(movieVideos[movieId] || {"720p": "default"});
 
     qualities.forEach(quality => {
-        if (quality !== "title") { // Excluir el campo "title"
+        if (quality !== "title") {
             const option = document.createElement("div");
             option.className = "quality-option";
             option.innerText = `Calidad: ${quality}`;
             option.addEventListener("click", () => {
                 const newUrl = getMovieVideoUrl(movieId, quality);
-                
                 if (Hls.isSupported()) {
-                    hls.destroy(); // Destruir instancia anterior
+                    hls.destroy();
                     hls = new Hls();
                     hls.loadSource(newUrl);
                     hls.attachMedia(video);
@@ -216,22 +229,15 @@ qualityBtn.addEventListener("click", () => {
     qualityContainer.style.display = qualityContainer.style.display === "block" ? "none" : "block";
 });
 
-// Detectar cambio de orientación y evitar recarga
 let isOrientationChanging = false;
-
 window.addEventListener("orientationchange", () => {
     isOrientationChanging = true;
-    // Guardar el estado actual del reproductor
     const currentTime = video.currentTime;
     const isPaused = video.paused;
-
-    // Restaurar el estado después de la recarga
     window.addEventListener("load", () => {
         if (isOrientationChanging) {
             video.currentTime = currentTime;
-            if (!isPaused) {
-                video.play();
-            }
+            if (!isPaused) video.play();
             isOrientationChanging = false;
         }
     });

@@ -1,20 +1,23 @@
-const apiKey = '995449ccaf6d840acc029f95c7d210dd'; // Tu API Key de TMDb
+const apiKey = '995449ccaf6d840acc029f95c7d210dd';
+let trailersCache = null;
 
-// Función para cargar el archivo trailers.json y aplanar las categorías
+// 1. Cache para trailers.json
 async function loadTrailers() {
+    if (trailersCache) return trailersCache;
+    
     try {
         const response = await fetch('trailers.json');
-        if (!response.ok) throw new Error('Error al cargar el archivo trailers.json');
+        if (!response.ok) throw new Error('Error al cargar trailers.json');
         const data = await response.json();
 
-        // Aplanar categorías: crear un objeto { id: trailerURL }
         const flattenedTrailers = {};
-        for (const category of Object.values(data)) {
-            for (const movie of category) {
+        Object.values(data).forEach(category => {
+            category.forEach(movie => {
                 flattenedTrailers[movie.id] = movie.trailer;
-            }
-        }
+            });
+        });
 
+        trailersCache = flattenedTrailers;
         return flattenedTrailers;
     } catch (error) {
         console.error('Error loading trailers:', error);
@@ -22,140 +25,109 @@ async function loadTrailers() {
     }
 }
 
-// Función para obtener series de TMDb
-async function fetchTVShows(endpoint) {
+// 2. Función unificada para obtener contenido
+async function fetchContent(type, endpoint) {
     try {
-        const response = await fetch(`https://api.themoviedb.org/3/${endpoint}?api_key=${apiKey}&language=es-MX&page=1`);
-        if (!response.ok) throw new Error('Error al obtener datos de la API');
+        const isTV = type === 'tv';
+        const [response, trailers] = await Promise.all([
+            fetch(`https://api.themoviedb.org/3/${endpoint}?api_key=${apiKey}&language=es-MX&page=1`),
+            loadTrailers()
+        ]);
+
+        if (!response.ok) throw new Error('Error en la API');
         const data = await response.json();
 
-        const trailers = await loadTrailers();
+        return await Promise.all(data.results.map(async (item) => {
+            const trailerKey = item.id in trailers ? 
+                trailers[item.id] : 
+                await fetchTrailer(item.id, isTV ? 'tv' : 'movie');
 
-        const tvShows = await Promise.all(data.results.map(async (show) => {
-            const trailer = trailers[show.id] || await fetchTVShowTrailer(show.id);
             return {
-                title: show.name, // ¡Usar .name en lugar de .title!
-                image: `https://image.tmdb.org/t/p/w500${show.poster_path}`,
-                link: `detallesseries.html?title=${encodeURIComponent(show.name)}`,
-                year: show.first_air_date?.split('-')[0] || 'N/A',
-                rating: show.vote_average ? `${show.vote_average}/10` : 'N/A',
-                genre: show.genres && show.genres.length > 0 ? 'TV: ' + show.genres[0].name : 'TV: Serie', // 👈 Verificación de genres
-                synopsis: show.overview || "Sin sinopsis disponible.",
-                trailer: trailer
+                title: isTV ? item.name : item.title,
+                image: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
+                link: `detalles.html?title=${encodeURIComponent(isTV ? item.name : item.title)}`,
+                year: (isTV ? item.first_air_date : item.release_date)?.split('-')[0] || 'N/A',
+                rating: item.vote_average ? `${item.vote_average}/10` : 'N/A',
+                genre: isTV ? 
+                    (item.genres?.[0]?.name || 'TV: Serie') : 
+                    'Acción', // Mantenido temporal
+                synopsis: item.overview || "Sin sinopsis disponible.",
+                trailer: trailerKey,
+                ...(!isTV && {
+                    duration: item.runtime ? 
+                        `${Math.floor(item.runtime / 60)}h ${item.runtime % 60}m` : 'N/A',
+                    cast: 'Reparto no disponible'
+                })
             };
         }));
-
-        return tvShows;
     } catch (error) {
-        console.error('Error fetching TV shows:', error);
-        return [];
-    }
-}
-// Función genérica para obtener películas de TMDb
-async function fetchMovies(endpoint) {
-    try {
-        const response = await fetch(`https://api.themoviedb.org/3/${endpoint}?api_key=${apiKey}&language=es-MX&page=1`);
-        if (!response.ok) throw new Error('Error al obtener datos de la API');
-        const data = await response.json();
-
-        // Cargar los tráilers desde el archivo JSON
-        const trailers = await loadTrailers();
-
-        // Usar Promise.all para manejar las promesas dentro del map
-        const movies = await Promise.all(data.results.map(async (movie) => {
-            const trailer = trailers[movie.id] || await fetchMovieTrailer(movie.id); // Obtener el tráiler desde el archivo o la API
-            return {
-                title: movie.title,
-                image: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
-                link: `detalles.html?title=${encodeURIComponent(movie.title)}`,
-                year: movie.release_date?.split('-')[0] || 'N/A',
-                rating: movie.vote_average ? `${movie.vote_average}/10` : 'N/A',
-                duration: movie.runtime ? `${Math.floor(movie.runtime / 60)}h ${movie.runtime % 60}m` : 'N/A',
-                genre: 'Acción', // Temporal - Se puede mejorar
-                cast: 'Reparto no disponible', // Temporal
-                synopsis: movie.overview || "Sin sinopsis disponible.",
-                trailer: trailer, // Asignar el tráiler obtenido
-                videoUrl: 'N/A' // Mantenemos tu estructura actual
-            };
-        }));
-
-        return movies; // Retornar las películas con los tráilers
-    } catch (error) {
-        console.error('Error fetching movies:', error);
+        console.error(`Error fetching ${type}:`, error);
         return [];
     }
 }
 
-// Función para obtener tráiler de series desde la API
-async function fetchTVShowTrailer(tvShowId) {
+// 3. Función unificada para trailers
+async function fetchTrailer(id, mediaType) {
     const languages = ['es-MX', 'es-ES', 'en-US'];
-    try {
-        for (const lang of languages) {
-            const response = await fetch(`https://api.themoviedb.org/3/tv/${tvShowId}/videos?api_key=${apiKey}&language=${lang}`);
-            if (!response.ok) throw new Error(`Error al obtener tráiler en ${lang}`);
+    
+    for (const lang of languages) {
+        try {
+            const response = await fetch(
+                `https://api.themoviedb.org/3/${mediaType}/${id}/videos?api_key=${apiKey}&language=${lang}`
+            );
             const data = await response.json();
-            const trailer = data.results.find(video => video.type === 'Trailer');
+            const trailer = data.results.find(v => v.type === 'Trailer');
             if (trailer) return `https://www.youtube.com/embed/${trailer.key}`;
+        } catch (error) {
+            console.error(`Error en ${lang}:`, error);
         }
-        return '';
-    } catch (error) {
-        console.error('Error fetching TV show trailer:', error);
-        return '';
     }
-}
-// Función para obtener tráiler desde la API de TMDb
-async function fetchMovieTrailer(movieId) {
-    const languages = ['es-MX', 'es-ES', 'en-US'];
-    try {
-        for (const lang of languages) {
-            const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${apiKey}&language=${lang}`);
-            if (!response.ok) throw new Error(`Error al obtener tráiler en ${lang}`);
-            const data = await response.json();
-            const trailer = data.results.find(video => video.type === 'Trailer');
-            if (trailer) return `https://www.youtube.com/embed/${trailer.key}`;
-        }
-        return '';
-    } catch (error) {
-        console.error('Error fetching trailer:', error);
-        return '';
-    }
+    return '';
 }
 
-// Datos iniciales (se actualizarán con TMDb)
+// 4. Carga paralela optimizada
 let moviesData = {
     "Tendencias": [],
     "Mejor calificadas": [],
-    "Series mejor clasificadas": [], // Nueva categoría
+    "Series mejor clasificadas": [],
     "Próximos estrenos": [],
     "En cartelera": []
 };
 
-// Cargar películas y actualizar interfaz
 async function loadMovies() {
-    moviesData["Tendencias"] = await fetchMovies('movie/popular');
-    moviesData["Mejor calificadas"] = await fetchMovies('movie/top_rated');
-    moviesData["Series mejor clasificadas"] = await fetchTVShows('tv/top_rated'); // Nueva función para obtener series
-    moviesData["Próximos estrenos"] = await fetchMovies('movie/upcoming');
-    moviesData["En cartelera"] = await fetchMovies('movie/now_playing');
-    updateContent(); // Actualizar la interfaz
+    const endpoints = [
+        ['movie/popular', 'Tendencias'],
+        ['movie/top_rated', 'Mejor calificadas'],
+        ['tv/top_rated', 'Series mejor clasificadas'],
+        ['movie/upcoming', 'Próximos estrenos'],
+        ['movie/now_playing', 'En cartelera']
+    ];
+
+    const results = await Promise.all(
+        endpoints.map(([endpoint, key]) => 
+            endpoint.startsWith('tv/') ? 
+                fetchContent('tv', endpoint) : 
+                fetchContent('movie', endpoint)
+        )
+    );
+
+    endpoints.forEach(([_, key], index) => {
+        moviesData[key] = results[index];
+    });
+
+    updateContent();
 }
 
-
-// Llamar a loadMovies() al cargar la página
-loadMovies();
-
-// Cargar películas "Me gusta" desde localStorage
+// Funciones de UI y almacenamiento (sin cambios)
 function loadLikedMovies() {
     const storedMovies = localStorage.getItem('likedMovies');
     return storedMovies ? JSON.parse(storedMovies) : [];
 }
 
-// Guardar películas "Me gusta" en localStorage
 function saveLikedMovies(movies) {
     localStorage.setItem('likedMovies', JSON.stringify(movies));
 }
 
-// Función para mostrar toast notifications
 function showToast(message, type = 'success') {
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
@@ -165,37 +137,29 @@ function showToast(message, type = 'success') {
     `;
     document.body.appendChild(toast);
 
-    // Mostrar el toast
     setTimeout(() => toast.classList.add('show'), 100);
-
-    // Ocultar el toast después de 3 segundos
     setTimeout(() => {
         toast.classList.remove('show');
-        setTimeout(() => toast.remove(), 300); // Eliminar el toast del DOM
+        setTimeout(() => toast.remove(), 300);
     }, 3000);
 }
 
-// Función para mostrar el modal de confirmación
 function showConfirmModal(movieTitle) {
     const modal = document.getElementById('confirm-modal');
     const confirmMessage = document.getElementById('confirm-message');
     const confirmYes = document.getElementById('confirm-yes');
     const confirmNo = document.getElementById('confirm-no');
 
-    // Actualizar el mensaje del modal
-    confirmMessage.textContent = `¿Estás seguro de que quieres eliminar "${movieTitle}" de la lista de Me gusta?`;
-
-    // Mostrar el modal
+    confirmMessage.textContent = `¿Estás seguro de eliminar "${movieTitle}" de Me gusta?`;
     modal.style.display = 'flex';
 
-    // Manejar la respuesta del usuario
     confirmYes.onclick = () => {
         modal.style.display = 'none';
         const likedMovies = loadLikedMovies();
         const updatedMovies = likedMovies.filter(m => m.title !== movieTitle);
         saveLikedMovies(updatedMovies);
-        showToast(`${movieTitle} ha sido eliminada de Me gusta.`, 'success');
-        updateContent(); // Actualizar la lista de "Me gusta"
+        showToast(`${movieTitle} eliminada de Me gusta`, 'success');
+        updateContent();
     };
 
     confirmNo.onclick = () => {
@@ -203,25 +167,22 @@ function showConfirmModal(movieTitle) {
     };
 }
 
-// Marcar película como "Me gusta"
 function markAsLiked(movie) {
     const likedMovies = loadLikedMovies();
     if (!likedMovies.some(m => m.title === movie.title)) {
         likedMovies.unshift(movie);
         saveLikedMovies(likedMovies);
-        showToast(`${movie.title} ha sido añadida a Me gusta.`, 'success');
-        updateContent(); // Actualizar la lista de "Me gusta"
+        showToast(`${movie.title} añadida a Me gusta`, 'success');
+        updateContent();
     } else {
-        showToast(`${movie.title} ya está en tu lista de Me gusta.`, 'error');
+        showToast(`${movie.title} ya está en Me gusta`, 'error');
     }
 }
 
-// Eliminar película de la lista de "Me gusta"
 function removeFromLiked(movieTitle) {
     showConfirmModal(movieTitle);
 }
 
-// Crear tarjeta de película
 function createMovieCard(movie, isLiked = false) {
     return `
         <div class="movie-card">
@@ -238,15 +199,14 @@ function createMovieCard(movie, isLiked = false) {
     `;
 }
 
-// Generar contenido principal
 function generarContenido(container) {
     const data = {
         "Tendencias": moviesData["Tendencias"],
         "Mejor calificadas": moviesData["Mejor calificadas"],
-        "Series mejor clasificadas": moviesData["Series mejor clasificadas"], // 👈 Incluir la nueva categoría
+        "Series mejor clasificadas": moviesData["Series mejor clasificadas"],
         "Próximos estrenos": moviesData["Próximos estrenos"],
         "En cartelera": moviesData["En cartelera"]
-    };
+    };    
 
     container.innerHTML = Object.entries(data).map(([category, movies]) => {
         return `
@@ -260,7 +220,6 @@ function generarContenido(container) {
     }).join('');
 }
 
-// Configurar controles del carrusel
 function setupCarouselControls() {
     const carousels = document.querySelectorAll('.liked-container');
     
@@ -268,7 +227,6 @@ function setupCarouselControls() {
         const carousel = container.querySelector('.liked-carousel');
         const prevBtn = container.querySelector('.prev-btn');
         const nextBtn = container.querySelector('.next-btn');
-        
         const scrollAmount = 300;
         
         prevBtn?.addEventListener('click', () => {
@@ -279,7 +237,6 @@ function setupCarouselControls() {
             carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
         });
         
-        // Ocultar/mostrar botones según posición
         const updateButtons = () => {
             prevBtn.style.display = carousel.scrollLeft <= 0 ? 'none' : 'flex';
             nextBtn.style.display = carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth ? 'none' : 'flex';
@@ -290,35 +247,30 @@ function setupCarouselControls() {
     });
 }
 
-// Actualizar contenido
 function updateContent() {
     const content = document.getElementById('content');
     if (content) generarContenido(content);
 }
 
-// Configuración de búsqueda
 function setupSearch() {
-    const searchIconButton = document.querySelector('.search-icon-button'); // Ícono de búsqueda
-    const searchWrapper = document.querySelector('.search-wrapper'); // Contenedor de la barra de búsqueda
-    const searchInput = document.querySelector('.search-input'); // Campo de entrada de búsqueda
-    const searchButton = document.querySelector('.search-button.close-search'); // Botón para cerrar la búsqueda
-    const searchResults = document.querySelector('.search-results'); // Contenedor de resultados
+    const searchIconButton = document.querySelector('.search-icon-button');
+    const searchWrapper = document.querySelector('.search-wrapper');
+    const searchInput = document.querySelector('.search-input');
+    const searchButton = document.querySelector('.search-button.close-search');
+    const searchResults = document.querySelector('.search-results');
     let searchTimeout;
 
-    // Mostrar la barra de búsqueda al hacer clic en el ícono de búsqueda
     searchIconButton?.addEventListener('click', (e) => {
         e.preventDefault();
         searchWrapper.style.display = 'flex';
         searchInput.focus();
     });
 
-    // Ocultar la barra de búsqueda al hacer clic en el botón de cerrar (X)
     searchButton?.addEventListener('click', (e) => {
         e.preventDefault();
         hideSearch();
     });
 
-    // Ocultar la barra de búsqueda al hacer clic fuera de ella (solo si no hay resultados o no se ha buscado nada)
     document.addEventListener('click', (e) => {
         const isClickInsideSearch = searchWrapper.contains(e.target) || searchIconButton.contains(e.target);
         if (!isClickInsideSearch && searchInput.value.trim() === '' && searchResults.innerHTML === '') {
@@ -326,7 +278,6 @@ function setupSearch() {
         }
     });
 
-    // Lógica de búsqueda al escribir en el campo de búsqueda
     searchInput?.addEventListener('input', (e) => {
         clearTimeout(searchTimeout);
         const query = e.target.value.trim().toLowerCase();
@@ -342,20 +293,17 @@ function setupSearch() {
         }, 300);
     });
 
-    // Función para ocultar la barra de búsqueda
     function hideSearch() {
         searchWrapper.style.display = 'none';
         clearSearch();
     }
 
-    // Función para limpiar la búsqueda
     function clearSearch() {
         searchInput.value = '';
         searchResults.innerHTML = '';
         searchResults.style.display = 'none';
     }
 
-    // Función para buscar películas
     function searchMovies(query) {
         const allMovies = Object.values(moviesData).flat();
         return allMovies.filter(movie => {
@@ -366,7 +314,6 @@ function setupSearch() {
         });
     }
 
-    // Función para mostrar los resultados de búsqueda
     function displayResults(results) {
         searchResults.innerHTML = '';
 
@@ -394,22 +341,13 @@ function setupSearch() {
 
         searchResults.style.display = 'block';
     }
-
-
-    // Función para limpiar la búsqueda
-    function clearSearch() {
-        searchInput.value = '';
-        searchResults.innerHTML = '';
-        searchResults.style.display = 'none';
-    }
 }
 
 // Inicialización
 document.addEventListener('DOMContentLoaded', () => {
-    updateContent();
-    setupSearch(); // Configura la búsqueda
+    loadMovies();
+    setupSearch();
 
-    // Marcar película destacada como "Me gusta"
     document.getElementById('mark-liked')?.addEventListener('click', () => {
         const featuredMovie = {
             title: document.querySelector('.hero-title').textContent,

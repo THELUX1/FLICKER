@@ -22,7 +22,7 @@ body {
     justify-content: space-between; /* Logo a la izquierda, ícono a la derecha */
     align-items: center;
     padding: 1% 5%;
-    background: #0300335e;
+    background: #00000075;
     backdrop-filter: blur(10px);
     position: fixed;
     top: 0;
@@ -39,7 +39,7 @@ body {
 }
 
 .logo {
-    color: #00abff;
+    color: #d90900;
     font-size: 2rem;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
 }
@@ -87,7 +87,7 @@ body {
     position: absolute;
     top: 179%; /* Se despliega debajo del ícono de búsqueda */
     right: 55%; /* Alineado a la derecha del ícono */
-    background: #0096ff45;
+    background: #0000007d;
     border-radius: 12px;
     padding: 10px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
@@ -157,7 +157,7 @@ body {
     padding: 12px;
     border-radius: 8px;
     margin-bottom: 8px;
-    background: #00abff40;
+    background: #000000;
     transition: all 0.2s ease;
     cursor: pointer;
 }
@@ -204,11 +204,11 @@ body {
 }
 
 .image-container {
-    border: 1px solid #00eaff;
+    border: 1px solid #ff0a00;
     border-radius: 20px;
     padding: 10px;
-    background: #00abff4a;
-    box-shadow: 0 0 40px #00c0ff;
+    background: #000000;
+    box-shadow: 0 0 20px #ff000a;
     margin-bottom: 1rem;
     max-width: 300px;
 }
@@ -229,7 +229,7 @@ body {
 .hero-title {
     font-size: 2.8rem;
     margin-bottom: 0.8rem;
-    text-shadow: 2px 2px 4px #00c0ff;
+    text-shadow: 2px 2px 4px #00000081;
 }
 
 .hero-actions {
@@ -240,7 +240,7 @@ body {
 }
 
 .hero-button {
-    background: #0096ffb2;
+    background: #ff0a00;
     color: white;
     padding: 12px 30px;
     border: none;
@@ -254,7 +254,7 @@ body {
 }
 
 .hero-button.secondary {
-    background: #ff0a00b2;
+    background: #ff0a008b;
 }
 
 .hero-button:hover {
@@ -263,7 +263,7 @@ body {
 }
 
 .hero-button:hover {
-    background: #c40812;
+    background: #ff000a;
 }
 
 .hero-button.secondary:hover {
@@ -326,6 +326,7 @@ body {
 }
 
 .movie-card img {
+    min-height: 200px;
     width: 90%;
     height: 100%;
     object-fit: cover;
@@ -359,6 +360,21 @@ body {
 .movie-card:hover img {
     transform: scale(1.30);
 }
+/* Añade estos estilos */
+.lazy-image {
+    background: #2a2a2a;
+    border-radius: 8px;
+    min-height: 450px;
+    transition: opacity 0.3s ease;
+}
+
+.lazy-image[data-src] {
+    opacity: 0;
+}
+
+.lazy-image:not([data-src]) {
+    opacity: 1;
+}
 
 .movie-card:hover .movie-title {
     opacity: 1;
@@ -369,14 +385,22 @@ body {
     content: '';
     flex: 0 0 1rem;
 }
-
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+.movie-card img:not([src]) {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
 /* Barra de navegación inferior */
 .bottom-nav {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    background: #0300335e;
+    background: #0000008b;
     backdrop-filter: blur(20px);
     display: flex;
     justify-content: space-around;
@@ -419,7 +443,7 @@ body {
     top: 385%; /* Ajusta la posición vertical */
     left: -265px; /* Alineado a la izquierda del contenedor de búsqueda */
     right: 0; /* Ocupa todo el ancho disponible */
-    background: #0081ff64;
+    background: #ffffff54;
     border-radius: 12px;
     padding: 15px;
     max-height: 400px;
@@ -438,7 +462,7 @@ body {
     padding: 12px;
     border-radius: 8px;
     margin-bottom: 8px;
-    background: rgba(255, 255, 255, 0.05);
+    background: #000000;
     transition: all 0.2s ease;
     cursor: pointer;
     outline: none; /* Elimina el outline predeterminado */

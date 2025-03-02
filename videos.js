@@ -92,9 +92,9 @@ const movieVideos = {
     },
     "950396": {
         "title": "El Abismo Secreto",
-        "360p": "https://hw8qpzyv9p.guardstorage.net/hls_3/qZQONg5kws3pML7ZZa3dbDEmSrpS4gRs5fUhvp8aVc6KVEZBccZDOUQ4JmErj_zYcxFOSdUz-ZbjcYyVYBktqg/index-f2-v1-a1.m3u8?sig=Kf2ANforBAJaL8JqFrLkSw&expires=1740742121",
-        "720p": "https://hw8qpzyv9p.guardstorage.net/hls_3/qZQONg5kws3pML7ZZa3dbDEmSrpS4gRs5fUhvp8aVc6KVEZBccZDOUQ4JmErj_zYcxFOSdUz-ZbjcYyVYBktqg/index-f3-v1-a1.m3u8?sig=Kf2ANforBAJaL8JqFrLkSw&expires=1740742121",
-        "1080p": "https://hw8qpzyv9p.guardstorage.net/hls_3/qZQONg5kws3pML7ZZa3dbDEmSrpS4gRs5fUhvp8aVc6KVEZBccZDOUQ4JmErj_zYcxFOSdUz-ZbjcYyVYBktqg/index-f3-v1-a1.m3u8?sig=Kf2ANforBAJaL8JqFrLkSw&expires=1740742121"
+        "360p": "https://hfs303.serversicuro.cc/hls/dnzpegao5pg4a3gyvaix5iroseoyouprwef5m5sxji4d3n3y7jdkzbjhzcua/index-v1-a1.m3u8",
+        "720p": "https://hfs303.serversicuro.cc/hls/dnzpegao5pg4a3gyvaix5iroseoyouprwef5m5sxji4d3n3y7jdkzbjhzcua/index-v1-a1.m3u8",
+        "1080p": "https://hfs303.serversicuro.cc/hls/dnzpegao5pg4a3gyvaix5iroseoyouprwef5m5sxji4d3n3y7jdkzbjhzcua/index-v1-a1.m3u8"
     },
     "939243": {
         "title": "Sonic 3",

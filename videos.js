@@ -92,9 +92,9 @@ const movieVideos = {
     },
     "950396": {
         "title": "El Abismo Secreto",
-        "360p": "https://hfs303.serversicuro.cc/hls/dnzpegao5pg4a3gyvaix5iroseoyouprwef5m5sxji4d3n3y7jdkzbjhzcua/index-v1-a1.m3u8",
-        "720p": "https://hfs303.serversicuro.cc/hls/dnzpegao5pg4a3gyvaix5iroseoyouprwef5m5sxji4d3n3y7jdkzbjhzcua/index-v1-a1.m3u8",
-        "1080p": "https://hfs303.serversicuro.cc/hls/dnzpegao5pg4a3gyvaix5iroseoyouprwef5m5sxji4d3n3y7jdkzbjhzcua/index-v1-a1.m3u8"
+        "360p": "https://olwunlq74c.cdn-centaurus.com/hls2/01/08546/npsr6ngvcmxv_,l,n,h,.urlset/index-f1-v1-a1.m3u8?t=El8_N43Tn6mtpAW_XFpPkkVdopKBQK_PUS05D8rB5Jw&s=1741021741&e=129600&f=42733174&srv=mhe7qdnw6bsc&i=0.4&sp=500&p1=mhe7qdnw6bsc&p2=mhe7qdnw6bsc&asn=264619",
+        "720p": "https://olwunlq74c.cdn-centaurus.com/hls2/01/08546/npsr6ngvcmxv_,l,n,h,.urlset/index-f2-v1-a1.m3u8?t=El8_N43Tn6mtpAW_XFpPkkVdopKBQK_PUS05D8rB5Jw&s=1741021741&e=129600&f=42733174&srv=mhe7qdnw6bsc&i=0.4&sp=500&p1=mhe7qdnw6bsc&p2=mhe7qdnw6bsc&asn=264619",
+        "1080p": "https://olwunlq74c.cdn-centaurus.com/hls2/01/08546/npsr6ngvcmxv_,l,n,h,.urlset/index-f3-v1-a1.m3u8?t=El8_N43Tn6mtpAW_XFpPkkVdopKBQK_PUS05D8rB5Jw&s=1741021741&e=129600&f=42733174&srv=mhe7qdnw6bsc&i=0.4&sp=500&p1=mhe7qdnw6bsc&p2=mhe7qdnw6bsc&asn=264619"
     },
     "939243": {
         "title": "Sonic 3",

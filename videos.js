@@ -1,5 +1,18 @@
 // videos.js
 const movieVideos = {
+62086: { // ID del Episodio 1 (Temporada 1 de Breaking Bad)
+        title: "Breaking Bad - Temp 1 Ep 2",
+        "360p": "https://be6721.rcr72.waw04.cdn255.com/hls2/02/04422/g684bpfisluh_h/index-v1-a1.m3u8?t=3Me_G2SYPsv4xA9c59svbQeN5Ge0Fpw3i6yJ3brDiqc&s=1741034752&e=10800&f=22114243&srv=27&asn=264619&sp=4000&p=",
+        "720p": "https://be6721.rcr72.waw04.cdn255.com/hls2/02/04422/g684bpfisluh_h/index-v1-a1.m3u8?t=3Me_G2SYPsv4xA9c59svbQeN5Ge0Fpw3i6yJ3brDiqc&s=1741034752&e=10800&f=22114243&srv=27&asn=264619&sp=4000&p=",
+        "1080p": "https://be6721.rcr72.waw04.cdn255.com/hls2/02/04422/g684bpfisluh_h/index-v1-a1.m3u8?t=3Me_G2SYPsv4xA9c59svbQeN5Ge0Fpw3i6yJ3brDiqc&s=1741034752&e=10800&f=22114243&srv=27&asn=264619&sp=4000&p="
+    },
+62085: { // ID del Episodio 1 (Temporada 1 de Breaking Bad)
+        title: "Breaking Bad - Temp 1 Ep 1",
+        "360p": "https://be6721.rcr72.waw04.cdn255.com/hls2/02/04422/ml0d0je9nean_h/index-v1-a1.m3u8?t=7GalNi2FssFjRTtbWcBeS6dyBcLfT9gH9nYZRLX_axY&s=1741034466&e=10800&f=22114398&srv=25&asn=264619&sp=4000&p=",
+        "720p": "https://be6721.rcr72.waw04.cdn255.com/hls2/02/04422/ml0d0je9nean_h/index-v1-a1.m3u8?t=7GalNi2FssFjRTtbWcBeS6dyBcLfT9gH9nYZRLX_axY&s=1741034466&e=10800&f=22114398&srv=25&asn=264619&sp=4000&p=",
+        "1080p": "https://be6721.rcr72.waw04.cdn255.com/hls2/02/04422/ml0d0je9nean_h/index-v1-a1.m3u8?t=7GalNi2FssFjRTtbWcBeS6dyBcLfT9gH9nYZRLX_axY&s=1741034466&e=10800&f=22114398&srv=25&asn=264619&sp=4000&p="
+    },
+
 "1201012": {
         "title": "Dhoom Dhaam",
         "360p": "https://2ith458pz9.guardstorage.net/hls_3/WCLQBwv1BwJ_Yl5vbEvOpKBOUvAZVNsCcNDX4zOV8HEop37q7f5I05abPvGq29FMA5TS8-AsczwZA95GiJq9RxaZolyyt_8n82pQNsK-PntJ2JfEtafsiLS_ufuc06yjtaXWqk-G1150caCl9gXc5UihSN5imR4qmOHBijpRVVjh5s42Mv8YtBUS1sRw8fRxoksxuKMBWNOrL2MIkNe2ZA/index-f1-v1-a1.m3u8?sig=NWFurm5ep8shHM80W7Jb6Q&expires=1740781392",

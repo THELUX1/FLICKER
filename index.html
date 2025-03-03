@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CineStream</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="moviesData.js"></script>
+    <!-- Cambio crucial: type="module" -->
+    <script type="module" src="moviesData.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+<!-- Resto del cuerpo permanece igual -->
 <body>
     <!-- Contenedor de búsqueda fuera del header -->
     <div class="search-overlay">
@@ -51,18 +53,28 @@
         </div>
     </section>
 
-    <main class="content" id="content"></main>
+    <!-- Mantener el mismo header y hero section -->
 
-    <!-- Barra de navegación inferior -->
-    <nav class="bottom-nav">
-        <a href="index.html" class="nav-icon">
-            <i class="fas fa-home"></i>
-            <span>Inicio</span>
-        </a>
-        <a href="me-gusta.html" class="nav-icon">
-            <i class="fas fa-heart"></i>
-            <span>Me gusta</span>
-        </a>
-    </nav>
+<main class="content" id="content"></main>
+
+<!-- Barra de navegación inferior -->
+<nav class="bottom-nav">
+    <a href="index.html" class="nav-icon">
+        <i class="fas fa-home"></i>
+        <span>Inicio</span>
+    </a>
+    <a href="me-gusta.html" class="nav-icon">
+        <i class="fas fa-heart"></i>
+        <span>Me gusta</span>
+    </a>
+</nav>
+
+<!-- Añadir nuevos estilos para las secciones de género -->
+<style>
+    .movie-section:nth-child(6) .section-title { color: #ff4444; }
+    .movie-section:nth-child(7) .section-title { color: #ffd700; }
+    .movie-section:nth-child(8) .section-title { color: #4a148c; }
+    .movie-section:nth-child(9) .section-title { color: #009688; }
+</style>
 </body>
 </html>

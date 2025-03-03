@@ -237,6 +237,141 @@ body {
     height: 100%;
     border: none;
 }
+/* Series - Contenedor principal */
+#series-content {
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(20,20,20,0.95) 0%, rgba(40,40,40,0.95) 100%);
+    margin: 2rem 0;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Selector de temporadas - Versión mejorada */
+.season-selector {
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    max-width: 400px; /* Nuevo: Limitar ancho máximo */
+    width: 100%; /* Asegurar que respete el contenedor padre */
+}
+
+.season-selector h3 {
+    color: #fff;
+    font-size: 1.4rem;
+    margin: 0;
+    padding-right: 1.5rem;
+    border-right: 3px solid #e50914;
+}
+
+#season-select {
+    padding: 0.8rem 2.5rem 0.8rem 1.5rem;
+    width: 100%; /* Cambiar a ancho completo del contenedor */
+    max-width: 300px; /* Limitar ancho máximo del select */
+    /* Resto de propiedades se mantienen igual */
+    background: #1a1a1a;
+    color: #fff;
+    border: 2px solid #333;
+    border-radius: 8px;
+    font-size: 1rem;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e50914'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+    transition: all 0.3s ease;
+} 
+
+#season-select:focus {
+    outline: none;
+    border-color: #e50914;
+    box-shadow: 0 0 0 3px rgba(229,9,20,0.2);
+}
+
+/* Grid de episodios - Mejora visual */
+.episodes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem 0;
+}
+
+.episode-card {
+    background: #181818;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.episode-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.4);
+}
+
+.episode-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.8) 100%);
+    z-index: 1;
+}
+
+.episode-card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.episode-info {
+    position: relative;
+    padding: 1.2rem;
+    z-index: 2;
+}
+
+.episode-info h4 {
+    color: #fff;
+    margin: 0 0 0.4rem;
+    font-size: 1.1rem;
+}
+
+.episode-info p {
+    color: rgba(255,255,255,0.8);
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* Efecto hover mejorado */
+.episode-card:hover img {
+    transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .episodes-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 1rem;
+    }
+    
+    .episode-card img {
+        height: 120px;
+    }
+    .season-selector {
+        flex-wrap: wrap; /* Permitir salto de línea */
+        gap: 1rem;
+    }
+    #season-select {
+        max-width: 100%; /* Ocupar ancho completo en móviles */
+        order: 1; /* Posicionar debajo del título */
+    }
+}
 
 /* RESPONSIVE */
 @media (max-width: 768px) {

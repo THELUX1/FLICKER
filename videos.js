@@ -2,17 +2,28 @@
 const movieVideos = {
 62086: { // ID del Episodio 1 (Temporada 1 de Breaking Bad)
         title: "Breaking Bad - Temp 1 Ep 2",
-        "360p": "https://be6721.rcr72.waw04.cdn255.com/hls2/02/04422/g684bpfisluh_h/index-v1-a1.m3u8?t=3Me_G2SYPsv4xA9c59svbQeN5Ge0Fpw3i6yJ3brDiqc&s=1741034752&e=10800&f=22114243&srv=27&asn=264619&sp=4000&p=",
-        "720p": "https://be6721.rcr72.waw04.cdn255.com/hls2/02/04422/g684bpfisluh_h/index-v1-a1.m3u8?t=3Me_G2SYPsv4xA9c59svbQeN5Ge0Fpw3i6yJ3brDiqc&s=1741034752&e=10800&f=22114243&srv=27&asn=264619&sp=4000&p=",
-        "1080p": "https://be6721.rcr72.waw04.cdn255.com/hls2/02/04422/g684bpfisluh_h/index-v1-a1.m3u8?t=3Me_G2SYPsv4xA9c59svbQeN5Ge0Fpw3i6yJ3brDiqc&s=1741034752&e=10800&f=22114243&srv=27&asn=264619&sp=4000&p="
+        "360p": "https://be4242.rcr52.ams03.cdn255.com/hls2/02/04422/g684bpfisluh_h/index-v1-a1.m3u8?t=PBmZri1F5CpY6strWmVyXthnL6byGMZrQgXu220q3VY&s=1741123213&e=10800&f=22114243&srv=27&asn=264619&sp=4000&p=",
+        "720p": "https://be4242.rcr52.ams03.cdn255.com/hls2/02/04422/g684bpfisluh_h/index-v1-a1.m3u8?t=PBmZri1F5CpY6strWmVyXthnL6byGMZrQgXu220q3VY&s=1741123213&e=10800&f=22114243&srv=27&asn=264619&sp=4000&p=",
+        "1080p": "https://be4242.rcr52.ams03.cdn255.com/hls2/02/04422/g684bpfisluh_h/index-v1-a1.m3u8?t=PBmZri1F5CpY6strWmVyXthnL6byGMZrQgXu220q3VY&s=1741123213&e=10800&f=22114243&srv=27&asn=264619&sp=4000&p="
     },
 62085: { // ID del Episodio 1 (Temporada 1 de Breaking Bad)
         title: "Breaking Bad - Temp 1 Ep 1",
-        "360p": "https://be6721.rcr72.waw04.cdn255.com/hls2/02/04422/ml0d0je9nean_h/index-v1-a1.m3u8?t=7GalNi2FssFjRTtbWcBeS6dyBcLfT9gH9nYZRLX_axY&s=1741034466&e=10800&f=22114398&srv=25&asn=264619&sp=4000&p=",
-        "720p": "https://be6721.rcr72.waw04.cdn255.com/hls2/02/04422/ml0d0je9nean_h/index-v1-a1.m3u8?t=7GalNi2FssFjRTtbWcBeS6dyBcLfT9gH9nYZRLX_axY&s=1741034466&e=10800&f=22114398&srv=25&asn=264619&sp=4000&p=",
-        "1080p": "https://be6721.rcr72.waw04.cdn255.com/hls2/02/04422/ml0d0je9nean_h/index-v1-a1.m3u8?t=7GalNi2FssFjRTtbWcBeS6dyBcLfT9gH9nYZRLX_axY&s=1741034466&e=10800&f=22114398&srv=25&asn=264619&sp=4000&p="
+        "360p": "https://be2719.rcr22.ams01.cdn255.com/hls2/02/04422/ml0d0je9nean_h/index-v1-a1.m3u8?t=EtbjD0bJDXYq3LsRX-3U9Tx-Sy7zXffQbCnuRqNjItU&s=1741122925&e=10800&f=22114398&srv=25&asn=264619&sp=4000&p=",
+        "720p": "https://be2719.rcr22.ams01.cdn255.com/hls2/02/04422/ml0d0je9nean_h/index-v1-a1.m3u8?t=EtbjD0bJDXYq3LsRX-3U9Tx-Sy7zXffQbCnuRqNjItU&s=1741122925&e=10800&f=22114398&srv=25&asn=264619&sp=4000&p=",
+        "1080p": "https://be2719.rcr22.ams01.cdn255.com/hls2/02/04422/ml0d0je9nean_h/index-v1-a1.m3u8?t=EtbjD0bJDXYq3LsRX-3U9Tx-Sy7zXffQbCnuRqNjItU&s=1741122925&e=10800&f=22114398&srv=25&asn=264619&sp=4000&p="
     },
-
+    1675448: { // ID del Episodio 1 (Temporada 1 de Breaking Bad)
+        title: "Kimetsu No Yaiba- Temp 1 Ep 1",
+        "360p": "https://cdn-tlrb1vs6yeporajd.orbitcache.com/engine/hls2/01/09026/cs24wdtmmxvc_,n,.urlset/index-v1-a1.m3u8?t=ZyVfwBdiJrYVIxuHMNJNoKF5E--9RVVyJkn4rYiu0zo&s=1741130985&e=14400&f=45134728&node=vQNYzBgoOUWQaNyCrwxJhQY3K9HJDDAMOj7kOzOhD9s=&i=0.1&sp=2500&asn=264619&q=n",
+        "720p": "https://cdn-tlrb1vs6yeporajd.orbitcache.com/engine/hls2/01/09026/cs24wdtmmxvc_,n,.urlset/index-v1-a1.m3u8?t=ZyVfwBdiJrYVIxuHMNJNoKF5E--9RVVyJkn4rYiu0zo&s=1741130985&e=14400&f=45134728&node=vQNYzBgoOUWQaNyCrwxJhQY3K9HJDDAMOj7kOzOhD9s=&i=0.1&sp=2500&asn=264619&q=n",
+        "1080p": "https://cdn-tlrb1vs6yeporajd.orbitcache.com/engine/hls2/01/09026/cs24wdtmmxvc_,n,.urlset/index-v1-a1.m3u8?t=ZyVfwBdiJrYVIxuHMNJNoKF5E--9RVVyJkn4rYiu0zo&s=1741130985&e=14400&f=45134728&node=vQNYzBgoOUWQaNyCrwxJhQY3K9HJDDAMOj7kOzOhD9s=&i=0.1&sp=2500&asn=264619&q=n"
+    },
+    "1035048": {
+        "title": "Criaturas: Línea de extinción",
+        "360p": "https://xyve3dzn2w.guardstorage.net/hls_3/rvKR0KuSGK4fNvld6RyAkKjTaOJBFmApFSQPqBs7v7Hi4UzcPEkt7NkgvLfUvUHV6byN1wy4yWm0i0bil7Me81d5bJISS43G7GafqZAu2tz2mxuXLjbkNW9emShtKQfrHSJkeFiuFEvrmGqspKw8eKCHCZ0ObdLzcGPeZaq2w_7sQt2xJm5ZgcrZG3LrehsNvFow9ElLrfguwQySTEA2aA/index-f1-v1-a1.m3u8?sig=XlocMAyVv52_L0Tf3jl_iQ&expires=1741140715",
+        "720p": "https://xyve3dzn2w.guardstorage.net/hls_3/rvKR0KuSGK4fNvld6RyAkKjTaOJBFmApFSQPqBs7v7Hi4UzcPEkt7NkgvLfUvUHV6byN1wy4yWm0i0bil7Me81d5bJISS43G7GafqZAu2tz2mxuXLjbkNW9emShtKQfrHSJkeFiuFEvrmGqspKw8eKCHCZ0ObdLzcGPeZaq2w_7sQt2xJm5ZgcrZG3LrehsNvFow9ElLrfguwQySTEA2aA/index-f2-v1-a1.m3u8?sig=XlocMAyVv52_L0Tf3jl_iQ&expires=1741140715",
+        "1080p": "https://xyve3dzn2w.guardstorage.net/hls_3/rvKR0KuSGK4fNvld6RyAkKjTaOJBFmApFSQPqBs7v7Hi4UzcPEkt7NkgvLfUvUHV6byN1wy4yWm0i0bil7Me81d5bJISS43G7GafqZAu2tz2mxuXLjbkNW9emShtKQfrHSJkeFiuFEvrmGqspKw8eKCHCZ0ObdLzcGPeZaq2w_7sQt2xJm5ZgcrZG3LrehsNvFow9ElLrfguwQySTEA2aA/index-f3-v1-a1.m3u8?sig=XlocMAyVv52_L0Tf3jl_iQ&expires=1741140715"
+    },
 "1201012": {
         "title": "Dhoom Dhaam",
         "360p": "https://2ith458pz9.guardstorage.net/hls_3/WCLQBwv1BwJ_Yl5vbEvOpKBOUvAZVNsCcNDX4zOV8HEop37q7f5I05abPvGq29FMA5TS8-AsczwZA95GiJq9RxaZolyyt_8n82pQNsK-PntJ2JfEtafsiLS_ufuc06yjtaXWqk-G1150caCl9gXc5UihSN5imR4qmOHBijpRVVjh5s42Mv8YtBUS1sRw8fRxoksxuKMBWNOrL2MIkNe2ZA/index-f1-v1-a1.m3u8?sig=NWFurm5ep8shHM80W7Jb6Q&expires=1740781392",

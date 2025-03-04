@@ -151,7 +151,6 @@ async function loadMovies(loadMore = false) {
 }
 
 // 5. Corregir función generarContenido
-// 1. Definir createMovieCard primero
 function createMovieCard(movie, isLiked = false) {
     return `
         <div class="movie-card">
@@ -168,7 +167,6 @@ function createMovieCard(movie, isLiked = false) {
     `;
 }
 
-// 2. Luego definir generarContenido
 function generarContenido(container) {
     const visibleCategories = {
         "Tendencias": moviesData["Tendencias"],
@@ -281,8 +279,20 @@ function setupSearch() {
     }
 
     function searchMovies(query) {
-        const allMovies = Object.values(moviesData).flat();
-        return allMovies.filter(movie => {
+        const allMovies = Object.values(moviesData).flat(); // Obtener todas las películas de todas las categorías
+        const uniqueMovies = []; // Almacenar películas únicas
+        const seenTitles = new Set(); // Usar un Set para rastrear títulos ya vistos
+
+        // Eliminar duplicados basados en el título
+        allMovies.forEach(movie => {
+            if (!seenTitles.has(movie.title)) { // Verificar si el título ya fue procesado
+                seenTitles.add(movie.title); // Agregar el título al Set
+                uniqueMovies.push(movie); // Agregar la película a la lista de resultados únicos
+            }
+        });
+
+        // Filtrar los resultados únicos según la consulta de búsqueda
+        return uniqueMovies.filter(movie => {
             return movie.title.toLowerCase().includes(query) ||
                    (movie.cast?.toLowerCase().includes(query)) ||
                    (movie.genre?.toLowerCase().includes(query)) ||
@@ -343,13 +353,6 @@ document.addEventListener('DOMContentLoaded', () => {
     loadMovies();
     setupSearch();
     setupInfiniteScroll();
-
-    // Resto del código de inicialización...
-});    
-// Inicialización
-document.addEventListener('DOMContentLoaded', () => {
-    loadMovies();
-    setupSearch();
 
     document.getElementById('mark-liked')?.addEventListener('click', () => {
         const featuredMovie = {

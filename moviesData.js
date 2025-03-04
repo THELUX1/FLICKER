@@ -26,11 +26,11 @@ async function loadTrailers() {
 }
 
 // Función fetchContent corregida
-async function fetchContent(type, endpoint) {
+async function fetchContent(type, endpoint, page = 1) {
     try {
         const isTV = type === 'tv';
         const urlParams = endpoint.includes('?') ? '&' : '?';
-        const url = `https://api.themoviedb.org/3/${endpoint}${urlParams}api_key=${apiKey}&language=es-MX`;
+        const url = `https://api.themoviedb.org/3/${endpoint}${urlParams}api_key=${apiKey}&language=es-MX&page=${page}`;
         
         const [response, trailers] = await Promise.all([
             fetch(url),
@@ -43,17 +43,16 @@ async function fetchContent(type, endpoint) {
         }
 
         const data = await response.json();
-        return await Promise.all(data.results.map(async (item) => {  // <- Línea 68
+        return await Promise.all(data.results.map(async (item) => {
             const trailerKey = item.id in trailers ? 
                 trailers[item.id] : 
                 await fetchTrailer(item.id, isTV ? 'tv' : 'movie');
 
             return {
-    title: isTV ? item.name : item.title,
-    image: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
-    // Corregir esta línea (mediaType no existe, usar isTV)
-    link: `detalles.html?type=${isTV ? 'tv' : 'movie'}&title=${encodeURIComponent(isTV ? item.name : item.title)}`,
-    year: (isTV ? item.first_air_date : item.release_date)?.split('-')[0] || 'N/A',
+                title: isTV ? item.name : item.title,
+                image: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
+                link: `detalles.html?type=${isTV ? 'tv' : 'movie'}&title=${encodeURIComponent(isTV ? item.name : item.title)}`,
+                year: (isTV ? item.first_air_date : item.release_date)?.split('-')[0] || 'N/A',
                 rating: item.vote_average ? `${item.vote_average}/10` : 'N/A',
                 genre: isTV ? 
                     (item.genres?.[0]?.name || 'TV: Serie') : 
@@ -66,7 +65,7 @@ async function fetchContent(type, endpoint) {
                     cast: 'Reparto no disponible'
                 })
             };
-        }));  // <- Paréntesis faltante añadido aquí
+        }));
     } catch (error) {
         console.error(`Error fetching ${type}:`, error.message);
         return [];
@@ -106,9 +105,11 @@ let moviesData = {
     "Ocultas": []
 };
 
-async function loadMovies() {
+let currentPage = 1;
+
+async function loadMovies(loadMore = false) {
     const loader = document.getElementById('loader');
-    if (loader) loader.style.display = 'block'; // Mostrar el loader
+    if (loader && !loadMore) loader.style.display = 'block'; // Mostrar el loader solo en la primera carga
 
     const endpoints = [
         ['movie/popular', 'Tendencias'],
@@ -127,20 +128,25 @@ async function loadMovies() {
         const results = await Promise.all(
             endpoints.map(([endpoint, key]) => 
                 endpoint.startsWith('tv/') ? 
-                    fetchContent('tv', endpoint) : 
-                    fetchContent('movie', endpoint)
+                    fetchContent('tv', endpoint, currentPage) : 
+                    fetchContent('movie', endpoint, currentPage)
             )
         );
 
         endpoints.forEach(([_, key], index) => {
-            moviesData[key] = results[index];
+            if (loadMore) {
+                moviesData[key] = [...moviesData[key], ...results[index]];
+            } else {
+                moviesData[key] = results[index];
+            }
         });
 
         updateContent();
+        if (loadMore) currentPage++;
     } catch (error) {
         console.error('Error loading movies:', error);
     } finally {
-        if (loader) loader.style.display = 'none'; // Ocultar el loader
+        if (loader && !loadMore) loader.style.display = 'none'; // Ocultar el loader solo en la primera carga
     }
 }
 
@@ -314,6 +320,33 @@ function setupSearch() {
 }
 
 // Inicialización
+function setupInfiniteScroll() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                loadMovies(true); // Cargar más películas
+            }
+        });
+    }, {
+        rootMargin: '0px 0px 100px 0px', // Cargar antes de llegar al final
+        threshold: 0.1
+    });
+
+    const sentinel = document.createElement('div');
+    sentinel.id = 'sentinel';
+    document.body.appendChild(sentinel);
+    observer.observe(sentinel);
+}
+
+// Inicialización
+document.addEventListener('DOMContentLoaded', () => {
+    loadMovies();
+    setupSearch();
+    setupInfiniteScroll();
+
+    // Resto del código de inicialización...
+});    
+// Inicialización
 document.addEventListener('DOMContentLoaded', () => {
     loadMovies();
     setupSearch();
@@ -326,4 +359,31 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         markAsLiked(featuredMovie);
     });
+
+    // Manejar el botón de géneros
+    const genreToggle = document.getElementById('genre-toggle');
+    const genreBar = document.getElementById('genre-bar');
+
+    genreToggle?.addEventListener('click', (e) => {
+        e.preventDefault();
+        genreBar.style.display = genreBar.style.display === 'none' ? 'flex' : 'none';
+    });
+
+    // Manejar los botones de género
+    const genreButtons = document.querySelectorAll('.genre-button');
+    genreButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const genre = button.getAttribute('data-genre');
+            scrollToGenre(genre);
+        });
+    });
+
+    function scrollToGenre(genre) {
+        const sectionTitles = document.querySelectorAll('.section-title');
+        sectionTitles.forEach(title => {
+            if (title.textContent === genre) {
+                title.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    }
 });

@@ -107,6 +107,9 @@ let moviesData = {
 };
 
 async function loadMovies() {
+    const loader = document.getElementById('loader');
+    if (loader) loader.style.display = 'block'; // Mostrar el loader
+
     const endpoints = [
         ['movie/popular', 'Tendencias'],
         ['movie/top_rated', 'Mejor calificadas'],
@@ -136,6 +139,8 @@ async function loadMovies() {
         updateContent();
     } catch (error) {
         console.error('Error loading movies:', error);
+    } finally {
+        if (loader) loader.style.display = 'none'; // Ocultar el loader
     }
 }
 

@@ -29,6 +29,47 @@ body {
     width: 100%;
     z-index: 1000;
 }
+.loader {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 1000;
+    display: none; /* Oculto por defecto */
+}
+
+.loader-spinner {
+    border: 8px solid #f3f3f3; /* Light grey */
+    border-top: 8px solid #ff4444; /* Red */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px; /* Espacio entre el spinner y el texto */
+}
+
+.loader-text {
+    color: #ffffff; /* Color blanco para el texto */
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+    padding: 10px 20px; /* Espaciado interno */
+    background-color: rgba(255, 68, 68, 0.9); /* Fondo rojo con transparencia */
+    border: 2px solid #ff4444; /* Borde rojo */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para resaltar */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 
 .logo-glass {
     background: rgba(255, 255, 255, 0.1);

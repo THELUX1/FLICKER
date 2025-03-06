@@ -18,6 +18,30 @@ const movieVideos = {
         "720p": "https://cdn-tlrb1vs6yeporajd.orbitcache.com/engine/hls2/01/09026/cs24wdtmmxvc_,n,.urlset/index-v1-a1.m3u8?t=ZyVfwBdiJrYVIxuHMNJNoKF5E--9RVVyJkn4rYiu0zo&s=1741130985&e=14400&f=45134728&node=vQNYzBgoOUWQaNyCrwxJhQY3K9HJDDAMOj7kOzOhD9s=&i=0.1&sp=2500&asn=264619&q=n",
         "1080p": "https://cdn-tlrb1vs6yeporajd.orbitcache.com/engine/hls2/01/09026/cs24wdtmmxvc_,n,.urlset/index-v1-a1.m3u8?t=ZyVfwBdiJrYVIxuHMNJNoKF5E--9RVVyJkn4rYiu0zo&s=1741130985&e=14400&f=45134728&node=vQNYzBgoOUWQaNyCrwxJhQY3K9HJDDAMOj7kOzOhD9s=&i=0.1&sp=2500&asn=264619&q=n"
     },
+    "933260": {
+        "title": "La sustancia",
+        "360p": "https://xyve3dzn2w.guardstorage.net/hls_3/7pvQIdsxe6FabtJ2nwp5Ou_fnvf2zyBlv-EAkd1AdqKDVg3KutMW5bUKACBU6TOBffNnDAcmwbiQmlnyrCfWQuXLMdw8oXe9b6c-9qcm9dxen3g9lVg3L829S98JfuxrDrDyl1jLssUpb5zIWAzxd3mV17WOMypZ7dFcHhXlEWBDolJuPTsF-DsvlTpBLDHr6Gdma3JnkJYi8LuJzV5ofA/index-f2-v1-a1.m3u8?sig=fyxlCU31aBHUd2CWgLZDig&expires=1741169323",
+        "720p": "https://xyve3dzn2w.guardstorage.net/hls_3/7pvQIdsxe6FabtJ2nwp5Ou_fnvf2zyBlv-EAkd1AdqKDVg3KutMW5bUKACBU6TOBffNnDAcmwbiQmlnyrCfWQuXLMdw8oXe9b6c-9qcm9dxen3g9lVg3L829S98JfuxrDrDyl1jLssUpb5zIWAzxd3mV17WOMypZ7dFcHhXlEWBDolJuPTsF-DsvlTpBLDHr6Gdma3JnkJYi8LuJzV5ofA/index-f2-v1-a1.m3u8?sig=fyxlCU31aBHUd2CWgLZDig&expires=1741169323",
+        "1080p": "https://xyve3dzn2w.guardstorage.net/hls_3/7pvQIdsxe6FabtJ2nwp5Ou_fnvf2zyBlv-EAkd1AdqKDVg3KutMW5bUKACBU6TOBffNnDAcmwbiQmlnyrCfWQuXLMdw8oXe9b6c-9qcm9dxen3g9lVg3L829S98JfuxrDrDyl1jLssUpb5zIWAzxd3mV17WOMypZ7dFcHhXlEWBDolJuPTsF-DsvlTpBLDHr6Gdma3JnkJYi8LuJzV5ofA/index-f3-v1-a1.m3u8?sig=fyxlCU31aBHUd2CWgLZDig&expires=1741169323"
+    },
+    "1064213": {
+        "title": "Anora",
+        "360p": "https://lltsymlmrx.guardstorage.net/hls_3/FAAinxXbxD2Fr4-aEiPTqfaSSr463yRxQkoprR9_XBdKILF_KxqzPn8Pw-9X5-FAMPnUUpg8rrcr9abzj38EQg/index-f2-v1-a1.m3u8?sig=YtFzNr7xgzUk1vvGSPR29g&expires=1741168563",
+        "720p": "https://cv9fqnu812v.premilkyway.com/hls2/01/08227/ssb8jmgnqavs_,l,n,.urlset/index-f1-v1-a1.m3u8?t=OQ9KyfsBjRbHLoUuszE9yAcCvr0bKSPRG1cWkgPUUhA&s=1741159417&e=129600&f=41139591&srv=Gy4KXLg7mXRDXE7k&i=0.4&sp=500&p1=Gy4KXLg7mXRDXE7k&p2=Gy4KXLg7mXRDXE7k&asn=264619",
+        "1080p": "https://cv9fqnu812v.premilkyway.com/hls2/01/08227/ssb8jmgnqavs_,l,n,.urlset/index-f2-v1-a1.m3u8?t=OQ9KyfsBjRbHLoUuszE9yAcCvr0bKSPRG1cWkgPUUhA&s=1741159417&e=129600&f=41139591&srv=Gy4KXLg7mXRDXE7k&i=0.4&sp=500&p1=Gy4KXLg7mXRDXE7k&p2=Gy4KXLg7mXRDXE7k&asn=264619"
+    },
+    "549509": {
+        "title": "El brutalista",
+        "360p": "https://hfs296.serversicuro.cc/hls/dnzpemdh5pg4a3gyvakh5klvtwdikblg2flfctdiobfv5qqv4xfy4btjxqwq/index-v1-a1.m3u8",
+        "720p": "https://hfs296.serversicuro.cc/hls/dnzpemdh5pg4a3gyvakh5klvtwdikblg2flfctdiobfv5qqv4xfy4btjxqwq/index-v1-a1.m3u8",
+        "1080p": "https://hfs296.serversicuro.cc/hls/dnzpemdh5pg4a3gyvakh5klvtwdikblg2flfctdiobfv5qqv4xfy4btjxqwq/index-v1-a1.m3u8"
+    },
+    "974576": {
+        "title": "Cónclave",
+        "360p": "https://jeaoebkhqn.guardstorage.net/hls_3/GETCeVj3oTwWReeUqq8hCXDYXq_qO9HdNIPGlhJ7OnJ6BMVecf4LtXg-_IGO9YZq2A4VzkN9A8tHPaDbKh_rPSbdvRjkF4jFG0kJB5pMUofIWA2iPJ6zqW9TuiCgnABw0Sht80HNuUigpWAgvZjD09mFH2VFQ1zc9yjaCnrqh-7ywi2y2MHytwXIrQY7WCS3gcYleFNDTpqSKscbMy3coQ/index-f2-v1-a1.m3u8?sig=jd3y14d9oVZ26_rfNw8JdQ&expires=1741167688",
+        "720p": "https://nhthwydgtq.cdn-centaurus.com/hls2/01/06491/ixzzg4acb3pi_,l,n,.urlset/index-f1-v1-a1.m3u8?t=0DxFlBwfhHIJQ7MB3vQJGLII_hunkce9XrG5-XhzlkE&s=1741158585&e=129600&f=32459337&srv=42jafu1ovi9j&i=0.4&sp=500&p1=42jafu1ovi9j&p2=42jafu1ovi9j&asn=264619",
+        "1080p": "https://mx9skjnui4es.premilkyway.com/hls2/01/06394/i4m7e115eth7_n/index-v1-a1.m3u8?t=EN0Js8_wySjQsZBxQgVfKi52ld83HKlMt4J-X59417o&s=1741158438&e=129600&f=32051032&srv=jubDiYuWLQCqfHI&i=0.4&sp=500&p1=jubDiYuWLQCqfHI&p2=jubDiYuWLQCqfHI&asn=264619"
+    },
     "1035048": {
         "title": "Criaturas: Línea de extinción",
         "360p": "https://xyve3dzn2w.guardstorage.net/hls_3/rvKR0KuSGK4fNvld6RyAkKjTaOJBFmApFSQPqBs7v7Hi4UzcPEkt7NkgvLfUvUHV6byN1wy4yWm0i0bil7Me81d5bJISS43G7GafqZAu2tz2mxuXLjbkNW9emShtKQfrHSJkeFiuFEvrmGqspKw8eKCHCZ0ObdLzcGPeZaq2w_7sQt2xJm5ZgcrZG3LrehsNvFow9ElLrfguwQySTEA2aA/index-f1-v1-a1.m3u8?sig=XlocMAyVv52_L0Tf3jl_iQ&expires=1741140715",
@@ -86,9 +110,9 @@ const movieVideos = {
     },
 "822119": {
         "title": "Capitán América: Un nuevo mundo",
-        "360p": "https://wayyrm3efe.guardstorage.net/hls_3/m7xRpfOTH7U_jpz19n7TKk35mE7HzR-C6mzUyo5N1hyNPMB47VQt-7LvHm9OouHx3XlN7ihWv-A6hke_xyO4gQtRhrA7GTKBMVM7bxrzb0S1oQZpSwdaHndr-7B4TjeyFnVC9a131NiGRF_y_J-4UMzN0MigwCrAgIxo-5kLiRuJMxfhGXmrwgTNsvuxqsPr1Rrv5yUfYX7fw0sJ7I0j_Q/index-f1-v1-a1.m3u8?sig=DUm6AcvWTD1yZjMj-ndv_Q&expires=1740744259",
-        "720p": "https://wayyrm3efe.guardstorage.net/hls_3/m7xRpfOTH7U_jpz19n7TKk35mE7HzR-C6mzUyo5N1hyNPMB47VQt-7LvHm9OouHx3XlN7ihWv-A6hke_xyO4gQtRhrA7GTKBMVM7bxrzb0S1oQZpSwdaHndr-7B4TjeyFnVC9a131NiGRF_y_J-4UMzN0MigwCrAgIxo-5kLiRuJMxfhGXmrwgTNsvuxqsPr1Rrv5yUfYX7fw0sJ7I0j_Q/index-f2-v1-a1.m3u8?sig=DUm6AcvWTD1yZjMj-ndv_Q&expires=1740744259",
-        "1080p": "https://wayyrm3efe.guardstorage.net/hls_3/m7xRpfOTH7U_jpz19n7TKk35mE7HzR-C6mzUyo5N1hyNPMB47VQt-7LvHm9OouHx3XlN7ihWv-A6hke_xyO4gQtRhrA7GTKBMVM7bxrzb0S1oQZpSwdaHndr-7B4TjeyFnVC9a131NiGRF_y_J-4UMzN0MigwCrAgIxo-5kLiRuJMxfhGXmrwgTNsvuxqsPr1Rrv5yUfYX7fw0sJ7I0j_Q/index-f3-v1-a1.m3u8?sig=DUm6AcvWTD1yZjMj-ndv_Q&expires=1740744259"
+        "360p": "https://7f12638xuzfg.premilkyway.com/hls2/01/08546/uagcpcfsl4la_,l,n,h,.urlset/index-f1-v1-a1.m3u8?t=4oeJ0VyuDTpJO_fwHIJet20VGtWZ9-HDfxOC9WCiZU4&s=1741159750&e=129600&f=42732441&srv=jubDiYuWLQCqfHI&i=0.4&sp=500&p1=jubDiYuWLQCqfHI&p2=jubDiYuWLQCqfHI&asn=264619",
+        "720p": "https://7f12638xuzfg.premilkyway.com/hls2/01/08546/uagcpcfsl4la_,l,n,h,.urlset/index-f2-v1-a1.m3u8?t=4oeJ0VyuDTpJO_fwHIJet20VGtWZ9-HDfxOC9WCiZU4&s=1741159750&e=129600&f=42732441&srv=jubDiYuWLQCqfHI&i=0.4&sp=500&p1=jubDiYuWLQCqfHI&p2=jubDiYuWLQCqfHI&asn=264619",
+        "1080p": "https://7f12638xuzfg.premilkyway.com/hls2/01/08546/uagcpcfsl4la_,l,n,h,.urlset/index-f3-v1-a1.m3u8?t=4oeJ0VyuDTpJO_fwHIJet20VGtWZ9-HDfxOC9WCiZU4&s=1741159750&e=129600&f=42732441&srv=jubDiYuWLQCqfHI&i=0.4&sp=500&p1=jubDiYuWLQCqfHI&p2=jubDiYuWLQCqfHI&asn=264619"
     },
 "1084199": {
         "title": "Compañera Perfecta",
@@ -116,9 +140,9 @@ const movieVideos = {
     },
     "950396": {
         "title": "El Abismo Secreto",
-        "360p": "https://olwunlq74c.cdn-centaurus.com/hls2/01/08546/npsr6ngvcmxv_,l,n,h,.urlset/index-f1-v1-a1.m3u8?t=El8_N43Tn6mtpAW_XFpPkkVdopKBQK_PUS05D8rB5Jw&s=1741021741&e=129600&f=42733174&srv=mhe7qdnw6bsc&i=0.4&sp=500&p1=mhe7qdnw6bsc&p2=mhe7qdnw6bsc&asn=264619",
-        "720p": "https://olwunlq74c.cdn-centaurus.com/hls2/01/08546/npsr6ngvcmxv_,l,n,h,.urlset/index-f2-v1-a1.m3u8?t=El8_N43Tn6mtpAW_XFpPkkVdopKBQK_PUS05D8rB5Jw&s=1741021741&e=129600&f=42733174&srv=mhe7qdnw6bsc&i=0.4&sp=500&p1=mhe7qdnw6bsc&p2=mhe7qdnw6bsc&asn=264619",
-        "1080p": "https://olwunlq74c.cdn-centaurus.com/hls2/01/08546/npsr6ngvcmxv_,l,n,h,.urlset/index-f3-v1-a1.m3u8?t=El8_N43Tn6mtpAW_XFpPkkVdopKBQK_PUS05D8rB5Jw&s=1741021741&e=129600&f=42733174&srv=mhe7qdnw6bsc&i=0.4&sp=500&p1=mhe7qdnw6bsc&p2=mhe7qdnw6bsc&asn=264619"
+        "360p": "https://akm-cdn-play-web.onfilom.com/c0928b6ef70671ef86334177d1c00102/2230c9ab671e42abb79cf9c93890b3e6-631609d1c96636aa105e0b95e5182c6d-fd.m3u8?hdnts=exp=1741385834_acl=/c0928b6ef70671ef86334177d1c00102/*_hmac=3cbc225be390f28899d17adcaac48b4d10ba90321ddc1370d5c4ad61f51a8ac6",
+        "720p": "https://akm-cdn-play-web.onfilom.com/c0928b6ef70671ef86334177d1c00102/2230c9ab671e42abb79cf9c93890b3e6-102e26cf6d0a02d4fb7bd87c20571d99-sd.m3u8?hdnts=exp=1741385834_acl=/c0928b6ef70671ef86334177d1c00102/*_hmac=3cbc225be390f28899d17adcaac48b4d10ba90321ddc1370d5c4ad61f51a8ac6",
+        "1080p": "https://akm-cdn-play-web.onfilom.com/c0928b6ef70671ef86334177d1c00102/2230c9ab671e42abb79cf9c93890b3e6-bb995a26a2e0a2efb5b2a32735e8bf15-hd.m3u8?hdnts=exp=1741385834_acl=/c0928b6ef70671ef86334177d1c00102/*_hmac=3cbc225be390f28899d17adcaac48b4d10ba90321ddc1370d5c4ad61f51a8ac6"
     },
     "939243": {
         "title": "Sonic 3",

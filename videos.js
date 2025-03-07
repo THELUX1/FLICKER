@@ -1,22 +1,10 @@
 // videos.js
 const movieVideos = {
-62086: { // ID del Episodio 1 (Temporada 1 de Breaking Bad)
-        title: "Breaking Bad - Temp 1 Ep 2",
-        "360p": "https://be4242.rcr52.ams03.cdn255.com/hls2/02/04422/g684bpfisluh_h/index-v1-a1.m3u8?t=PBmZri1F5CpY6strWmVyXthnL6byGMZrQgXu220q3VY&s=1741123213&e=10800&f=22114243&srv=27&asn=264619&sp=4000&p=",
-        "720p": "https://be4242.rcr52.ams03.cdn255.com/hls2/02/04422/g684bpfisluh_h/index-v1-a1.m3u8?t=PBmZri1F5CpY6strWmVyXthnL6byGMZrQgXu220q3VY&s=1741123213&e=10800&f=22114243&srv=27&asn=264619&sp=4000&p=",
-        "1080p": "https://be4242.rcr52.ams03.cdn255.com/hls2/02/04422/g684bpfisluh_h/index-v1-a1.m3u8?t=PBmZri1F5CpY6strWmVyXthnL6byGMZrQgXu220q3VY&s=1741123213&e=10800&f=22114243&srv=27&asn=264619&sp=4000&p="
-    },
-62085: { // ID del Episodio 1 (Temporada 1 de Breaking Bad)
-        title: "Breaking Bad - Temp 1 Ep 1",
-        "360p": "https://be2719.rcr22.ams01.cdn255.com/hls2/02/04422/ml0d0je9nean_h/index-v1-a1.m3u8?t=EtbjD0bJDXYq3LsRX-3U9Tx-Sy7zXffQbCnuRqNjItU&s=1741122925&e=10800&f=22114398&srv=25&asn=264619&sp=4000&p=",
-        "720p": "https://be2719.rcr22.ams01.cdn255.com/hls2/02/04422/ml0d0je9nean_h/index-v1-a1.m3u8?t=EtbjD0bJDXYq3LsRX-3U9Tx-Sy7zXffQbCnuRqNjItU&s=1741122925&e=10800&f=22114398&srv=25&asn=264619&sp=4000&p=",
-        "1080p": "https://be2719.rcr22.ams01.cdn255.com/hls2/02/04422/ml0d0je9nean_h/index-v1-a1.m3u8?t=EtbjD0bJDXYq3LsRX-3U9Tx-Sy7zXffQbCnuRqNjItU&s=1741122925&e=10800&f=22114398&srv=25&asn=264619&sp=4000&p="
-    },
-    1675448: { // ID del Episodio 1 (Temporada 1 de Breaking Bad)
-        title: "Kimetsu No Yaiba- Temp 1 Ep 1",
-        "360p": "https://cdn-tlrb1vs6yeporajd.orbitcache.com/engine/hls2/01/09026/cs24wdtmmxvc_,n,.urlset/index-v1-a1.m3u8?t=ZyVfwBdiJrYVIxuHMNJNoKF5E--9RVVyJkn4rYiu0zo&s=1741130985&e=14400&f=45134728&node=vQNYzBgoOUWQaNyCrwxJhQY3K9HJDDAMOj7kOzOhD9s=&i=0.1&sp=2500&asn=264619&q=n",
-        "720p": "https://cdn-tlrb1vs6yeporajd.orbitcache.com/engine/hls2/01/09026/cs24wdtmmxvc_,n,.urlset/index-v1-a1.m3u8?t=ZyVfwBdiJrYVIxuHMNJNoKF5E--9RVVyJkn4rYiu0zo&s=1741130985&e=14400&f=45134728&node=vQNYzBgoOUWQaNyCrwxJhQY3K9HJDDAMOj7kOzOhD9s=&i=0.1&sp=2500&asn=264619&q=n",
-        "1080p": "https://cdn-tlrb1vs6yeporajd.orbitcache.com/engine/hls2/01/09026/cs24wdtmmxvc_,n,.urlset/index-v1-a1.m3u8?t=ZyVfwBdiJrYVIxuHMNJNoKF5E--9RVVyJkn4rYiu0zo&s=1741130985&e=14400&f=45134728&node=vQNYzBgoOUWQaNyCrwxJhQY3K9HJDDAMOj7kOzOhD9s=&i=0.1&sp=2500&asn=264619&q=n"
+    "1272149": {
+        "title": "Bridget Jones: Loca Por Él",
+        "360p": "https://wpvsahsvl0yo.acek-cdn.com/hls2/01/03824/g2l7o2r2z5kn_n/index-v1-a1.m3u8?t=a5MQroQafz7RTSRZXxIr00BikEIvnrLvKI1JeNYSviM&s=1741327793&e=129600&f=19585118&srv=yCdcGNsOcuCU&i=0.4&sp=500&p1=yCdcGNsOcuCU&p2=yCdcGNsOcuCU&asn=264619",
+        "720p": "https://wpvsahsvl0yo.acek-cdn.com/hls2/01/03824/g2l7o2r2z5kn_n/index-v1-a1.m3u8?t=a5MQroQafz7RTSRZXxIr00BikEIvnrLvKI1JeNYSviM&s=1741327793&e=129600&f=19585118&srv=yCdcGNsOcuCU&i=0.4&sp=500&p1=yCdcGNsOcuCU&p2=yCdcGNsOcuCU&asn=264619",
+        "1080p": "https://wpvsahsvl0yo.acek-cdn.com/hls2/01/03824/g2l7o2r2z5kn_n/index-v1-a1.m3u8?t=a5MQroQafz7RTSRZXxIr00BikEIvnrLvKI1JeNYSviM&s=1741327793&e=129600&f=19585118&srv=yCdcGNsOcuCU&i=0.4&sp=500&p1=yCdcGNsOcuCU&p2=yCdcGNsOcuCU&asn=264619"
     },
     "933260": {
         "title": "La sustancia",
@@ -24,11 +12,17 @@ const movieVideos = {
         "720p": "https://xyve3dzn2w.guardstorage.net/hls_3/7pvQIdsxe6FabtJ2nwp5Ou_fnvf2zyBlv-EAkd1AdqKDVg3KutMW5bUKACBU6TOBffNnDAcmwbiQmlnyrCfWQuXLMdw8oXe9b6c-9qcm9dxen3g9lVg3L829S98JfuxrDrDyl1jLssUpb5zIWAzxd3mV17WOMypZ7dFcHhXlEWBDolJuPTsF-DsvlTpBLDHr6Gdma3JnkJYi8LuJzV5ofA/index-f2-v1-a1.m3u8?sig=fyxlCU31aBHUd2CWgLZDig&expires=1741169323",
         "1080p": "https://xyve3dzn2w.guardstorage.net/hls_3/7pvQIdsxe6FabtJ2nwp5Ou_fnvf2zyBlv-EAkd1AdqKDVg3KutMW5bUKACBU6TOBffNnDAcmwbiQmlnyrCfWQuXLMdw8oXe9b6c-9qcm9dxen3g9lVg3L829S98JfuxrDrDyl1jLssUpb5zIWAzxd3mV17WOMypZ7dFcHhXlEWBDolJuPTsF-DsvlTpBLDHr6Gdma3JnkJYi8LuJzV5ofA/index-f3-v1-a1.m3u8?sig=fyxlCU31aBHUd2CWgLZDig&expires=1741169323"
     },
+    "823219": {
+        "title": "Flow",
+        "360p": "https://akm-cdn-play-web.onfilom.com/70d62c448d1a71efbfc987c7371d0102/de9e99578e8448dc96428924ffd150dd-4acea4010fa084e84e5f3aef9d32811f-fd.m3u8?hdnts=exp=1741374353_acl=/70d62c448d1a71efbfc987c7371d0102/*_hmac=d3317d868599099c56edef1f9f49dcaa2d0492f7d9dcfc823ec91a3bfc691b62",
+        "720p": "https://akm-cdn-play-web.onfilom.com/70d62c448d1a71efbfc987c7371d0102/de9e99578e8448dc96428924ffd150dd-2a36e0a3d8613822e53341ad74d37310-ld.m3u8?hdnts=exp=1741374353_acl=/70d62c448d1a71efbfc987c7371d0102/*_hmac=d3317d868599099c56edef1f9f49dcaa2d0492f7d9dcfc823ec91a3bfc691b62",
+        "1080p": "https://akm-cdn-play-web.onfilom.com/70d62c448d1a71efbfc987c7371d0102/de9e99578e8448dc96428924ffd150dd-31f43b7a1cd6b8c49b9e46905d4d8866-sd.m3u8?hdnts=exp=1741374353_acl=/70d62c448d1a71efbfc987c7371d0102/*_hmac=d3317d868599099c56edef1f9f49dcaa2d0492f7d9dcfc823ec91a3bfc691b62"
+    },
     "1064213": {
         "title": "Anora",
-        "360p": "https://lltsymlmrx.guardstorage.net/hls_3/FAAinxXbxD2Fr4-aEiPTqfaSSr463yRxQkoprR9_XBdKILF_KxqzPn8Pw-9X5-FAMPnUUpg8rrcr9abzj38EQg/index-f2-v1-a1.m3u8?sig=YtFzNr7xgzUk1vvGSPR29g&expires=1741168563",
-        "720p": "https://cv9fqnu812v.premilkyway.com/hls2/01/08227/ssb8jmgnqavs_,l,n,.urlset/index-f1-v1-a1.m3u8?t=OQ9KyfsBjRbHLoUuszE9yAcCvr0bKSPRG1cWkgPUUhA&s=1741159417&e=129600&f=41139591&srv=Gy4KXLg7mXRDXE7k&i=0.4&sp=500&p1=Gy4KXLg7mXRDXE7k&p2=Gy4KXLg7mXRDXE7k&asn=264619",
-        "1080p": "https://cv9fqnu812v.premilkyway.com/hls2/01/08227/ssb8jmgnqavs_,l,n,.urlset/index-f2-v1-a1.m3u8?t=OQ9KyfsBjRbHLoUuszE9yAcCvr0bKSPRG1cWkgPUUhA&s=1741159417&e=129600&f=41139591&srv=Gy4KXLg7mXRDXE7k&i=0.4&sp=500&p1=Gy4KXLg7mXRDXE7k&p2=Gy4KXLg7mXRDXE7k&asn=264619"
+        "360p": "https://akm-cdn-play-web.swplayer.com/00747ad3f25e71efbfef4177d0d10102/de98d363b5df4f8ba6d48dea02c95876-834b9be3e48bcc72b9a3a11e5771ccab-fd.m3u8?hdnts=exp=1741386768_acl=/00747ad3f25e71efbfef4177d0d10102/*_hmac=d94fea309c7d479269bae41639776579a56c921da7ea13b0436835fa2650b25b",
+        "720p": "https://akm-cdn-play-web.swplayer.com/00747ad3f25e71efbfef4177d0d10102/de98d363b5df4f8ba6d48dea02c95876-834b9be3e48bcc72b9a3a11e5771ccab-fd.m3u8?hdnts=exp=1741386768_acl=/00747ad3f25e71efbfef4177d0d10102/*_hmac=d94fea309c7d479269bae41639776579a56c921da7ea13b0436835fa2650b25b",
+        "1080p": "https://akm-cdn-play-web.swplayer.com/00747ad3f25e71efbfef4177d0d10102/de98d363b5df4f8ba6d48dea02c95876-01a99083a931dd1a7c4347eb9deee5ce-sd.m3u8?hdnts=exp=1741386768_acl=/00747ad3f25e71efbfef4177d0d10102/*_hmac=d94fea309c7d479269bae41639776579a56c921da7ea13b0436835fa2650b25b"
     },
     "549509": {
         "title": "El brutalista",
@@ -38,9 +32,9 @@ const movieVideos = {
     },
     "974576": {
         "title": "Cónclave",
-        "360p": "https://jeaoebkhqn.guardstorage.net/hls_3/GETCeVj3oTwWReeUqq8hCXDYXq_qO9HdNIPGlhJ7OnJ6BMVecf4LtXg-_IGO9YZq2A4VzkN9A8tHPaDbKh_rPSbdvRjkF4jFG0kJB5pMUofIWA2iPJ6zqW9TuiCgnABw0Sht80HNuUigpWAgvZjD09mFH2VFQ1zc9yjaCnrqh-7ywi2y2MHytwXIrQY7WCS3gcYleFNDTpqSKscbMy3coQ/index-f2-v1-a1.m3u8?sig=jd3y14d9oVZ26_rfNw8JdQ&expires=1741167688",
-        "720p": "https://nhthwydgtq.cdn-centaurus.com/hls2/01/06491/ixzzg4acb3pi_,l,n,.urlset/index-f1-v1-a1.m3u8?t=0DxFlBwfhHIJQ7MB3vQJGLII_hunkce9XrG5-XhzlkE&s=1741158585&e=129600&f=32459337&srv=42jafu1ovi9j&i=0.4&sp=500&p1=42jafu1ovi9j&p2=42jafu1ovi9j&asn=264619",
-        "1080p": "https://mx9skjnui4es.premilkyway.com/hls2/01/06394/i4m7e115eth7_n/index-v1-a1.m3u8?t=EN0Js8_wySjQsZBxQgVfKi52ld83HKlMt4J-X59417o&s=1741158438&e=129600&f=32051032&srv=jubDiYuWLQCqfHI&i=0.4&sp=500&p1=jubDiYuWLQCqfHI&p2=jubDiYuWLQCqfHI&asn=264619"
+        "360p": "https://akm-cdn-play-web.swplayer.com/70d918b6bd0671ef808b86c6360c0102/a6a02a6ec4f3440b8a749d4b2957a6ca-744f487d0d91c3d8b88ba5912beb6dd9-fd.m3u8?hdnts=exp=1741401372_acl=/70d918b6bd0671ef808b86c6360c0102/*_hmac=ff8482cfcc9d68b2bd27026b27cc8adab4bb7f179c41d32bc9ca63048340415a",
+        "720p": "https://akm-cdn-play-web.swplayer.com/70d918b6bd0671ef808b86c6360c0102/a6a02a6ec4f3440b8a749d4b2957a6ca-a3aa7e4a010671da7cc2795250166fd7-ld.m3u8?hdnts=exp=1741401372_acl=/70d918b6bd0671ef808b86c6360c0102/*_hmac=ff8482cfcc9d68b2bd27026b27cc8adab4bb7f179c41d32bc9ca63048340415a",
+        "1080p": "https://akm-cdn-play-web.swplayer.com/70d918b6bd0671ef808b86c6360c0102/a6a02a6ec4f3440b8a749d4b2957a6ca-9d1e8e3c531b4571367538cf9c654268-sd.m3u8?hdnts=exp=1741401372_acl=/70d918b6bd0671ef808b86c6360c0102/*_hmac=ff8482cfcc9d68b2bd27026b27cc8adab4bb7f179c41d32bc9ca63048340415a"
     },
     "1035048": {
         "title": "Criaturas: Línea de extinción",
@@ -92,9 +86,9 @@ const movieVideos = {
     },
 "1294203": {
         "title": "Culpa Mía: Londres",
-        "360p": "https://fqpy8ovqad.guardstorage.net/hls_3/DM3MduhB9ICO3sarVBZqDqNTJpjaBa4rWHH8XxNSkazg-l--4H6uvb0YGjSqtQs5qr_oIf_3YGbHL63zVGfs24gjsGrhvmCAtYbAwC_AEHzsLH1e2VqMXdL_VjpZYKRBb47soBButJgfcX5kh4jB_uqAvbqxRoM-aJ4Lugwf8N9dHS_la6CP90i9gKWjh9vp3UYq7ufpnN-AKvsNpTEUAw/index-f1-v1-a1.m3u8?sig=vo0wPlnjXG5leQ92mhQsPw&expires=1740778386",
-        "720p": "https://fqpy8ovqad.guardstorage.net/hls_3/DM3MduhB9ICO3sarVBZqDqNTJpjaBa4rWHH8XxNSkazg-l--4H6uvb0YGjSqtQs5qr_oIf_3YGbHL63zVGfs24gjsGrhvmCAtYbAwC_AEHzsLH1e2VqMXdL_VjpZYKRBb47soBButJgfcX5kh4jB_uqAvbqxRoM-aJ4Lugwf8N9dHS_la6CP90i9gKWjh9vp3UYq7ufpnN-AKvsNpTEUAw/index-f2-v1-a1.m3u8?sig=vo0wPlnjXG5leQ92mhQsPw&expires=1740778386",
-        "1080p": "https://fqpy8ovqad.guardstorage.net/hls_3/DM3MduhB9ICO3sarVBZqDqNTJpjaBa4rWHH8XxNSkazg-l--4H6uvb0YGjSqtQs5qr_oIf_3YGbHL63zVGfs24gjsGrhvmCAtYbAwC_AEHzsLH1e2VqMXdL_VjpZYKRBb47soBButJgfcX5kh4jB_uqAvbqxRoM-aJ4Lugwf8N9dHS_la6CP90i9gKWjh9vp3UYq7ufpnN-AKvsNpTEUAw/index-f3-v1-a1.m3u8?sig=vo0wPlnjXG5leQ92mhQsPw&expires=1740778386"
+        "360p": "https://akm-cdn-play-web.swplayer.com/10a94a94f0c171efbfb487c6371c0102/ddb0946df3274dda8bf219a5d57af475-95ab96b35995f453707a660d6db67a7e-fd.m3u8?hdnts=exp=1741403346_acl=/10a94a94f0c171efbfb487c6371c0102/*_hmac=1f459faca272cfe0f3a6597c67b7e14853904e9810d00b1b3a6bc9ad219c0b6b",
+        "720p": "https://akm-cdn-play-web.swplayer.com/10a94a94f0c171efbfb487c6371c0102/ddb0946df3274dda8bf219a5d57af475-02ac0f2d6673d44e65b4d7c5a28231e3-sd.m3u8?hdnts=exp=1741403346_acl=/10a94a94f0c171efbfb487c6371c0102/*_hmac=1f459faca272cfe0f3a6597c67b7e14853904e9810d00b1b3a6bc9ad219c0b6b",
+        "1080p": "https://akm-cdn-play-web.swplayer.com/10a94a94f0c171efbfb487c6371c0102/ddb0946df3274dda8bf219a5d57af475-ffc3af872b405ea39cbf78dd1575c708-hd.m3u8?hdnts=exp=1741403346_acl=/10a94a94f0c171efbfb487c6371c0102/*_hmac=1f459faca272cfe0f3a6597c67b7e14853904e9810d00b1b3a6bc9ad219c0b6b"
     },
 "539972": {
         "title": "Kraven el cazador",
@@ -110,9 +104,9 @@ const movieVideos = {
     },
 "822119": {
         "title": "Capitán América: Un nuevo mundo",
-        "360p": "https://7f12638xuzfg.premilkyway.com/hls2/01/08546/uagcpcfsl4la_,l,n,h,.urlset/index-f1-v1-a1.m3u8?t=4oeJ0VyuDTpJO_fwHIJet20VGtWZ9-HDfxOC9WCiZU4&s=1741159750&e=129600&f=42732441&srv=jubDiYuWLQCqfHI&i=0.4&sp=500&p1=jubDiYuWLQCqfHI&p2=jubDiYuWLQCqfHI&asn=264619",
-        "720p": "https://7f12638xuzfg.premilkyway.com/hls2/01/08546/uagcpcfsl4la_,l,n,h,.urlset/index-f2-v1-a1.m3u8?t=4oeJ0VyuDTpJO_fwHIJet20VGtWZ9-HDfxOC9WCiZU4&s=1741159750&e=129600&f=42732441&srv=jubDiYuWLQCqfHI&i=0.4&sp=500&p1=jubDiYuWLQCqfHI&p2=jubDiYuWLQCqfHI&asn=264619",
-        "1080p": "https://7f12638xuzfg.premilkyway.com/hls2/01/08546/uagcpcfsl4la_,l,n,h,.urlset/index-f3-v1-a1.m3u8?t=4oeJ0VyuDTpJO_fwHIJet20VGtWZ9-HDfxOC9WCiZU4&s=1741159750&e=129600&f=42732441&srv=jubDiYuWLQCqfHI&i=0.4&sp=500&p1=jubDiYuWLQCqfHI&p2=jubDiYuWLQCqfHI&asn=264619"
+        "360p": "https://be2719.rcr22.ams01.cdn255.com/hls2/01/08234/0g3752lt7sty_h/index-v1-a1.m3u8?t=j0dHiCODyo8b6xMZQuFoTrtdgNSgRaSXDr2bglTEaGE&s=1741324899&e=10800&f=41203253&srv=49&asn=264619&sp=4000&p=",
+        "720p": "https://be2719.rcr22.ams01.cdn255.com/hls2/01/08234/0g3752lt7sty_h/index-v1-a1.m3u8?t=j0dHiCODyo8b6xMZQuFoTrtdgNSgRaSXDr2bglTEaGE&s=1741324899&e=10800&f=41203253&srv=49&asn=264619&sp=4000&p=",
+        "1080p": "https://be2719.rcr22.ams01.cdn255.com/hls2/01/08234/0g3752lt7sty_h/index-v1-a1.m3u8?t=j0dHiCODyo8b6xMZQuFoTrtdgNSgRaSXDr2bglTEaGE&s=1741324899&e=10800&f=41203253&srv=49&asn=264619&sp=4000&p="
     },
 "1084199": {
         "title": "Compañera Perfecta",
@@ -122,9 +116,9 @@ const movieVideos = {
     },
 "1241982": {
         "title": "Moana 2",
-        "360p": "https://0uki2r61lp.guardstorage.net/hls_3/VcJ1yQrvRQTswJn-PEa4fjoSsaG8KCxs-pM4-uFYU7K53VtwMO1mKQLlu7DFkmW47JGe-ytPzDdDfXyRVxBSKSgLhRgq128nP36drrM62Fmv051Htafh94I10fp_bR9fXXlIDJ_75mvgbmygJrw1RsSzdv5AXMCm_KwmYcvnenf4DjtP12tM9B0QBUdy1WETEXfCxKVlRv-tnYWG5X7qfw/index-f1-v1-a1.m3u8?sig=d_97MsU6mRjrc8S1c9kd3w&expires=1740743482",
-        "720p": "https://0uki2r61lp.guardstorage.net/hls_3/VcJ1yQrvRQTswJn-PEa4fjoSsaG8KCxs-pM4-uFYU7K53VtwMO1mKQLlu7DFkmW47JGe-ytPzDdDfXyRVxBSKSgLhRgq128nP36drrM62Fmv051Htafh94I10fp_bR9fXXlIDJ_75mvgbmygJrw1RsSzdv5AXMCm_KwmYcvnenf4DjtP12tM9B0QBUdy1WETEXfCxKVlRv-tnYWG5X7qfw/index-f2-v1-a1.m3u8?sig=d_97MsU6mRjrc8S1c9kd3w&expires=1740743482",
-        "1080p": "https://0uki2r61lp.guardstorage.net/hls_3/VcJ1yQrvRQTswJn-PEa4fjoSsaG8KCxs-pM4-uFYU7K53VtwMO1mKQLlu7DFkmW47JGe-ytPzDdDfXyRVxBSKSgLhRgq128nP36drrM62Fmv051Htafh94I10fp_bR9fXXlIDJ_75mvgbmygJrw1RsSzdv5AXMCm_KwmYcvnenf4DjtP12tM9B0QBUdy1WETEXfCxKVlRv-tnYWG5X7qfw/index-f2-v1-a1.m3u8?sig=d_97MsU6mRjrc8S1c9kd3w&expires=1740743482"
+        "360p": "https://akm-cdn-play-web.swplayer.com/40a19674adfb71efbfbf97c6360c0102/a206070514bb4a0fbe333c704ea63103-6399bba9ce8e29ae4b2fef2986534eed-fd.m3u8?hdnts=exp=1741387134_acl=/40a19674adfb71efbfbf97c6360c0102/*_hmac=18b5cd4248cec7dc7da5be9a95c45f4ba75987559ad65c285b8d9d1421f854fe",
+        "720p": "https://akm-cdn-play-web.swplayer.com/40a19674adfb71efbfbf97c6360c0102/a206070514bb4a0fbe333c704ea63103-642f8931f022d00a9fd830bb158f7505-sd.m3u8?hdnts=exp=1741387134_acl=/40a19674adfb71efbfbf97c6360c0102/*_hmac=18b5cd4248cec7dc7da5be9a95c45f4ba75987559ad65c285b8d9d1421f854fe",
+        "1080p": "https://akm-cdn-play-web.swplayer.com/40a19674adfb71efbfbf97c6360c0102/a206070514bb4a0fbe333c704ea63103-1d24a2853a26444bdcc9a53e7bd10806-hd.m3u8?hdnts=exp=1741387134_acl=/40a19674adfb71efbfbf97c6360c0102/*_hmac=18b5cd4248cec7dc7da5be9a95c45f4ba75987559ad65c285b8d9d1421f854fe"
     },
 "1126166": {
         "title": "Amenaza En El Aire",
@@ -134,9 +128,9 @@ const movieVideos = {
     },
     "762509": {
         "title": "Mufasa El Rey León",
-        "360p": "https://zte054upd8.guardstorage.net/hls_3/zOOp8MnWQ8LLDkPqUR6nt_wq7JNc21Jd1TGs_TBV9b-Aia3tDpYc06rpQdh8SnlJ3gJ1-Gdp24wjyoTDFPPsnQ/index-f2-v1-a1.m3u8?sig=mz5wJm6pnYEum_X_-KQGvQ&expires=1740742899",
-        "720p": "https://zte054upd8.guardstorage.net/hls_3/zOOp8MnWQ8LLDkPqUR6nt_wq7JNc21Jd1TGs_TBV9b-Aia3tDpYc06rpQdh8SnlJ3gJ1-Gdp24wjyoTDFPPsnQ/index-f3-v1-a1.m3u8?sig=mz5wJm6pnYEum_X_-KQGvQ&expires=1740742899",
-        "1080p": "https://zte054upd8.guardstorage.net/hls_3/zOOp8MnWQ8LLDkPqUR6nt_wq7JNc21Jd1TGs_TBV9b-Aia3tDpYc06rpQdh8SnlJ3gJ1-Gdp24wjyoTDFPPsnQ/index-f3-v1-a1.m3u8?sig=mz5wJm6pnYEum_X_-KQGvQ&expires=1740742899"
+        "360p": "https://akm-cdn-play-web.swplayer.com/a0236babcbd671ef814a86c6360c0102/3e67dbe1512d4dc893a54560768b20fa-88132d0ee80f1a11b2cf848108927980-fd.m3u8?hdnts=exp=1741386933_acl=/a0236babcbd671ef814a86c6360c0102/*_hmac=e606a80e0c86754b3d5e68110aa302744690d8f96b1b52a28caeb5494cabba4b",
+        "720p": "https://akm-cdn-play-web.swplayer.com/a0236babcbd671ef814a86c6360c0102/3e67dbe1512d4dc893a54560768b20fa-a63109e1f44c74225e2248b7f3fd1570-ld.m3u8?hdnts=exp=1741386933_acl=/a0236babcbd671ef814a86c6360c0102/*_hmac=e606a80e0c86754b3d5e68110aa302744690d8f96b1b52a28caeb5494cabba4b",
+        "1080p": "https://akm-cdn-play-web.swplayer.com/a0236babcbd671ef814a86c6360c0102/3e67dbe1512d4dc893a54560768b20fa-c107b7aa5aa0ec93ac25bd0d1a9a9d5d-sd.m3u8?hdnts=exp=1741386933_acl=/a0236babcbd671ef814a86c6360c0102/*_hmac=e606a80e0c86754b3d5e68110aa302744690d8f96b1b52a28caeb5494cabba4b"
     },
     "950396": {
         "title": "El Abismo Secreto",

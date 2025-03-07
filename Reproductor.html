@@ -36,6 +36,29 @@
 
 <script>
 const video = document.getElementById("video");
+
+// Guardar el progreso de la reproducción
+video.addEventListener("pause", () => {
+    localStorage.setItem(`progress_${movieId}`, video.currentTime);
+});
+
+// Guardar el progreso cuando el usuario cierre la página
+window.addEventListener("beforeunload", () => {
+    localStorage.setItem(`progress_${movieId}`, video.currentTime);
+});
+
+// Cargar el progreso guardado al iniciar la reproducción
+document.addEventListener("DOMContentLoaded", () => {
+    const savedProgress = localStorage.getItem(`progress_${movieId}`);
+    if (savedProgress) {
+        video.currentTime = parseFloat(savedProgress);
+    }
+});
+
+// Eliminar el progreso cuando la película se termine
+video.addEventListener("ended", () => {
+    localStorage.removeItem(`progress_${movieId}`);
+});
 const controls = document.getElementById("customControls");
 const loader = document.getElementById("loader");
 const qualityContainer = document.getElementById("quality-container");
@@ -241,6 +264,21 @@ window.addEventListener("orientationchange", () => {
             isOrientationChanging = false;
         }
     });
+});
+// En Reproductor.html, dentro del script existente
+video.addEventListener("ended", () => {
+    localStorage.removeItem(`progress_${movieId}`);
+    
+    // Guardar el historial de reproducciones
+    const watchedHistory = JSON.parse(localStorage.getItem('watchedHistory') || '[]');
+    if (!watchedHistory.includes(movieId)) {
+        watchedHistory.push(movieId);
+        localStorage.setItem('watchedHistory', JSON.stringify(watchedHistory));
+    }
+
+    // Actualizar la sección "Para ti" en la página principal
+    const content = document.getElementById('content');
+    if (content) generateForYouSection(content);
 });
 </script>
 

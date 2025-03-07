@@ -1,186 +1,138 @@
+// Películas manuales
+const manualMovies = [
+    {
+        id: 950396, // ID de TMDb para "Fight Club"
+        title: "El Abismo Secreto",
+        image: "https://media.themoviedb.org/t/p/w220_and_h330_face/3s0jkMh0YUhIeIeioH3kt2X4st4.jpg",
+        link: "detalles.html?type=movie&id=950396", // Usamos el ID de TMDb
+        year: "2025"
+    },
+    {
+        id: 822119, // ID de TMDb para "Fight Club"
+        title: "Capitán América: Un Nuevo Mundo",
+        image: "https://media.themoviedb.org/t/p/w220_and_h330_face/xVwP4GCbEfO66JSSyonnAhU3Fad.jpg",
+        link: "detalles.html?type=movie&id=822119", // Usamos el ID de TMDb
+        year: "2025"
+    },
+    {
+        id: 1084199, // ID de TMDb para "Fight Club"
+        title: "Compañera Perfecta",
+        image: "https://media.themoviedb.org/t/p/w220_and_h330_face/nyloao2GWttUvS7KVcEM2eSDwUn.jpg",
+        link: "detalles.html?type=movie&id=1084199", // Usamos el ID de TMDb
+        year: "2025"
+    },
+    {
+        id: 1126166, // ID de TMDb para "Fight Club"
+        title: "Amenaza En El Aire",
+        image: "https://media.themoviedb.org/t/p/w220_and_h330_face/8T6nkYb4W8BIeafmFffyfsRciTL.jpg",
+        link: "detalles.html?type=movie&id=1126166", // Usamos el ID de TMDb
+        year: "2025"
+    },
+    {
+        id: 823219, // ID de TMDb para "Fight Club"
+        title: "Flow",
+        image: "https://media.themoviedb.org/t/p/w220_and_h330_face/337MqZW7xii2evUDVeaWXAtopff.jpg",
+        link: "detalles.html?type=movie&id=823219", // Usamos el ID de TMDb
+        year: "2024"
+    }, 
+    {
+        id: 1064213, // ID de TMDb para "Fight Club"
+        title: "Anora",
+        image: "https://media.themoviedb.org/t/p/w220_and_h330_face/n5wEFSLkm2fCtN0FVAuphrCAjf8.jpg",
+        link: "detalles.html?type=movie&id=1064213", // Usamos el ID de TMDb
+        year: "2024"
+    },
+    {
+        id: 762509, // ID de TMDb para "Fight Club"
+        title: "Mufasa El Rey León",
+        image: "https://media.themoviedb.org/t/p/w220_and_h330_face/dmw74cWIEKaEgl5Dv3kUTcCob6D.jpg",
+        link: "detalles.html?type=movie&id=762509", // Usamos el ID de TMDb
+        year: "2024"
+    },
+    {
+        id: 1241982, // ID de TMDb para "Fight Club"
+        title: "Moana 2",
+        image: "https://media.themoviedb.org/t/p/w220_and_h330_face/b1WsCRfomw7tRi12NuseKsAJxYK.jpg",
+        link: "detalles.html?type=movie&id=1241982", // Usamos el ID de TMDb
+        year: "2024"
+    },
+    {
+        id: 939243, // ID de TMDb para "Fight Club"
+        title: "Sonic 3: La Película",
+        image: "https://media.themoviedb.org/t/p/w220_and_h330_face/3aDWCRXLYOCuxjrjiPfLd79tcI6.jpg",
+        link: "detalles.html?type=movie&id=939243", // Usamos el ID de TMDb
+        year: "2024"
+    },
+    
+];
+
+// Función para generar el contenido de la página principal
+const accionMovies = [
+    {
+        id: 822119, // ID de TMDb para "Fight Club"
+        title: "Capitán América: Un Nuevo Mundo",
+        image: "https://media.themoviedb.org/t/p/w220_and_h330_face/xVwP4GCbEfO66JSSyonnAhU3Fad.jpg",
+        link: "detalles.html?type=movie&id=822119", // Usamos el ID de TMDb
+        year: "2025"
+    },
+    {
+        id: 1126166, // ID de TMDb para "Fight Club"
+        title: "Amenaza En El Aire",
+        image: "https://media.themoviedb.org/t/p/w220_and_h330_face/8T6nkYb4W8BIeafmFffyfsRciTL.jpg",
+        link: "detalles.html?type=movie&id=1126166", // Usamos el ID de TMDb
+        year: "2025"
+    },
+    {
+        id: 950396, // ID de TMDb para "Fight Club"
+        title: "El Abismo Secreto",
+        image: "https://media.themoviedb.org/t/p/w220_and_h330_face/3s0jkMh0YUhIeIeioH3kt2X4st4.jpg",
+        link: "detalles.html?type=movie&id=950396", // Usamos el ID de TMDb
+        year: "2025"
+    },
+];
+const dramaMovies = [
+    {
+        id: 974576, // ID de TMDb para "Fight Club"
+        title: "Cónclave",
+        image: "https://media.themoviedb.org/t/p/w220_and_h330_face/jkOgeASTlWwyKLBNblHVwWmAKhD.jpg",
+        link: "detalles.html?type=movie&id=974576", // Usamos el ID de TMDb
+        year: "2025"
+    },
+    {
+        id: 933260, // ID de TMDb para "Fight Club"
+        title: "The substance",
+        image: "https://media.themoviedb.org/t/p/w220_and_h330_face/w1PiIqM89r4AM7CiMEP4VLCEFUn.jpg",
+        link: "detalles.html?type=movie&id=933260", // Usamos el ID de TMDb
+        year: "2024"
+    },
+    {
+        id: 1272149, // ID de TMDb para "Fight Club"
+        title: "Bridget Jones: Loca Por Él",
+        image: "https://media.themoviedb.org/t/p/w220_and_h330_face/9K4xBef7N7YZTnke23FiNTHBGNU.jpg",
+        link: "detalles.html?type=movie&id=1272149", // Usamos el ID de TMDb
+        year: "2025"
+    },
+    {
+        id: 1294203, // ID de TMDb para "Fight Club"
+        title: "Culpa Mía: Londres",
+        image: "https://media.themoviedb.org/t/p/w220_and_h330_face/q0HxfkF9eoa6wSVnzwMhuDSK7ba.jpg",
+        link: "detalles.html?type=movie&id=1294203", // Usamos el ID de TMDb
+        year: "2025"
+    },
+];
 const apiKey = '995449ccaf6d840acc029f95c7d210dd';
-let trailersCache = null;
-
-// 1. Cache para trailers.json (sin cambios)
-async function loadTrailers() {
-    if (trailersCache) return trailersCache;
-    
-    try {
-        const response = await fetch('trailers.json');
-        if (!response.ok) throw new Error('Error al cargar trailers.json');
-        const data = await response.json();
-
-        const flattenedTrailers = {};
-        Object.values(data).forEach(category => {
-            category.forEach(movie => {
-                flattenedTrailers[movie.id] = movie.trailer;
-            });
-        });
-
-        trailersCache = flattenedTrailers;
-        return flattenedTrailers;
-    } catch (error) {
-        console.error('Error loading trailers:', error);
-        return {};
-    }
-}
-
-// Función fetchContent corregida
-async function fetchContent(type, endpoint, page = 1) {
-    try {
-        const isTV = type === 'tv';
-        const urlParams = endpoint.includes('?') ? '&' : '?';
-        const url = `https://api.themoviedb.org/3/${endpoint}${urlParams}api_key=${apiKey}&language=es-MX&page=${page}`;
-        
-        const [response, trailers] = await Promise.all([
-            fetch(url),
-            loadTrailers()
-        ]);
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(`API Error: ${errorData.status_message}`);
-        }
-
-        const data = await response.json();
-        return await Promise.all(data.results.map(async (item) => {
-            const trailerKey = item.id in trailers ? 
-                trailers[item.id] : 
-                await fetchTrailer(item.id, isTV ? 'tv' : 'movie');
-
-            return {
-                title: isTV ? item.name : item.title,
-                image: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
-                link: `detalles.html?type=${isTV ? 'tv' : 'movie'}&title=${encodeURIComponent(isTV ? item.name : item.title)}`,
-                year: (isTV ? item.first_air_date : item.release_date)?.split('-')[0] || 'N/A',
-                rating: item.vote_average ? `${item.vote_average}/10` : 'N/A',
-                genre: isTV ? 
-                    (item.genres?.[0]?.name || 'TV: Serie') : 
-                    (item.genres?.[0]?.name || 'Película'),
-                synopsis: item.overview || "Sin sinopsis disponible.",
-                trailer: trailerKey,
-                ...(!isTV && {
-                    duration: item.runtime ? 
-                        `${Math.floor(item.runtime / 60)}h ${item.runtime % 60}m` : 'N/A',
-                    cast: 'Reparto no disponible'
-                })
-            };
-        }));
-    } catch (error) {
-        console.error(`Error fetching ${type}:`, error.message);
-        return [];
-    }
-}
-
-// 3. Función fetchTrailer (sin cambios)
-async function fetchTrailer(id, mediaType) {
-    const languages = ['es-MX', 'es-ES', 'en-US'];
-    
-    for (const lang of languages) {
-        try {
-            const response = await fetch(
-                `https://api.themoviedb.org/3/${mediaType}/${id}/videos?api_key=${apiKey}&language=${lang}`
-            );
-            const data = await response.json();
-            const trailer = data.results.find(v => v.type === 'Trailer');
-            if (trailer) return `https://www.youtube.com/embed/${trailer.key}`;
-        } catch (error) {
-            console.error(`Error en ${lang}:`, error);
-        }
-    }
-    return '';
-}
-
-// 4. Carga paralela optimizada
-let moviesData = {
-    "Tendencias": [],
-    "Mejor calificadas": [],
-    "Series mejor clasificadas": [],
-    "Próximos estrenos": [],
-    "En cartelera": [],
-    "Acción": [],
-    "Comedia": [],
-    "Terror": [],
-    "Fantasía": [],
-    "Ocultas": []
-};
-
-let currentPage = 1;
-
-async function loadMovies(loadMore = false) {
-    const loader = document.getElementById('loader');
-    if (loader && !loadMore) loader.style.display = 'block'; // Mostrar el loader solo en la primera carga
-
-    const endpoints = [
-        ['movie/popular', 'Tendencias'],
-        ['movie/top_rated', 'Mejor calificadas'],
-        ['tv/top_rated', 'Series mejor clasificadas'],
-        ['movie/upcoming', 'Próximos estrenos'],
-        ['movie/now_playing', 'En cartelera'],
-        ['discover/movie?with_genres=28', 'Acción'],
-        ['discover/movie?with_genres=35', 'Comedia'],
-        ['discover/movie?with_genres=27', 'Terror'],
-        ['discover/movie?with_genres=14', 'Fantasía'],
-        ['discover/movie?sort_by=vote_count.asc&vote_count.gte=10', 'Ocultas']
-    ];
-
-    try {
-        const results = await Promise.all(
-            endpoints.map(([endpoint, key]) => 
-                endpoint.startsWith('tv/') ? 
-                    fetchContent('tv', endpoint, currentPage) : 
-                    fetchContent('movie', endpoint, currentPage)
-            )
-        );
-
-        endpoints.forEach(([_, key], index) => {
-            if (loadMore) {
-                moviesData[key] = [...moviesData[key], ...results[index]];
-            } else {
-                moviesData[key] = results[index];
-            }
-        });
-
-        updateContent();
-        if (loadMore) currentPage++;
-    } catch (error) {
-        console.error('Error loading movies:', error);
-    } finally {
-        if (loader && !loadMore) loader.style.display = 'none'; // Ocultar el loader solo en la primera carga
-    }
-}
-
-// 5. Corregir función generarContenido
-function createMovieCard(movie, isLiked = false) {
-    return `
-        <div class="movie-card">
-            <a href="${movie.link}">
-                <img src="${movie.image}" alt="${movie.title}">
-                <div class="movie-title">${movie.title}</div>
-            </a>
-            ${isLiked ? `
-                <button class="remove-liked" onclick="removeFromLiked('${movie.title}')">
-                    <i class="fas fa-times"></i>
-                </button>
-            ` : ''}
-        </div>
-    `;
-}
-
+// En moviesData.js, al final de la función generarContenido
 function generarContenido(container) {
+    const continueWatchingMovies = getContinueWatchingMovies();
     const visibleCategories = {
-        "Tendencias": moviesData["Tendencias"],
-        "Mejor calificadas": moviesData["Mejor calificadas"],
-        "Series mejor clasificadas": moviesData["Series mejor clasificadas"],
-        "Próximos estrenos": moviesData["Próximos estrenos"],
-        "En cartelera": moviesData["En cartelera"],
-        "Acción": moviesData["Acción"],
-        "Comedia": moviesData["Comedia"],
-        "Terror": moviesData["Terror"],
-        "Fantasía": moviesData["Fantasía"]
-    };    
+        "Seguir viendo": continueWatchingMovies,
+        "Recién Agregado": manualMovies,
+        "Acción": accionMovies,
+        "Drama": dramaMovies
+    };
 
     container.innerHTML = Object.entries(visibleCategories).map(([category, movies]) => {
+        if (movies.length === 0) return ''; // No mostrar categorías vacías
         return `
             <section class="movie-section">
                 <h2 class="section-title">${category}</h2>
@@ -190,42 +142,118 @@ function generarContenido(container) {
             </section>
         `;
     }).join('');
+
+    // Generar la sección "Para ti"
+    generateForYouSection(container);
 }
+// Función para obtener las películas que el usuario está viendo
+function getContinueWatchingMovies() {
+    const continueWatching = [];
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key.startsWith("progress_")) {
+            const movieId = key.split("_")[1];
+            const progress = localStorage.getItem(key);
+            const movie = manualMovies.find(m => m.id == movieId) || 
+                          accionMovies.find(m => m.id == movieId) || 
+                          dramaMovies.find(m => m.id == movieId);
+            if (movie) {
+                continueWatching.push({
+                    ...movie,
+                    progress: parseFloat(progress)
+                });
+            }
+        }
+    }
+    return continueWatching;
+}
+// Función para crear una tarjeta de película
+function createMovieCard(movie) {
+    const progress = movie.progress ? `<div class="progress-bar"><div class="progress" style="width: ${(movie.progress / movie.duration) * 100}%"></div></div>` : '';
+    const removeButton = movie.progress ? `
+        <button class="remove-button" data-movie-id="${movie.id}">
+            <i class="fas fa-trash"></i> <!-- Ícono de papelera -->
+        </button>
+    ` : '';
 
-// Resto de funciones UI permanecen igual...
+    return `
+        <div class="movie-card">
+            <a href="${movie.link}">
+                <img src="${movie.image}" alt="${movie.title}">
+                <div class="movie-title">${movie.title}</div>
+                ${movie.year ? `<div class="movie-year">${movie.year}</div>` : ''}
+                ${progress}
+            </a>
+            ${removeButton} <!-- Botón con ícono de eliminar -->
+        </div>
+    `;
+}
+function showConfirmModal(title, callback) {
+    const modal = document.getElementById('confirm-modal');
+    const confirmMessage = document.getElementById('confirm-message');
+    const confirmYes = document.getElementById('confirm-yes');
+    const confirmNo = document.getElementById('confirm-no');
 
-function setupCarouselControls() {
-    const carousels = document.querySelectorAll('.liked-container');
-    
-    carousels.forEach(container => {
-        const carousel = container.querySelector('.liked-carousel');
-        const prevBtn = container.querySelector('.prev-btn');
-        const nextBtn = container.querySelector('.next-btn');
-        const scrollAmount = 300;
-        
-        prevBtn?.addEventListener('click', () => {
-            carousel.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    confirmMessage.textContent = `¿Estás seguro de que quieres eliminar "${title}" de "Seguir viendo"?`;
+    modal.style.display = 'flex';
+
+    confirmYes.onclick = () => {
+        modal.style.display = 'none';
+        callback(true); // Confirmar eliminación
+    };
+
+    confirmNo.onclick = () => {
+        modal.style.display = 'none';
+        callback(false); // Cancelar eliminación
+    };
+}
+function setupRemoveButtons() {
+    const removeButtons = document.querySelectorAll('.remove-button');
+    removeButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault(); // Evitar que el enlace se active
+            const movieId = button.getAttribute('data-movie-id');
+            const movieTitle = manualMovies.find(m => m.id == movieId)?.title || "esta película";
+
+            // Mostrar el modal de confirmación
+            showConfirmModal(movieTitle, (confirmed) => {
+                if (confirmed) {
+                    removeFromContinueWatching(movieId);
+                }
+            });
         });
-        
-        nextBtn?.addEventListener('click', () => {
-            carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-        });
-        
-        const updateButtons = () => {
-            prevBtn.style.display = carousel.scrollLeft <= 0 ? 'none' : 'flex';
-            nextBtn.style.display = carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth ? 'none' : 'flex';
-        };
-        
-        carousel.addEventListener('scroll', updateButtons);
-        updateButtons();
     });
 }
 
-function updateContent() {
-    const content = document.getElementById('content');
-    if (content) generarContenido(content);
+function removeFromContinueWatching(movieId) {
+    localStorage.removeItem(`progress_${movieId}`);
+    showToast(`Película eliminada de "Seguir viendo"`, 'success');
+    // Recargar la página para actualizar la lista
+    setTimeout(() => {
+        window.location.reload();
+    }, 1000);
 }
+function showToast(message, type) {
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.innerText = message;
 
+    document.body.appendChild(toast);
+
+    // Mostrar el toast
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 100);
+
+    // Ocultar el toast después de 3 segundos
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            document.body.removeChild(toast);
+        }, 300); // Esperar a que termine la animación de desvanecimiento
+    }, 3000);
+}
+// Configuración del buscador
 function setupSearch() {
     const searchIconButton = document.querySelector('.search-icon-button');
     const searchWrapper = document.querySelector('.search-wrapper');
@@ -279,26 +307,32 @@ function setupSearch() {
     }
 
     function searchMovies(query) {
-        const allMovies = Object.values(moviesData).flat(); // Obtener todas las películas de todas las categorías
-        const uniqueMovies = []; // Almacenar películas únicas
-        const seenTitles = new Set(); // Usar un Set para rastrear títulos ya vistos
+    const normalizedQuery = query
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Eliminar acentos
+        .toLowerCase();
 
-        // Eliminar duplicados basados en el título
-        allMovies.forEach(movie => {
-            if (!seenTitles.has(movie.title)) { // Verificar si el título ya fue procesado
-                seenTitles.add(movie.title); // Agregar el título al Set
-                uniqueMovies.push(movie); // Agregar la película a la lista de resultados únicos
-            }
-        });
+    // Combinar todas las listas de películas que quieras buscar
+    const allMovies = [...manualMovies, ...accionMovies, ...dramaMovies]; // Agrega más listas si es necesario
 
-        // Filtrar los resultados únicos según la consulta de búsqueda
-        return uniqueMovies.filter(movie => {
-            return movie.title.toLowerCase().includes(query) ||
-                   (movie.cast?.toLowerCase().includes(query)) ||
-                   (movie.genre?.toLowerCase().includes(query)) ||
-                   (movie.year?.toString().includes(query));
-        });
-    }
+    const seenTitles = new Set();
+    const uniqueMovies = [];
+
+    allMovies.forEach(movie => {
+        if (!seenTitles.has(movie.title)) {
+            seenTitles.add(movie.title);
+            uniqueMovies.push(movie);
+        }
+    });
+
+    return uniqueMovies.filter(movie => {
+        const normalizedTitle = movie.title
+            .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase();
+
+        return normalizedTitle.includes(normalizedQuery) ||
+               movie.year?.toString().includes(query);
+    });
+}
 
     function displayResults(results) {
         searchResults.innerHTML = '';
@@ -316,7 +350,7 @@ function setupSearch() {
                 <img src="${movie.image}" alt="${movie.title}">
                 <div class="search-result-info">
                     <h3>${movie.title}</h3>
-                    ${movie.year ? `<p>${movie.year} • ${movie.genre || ''}</p>` : ''}
+                    ${movie.year ? `<p>${movie.year}</p>` : ''}
                 </div>
             `;
             item.addEventListener('click', () => {
@@ -328,65 +362,70 @@ function setupSearch() {
         searchResults.style.display = 'block';
     }
 }
+// En moviesData.js, antes de la inicialización
 
-// Inicialización
-function setupInfiniteScroll() {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                loadMovies(true); // Cargar más películas
-            }
-        });
-    }, {
-        rootMargin: '0px 0px 100px 0px', // Cargar antes de llegar al final
-        threshold: 0.1
-    });
-
-    const sentinel = document.createElement('div');
-    sentinel.id = 'sentinel';
-    document.body.appendChild(sentinel);
-    observer.observe(sentinel);
+// Función para obtener recomendaciones
+async function getRecommendations(movieId, type) {
+    try {
+        const response = await fetch(
+            `https://api.themoviedb.org/3/${type}/${movieId}/recommendations?api_key=${apiKey}&language=es-MX`
+        );
+        const data = await response.json();
+        return data.results;
+    } catch (error) {
+        console.error('Error obteniendo recomendaciones:', error);
+        return [];
+    }
 }
 
+// Función para generar la sección "Para ti"
+async function generateForYouSection(container) {
+    const watchedHistory = JSON.parse(localStorage.getItem('watchedHistory') || '[]');
+    if (watchedHistory.length === 0) return;
+
+    // Obtener recomendaciones basadas en el historial
+    const recommendations = [];
+    for (const movieId of watchedHistory) {
+        const recs = await getRecommendations(movieId, 'movie'); // Cambia a 'tv' si es una serie
+        recommendations.push(...recs);
+    }
+
+    // Eliminar duplicados
+    const uniqueRecommendations = recommendations.filter((movie, index, self) =>
+        index === self.findIndex((m) => m.id === movie.id)
+    );
+
+    // Mostrar la sección "Para ti"
+    if (uniqueRecommendations.length > 0) {
+        const forYouSection = `
+            <section class="movie-section">
+                <h2 class="section-title">Para ti</h2>
+                <div class="movies-container">
+                    ${uniqueRecommendations.map(movie => createMovieCard({
+                        id: movie.id,
+                        title: movie.title,
+                        image: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+                        link: `detalles.html?type=movie&id=${movie.id}`,
+                        year: movie.release_date?.split('-')[0] || 'N/A'
+                    })).join('')}
+                </div>
+            </section>
+        `;
+        container.insertAdjacentHTML('afterbegin', forYouSection);
+    }
+}
 // Inicialización
 document.addEventListener('DOMContentLoaded', () => {
-    loadMovies();
+    const content = document.getElementById('content');
+    if (content) generarContenido(content);
+
+    // Ocultar el loader después de cargar las películas manuales
+    const loader = document.getElementById('loader');
+    if (loader) loader.style.display = 'none';
+
+    // Configurar el buscador
     setupSearch();
-    setupInfiniteScroll();
 
-    document.getElementById('mark-liked')?.addEventListener('click', () => {
-        const featuredMovie = {
-            title: document.querySelector('.hero-title').textContent,
-            image: document.querySelector('.featured-image').src,
-            link: '#'
-        };
-        markAsLiked(featuredMovie);
-    });
-
-    // Manejar el botón de géneros
-    const genreToggle = document.getElementById('genre-toggle');
-    const genreBar = document.getElementById('genre-bar');
-
-    genreToggle?.addEventListener('click', (e) => {
-        e.preventDefault();
-        genreBar.style.display = genreBar.style.display === 'none' ? 'flex' : 'none';
-    });
-
-    // Manejar los botones de género
-    const genreButtons = document.querySelectorAll('.genre-button');
-    genreButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const genre = button.getAttribute('data-genre');
-            scrollToGenre(genre);
-        });
-    });
-
-    function scrollToGenre(genre) {
-        const sectionTitles = document.querySelectorAll('.section-title');
-        sectionTitles.forEach(title => {
-            if (title.textContent === genre) {
-                title.scrollIntoView({ behavior: 'smooth' });
-            }
-        });
-    }
+    // Configurar los botones de "Eliminar"
+    setupRemoveButtons();
 });

@@ -372,7 +372,41 @@ body {
         order: 1; /* Posicionar debajo del título */
     }
 }
+/* Estilos para el contenedor de episodios */
+.episodes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    padding: 16px;
+}
 
+/* Estilos para la tarjeta de cada episodio */
+.episode-card {
+    background-color: #2c2c2c;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.episode-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilos para el enlace del episodio */
+.episode-link {
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    padding: 16px;
+}
+
+/* Estilos para el título del episodio */
+.episode-title {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+}
 /* RESPONSIVE */
 @media (max-width: 768px) {
     .main-info {

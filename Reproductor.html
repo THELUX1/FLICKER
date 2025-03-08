@@ -222,7 +222,7 @@ document.getElementById("fullscreen-btn").addEventListener("click", () => {
 
 function addQualityOptions() {
     qualityContainer.innerHTML = '';
-    const qualities = Object.keys(movieVideos[movieId] || {"720p": "default"});
+    const qualities = Object.keys(movieVideos[movieId] || {"360p": "default"});
 
     qualities.forEach(quality => {
         if (quality !== "title") {
@@ -230,15 +230,20 @@ function addQualityOptions() {
             option.className = "quality-option";
             option.innerText = `Calidad: ${quality}`;
             option.addEventListener("click", () => {
+                const currentTime = video.currentTime; // Guardar el tiempo actual
                 const newUrl = getMovieVideoUrl(movieId, quality);
                 if (Hls.isSupported()) {
                     hls.destroy();
                     hls = new Hls();
                     hls.loadSource(newUrl);
                     hls.attachMedia(video);
-                    video.play();
+                    hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                        video.currentTime = currentTime; // Restaurar el tiempo actual
+                        video.play();
+                    });
                 } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
                     video.src = newUrl;
+                    video.currentTime = currentTime; // Restaurar el tiempo actual
                     video.play();
                 }
                 qualityContainer.style.display = "none";

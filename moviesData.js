@@ -143,8 +143,8 @@ function generarContenido(container) {
         `;
     }).join('');
 
-    // Generar la sección "Para ti"
-    generateForYouSection(container);
+    /* // Generar la sección "Para ti"
+    generateForYouSection(container); */
 }
 // Función para obtener las películas que el usuario está viendo
 function getContinueWatchingMovies() {

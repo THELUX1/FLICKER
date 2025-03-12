@@ -22,7 +22,7 @@ body {
     justify-content: space-between; /* Logo a la izquierda, ícono a la derecha */
     align-items: center;
     padding: 1% 5%;
-    background: #222;
+    background: #373737;
     backdrop-filter: blur(10px);
     position: fixed;
     top: 0;
@@ -441,7 +441,7 @@ body {
     bottom: 0;
     left: 0;
     width: 100%;
-    background: #0000008b;
+    background: #373737;
     backdrop-filter: blur(20px);
     display: flex;
     justify-content: space-around;
@@ -570,7 +570,7 @@ body {
     font-size: 14px;
     font-weight: bold;
     color: white;
-    background: rgba(0, 0, 0, 0.6); /* Fondo semitransparente */
+    background: #ff0a0087; /* Fondo semitransparente */
     padding: 5px 10px;
     border-radius: 4px;
     z-index: 1;

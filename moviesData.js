@@ -1,6 +1,102 @@
 // Películas manuales
 const manualMovies = [
     {
+          id: 710295,
+          title: "Hombre Lobo",
+          image: "https://s.lupacine.com/image/t/p/w500/vtdEHG1j07PqLlVyhKNZRHTPKGt.jpg",
+          link: "detalles.html?type=movie&id=710295",
+          year: "2025",
+          genres: ["Terror", "Suspenso"] // <-- Asegúrate de que esto esté definido
+      },
+    {
+          id: 539972,
+          title: "Kraven el cazador",
+          image: "https://s.lupacine.com/image/t/p/w500/1GvBhRxY6MELDfxFrete6BNhBB5.jpg",
+          link: "detalles.html?type=movie&id=539972",
+          year: "2024",
+          genres: ["Acción", "Aventura", "Fantasía", "Suspenso", "Ciencia ficción"] // <-- Asegúrate de que esto esté definido
+      },
+    {
+          id: 774370,
+          title: "Las aventuras de Dog Man",
+          image: "https://s.lupacine.com/image/t/p/w500/89wNiexZdvLQ41OQWIsQy4O6jAQ.jpg",
+          link: "detalles.html?type=movie&id=774370",
+          year: "2025",
+          genres: ["Animación", "Aventura", "Acción", "Comedia", "Familia"] // <-- Asegúrate de que esto esté definido
+      },
+    {
+          id: 516729,
+          title: "Paddington: Aventura en la selva",
+          image: "https://s.lupacine.com/image/t/p/w500/1ffZAucqfvQu36x1C49XfOdjuOG.jpg",
+          link: "detalles.html?type=movie&id=516729",
+          year: "2024",
+          genres: ["Aventura", "Comedia", "Familia"] // <-- Asegúrate de que esto esté definido
+      },
+    {
+          id: 912649,
+          title: "Venom: El último baile",
+          image: "https://s.lupacine.com/image/t/p/w500/vGXptEdgZIhPg3cGlc7e8sNPC2e.jpg",
+          link: "detalles.html?type=movie&id=912649",
+          year: "2024",
+          genres: ["Aventura", "Acción", "Suspenso", "Ciencia ficción"] // <-- Asegúrate de que esto esté definido
+      },
+    {
+          id: 1247019,
+          title: "Thi Yot 2: Susurros Mortales",
+          image: "https://s.lupacine.com/image/t/p/w500/uDW5eeFUYp1vaU2ymEdVBG6g7iq.jpg",
+          link: "detalles.html?type=movie&id=1247019",
+          year: "2024",
+          genres: ["Terror", "Acción", "Suspenso"] // <-- Asegúrate de que esto esté definido
+      },
+    {
+          id: 1138749,
+          title: "The Island",
+          image: "https://s.lupacine.com/image/t/p/w500/ajb1rMiorchfRemYHZCkbV9DBg6.jpg",
+          link: "detalles.html?type=movie&id=1138749",
+          year: "2023",
+          genres: ["Acción", "Suspenso", "Crimen"] // <-- Asegúrate de que esto esté definido
+      },
+    {
+          id: 558449,
+          title: "Gladiador II",
+          image: "https://s.lupacine.com/image/t/p/w500/2cxhvwyEwRlysAmRH4iodkvo0z5.jpg",
+          link: "detalles.html?type=movie&id=558449",
+          year: "2024",
+          genres: ["Aventura", "Drama", "Acción", "Historia"] // <-- Asegúrate de que esto esté definido
+      },
+    {
+          id: 1201012,
+          title: "Dhoom Dhaam",
+          image: "https://s.lupacine.com/image/t/p/w500/2E7me3rPi8HqaeheuD86YlpNX6k.jpg",
+          link: "detalles.html?type=movie&id=1201012",
+          year: "2025",
+          genres: ["Acción", "Comedia", "Romance"] // <-- Asegúrate de que esto esté definido
+      },
+    {
+          id: 1035048,
+          title: "Criaturas: Línea de extinción",
+          image: "https://s.lupacine.com/image/t/p/w500/tnfc0NJ3BzhJrGJhkkEd6MHBdq5.jpg",
+          link: "detalles.html?type=movie&id=1035048",
+          year: "2024",
+          genres: ["Acción", "Suspenso", "Ciencia ficción"] // <-- Asegúrate de que esto esté definido
+      },
+    {
+          id: 1352774,
+          title: "Piglet",
+          image: "https://s.lupacine.com/image/t/p/w500/5wZNFUJAwyX6RCxdqrLO9lLWJ20.jpg",
+          link: "detalles.html?type=movie&id=1352774",
+          year: "2025",
+          genres: ["Terror"] // <-- Asegúrate de que esto esté definido
+      },
+    {
+          id: 1405338,
+          title: "Oni-Goroshi: Ciudad de los demonios",
+          image: "https://s.lupacine.com/image/t/p/w500/fQ9hzto0cUuxjfzqNAiAnNJo8O7.jpg",
+          link: "detalles.html?type=movie&id=1405338",
+          year: "2025",
+          genres: ["Acción", "Crimen", "Fantasía", "Suspenso"] // <-- Asegúrate de que esto esté definido
+      },
+    {
         id: 950396, // ID de TMDb para "Fight Club"
         title: "El Abismo Secreto",
         image: "https://media.themoviedb.org/t/p/w220_and_h330_face/3s0jkMh0YUhIeIeioH3kt2X4st4.jpg",

@@ -1,5 +1,17 @@
 // videos.js
 const movieVideos = {
+    "696506": {
+        "title": "Mickey 17",
+        "360p": "https://v2.fiestareel.com/mov/2025/696506-156750/480/480p.m3u8",
+        "720p": "https://v2.fiestareel.com/mov/2025/696506-156750/720/720p.m3u8",
+        "1080p": "https://v2.fiestareel.com/mov/2025/696506-156750/720/720p.m3u8"
+    },
+    "1357633": {
+        "title": "Solo Leveling: Segundo Despertar",
+        "360p": "https://v2.fiestareel.com/mov/2024/1357633-156148/480/480p.m3u8",
+        "720p": "https://v2.fiestareel.com/mov/2024/1357633-156148/720/720p.m3u8",
+        "1080p": "https://v2.fiestareel.com/mov/2024/1357633-156148/720/720p.m3u8"
+    },
     "1352774": {
         "title": "Piglet",
         "360p": "https://v2.fiestareel.com/mov/2025/1352774-156565/480/480p.m3u8",

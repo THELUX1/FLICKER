@@ -1,5 +1,21 @@
-// Películas manuales
+// Películas manuales (vacío, ya que omitimos las películas)
 const manualMovies = [
+    {
+          id: 696506,
+          title: "Mickey 17",
+          image: "https://media.themoviedb.org/t/p/w220_and_h330_face/fjIHkLGIZdjKIKe252gSFt5QzVK.jpg",
+          link: "detalles.html?type=movie&id=696506",
+          year: "2025",
+          genres: ["Ciencia ficción", "Aventura", "Comedia"] // <-- Asegúrate de que esto esté definido
+      },
+    {
+          id: 1357633,
+          title: "Solo Leveling: Segundo Despertar",
+          image: "https://s.lupacine.com/image/t/p/w500/dblIFen0bNZAq8icJXHwrjfymDW.jpg",
+          link: "detalles.html?type=movie&id=1357633",
+          year: "2024",
+          genres: ["Acción", "Aventura", "Fantasía", "Animación"] // <-- Asegúrate de que esto esté definido
+      },
     {
           id: 710295,
           title: "Hombre Lobo",
@@ -162,7 +178,7 @@ const manualMovies = [
     
 ];
 
-// Función para generar el contenido de la página principal
+// Películas de acción (vacío)
 const accionMovies = [
     {
         id: 822119, // ID de TMDb para "Fight Club"
@@ -185,7 +201,10 @@ const accionMovies = [
         link: "detalles.html?type=movie&id=950396", // Usamos el ID de TMDb
         year: "2025"
     },
+   
 ];
+
+// Películas de drama (vacío)
 const dramaMovies = [
     {
         id: 974576, // ID de TMDb para "Fight Club"
@@ -216,15 +235,38 @@ const dramaMovies = [
         year: "2025"
     },
 ];
-const apiKey = '995449ccaf6d840acc029f95c7d210dd';
-// En moviesData.js, al final de la función generarContenido
+
+// Crear un objeto para almacenar las categorías de géneros
+const genreCategories = {};
+
+// Función para clasificar las películas por género
+function classifyMoviesByGenre(movies) {
+    movies.forEach(movie => {
+        if (movie.genres) {
+            movie.genres.forEach(genre => {
+                if (!genreCategories[genre]) {
+                    genreCategories[genre] = [];
+                }
+                genreCategories[genre].push(movie);
+            });
+        }
+    });
+}
+
+// Clasificar las películas manuales, de acción y de drama
+classifyMoviesByGenre(manualMovies);
+classifyMoviesByGenre(accionMovies);
+classifyMoviesByGenre(dramaMovies);
+
+// Función para generar el contenido de la página principal
 function generarContenido(container) {
     const continueWatchingMovies = getContinueWatchingMovies();
     const visibleCategories = {
         "Seguir viendo": continueWatchingMovies,
         "Recién Agregado": manualMovies,
         "Acción": accionMovies,
-        "Drama": dramaMovies
+        "Drama": dramaMovies,
+        ...genreCategories // Agregar las categorías de géneros
     };
 
     container.innerHTML = Object.entries(visibleCategories).map(([category, movies]) => {
@@ -239,9 +281,10 @@ function generarContenido(container) {
         `;
     }).join('');
 
-    /* // Generar la sección "Para ti"
-    generateForYouSection(container); */
+    // Configurar los botones de "Eliminar"
+    setupRemoveButtons();
 }
+
 // Función para obtener las películas que el usuario está viendo
 function getContinueWatchingMovies() {
     const continueWatching = [];
@@ -263,6 +306,7 @@ function getContinueWatchingMovies() {
     }
     return continueWatching;
 }
+
 // Función para crear una tarjeta de película
 function createMovieCard(movie) {
     const progress = movie.progress ? `<div class="progress-bar"><div class="progress" style="width: ${(movie.progress / movie.duration) * 100}%"></div></div>` : '';
@@ -284,6 +328,8 @@ function createMovieCard(movie) {
         </div>
     `;
 }
+
+// Función para mostrar el modal de confirmación
 function showConfirmModal(title, callback) {
     const modal = document.getElementById('confirm-modal');
     const confirmMessage = document.getElementById('confirm-message');
@@ -303,6 +349,8 @@ function showConfirmModal(title, callback) {
         callback(false); // Cancelar eliminación
     };
 }
+
+// Configurar los botones de "Eliminar"
 function setupRemoveButtons() {
     const removeButtons = document.querySelectorAll('.remove-button');
     removeButtons.forEach(button => {
@@ -321,6 +369,7 @@ function setupRemoveButtons() {
     });
 }
 
+// Función para eliminar una película de "Seguir viendo"
 function removeFromContinueWatching(movieId) {
     localStorage.removeItem(`progress_${movieId}`);
     showToast(`Película eliminada de "Seguir viendo"`, 'success');
@@ -329,6 +378,8 @@ function removeFromContinueWatching(movieId) {
         window.location.reload();
     }, 1000);
 }
+
+// Función para mostrar un toast (notificación)
 function showToast(message, type) {
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
@@ -349,6 +400,7 @@ function showToast(message, type) {
         }, 300); // Esperar a que termine la animación de desvanecimiento
     }, 3000);
 }
+
 // Configuración del buscador
 function setupSearch() {
     const searchIconButton = document.querySelector('.search-icon-button');
@@ -403,32 +455,32 @@ function setupSearch() {
     }
 
     function searchMovies(query) {
-    const normalizedQuery = query
-        .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Eliminar acentos
-        .toLowerCase();
-
-    // Combinar todas las listas de películas que quieras buscar
-    const allMovies = [...manualMovies, ...accionMovies, ...dramaMovies]; // Agrega más listas si es necesario
-
-    const seenTitles = new Set();
-    const uniqueMovies = [];
-
-    allMovies.forEach(movie => {
-        if (!seenTitles.has(movie.title)) {
-            seenTitles.add(movie.title);
-            uniqueMovies.push(movie);
-        }
-    });
-
-    return uniqueMovies.filter(movie => {
-        const normalizedTitle = movie.title
-            .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        const normalizedQuery = query
+            .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Eliminar acentos
             .toLowerCase();
 
-        return normalizedTitle.includes(normalizedQuery) ||
-               movie.year?.toString().includes(query);
-    });
-}
+        // Combinar todas las listas de películas que quieras buscar
+        const allMovies = [...manualMovies, ...accionMovies, ...dramaMovies]; // Agrega más listas si es necesario
+
+        const seenTitles = new Set();
+        const uniqueMovies = [];
+
+        allMovies.forEach(movie => {
+            if (!seenTitles.has(movie.title)) {
+                seenTitles.add(movie.title);
+                uniqueMovies.push(movie);
+            }
+        });
+
+        return uniqueMovies.filter(movie => {
+            const normalizedTitle = movie.title
+                .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+                .toLowerCase();
+
+            return normalizedTitle.includes(normalizedQuery) ||
+                   movie.year?.toString().includes(query);
+        });
+    }
 
     function displayResults(results) {
         searchResults.innerHTML = '';
@@ -458,58 +510,7 @@ function setupSearch() {
         searchResults.style.display = 'block';
     }
 }
-// En moviesData.js, antes de la inicialización
 
-// Función para obtener recomendaciones
-async function getRecommendations(movieId, type) {
-    try {
-        const response = await fetch(
-            `https://api.themoviedb.org/3/${type}/${movieId}/recommendations?api_key=${apiKey}&language=es-MX`
-        );
-        const data = await response.json();
-        return data.results;
-    } catch (error) {
-        console.error('Error obteniendo recomendaciones:', error);
-        return [];
-    }
-}
-
-// Función para generar la sección "Para ti"
-async function generateForYouSection(container) {
-    const watchedHistory = JSON.parse(localStorage.getItem('watchedHistory') || '[]');
-    if (watchedHistory.length === 0) return;
-
-    // Obtener recomendaciones basadas en el historial
-    const recommendations = [];
-    for (const movieId of watchedHistory) {
-        const recs = await getRecommendations(movieId, 'movie'); // Cambia a 'tv' si es una serie
-        recommendations.push(...recs);
-    }
-
-    // Eliminar duplicados
-    const uniqueRecommendations = recommendations.filter((movie, index, self) =>
-        index === self.findIndex((m) => m.id === movie.id)
-    );
-
-    // Mostrar la sección "Para ti"
-    if (uniqueRecommendations.length > 0) {
-        const forYouSection = `
-            <section class="movie-section">
-                <h2 class="section-title">Para ti</h2>
-                <div class="movies-container">
-                    ${uniqueRecommendations.map(movie => createMovieCard({
-                        id: movie.id,
-                        title: movie.title,
-                        image: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
-                        link: `detalles.html?type=movie&id=${movie.id}`,
-                        year: movie.release_date?.split('-')[0] || 'N/A'
-                    })).join('')}
-                </div>
-            </section>
-        `;
-        container.insertAdjacentHTML('afterbegin', forYouSection);
-    }
-}
 // Inicialización
 document.addEventListener('DOMContentLoaded', () => {
     const content = document.getElementById('content');
@@ -521,7 +522,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Configurar el buscador
     setupSearch();
-
-    // Configurar los botones de "Eliminar"
-    setupRemoveButtons();
 });

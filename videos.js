@@ -1,5 +1,53 @@
 // videos.js
 const movieVideos = {
+"1104845": {
+        "title": "Plankton: La Película",
+        "360p": "https://v2.fiestareel.com/mov/2025/1104845-156766/480/480p.m3u8?did=XVzwN5etnKWL0z9T39Xda&dt=3",
+        "720p": "https://v2.fiestareel.com/mov/2025/1104845-156766/720/720p.m3u8?did=XVzwN5etnKWL0z9T39Xda&dt=3",
+        "1080p": "https://v2.fiestareel.com/mov/2025/1104845-156766/720/720p.m3u8?did=XVzwN5etnKWL0z9T39Xda&dt=3"
+    },
+"1356039": {
+        "title": "Counterstrike",
+        "360p": "https://v2.fiestareel.com/mov/2025/1356039-156661/480/480p.m3u8?did=XVzwN5etnKWL0z9T39Xda&dt=3",
+        "720p": "https://v2.fiestareel.com/mov/2025/1356039-156661/720/720p.m3u8?did=XVzwN5etnKWL0z9T39Xda&dt=3",
+        "1080p": "https://v2.fiestareel.com/mov/2025/1356039-156661/720/720p.m3u8?did=XVzwN5etnKWL0z9T39Xda&dt=3"
+    },
+"1124620": {
+        "title": "El Mono",
+        "360p": "https://v2.fiestareel.com/mov/2025/1124620-156659/480/480p.m3u8?did=XVzwN5etnKWL0z9T39Xda&dt=3",
+        "720p": "https://v2.fiestareel.com/mov/2025/1124620-156659/720/720p.m3u8?did=XVzwN5etnKWL0z9T39Xda&dt=3",
+        "1080p": "https://v2.fiestareel.com/mov/2025/1124620-156659/720/720p.m3u8?did=XVzwN5etnKWL0z9T39Xda&dt=3"
+    },
+"799766": {
+        "title": "Better Man",
+        "360p": "https://v2.fiestareel.com/mov/2024/799766-156545/480/480p.m3u8?did=XVzwN5etnKWL0z9T39Xda&dt=3",
+        "720p": "https://v2.fiestareel.com/mov/2024/799766-156545/720/720p.m3u8?did=XVzwN5etnKWL0z9T39Xda&dt=3",
+        "1080p": "https://v2.fiestareel.com/mov/2024/799766-156545/720/720p.m3u8?did=XVzwN5etnKWL0z9T39Xda&dt=3"
+    },
+"1140535": {
+        "title": "Presencia",
+        "360p": "https://no6ojcmmspit.acek-cdn.com/hls2/01/04123/bi1thag73kf5_n/index-v1-a1.m3u8?t=Y02VhZCnmY5JCtMWbTeRkpbLj21PIAnt3ejlAJOqHD4&s=1742386654&e=129600&f=20615975&srv=e4RHfFUBYeX4H3m&i=0.4&sp=500&p1=e4RHfFUBYeX4H3m&p2=e4RHfFUBYeX4H3m&asn=264619",
+        "720p": "https://no6ojcmmspit.acek-cdn.com/hls2/01/04123/bi1thag73kf5_n/index-v1-a1.m3u8?t=Y02VhZCnmY5JCtMWbTeRkpbLj21PIAnt3ejlAJOqHD4&s=1742386654&e=129600&f=20615975&srv=e4RHfFUBYeX4H3m&i=0.4&sp=500&p1=e4RHfFUBYeX4H3m&p2=e4RHfFUBYeX4H3m&asn=264619",
+        "1080p": "https://no6ojcmmspit.acek-cdn.com/hls2/01/04123/bi1thag73kf5_n/index-v1-a1.m3u8?t=Y02VhZCnmY5JCtMWbTeRkpbLj21PIAnt3ejlAJOqHD4&s=1742386654&e=129600&f=20615975&srv=e4RHfFUBYeX4H3m&i=0.4&sp=500&p1=e4RHfFUBYeX4H3m&p2=e4RHfFUBYeX4H3m&asn=264619"
+    },
+"1418522": {
+        "title": "Delicia",
+        "360p": "https://v2.fiestareel.com/mov/2025/1418522-156739/480/480p.m3u8?did=XVzwN5etnKWL0z9T39Xda&dt=3",
+        "720p": "https://v2.fiestareel.com/mov/2025/1418522-156739/720/720p.m3u8?did=XVzwN5etnKWL0z9T39Xda&dt=3",
+        "1080p": "https://v2.fiestareel.com/mov/2025/1418522-156739/720/720p.m3u8?did=XVzwN5etnKWL0z9T39Xda&dt=3"
+    },
+"777443": {
+        "title": "Estado Eléctrico",
+        "360p": "https://v2.fiestareel.com/mov/2025/777443-156785/480/480p.m3u8?did=XVzwN5etnKWL0z9T39Xda&dt=3",
+        "720p": "https://v2.fiestareel.com/mov/2025/777443-156785/720/720p.m3u8?did=XVzwN5etnKWL0z9T39Xda&dt=3",
+        "1080p": "https://v2.fiestareel.com/mov/2025/777443-156785/720/720p.m3u8?did=XVzwN5etnKWL0z9T39Xda&dt=3"
+    },
+"426063": {
+        "title": "Nosferatu",
+        "360p": "https://v2.fiestareel.com/mov/2024/426063-156552/480/480p.m3u8?did=XVzwN5etnKWL0z9T39Xda&dt=3",
+        "720p": "https://v2.fiestareel.com/mov/2024/426063-156552/720/720p.m3u8?did=XVzwN5etnKWL0z9T39Xda&dt=3",
+        "1080p": "https://v2.fiestareel.com/mov/2024/426063-156552/720/720p.m3u8?did=XVzwN5etnKWL0z9T39Xda&dt=3"
+    },
     "696506": {
         "title": "Mickey 17",
         "360p": "https://v2.fiestareel.com/mov/2025/696506-156750/480/480p.m3u8",

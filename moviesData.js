@@ -1,5 +1,69 @@
 // Películas manuales (vacío, ya que omitimos las películas)
 const manualMovies = [
+{
+          id: 1104845,
+          title: "Plankton: La Película",
+          image: "https://s.lupacine.com/image/t/p/w500/hGaUNLF5VZbg9ovPTyjm9Rv5xWz.jpg",
+          link: "detalles.html?type=movie&id=1104845",
+          year: "2025",
+          genres: ["Animación", "Comedia", "Aventura", "Familia", "Fantasía"] // <-- Asegúrate de que esto esté definido
+      },
+{
+          id: 1356039,
+          title: "Counterstrike",
+          image: "https://s.lupacine.com/image/t/p/w500/lI2uFlSEkwXKljqiry7coaJ6wIS.jpg",
+          link: "detalles.html?type=movie&id=1356039",
+          year: "2025",
+          genres: ["Acción", "Fantasía", "Suspenso"] // <-- Asegúrate de que esto esté definido
+      },
+{
+          id: 1124620,
+          title: "El Mono",
+          image: "https://s.lupacine.com/image/t/p/w500/yYa8Onk9ow7ukcnfp2QWVvjWYel.jpg",
+          link: "detalles.html?type=movie&id=1124620",
+          year: "2025",
+          genres: ["Comedia", "Terror"] // <-- Asegúrate de que esto esté definido
+      },
+{
+          id: 799766,
+          title: "Better Man",
+          image: "https://media.themoviedb.org/t/p/w220_and_h330_face/otXaS8K5coAwmUyGxBsNz9mWs8H.jpg",
+          link: "detalles.html?type=movie&id=799766",
+          year: "2025",
+          genres: ["Música", "Drama"] // <-- Asegúrate de que esto esté definido
+      },
+{
+          id: 1140535,
+          title: "Presencia",
+          image: "https://media.themoviedb.org/t/p/w220_and_h330_face/kc7YIx6KNiXm1dpqlhqdX3eTL7a.jpg",
+          link: "detalles.html?type=movie&id=1140535",
+          year: "2025",
+          genres: ["Drama", "Terror"] // <-- Asegúrate de que esto esté definido
+      },
+{
+          id: 1418522,
+          title: "Delicia",
+          image: "https://s.lupacine.com/image/t/p/w500/o1ZIvviAEuIHcH9x6sv112mSvTR.jpg",
+          link: "detalles.html?type=movie&id=1418522",
+          year: "2025",
+          genres: ["Drama", "Suspenso"] // <-- Asegúrate de que esto esté definido
+      },
+{
+          id: 777443,
+          title: "Estado Eléctrico",
+          image: "https://media.themoviedb.org/t/p/w220_and_h330_face/nCuSMDWhWGJAPdp9rSDIogG5X82.jpg",
+          link: "detalles.html?type=movie&id=777443",
+          year: "2025",
+          genres: ["Ciencia ficción", "Aventura", "Drama"] // <-- Asegúrate de que esto esté definido
+      },
+    {
+          id: 426063,
+          title: "Nosferatu",
+          image: "https://media.themoviedb.org/t/p/w220_and_h330_face/jivUhECegXI3OYtPVflWoIDtENt.jpg",
+          link: "detalles.html?type=movie&id=426063",
+          year: "2024",
+          genres: ["Fantasía", "Terror"] // <-- Asegúrate de que esto esté definido
+      },
     {
           id: 696506,
           title: "Mickey 17",

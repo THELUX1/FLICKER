@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="repro.css">
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script> 
-    <script src="videos.js"></script>
+    <script src="peliculas.js"></script>
 </head>
 <body>
 
@@ -35,7 +35,83 @@
 </div>
 
 <script>
+// Declarar hls como una variable global
+let hls;
+
 const video = document.getElementById("video");
+
+// Obtener parámetros de la URL
+const urlParams = new URLSearchParams(window.location.search);
+const videoUrl = urlParams.get('video');
+const movieId = urlParams.get('movieId');
+const type = urlParams.get('type'); // Obtener el tipo de contenido (película o serie)
+const episodeNumber = urlParams.get('episodeNumber'); // Obtener el número del episodio (solo para series)
+
+// Asignar el título de la película o el nombre del episodio
+let movieTitle;
+if (type === 'series') {
+    movieTitle = `Episodio ${episodeNumber}`;
+} else {
+    movieTitle = peliculasDisponibles[movieId]?.title || "Película";
+}
+
+// Mostrar el título en la notificación
+document.getElementById("movie-title-notification").innerText = movieTitle;
+
+// Función para formatear el tiempo en HH:MM:SS o MM:SS
+function formatTime(seconds) {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = Math.floor(seconds % 60);
+
+    if (hours > 0) {
+        return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    } else {
+        return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
+}
+
+// Obtener elementos del DOM
+const timeDisplay = document.getElementById("time-display");
+const timeline = document.getElementById("timeline");
+
+// Función para actualizar el tiempo y la barra de progreso
+function updateTime() {
+    const currentTime = video.currentTime;
+    const duration = video.duration;
+
+    // Actualizar el contador de tiempo
+    timeDisplay.innerText = formatTime(currentTime);
+
+    // Actualizar la barra de progreso
+    if (duration > 0) {
+        const progress = (currentTime / duration) * 100;
+        timeline.value = progress;
+    }
+}
+
+// Configurar un intervalo para actualizar el tiempo cada segundo
+let timeUpdateInterval;
+video.addEventListener("play", () => {
+    timeUpdateInterval = setInterval(updateTime, 1000); // Actualizar cada segundo
+});
+
+video.addEventListener("pause", () => {
+    clearInterval(timeUpdateInterval); // Detener el intervalo cuando el video se pausa
+});
+
+video.addEventListener("seeked", updateTime); // Actualizar al buscar en el video
+
+// Inicializar el tiempo y la barra de progreso al cargar la página
+document.addEventListener("DOMContentLoaded", () => {
+    updateTime(); // Mostrar el tiempo inicial
+});
+
+// Manejar la barra de progreso
+timeline.addEventListener("input", (e) => {
+    const seekTime = (e.target.value / 100) * video.duration;
+    video.currentTime = seekTime;
+});
 
 // Guardar el progreso de la reproducción
 video.addEventListener("pause", () => {
@@ -55,10 +131,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-// Eliminar el progreso cuando la película se termine
+// Eliminar el progreso cuando la película termine
 video.addEventListener("ended", () => {
     localStorage.removeItem(`progress_${movieId}`);
 });
+
 const controls = document.getElementById("customControls");
 const loader = document.getElementById("loader");
 const qualityContainer = document.getElementById("quality-container");
@@ -66,104 +143,37 @@ const qualityBtn = document.getElementById("quality-btn");
 const backBtn = document.getElementById("back-btn");
 const notification = document.getElementById("notification");
 const movieTitleNotification = document.getElementById("movie-title-notification");
-let hls;
-let timeout;
 
-// Funcionalidad de la barra de tiempo
-document.getElementById("timeline").addEventListener("input", function(e) {
-    const seekTime = (e.target.value / 100) * video.duration;
-    video.currentTime = seekTime;
-});
-
-// Doble toque/clic para saltar 15 segundos
-let lastTap = 0;
-video.addEventListener("touchend", function(e) {
-    const currentTime = new Date().getTime();
-    const tapLength = currentTime - lastTap;
-    if (tapLength < 300 && tapLength > 0) {
-        const tapPosition = e.changedTouches[0].clientX;
-        const screenWidth = window.innerWidth;
-        
-        if (tapPosition < screenWidth / 2) {
-            video.currentTime = Math.max(0, video.currentTime - 15);
-        } else {
-            video.currentTime = Math.min(video.duration, video.currentTime + 15);
-        }
-    }
-    lastTap = currentTime;
-});
-
-let lastClick = 0;
-video.addEventListener("dblclick", function(e) {
-    const clickPosition = e.clientX;
-    const screenWidth = window.innerWidth;
-    
-    if (clickPosition < screenWidth / 2) {
-        video.currentTime = Math.max(0, video.currentTime - 15);
-    } else {
-        video.currentTime = Math.min(video.duration, video.currentTime + 15);
-    }
-});
-
-// Botón de ajuste de pantalla
-document.getElementById("fit-screen-btn").addEventListener("click", function() {
-    if (video.style.objectFit === "contain") {
-        video.style.objectFit = "cover";
-        this.innerHTML = '<i class="fas fa-compress-arrows-alt"></i>';
-    } else {
-        video.style.objectFit = "contain";
-        this.innerHTML = '<i class="fas fa-expand-arrows-alt"></i>';
-    }
-});
-
-// Resto del código original
-function showControls() {
-    controls.classList.remove("hidden");
-    backBtn.style.display = "block";
-    clearTimeout(timeout);
-    timeout = setTimeout(hideControls, 3000);
-}
-
-function hideControls() {
-    controls.classList.add("hidden");
-    backBtn.style.display = "none";
-}
-
-video.addEventListener("mousemove", showControls);
-video.addEventListener("touchstart", showControls);
-controls.addEventListener("mousemove", showControls);
-
-setTimeout(() => { hideControls(); }, 4000);
-
-const videoUrl = new URLSearchParams(window.location.search).get('video');
-const movieId = new URLSearchParams(window.location.search).get('movieId');
-
+// Función para obtener URL del video según calidad
 function getMovieVideoUrl(movieId, quality) {
-    return movieVideos[movieId]?.[quality] || videoUrl;
+    return peliculasDisponibles[movieId]?.[quality] || videoUrl;
 }
 
+// Regresar a la página de detalles
 backBtn.addEventListener("click", () => {
-    const movieTitle = movieVideos[movieId]?.title || "Película";
-    window.location.href = `detalles.html?title=${encodeURIComponent(movieTitle)}`;
+    if (type === 'series') {
+        window.location.href = `seriesDetalles.html?id=${movieId}`;
+    } else {
+        window.location.href = `detalles.html?title=${encodeURIComponent(movieTitle)}`;
+    }
 });
 
+// Mostrar notificación de reproducción
 function showNotification(title) {
     movieTitleNotification.innerText = title;
     notification.style.display = "block";
     setTimeout(() => { notification.style.display = "none"; }, 6000);
 }
 
-const movieTitle = movieVideos[movieId]?.title || "Película";
-
+// Configurar el reproductor con HLS
 if (Hls.isSupported()) {
-    hls = new Hls();
+    hls = new Hls(); // Asignar la instancia de Hls a la variable global hls
     hls.loadSource(videoUrl);
     hls.attachMedia(video);
     hls.on(Hls.Events.MANIFEST_PARSED, function() {
         addQualityOptions();
     });
     hls.on(Hls.Events.ERROR, function(event, data) {
-        console.error("Error en HLS:", data);
         if (data.fatal) {
             switch (data.type) {
                 case Hls.ErrorTypes.NETWORK_ERROR:
@@ -197,53 +207,39 @@ document.getElementById("play-btn").addEventListener("click", () => {
     if (video.paused) {
         video.play();
         document.getElementById("play-btn").innerHTML = '<i class="fas fa-pause"></i>';
-        showNotification(movieTitle);
     } else {
         video.pause();
         document.getElementById("play-btn").innerHTML = '<i class="fas fa-play"></i>';
     }
 });
 
-video.addEventListener("timeupdate", () => {
-    document.getElementById("timeline").value = (video.currentTime / video.duration) * 100;
-    let minutes = Math.floor(video.currentTime / 60);
-    let seconds = Math.floor(video.currentTime % 60);
-    document.getElementById("time-display").innerText = 
-        `${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
-});
-
-document.getElementById("fullscreen-btn").addEventListener("click", () => {
-    if (!document.fullscreenElement) {
-        document.getElementById("videoContainer").requestFullscreen();
-    } else {
-        document.exitFullscreen();
-    }
-});
-
+// Agregar opciones de calidad
 function addQualityOptions() {
     qualityContainer.innerHTML = '';
-    const qualities = Object.keys(movieVideos[movieId] || {"360p": "default"});
-
+    const qualities = Object.keys(peliculasDisponibles[movieId] || {"360p": "default"});
+    
     qualities.forEach(quality => {
         if (quality !== "title") {
             const option = document.createElement("div");
             option.className = "quality-option";
             option.innerText = `Calidad: ${quality}`;
             option.addEventListener("click", () => {
-                const currentTime = video.currentTime; // Guardar el tiempo actual
+                const currentTime = video.currentTime;
                 const newUrl = getMovieVideoUrl(movieId, quality);
                 if (Hls.isSupported()) {
-                    hls.destroy();
-                    hls = new Hls();
+                    if (hls) {
+                        hls.destroy(); // Destruir la instancia anterior de Hls
+                    }
+                    hls = new Hls(); // Crear una nueva instancia de Hls
                     hls.loadSource(newUrl);
                     hls.attachMedia(video);
                     hls.on(Hls.Events.MANIFEST_PARSED, function() {
-                        video.currentTime = currentTime; // Restaurar el tiempo actual
+                        video.currentTime = currentTime;
                         video.play();
                     });
-                } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+                } else {
                     video.src = newUrl;
-                    video.currentTime = currentTime; // Restaurar el tiempo actual
+                    video.currentTime = currentTime;
                     video.play();
                 }
                 qualityContainer.style.display = "none";
@@ -255,35 +251,6 @@ function addQualityOptions() {
 
 qualityBtn.addEventListener("click", () => {
     qualityContainer.style.display = qualityContainer.style.display === "block" ? "none" : "block";
-});
-
-let isOrientationChanging = false;
-window.addEventListener("orientationchange", () => {
-    isOrientationChanging = true;
-    const currentTime = video.currentTime;
-    const isPaused = video.paused;
-    window.addEventListener("load", () => {
-        if (isOrientationChanging) {
-            video.currentTime = currentTime;
-            if (!isPaused) video.play();
-            isOrientationChanging = false;
-        }
-    });
-});
-// En Reproductor.html, dentro del script existente
-video.addEventListener("ended", () => {
-    localStorage.removeItem(`progress_${movieId}`);
-    
-    // Guardar el historial de reproducciones
-    const watchedHistory = JSON.parse(localStorage.getItem('watchedHistory') || '[]');
-    if (!watchedHistory.includes(movieId)) {
-        watchedHistory.push(movieId);
-        localStorage.setItem('watchedHistory', JSON.stringify(watchedHistory));
-    }
-
-    // Actualizar la sección "Para ti" en la página principal
-    const content = document.getElementById('content');
-    if (content) generateForYouSection(content);
 });
 </script>
 

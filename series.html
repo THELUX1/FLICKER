@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CineStream</title>
+    <title>CineStream - Series</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script type="module" src="moviesData.js"></script>
+    <script type="module" src="seriesData.js"></script> <!-- Cambia el archivo de datos a seriesData.js -->
     <script src="global.js"></script>
 </head>
 <body>
@@ -16,7 +16,7 @@
             <i class="fas fa-search"></i>
         </button>
         <div class="search-wrapper" style="display: none;">
-            <input type="text" class="search-input" placeholder="Buscar películas y series...">
+            <input type="text" class="search-input" placeholder="Buscar series...">
             <button class="search-button close-search">
                 <i class="fas fa-times"></i>
             </button>
@@ -31,16 +31,18 @@
             </div>
         </div>
     </header>
-   <!-- Modal de confirmación -->
-<div id="confirm-modal" class="modal">
-    <div class="modal-content">
-        <p id="confirm-message">¿Estás seguro de que quieres eliminar esta película de "Seguir viendo"?</p>
-        <div class="modal-buttons">
-            <button id="confirm-yes" class="modal-button confirm">Sí, eliminar</button>
-            <button id="confirm-no" class="modal-button cancel">Cancelar</button>
+
+    <!-- Modal de confirmación -->
+    <div id="confirm-modal" class="modal">
+        <div class="modal-content">
+            <p id="confirm-message">¿Estás seguro de que quieres eliminar esta serie de "Seguir viendo"?</p>
+            <div class="modal-buttons">
+                <button id="confirm-yes" class="modal-button confirm">Sí, eliminar</button>
+                <button id="confirm-no" class="modal-button cancel">Cancelar</button>
+            </div>
         </div>
     </div>
-</div>
+
     <!-- Loader -->
     <div id="loader" class="loader">
         <div class="loader-spinner"></div>
@@ -55,13 +57,7 @@
     <a href="index.html" class="nav-icon">
         <i class="fas fa-home"></i>
         <span>Inicio</span>
-    </a>
-    
-    <a href="series.html" class="nav-icon"> <!-- Enlace a la página de series -->
-        <i class="fas fa-tv"></i>
-        <span>Series</span>
-    </a>
-    
+    </a>    
     <a href="me-gusta.html" class="nav-icon">
         <i class="fas fa-heart"></i>
         <span>Me gusta</span>

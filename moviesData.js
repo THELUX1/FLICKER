@@ -1,4 +1,30 @@
 // Películas manuales (vacío, ya que omitimos las películas)
+const hiddenMovies = [
+{
+          id: 1426674,
+          title: "Una Historia De Amor En Copenhague",
+          image: "https://s.lupacine.com/image/t/p/w500/aau2E9HW5TvlxoNPHET6ZnAcV72.jpg",
+          link: "detalles.html?type=movie&id=1426674",
+          year: "2025",
+          genres: ["Drama", "Romance"] // <-- Asegúrate de que esto esté definido
+      },
+    {
+        id: 1422179,
+        title: "Por El Mal Camino",
+        image: "https://s.lupacine.com/image/t/p/w500/7uVdqyf7xiHeGjxhnRTKjGnO0Gm.jpg",
+        link: "detalles.html?type=movie&id=1422179",
+        year: "2025",
+        genres: ["Comedia", "Drama"]
+    },
+    {
+        id: 1426142,
+        title: "Ricos, Sin Duda",
+        image: "https://s.lupacine.com/image/t/p/w500/cr6y0nWdfPb3yZT9Iz63zTE1dQE.jpg",
+        link: "detalles.html?type=movie&id=1426142",
+        year: "2025",
+        genres: ["Romance", "Comedia"]
+    }
+];
 const manualMovies = [
 {
           id: 1104845,
@@ -317,20 +343,21 @@ function classifyMoviesByGenre(movies) {
     });
 }
 
-// Clasificar las películas manuales, de acción y de drama
+// Clasificar las películas manuales, de acción, de drama y las ocultas
 classifyMoviesByGenre(manualMovies);
 classifyMoviesByGenre(accionMovies);
 classifyMoviesByGenre(dramaMovies);
+classifyMoviesByGenre(hiddenMovies); // Clasificar las películas ocultas por género
 
 // Función para generar el contenido de la página principal
 function generarContenido(container) {
     const continueWatchingMovies = getContinueWatchingMovies();
     const visibleCategories = {
         "Seguir viendo": continueWatchingMovies,
-        "Recién Agregado": manualMovies,
+        "Recién Agregado": manualMovies, // Solo mostrar películas manuales aquí
         "Acción": accionMovies,
         "Drama": dramaMovies,
-        ...genreCategories // Agregar las categorías de géneros
+        ...genreCategories // Agregar las categorías de géneros (incluyendo las de hiddenMovies)
     };
 
     container.innerHTML = Object.entries(visibleCategories).map(([category, movies]) => {
@@ -358,7 +385,8 @@ function getContinueWatchingMovies() {
             const movieId = key.split("_")[1];
             const progress = localStorage.getItem(key);
             const movie = manualMovies.find(m => m.id == movieId) || 
-                          accionMovies.find(m => m.id == movieId) || 
+                          accionMovies.find(m => m.id == movieId) ||
+                          hiddenMovies.find(m => m.id == movieId) || 
                           dramaMovies.find(m => m.id == movieId);
             if (movie) {
                 continueWatching.push({
@@ -524,7 +552,7 @@ function setupSearch() {
             .toLowerCase();
 
         // Combinar todas las listas de películas que quieras buscar
-        const allMovies = [...manualMovies, ...accionMovies, ...dramaMovies]; // Agrega más listas si es necesario
+        const allMovies = [...manualMovies, ...accionMovies, ...dramaMovies, ...hiddenMovies]; // Agrega más listas si es necesario
 
         const seenTitles = new Set();
         const uniqueMovies = [];

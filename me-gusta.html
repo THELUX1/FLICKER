@@ -26,13 +26,13 @@
     </header>
 
     <main class="content" id="content">
-        <!-- Aquí se cargarán las películas marcadas como "Me gusta" -->
+        <!-- Aquí se cargarán las películas y series marcadas como "Me gusta" -->
     </main>
 
     <!-- Modal de confirmación -->
     <div id="confirm-modal" class="modal">
         <div class="modal-content">
-            <p id="confirm-message">¿Estás seguro de que quieres eliminar esta película de la lista de Me gusta?</p>
+            <p id="confirm-message">¿Estás seguro de que quieres eliminar este contenido de la lista de Me gusta?</p>
             <div class="modal-buttons">
                 <button id="confirm-yes" class="modal-button confirm">Sí, eliminar</button>
                 <button id="confirm-no" class="modal-button cancel">Cancelar</button>
@@ -41,32 +41,37 @@
     </div>
 
     <script>
-        // Función para cargar las películas "Me gusta"
-        function loadLikedMovies() {
+        // Función para cargar las películas y series "Me gusta"
+        function loadLikedContent() {
             const storedMovies = localStorage.getItem('likedMovies');
-            return storedMovies ? JSON.parse(storedMovies) : [];
+            const storedSeries = localStorage.getItem('likedSeries');
+            return {
+                movies: storedMovies ? JSON.parse(storedMovies) : [],
+                series: storedSeries ? JSON.parse(storedSeries) : []
+            };
         }
 
         // Función para generar el contenido de la página
         function generarContenido(container) {
-            const likedMovies = loadLikedMovies();
+            const { movies, series } = loadLikedContent();
             const data = {
-                "Me gusta": likedMovies
+                "Películas": movies,
+                "Series": series
             };
 
-            container.innerHTML = Object.entries(data).map(([category, movies]) => {
-                const isLiked = category === "Me gusta";
+            container.innerHTML = Object.entries(data).map(([category, items]) => {
+                const isLiked = category === "Películas" || category === "Series";
                 return `
                     <section class="movie-section ${isLiked ? 'liked-section' : ''}">
                         <h2 class="section-title">${category}</h2>
-                        ${movies.length > 0 ? `
+                        ${items.length > 0 ? `
                             <div class="${isLiked ? 'liked-container' : 'movies-container'}">
-                                ${movies.map(movie => createMovieCard(movie, isLiked)).join('')}
+                                ${items.map(item => createContentCard(item, isLiked)).join('')}
                             </div>
                         ` : isLiked ? `
                             <div class="liked-empty">
                                 <i class="fas fa-heart"></i>
-                                <p>No has añadido ninguna película a Me gusta todavía</p>
+                                <p>No has añadido ningún contenido a Me gusta todavía</p>
                             </div>
                         ` : ''}
                     </section>
@@ -74,16 +79,16 @@
             }).join('');
         }
 
-        // Función para crear una tarjeta de película
-        function createMovieCard(movie, isLiked = false) {
+        // Función para crear una tarjeta de contenido (película o serie)
+        function createContentCard(item, isLiked = false) {
             return `
                 <div class="movie-card">
-                    <a href="${movie.link}">
-                        <img src="${movie.image}" alt="${movie.title}">
-                        <div class="movie-title">${movie.title}</div>
+                    <a href="${item.link}">
+                        <img src="${item.image}" alt="${item.title}">
+                        <div class="movie-title">${item.title}</div>
                     </a>
                     ${isLiked ? `
-                        <button class="remove-liked" onclick="removeFromLiked('${movie.title}')">
+                        <button class="remove-liked" onclick="removeFromLiked('${item.title}', '${item.type}')">
                             <i class="fas fa-trash"></i>
                         </button>
                     ` : ''}
@@ -112,13 +117,19 @@
             };
         }
 
-        // Función para eliminar una película de "Me gusta"
-        function removeFromLiked(title) {
+        // Función para eliminar un contenido de "Me gusta"
+        function removeFromLiked(title, type) {
             showConfirmModal(title, (confirmed) => {
                 if (confirmed) {
-                    const likedMovies = loadLikedMovies();
-                    const updatedMovies = likedMovies.filter(movie => movie.title !== title);
-                    localStorage.setItem('likedMovies', JSON.stringify(updatedMovies));
+                    if (type === 'movie') {
+                        const likedMovies = JSON.parse(localStorage.getItem('likedMovies') || '[]');
+                        const updatedMovies = likedMovies.filter(movie => movie.title !== title);
+                        localStorage.setItem('likedMovies', JSON.stringify(updatedMovies));
+                    } else if (type === 'tv') {
+                        const likedSeries = JSON.parse(localStorage.getItem('likedSeries') || '[]');
+                        const updatedSeries = likedSeries.filter(series => series.title !== title);
+                        localStorage.setItem('likedSeries', JSON.stringify(updatedSeries));
+                    }
                     generarContenido(document.getElementById('content'));
                 }
             });

@@ -1,0 +1,180 @@
+/* Estilos para el contenedor del tráiler */
+.trailer-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px; /* Ajusta el ancho máximo según sea necesario */
+    margin: 0 auto; /* Centrar el contenedor */
+    padding-top: 56.25%; /* Relación de aspecto 16:9 */
+    background-color: red; /* Fondo rojo para el recuadro */
+    border-radius: 10px; /* Bordes redondeados */
+    overflow: hidden; /* Evitar que el contenido se desborde */
+}
+
+.trailer-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+iframe.series-trailer {
+    width: 100%;
+    height: 100%;
+    border: none; /* Eliminar el borde del iframe */
+}
+
+/* Estilos para el título */
+.series-info h1 {
+    text-align: center; /* Centrar el título */
+    margin-bottom: 20px; /* Espacio debajo del título */
+}
+
+/* Estilos para el botón "Me gusta" */
+.add-list-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e50914; /* Color de fondo rojo */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px; /* Espacio entre la sinopsis y el botón */
+    transition: background-color 0.3s ease;
+}
+
+.add-list-button:hover {
+    background-color: #f40612; /* Color de fondo rojo más oscuro al pasar el mouse */
+}
+
+.add-list-button .add-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+/* Estilos para el contenedor de la sinopsis y el botón */
+.series-info {
+    max-width: 800px; /* Ajusta el ancho máximo según sea necesario */
+    margin: 0 auto; /* Centrar el contenedor */
+    padding: 20px;
+    text-align: left; /* Alinear el texto a la izquierda */
+}
+
+.series-meta {
+    margin-bottom: 20px; /* Espacio entre el rating/año y la sinopsis */
+}
+.series-synopsis {
+    margin-bottom: 20px; /* Espacio entre la sinopsis y el botón */
+}
+/* Estilos para el contenedor del selector de temporadas */
+.season-selector-container {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.season-selector-container label {
+    font-size: 18px;
+    color: #fff;
+    margin-right: 10px;
+}
+
+/* Estilos para el selector de temporadas */
+.season-selector-container select {
+    padding: 8px 12px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #e50914; /* Borde rojo */
+    background-color: #e50914; /* Fondo rojo */
+    color: #fff; /* Texto blanco */
+    cursor: pointer;
+    outline: none; /* Eliminar el borde amarillo al hacer clic */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.season-selector-container select:hover {
+    background-color: #f40612; /* Rojo más oscuro al pasar el mouse */
+    border-color: #f40612;
+}
+
+/* Estilos para las opciones del selector */
+.season-selector-container select option {
+    background-color: #333; /* Fondo oscuro para las opciones */
+    color: #fff; /* Texto blanco para las opciones */
+}
+
+/* Estilos para el contenedor de episodios */
+.seasons-container {
+    max-height: 500px; /* Ajusta la altura máxima según sea necesario */
+    overflow-y: auto; /* Agrega un scroll vertical si el contenido es demasiado largo */
+    padding: 10px;
+    background-color: #1a1a1a; /* Fondo oscuro para el contenedor */
+    border-radius: 8px; /* Bordes redondeados */
+    margin-top: 20px; /* Espacio superior */
+}
+
+/* Estilos para cada episodio */
+.episode {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #2a2a2a; /* Fondo oscuro para cada episodio */
+    border-radius: 8px; /* Bordes redondeados */
+}
+
+.episode img {
+    width: 150px; /* Ancho fijo para la imagen */
+    height: auto;
+    border-radius: 8px; /* Bordes redondeados para la imagen */
+    margin-right: 15px; /* Espacio entre la imagen y la información */
+}
+
+.episode-info {
+    flex: 1; /* Ocupa el espacio restante */
+}
+
+.episode-info h4 {
+    margin: 0;
+    font-size: 18px;
+    color: #fff; /* Texto blanco */
+}
+
+.episode-info p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #ccc; /* Texto gris claro */
+}
+
+.episode-info span {
+    font-size: 12px;
+    color: #999; /* Texto gris */
+}
+/* Estilos para el contenedor de opciones de calidad */
+.quality-options {
+    display: flex;
+    gap: 10px; /* Espacio entre los botones de calidad */
+    margin-top: 10px; /* Espacio superior */
+    flex-wrap: wrap; /* Permite que los botones se envuelvan si no caben en una línea */
+}
+
+/* Estilos para cada botón de calidad */
+.quality-option {
+    padding: 8px 12px;
+    background-color: #444; /* Fondo oscuro para los botones */
+    color: #fff; /* Texto blanco */
+    border: none;
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease; /* Transición suave al hacer hover */
+}
+
+.quality-option:hover {
+    background-color: #666; /* Cambia el color al hacer hover */
+}

@@ -246,3 +246,48 @@ video[style*="cover"] {
 #fit-screen-btn.active {
     background: rgba(255, 255, 255, 0.2);
 }
+.skip-animation {
+    animation: skip 0.5s ease-in-out;
+}
+
+@keyframes skip {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(20px); }
+    100% { transform: translateX(0); }
+}
+
+.skip-indicator {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    display: none;
+    z-index: 1000;
+    animation: fadeOut 1.5s ease-in-out;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+.stream-btn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1000;
+    font-size: 16px;
+}
+
+.stream-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}

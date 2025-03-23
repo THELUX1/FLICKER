@@ -8,11 +8,12 @@
     <link rel="stylesheet" href="repro.css">
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script> 
     <script src="peliculas.js"></script>
+    <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js"></script>
 </head>
 <body>
 
 <div class="video-container" id="videoContainer">
-    <button class="back-btn" id="back-btn">‹ Volver</button>
+    <button class="stream-btn" id="stream-btn"><i class="fas fa-tv"></i></button>
     <div class="notification" id="notification">Estás viendo: <span id="movie-title-notification"></span></div>
 
     <div class="thumbnail" id="thumbnail" style="background-image: url('assets/thumbnail.jpg');">
@@ -23,6 +24,7 @@
 
     <div class="controls" id="customControls">
         <button id="play-btn"><i class="fas fa-play"></i></button>
+        <button id="skip-forward-btn"><i class="fas fa-forward"></i></button>
         <input type="range" id="timeline" min="0" value="0">
         <span id="time-display">00:00</span>
         <button id="fullscreen-btn"><i class="fas fa-expand"></i></button>
@@ -32,6 +34,7 @@
 
     <div class="quality-container" id="quality-container"></div>
     <div class="loader" id="loader"></div>
+    <div class="skip-indicator" id="skip-indicator">+10s</div>
 </div>
 
 <script>
@@ -107,59 +110,76 @@ document.addEventListener("DOMContentLoaded", () => {
     updateTime(); // Mostrar el tiempo inicial
 });
 
+// Guardar el progreso de la reproducción
+video.addEventListener("pause", () => {
+    if (type === 'series') {
+        const progressData = {
+            seriesId: movieId, // ID de la serie
+            episodeNumber: episodeNumber, // Número del episodio
+            currentTime: video.currentTime, // Tiempo actual
+            duration: video.duration // Duración total del episodio
+        };
+        localStorage.setItem(`seriesProgress_${movieId}_${episodeNumber}`, JSON.stringify(progressData));
+    } else {
+        localStorage.setItem(`progress_${movieId}`, video.currentTime);
+    }
+});
+
+// Guardar el progreso cuando el usuario cierre la página
+window.addEventListener("beforeunload", () => {
+    if (type === 'series') {
+        const progressData = {
+            seriesId: movieId,
+            episodeNumber: episodeNumber,
+            currentTime: video.currentTime,
+            duration: video.duration
+        };
+        localStorage.setItem(`seriesProgress_${movieId}_${episodeNumber}`, JSON.stringify(progressData));
+    } else {
+        localStorage.setItem(`progress_${movieId}`, video.currentTime);
+    }
+});
+
+// Cargar el progreso guardado al iniciar la reproducción
+document.addEventListener("DOMContentLoaded", () => {
+    if (type === 'series') {
+        const savedProgress = localStorage.getItem(`seriesProgress_${movieId}_${episodeNumber}`);
+        if (savedProgress) {
+            const progressData = JSON.parse(savedProgress);
+            video.currentTime = progressData.currentTime;
+        }
+    } else {
+        const savedProgress = localStorage.getItem(`progress_${movieId}`);
+        if (savedProgress) {
+            video.currentTime = parseFloat(savedProgress);
+        }
+    }
+});
+
+// Eliminar el progreso cuando la película o episodio termine
+video.addEventListener("ended", () => {
+    if (type === 'series') {
+        localStorage.removeItem(`seriesProgress_${movieId}_${episodeNumber}`);
+    } else {
+        localStorage.removeItem(`progress_${movieId}`);
+    }
+});
+
 // Manejar la barra de progreso
 timeline.addEventListener("input", (e) => {
     const seekTime = (e.target.value / 100) * video.duration;
     video.currentTime = seekTime;
 });
 
-// Guardar el progreso de la reproducción
-video.addEventListener("pause", () => {
-    localStorage.setItem(`progress_${movieId}`, video.currentTime);
-});
-
-// Guardar el progreso cuando el usuario cierre la página
-window.addEventListener("beforeunload", () => {
-    localStorage.setItem(`progress_${movieId}`, video.currentTime);
-});
-
-// Cargar el progreso guardado al iniciar la reproducción
-document.addEventListener("DOMContentLoaded", () => {
-    const savedProgress = localStorage.getItem(`progress_${movieId}`);
-    if (savedProgress) {
-        video.currentTime = parseFloat(savedProgress);
-    }
-});
-
-// Eliminar el progreso cuando la película termine
-video.addEventListener("ended", () => {
-    localStorage.removeItem(`progress_${movieId}`);
-});
-
-const controls = document.getElementById("customControls");
-const loader = document.getElementById("loader");
-const qualityContainer = document.getElementById("quality-container");
-const qualityBtn = document.getElementById("quality-btn");
-const backBtn = document.getElementById("back-btn");
-const notification = document.getElementById("notification");
-const movieTitleNotification = document.getElementById("movie-title-notification");
-
 // Función para obtener URL del video según calidad
 function getMovieVideoUrl(movieId, quality) {
     return peliculasDisponibles[movieId]?.[quality] || videoUrl;
 }
 
-// Regresar a la página de detalles
-backBtn.addEventListener("click", () => {
-    if (type === 'series') {
-        window.location.href = `seriesDetalles.html?id=${movieId}`;
-    } else {
-        window.location.href = `detalles.html?title=${encodeURIComponent(movieTitle)}`;
-    }
-});
-
 // Mostrar notificación de reproducción
 function showNotification(title) {
+    const notification = document.getElementById("notification");
+    const movieTitleNotification = document.getElementById("movie-title-notification");
     movieTitleNotification.innerText = title;
     notification.style.display = "block";
     setTimeout(() => { notification.style.display = "none"; }, 6000);
@@ -215,6 +235,7 @@ document.getElementById("play-btn").addEventListener("click", () => {
 
 // Agregar opciones de calidad
 function addQualityOptions() {
+    const qualityContainer = document.getElementById("quality-container");
     qualityContainer.innerHTML = '';
     const qualities = Object.keys(peliculasDisponibles[movieId] || {"360p": "default"});
     
@@ -249,9 +270,108 @@ function addQualityOptions() {
     });
 }
 
+const qualityBtn = document.getElementById("quality-btn");
 qualityBtn.addEventListener("click", () => {
+    const qualityContainer = document.getElementById("quality-container");
     qualityContainer.style.display = qualityContainer.style.display === "block" ? "none" : "block";
 });
+
+// Botón de pantalla completa
+const fullscreenBtn = document.getElementById("fullscreen-btn");
+fullscreenBtn.addEventListener("click", () => {
+    if (!document.fullscreenElement) {
+        videoContainer.requestFullscreen().catch(err => {
+            alert(`Error al intentar entrar en pantalla completa: ${err.message}`);
+        });
+    } else {
+        document.exitFullscreen();
+    }
+});
+
+// Botón de ajustar la relación de aspecto
+const fitScreenBtn = document.getElementById("fit-screen-btn");
+fitScreenBtn.addEventListener("click", () => {
+    if (video.style.objectFit === "cover") {
+        video.style.objectFit = "contain";
+    } else {
+        video.style.objectFit = "cover";
+    }
+});
+
+// Botón de adelantar 10 segundos con animación
+const skipForwardBtn = document.getElementById("skip-forward-btn");
+const skipIndicator = document.getElementById("skip-indicator");
+
+skipForwardBtn.addEventListener("click", () => {
+    video.currentTime += 10; // Adelantar 10 segundos
+
+    // Mostrar el indicador de segundos adelantados
+    skipIndicator.innerText = `+10s`;
+    skipIndicator.style.display = "block";
+    setTimeout(() => {
+        skipIndicator.style.display = "none";
+    }, 1500); // Ocultar el indicador después de 1.5 segundos
+
+    // Agregar animación al contenedor del video
+    const videoContainer = document.getElementById("videoContainer");
+    videoContainer.classList.add("skip-animation");
+    setTimeout(() => {
+        videoContainer.classList.remove("skip-animation");
+    }, 500); // Duración de la animación en milisegundos
+});
+
+// Botón de transmisión a TV
+const streamBtn = document.getElementById("stream-btn");
+const videoContainer = document.getElementById("videoContainer");
+
+// Ocultar el botón después de 5 segundos
+setTimeout(() => {
+    streamBtn.style.display = "none";
+}, 5000); // 5000 milisegundos = 5 segundos
+
+// Mostrar el botón cuando el usuario mueva el mouse sobre el reproductor
+videoContainer.addEventListener("mousemove", () => {
+    streamBtn.style.display = "block";
+    setTimeout(() => {
+        streamBtn.style.display = "none";
+    }, 5000); // Ocultar nuevamente después de 5 segundos
+});
+
+// Verificar si Google Cast está disponible
+if (!window.cast || !window.cast.framework) {
+    console.error("Google Cast no está disponible.");
+    streamBtn.style.display = "none"; // Ocultar el botón si no hay soporte para Chromecast
+} else {
+    const castContext = cast.framework.CastContext.getInstance();
+
+    // Configurar el botón de transmisión
+    streamBtn.addEventListener("click", () => {
+        castContext.requestSession()
+            .then(() => {
+                console.log("Transmisión iniciada correctamente.");
+                alert("Transmisión a TV iniciada.");
+            })
+            .catch((error) => {
+                console.error("Error al iniciar la transmisión:", error);
+                alert("Error al iniciar la transmisión.");
+            });
+    });
+
+    // Escuchar cambios en el estado de la transmisión
+    castContext.addEventListener(
+        cast.framework.CastContextEventType.SESSION_STATE_CHANGED,
+        (event) => {
+            switch (event.sessionState) {
+                case cast.framework.SessionState.SESSION_STARTED:
+                    console.log("Transmisión activa.");
+                    break;
+                case cast.framework.SessionState.SESSION_ENDED:
+                    console.log("Transmisión finalizada.");
+                    break;
+            }
+        }
+    );
+}
 </script>
 
 </body>

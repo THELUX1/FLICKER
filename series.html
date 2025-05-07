@@ -6,10 +6,75 @@
     <title>CineStream - Series</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script type="module" src="seriesData.js"></script> <!-- Cambia el archivo de datos a seriesData.js -->
+    <script type="module" src="seriesData.js"></script>
     <script src="global.js"></script>
+    <style>
+        .dev-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .dev-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .password-input {
+            margin: 1rem 0;
+            padding: 0.5rem;
+            border: none;
+            border-radius: 5px;
+            width: 200px;
+        }
+
+        .unlock-btn {
+            background: #0095ff;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .unlock-btn:hover {
+            background: #007acc;
+        }
+
+        .error-msg {
+            color: #ff4444;
+            margin-top: 1rem;
+            display: none;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
+    <!-- Bloqueo de desarrollo -->
+    <div class="dev-overlay" id="devOverlay">
+        <div class="dev-box">
+            <h2>🚧 En Desarrollo 🚧</h2>
+            <p>Introduzca la contraseña para acceder:</p>
+            <input type="password" class="password-input" id="passwordInput" placeholder="Contraseña">
+            <button class="unlock-btn" onclick="checkPassword()">Desbloquear</button>
+            <div class="error-msg" id="errorMsg">Contraseña incorrecta</div>
+        </div>
+    </div>
+
     <!-- Contenedor de búsqueda -->
     <div class="search-overlay">
         <button class="search-icon-button">
@@ -32,37 +97,52 @@
         </div>
     </header>
 
-    <!-- Modal de confirmación -->
-    <div id="confirm-modal" class="modal">
-        <div class="modal-content">
-            <p id="confirm-message">¿Estás seguro de que quieres eliminar esta serie de "Seguir viendo"?</p>
-            <div class="modal-buttons">
-                <button id="confirm-yes" class="modal-button confirm">Sí, eliminar</button>
-                <button id="confirm-no" class="modal-button cancel">Cancelar</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Loader -->
-    <div id="loader" class="loader">
-        <div class="loader-spinner"></div>
-        <p class="loader-text">Cargando catálogo...</p>
-    </div>
-
     <!-- Contenido principal -->
     <main class="content" id="content"></main>
 
     <!-- Barra de navegación inferior -->
     <nav class="bottom-nav">
-    <a href="index.html" class="nav-icon">
-        <i class="fas fa-home"></i>
-        <span>Inicio</span>
-    </a>    
-    <a href="me-gusta.html" class="nav-icon">
-        <i class="fas fa-heart"></i>
-        <span>Me gusta</span>
-    </a>
-</nav>
+        <a href="index.html" class="nav-icon">
+            <i class="fas fa-home"></i>
+            <span>Inicio</span>
+        </a>    
+        <a href="me-gusta.html" class="nav-icon">
+            <i class="fas fa-heart"></i>
+            <span>Me gusta</span>
+        </a>
     </nav>
+
+    <script>
+        // Verificar estado de desbloqueo al cargar
+        window.addEventListener('DOMContentLoaded', () => {
+            if(localStorage.getItem('unlocked') === 'true') {
+                document.getElementById('devOverlay').style.display = 'none';
+            }
+        });
+
+        // Función para verificar contraseña
+        function checkPassword() {
+            const password = document.getElementById('passwordInput').value;
+            const errorMsg = document.getElementById('errorMsg');
+            
+            if(password === '1234') {
+                document.getElementById('devOverlay').style.display = 'none';
+                localStorage.setItem('unlocked', 'true');
+            } else {
+                errorMsg.style.display = 'block';
+                setTimeout(() => errorMsg.style.display = 'none', 2000);
+            }
+        }
+
+        // Habilitar Enter para enviar
+        document.getElementById('passwordInput').addEventListener('keypress', (e) => {
+            if(e.key === 'Enter') checkPassword();
+        });
+
+        // Limpiar estado al cerrar la pestaña
+        window.addEventListener('beforeunload', () => {
+            localStorage.removeItem('unlocked');
+        });
+    </script>
 </body>
 </html>

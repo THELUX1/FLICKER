@@ -237,8 +237,27 @@ document.getElementById("play-btn").addEventListener("click", () => {
 function addQualityOptions() {
     const qualityContainer = document.getElementById("quality-container");
     qualityContainer.innerHTML = '';
-    const qualities = Object.keys(peliculasDisponibles[movieId] || {"360p": "default"});
-    
+
+    // Obtener las calidades según el tipo de contenido
+    let qualities;
+    if (type === 'series') {
+        // Si es una serie, obtener las calidades del episodio
+        const series = seriesSeasons.find(s => s.seriesId === parseInt(movieId));
+        if (series) {
+            const season = series.seasons.find(s => s.seasonNumber === parseInt(seasonNumber));
+            if (season) {
+                const episode = season.episodes.find(e => e.episodeNumber === parseInt(episodeNumber));
+                if (episode) {
+                    qualities = Object.keys(episode.qualities);
+                }
+            }
+        }
+    } else {
+        // Si es una película, obtener las calidades de peliculasDisponibles
+        qualities = Object.keys(peliculasDisponibles[movieId] || {"360p": "default"});
+    }
+
+    // Mostrar las opciones de calidad
     qualities.forEach(quality => {
         if (quality !== "title") {
             const option = document.createElement("div");
@@ -322,20 +341,38 @@ skipForwardBtn.addEventListener("click", () => {
 
 // Botón de transmisión a TV
 const streamBtn = document.getElementById("stream-btn");
+const customControls = document.getElementById("customControls");
 const videoContainer = document.getElementById("videoContainer");
 
-// Ocultar el botón después de 5 segundos
-setTimeout(() => {
-    streamBtn.style.display = "none";
-}, 5000); // 5000 milisegundos = 5 segundos
+let inactivityTimer;
 
-// Mostrar el botón cuando el usuario mueva el mouse sobre el reproductor
-videoContainer.addEventListener("mousemove", () => {
+// Función para ocultar controles
+function hideControls() {
+    streamBtn.style.display = "none";
+    customControls.style.display = "none";
+}
+
+// Función para mostrar controles
+function showControls() {
     streamBtn.style.display = "block";
-    setTimeout(() => {
-        streamBtn.style.display = "none";
-    }, 5000); // Ocultar nuevamente después de 5 segundos
-});
+    customControls.style.display = "block";
+
+    // Reiniciar el temporizador de inactividad
+    clearTimeout(inactivityTimer);
+    inactivityTimer = setTimeout(hideControls, 5000); // Ocultar después de 5 segundos
+}
+
+// Ocultar controles después de 5 segundos al cargar la página
+inactivityTimer = setTimeout(hideControls, 5000);
+
+// Mostrar controles cuando el usuario mueva el mouse sobre el reproductor
+videoContainer.addEventListener("mousemove", showControls);
+
+// Mostrar controles cuando el usuario interactúe con los controles
+customControls.addEventListener("click", showControls);
+
+// Mostrar controles cuando el usuario haga clic en el botón de transmisión
+streamBtn.addEventListener("click", showControls);
 
 // Verificar si Google Cast está disponible
 if (!window.cast || !window.cast.framework) {

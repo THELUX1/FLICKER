@@ -272,25 +272,24 @@
         document.getElementById('mark-watched-detail').addEventListener('click', toggleLike);
 
         // Configurar el botón de reporte
-        // Modifica el evento click del botón de reporte:
+        // Reemplaza el evento click del botón de reporte con esto:
 document.getElementById('reportButton').addEventListener('click', function() {
-    // Asegúrate de usar la variable 'movie' que ya contiene los datos cargados
-    if (!movie) {
-        showToast('Error: No se encontró la película', 'error');
-        return;
-    }
-
-    const movieTitle = movie.title; // <-- Usar la variable 'movie' del contexto
+    const movieTitle = movie?.title || "Contenido no disponible";
     const playButton = document.getElementById('playButton');
     
     try {
+        // Obtener el enlace del reproductor
         const urlParams = new URL(playButton.href).searchParams;
         const videoUrl = decodeURIComponent(urlParams.get('video'));
-        
-        const subject = `Reporte de enlace caído: ${movieTitle}`;
-        const body = `El enlace de "${movieTitle}" está caído:\n${videoUrl}\n\nPor favor verifica este problema.`;
-        
-        window.location.href = `mailto:soporte@cinestream.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+        // Crear enlace mailto
+        const mailtoLink = `mailto:soporte@cinestream.com?
+            subject=${encodeURIComponent(`Reporte de enlace caído: ${movieTitle}`)}
+            &body=${encodeURIComponent(`El enlace de "${movieTitle}" está caído:\n${videoUrl}`)}`;
+
+        // Abrir en el navegador externo
+        window.open(mailtoLink, '_system'); // '_system' abre el navegador por defecto
+
     } catch (error) {
         showToast('Error al generar el reporte', 'error');
         console.error('Error:', error);

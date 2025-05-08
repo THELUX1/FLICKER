@@ -272,23 +272,30 @@
         document.getElementById('mark-watched-detail').addEventListener('click', toggleLike);
 
         // Configurar el botón de reporte
-        document.getElementById('reportButton').addEventListener('click', function() {
-            const movieTitle = document.getElementById('movie-title').innerText;
-            const playButton = document.getElementById('playButton');
-            
-            try {
-                const urlParams = new URL(playButton.href).searchParams;
-                const videoUrl = decodeURIComponent(urlParams.get('video'));
-                
-                const subject = `Reporte de enlace caído: ${movieTitle}`;
-                const body = `El enlace de "${movieTitle}" está caído:\n${videoUrl}\n\nPor favor verifica este problema.`;
-                
-                window.location.href = `mailto:cristiandeniz669@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            } catch (error) {
-                showToast('Error al generar el reporte', 'error');
-                console.error('Error:', error);
-            }
-        });
+        // Modifica el evento click del botón de reporte:
+document.getElementById('reportButton').addEventListener('click', function() {
+    // Asegúrate de usar la variable 'movie' que ya contiene los datos cargados
+    if (!movie) {
+        showToast('Error: No se encontró la película', 'error');
+        return;
+    }
+
+    const movieTitle = movie.title; // <-- Usar la variable 'movie' del contexto
+    const playButton = document.getElementById('playButton');
+    
+    try {
+        const urlParams = new URL(playButton.href).searchParams;
+        const videoUrl = decodeURIComponent(urlParams.get('video'));
+        
+        const subject = `Reporte de enlace caído: ${movieTitle}`;
+        const body = `El enlace de "${movieTitle}" está caído:\n${videoUrl}\n\nPor favor verifica este problema.`;
+        
+        window.location.href = `mailto:soporte@cinestream.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    } catch (error) {
+        showToast('Error al generar el reporte', 'error');
+        console.error('Error:', error);
+    }
+});
     </script>
 </head>
 <body>

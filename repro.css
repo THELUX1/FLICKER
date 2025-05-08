@@ -118,7 +118,7 @@ video {
 #fit-screen-btn, 
 #quality-btn {
     flex-shrink: 0;
-    width: 30px; /* Ancho fijo para consistencia */
+    width: 20px; /* Ancho fijo para consistencia */
 }
 
 /* Contenedor de tiempo */

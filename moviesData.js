@@ -354,10 +354,10 @@ function generarContenido(container) {
     const continueWatchingMovies = getContinueWatchingMovies();
     const visibleCategories = {
         "Seguir viendo": continueWatchingMovies,
-        "Recién Agregado": manualMovies, // Solo mostrar películas manuales aquí
+        "Recién Agregado": manualMovies.slice(-12).reverse(), // <- Últimas 10 películas, orden inverso
         "Acción": accionMovies,
         "Drama": dramaMovies,
-        ...genreCategories // Agregar las categorías de géneros (incluyendo las de hiddenMovies)
+        ...genreCategories
     };
 
     container.innerHTML = Object.entries(visibleCategories).map(([category, movies]) => {

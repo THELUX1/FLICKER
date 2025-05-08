@@ -62,9 +62,9 @@ const peliculasDisponibles = {
     },
     "1352774": {
         "title": "Piglet",
-        "360p": "https://v2.fiestareel.com/mov/2025/1352774-156565/480/480p.m3u8",
-        "720p": "https://v2.fiestareel.com/mov/2025/1352774-156565/720/720p.m3u8",
-        "1080p": "https://v2.fiestareel.com/mov/2025/1352774-156565/720/720p.m3u8"
+        "360p": "https://v3.fiestareel.com/mov/2025/1352774-156565/480/480p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3",
+        "720p": "https://v3.fiestareel.com/mov/2025/1352774-156565/720/720p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3",
+        "1080p": "https://v3.fiestareel.com/mov/2025/1352774-156565/720/720p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3"
     },
     "1405338": {
         "title": "Oni-Goroshi: Ciudad de los demonios",
@@ -200,9 +200,9 @@ const peliculasDisponibles = {
     },
     "950396": {
         "title": "El Abismo Secreto",
-        "360p": "https://v2.fiestareel.com/mov/2025/950396-156617/480/480p.m3u8",
-        "720p": "https://v2.fiestareel.com/mov/2025/950396-156617/720/720p.m3u8",
-        "1080p": "https://v2.fiestareel.com/mov/2025/950396-156617/720/720p.m3u8"
+        "360p": "https://v3.fiestareel.com/mov/2025/950396-156617/480/480p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3",
+        "720p": "https://v3.fiestareel.com/mov/2025/950396-156617/720/720p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3",
+        "1080p": "https://v3.fiestareel.com/mov/2025/950396-156617/720/720p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3"
     },
     "939243": {
         "title": "Sonic 3",

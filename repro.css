@@ -80,18 +80,52 @@ video {
     100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-/* Controles */
+/* Controles generales */
 .controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px;
     position: absolute;
     bottom: 0;
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+    left: 0;
     background: rgba(0, 0, 0, 0.7);
-    padding: 10px;
-    transition: opacity 0.3s ease;
-    opacity: 1;
+    box-sizing: border-box; /* Incluye padding en el ancho total */
+}
+
+/* Ajustes para pantallas anchas (horizontal) */
+@media (min-width: 480px) {
+    .controls {
+        justify-content: space-between; /* Distribuye elementos uniformemente */
+    }
+
+    #timeline {
+        margin: 0 15px; /* Más espacio en pantallas grandes */
+    }
+}
+
+/* Barra de tiempo */
+#timeline {
+    flex-grow: 1;
+    min-width: 50px; /* Evita que colapse en pantallas pequeñas */
+}
+
+/* Botones */
+#play-btn, 
+#skip-forward-btn, 
+#fullscreen-btn, 
+#fit-screen-btn, 
+#quality-btn {
+    flex-shrink: 0;
+    width: 30px; /* Ancho fijo para consistencia */
+}
+
+/* Contenedor de tiempo */
+#time-display {
+    flex-shrink: 0;
+    min-width: 50px; /* Evita saltos de línea */
+    text-align: center;
 }
 
 .controls.hidden {
@@ -290,4 +324,23 @@ video[style*="cover"] {
 
 .stream-btn:hover {
     background-color: rgba(0, 0, 0, 0.8);
+}
+/* Estilo para ocultar los controles */
+#customControls {
+    transition: opacity 0.5s ease;
+}
+
+#customControls.hidden {
+    opacity: 0;
+    pointer-events: none; /* Evitar interacciones cuando está oculto */
+}
+
+/* Estilo para ocultar el botón de transmisión */
+#stream-btn {
+    transition: opacity 0.5s ease;
+}
+
+#stream-btn.hidden {
+    opacity: 0;
+    pointer-events: none; /* Evitar interacciones cuando está oculto */
 }

@@ -26,9 +26,9 @@ const peliculasDisponibles = {
     },
 "1140535": {
         "title": "Presencia",
-        "360p": "https://no6ojcmmspit.acek-cdn.com/hls2/01/04123/bi1thag73kf5_n/index-v1-a1.m3u8?t=Y02VhZCnmY5JCtMWbTeRkpbLj21PIAnt3ejlAJOqHD4&s=1742386654&e=129600&f=20615975&srv=e4RHfFUBYeX4H3m&i=0.4&sp=500&p1=e4RHfFUBYeX4H3m&p2=e4RHfFUBYeX4H3m&asn=264619",
-        "720p": "https://no6ojcmmspit.acek-cdn.com/hls2/01/04123/bi1thag73kf5_n/index-v1-a1.m3u8?t=Y02VhZCnmY5JCtMWbTeRkpbLj21PIAnt3ejlAJOqHD4&s=1742386654&e=129600&f=20615975&srv=e4RHfFUBYeX4H3m&i=0.4&sp=500&p1=e4RHfFUBYeX4H3m&p2=e4RHfFUBYeX4H3m&asn=264619",
-        "1080p": "https://no6ojcmmspit.acek-cdn.com/hls2/01/04123/bi1thag73kf5_n/index-v1-a1.m3u8?t=Y02VhZCnmY5JCtMWbTeRkpbLj21PIAnt3ejlAJOqHD4&s=1742386654&e=129600&f=20615975&srv=e4RHfFUBYeX4H3m&i=0.4&sp=500&p1=e4RHfFUBYeX4H3m&p2=e4RHfFUBYeX4H3m&asn=264619"
+        "360p": "https://v3.fiestareel.com/mov/2025/1140535-156646/480/480p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3",
+        "720p": "https://v3.fiestareel.com/mov/2025/1140535-156646/720/720p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3",
+        "1080p": "https://v3.fiestareel.com/mov/2025/1140535-156646/720/720p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3"
     },
 "1418522": {
         "title": "Delicia",
@@ -74,9 +74,9 @@ const peliculasDisponibles = {
     },
     "1272149": {
         "title": "Bridget Jones: Loca Por Él",
-        "360p": "https://v2.fiestareel.com/mov/2025/1272149-156564/480/480p.m3u8",
-        "720p": "https://v2.fiestareel.com/mov/2025/1272149-156564/720/720p.m3u8",
-        "1080p": "https://v2.fiestareel.com/mov/2025/1272149-156564/720/720p.m3u8"
+        "360p": "https://v3.fiestareel.com/mov/2025/1272149-92982/480/480p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3",
+        "720p": "https://v3.fiestareel.com/mov/2025/1272149-92982/720/720p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3",
+        "1080p": "https://v3.fiestareel.com/mov/2025/1272149-92982/720/720p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3"
     },        
     "933260": {
         "title": "La sustancia",
@@ -86,9 +86,9 @@ const peliculasDisponibles = {
     },
     "823219": {
         "title": "Flow",
-        "360p": "https://akm-cdn-play-web.onfilom.com/70d62c448d1a71efbfc987c7371d0102/de9e99578e8448dc96428924ffd150dd-31f43b7a1cd6b8c49b9e46905d4d8866-sd.m3u8?hdnts=exp=1741754593_acl=/70d62c448d1a71efbfc987c7371d0102/*_hmac=72c15b6a768e408e7539ed2e49a40e8cf9774dcbdf369dea6659d7508b0ca62a",
-        "720p": "https://akm-cdn-play-web.onfilom.com/70d62c448d1a71efbfc987c7371d0102/de9e99578e8448dc96428924ffd150dd-31f43b7a1cd6b8c49b9e46905d4d8866-sd.m3u8?hdnts=exp=1741754593_acl=/70d62c448d1a71efbfc987c7371d0102/*_hmac=72c15b6a768e408e7539ed2e49a40e8cf9774dcbdf369dea6659d7508b0ca62a",
-        "1080p": "https://akm-cdn-play-web.onfilom.com/70d62c448d1a71efbfc987c7371d0102/de9e99578e8448dc96428924ffd150dd-31f43b7a1cd6b8c49b9e46905d4d8866-sd.m3u8?hdnts=exp=1741754593_acl=/70d62c448d1a71efbfc987c7371d0102/*_hmac=72c15b6a768e408e7539ed2e49a40e8cf9774dcbdf369dea6659d7508b0ca62a"
+        "360p": "https://v3.fiestareel.com/mov/2024/823219-155485/480/480p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3",
+        "720p": "https://v3.fiestareel.com/mov/2024/823219-155485/720/720p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3",
+        "1080p": "https://v3.fiestareel.com/mov/2024/823219-155485/720/720p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3"
     },
     "1064213": {
         "title": "Anora",
@@ -146,9 +146,9 @@ const peliculasDisponibles = {
     },
 "516729": {
         "title": "Paddington: Aventura en la selva",
-        "360p": "https://z1qovyduaduu.cdn-centaurus.com/hls2/01/06910/8kw773h44iy8_n/index-v1-a1.m3u8?t=sxuf_BClKuilyWhWJ2VERAWnaw0gXdNjkhbvlPALyZc&s=1741791081&e=129600&f=36740116&srv=aobx2iskdwtw&i=0.4&sp=500&p1=aobx2iskdwtw&p2=aobx2iskdwtw&asn=264619",
-        "720p": "https://z1qovyduaduu.cdn-centaurus.com/hls2/01/06910/8kw773h44iy8_n/iframes-v1-a1.m3u8?t=sxuf_BClKuilyWhWJ2VERAWnaw0gXdNjkhbvlPALyZc&s=1741791081&e=129600&f=36740116&srv=aobx2iskdwtw&i=0.4&sp=500&p1=aobx2iskdwtw&p2=aobx2iskdwtw&asn=264619",
-        "1080p": "https://z1qovyduaduu.cdn-centaurus.com/hls2/01/06910/8kw773h44iy8_n/iframes-v1-a1.m3u8?t=sxuf_BClKuilyWhWJ2VERAWnaw0gXdNjkhbvlPALyZc&s=1741791081&e=129600&f=36740116&srv=aobx2iskdwtw&i=0.4&sp=500&p1=aobx2iskdwtw&p2=aobx2iskdwtw&asn=264619"
+        "360p": "https://v3.fiestareel.com/mov/2024/516729-92646/480/480p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3",
+        "720p": "https://v3.fiestareel.com/mov/2024/516729-92646/720/720p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3",
+        "1080p": "https://v3.fiestareel.com/mov/2024/516729-92646/720/720p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3"
     },
 "774370": {
         "title": "Las aventuras de Dog Man",
@@ -170,9 +170,9 @@ const peliculasDisponibles = {
     },
 "822119": {
         "title": "Capitán América: Un nuevo mundo",
-        "360p": "https://v2.fiestareel.com/mov/2025/822119-156597/480/480p.m3u8",
-        "720p": "https://v2.fiestareel.com/mov/2025/822119-156597/480/480p.m3u8",
-        "1080p": "https://v2.fiestareel.com/mov/2025/822119-156597/720/720p.m3u8"
+        "360p": "https://v3.fiestareel.com/mov/2025/822119-93800/480/480p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3",
+        "720p": "https://v3.fiestareel.com/mov/2025/822119-93800/720/720p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3",
+        "1080p": "https://v3.fiestareel.com/mov/2025/822119-93800/720/720p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3"
     },
 "1084199": {
         "title": "Compañera Perfecta",
@@ -182,9 +182,9 @@ const peliculasDisponibles = {
     },
 "1241982": {
         "title": "Moana 2",
-        "360p": "https://v2.fiestareel.com/mov/2024/1241982-156362/480/480p.m3u8",
-        "720p": "https://v2.fiestareel.com/mov/2024/1241982-156362/720/720p.m3u8",
-        "1080p": "https://v2.fiestareel.com/mov/2024/1241982-156362/720/720p.m3u8"
+        "360p": "https://v3.fiestareel.com/mov/2024/1241982-156362/480/480p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3",
+        "720p": "https://v3.fiestareel.com/mov/2024/1241982-156362/720/720p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3",
+        "1080p": "https://v3.fiestareel.com/mov/2024/1241982-156362/720/720p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3"
     },
 "1126166": {
         "title": "Amenaza En El Aire",

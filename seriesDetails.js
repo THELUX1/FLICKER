@@ -1,14 +1,14 @@
 // seriesDetails.js
 const seriesDetails = [
     {
-        id: 194807,
-        title: "Porno Y Helado",
-        image: "https://media.themoviedb.org/t/p/w220_and_h330_face/4BOfJlIY99rCrDFI2nR0ID6Isu8.jpg",
-        link: "detalles.html?type=series&id=194807",
-        year: "2022",
-        genres: ["Comedia"],
-        synopsis: "Una comedia irreverente que sigue las aventuras de un grupo de amigos mientras intentan montar un negocio de helados con un giro inesperado.",
-        trailer: "https://www.youtube.com/embed/ejemplo_trailer", // Enlace al tráiler
+        id: 71914,
+        title: "La Rueda Del Tiempo",
+        image: "https://media.themoviedb.org/t/p/w220_and_h330_face/2KsxHDAiBABc2v99DGmXiVy4RoG.jpg",
+        link: "detalles.html?type=series&id=71914",
+        year: "2021",
+        genres: ["Ciencia ficción", "Fantasía", "Drama"],
+        synopsis: "Las vidas de cuatro jóvenes cambian para siempre cuando una desconocida llega a su aldea afirmando que uno de ellos es la encarnación de una antigua profecía y tiene el poder de inclinar la balanza entre la Luz y la Oscuridad. Deberán decidir si dejar en manos de la desconocida (y de ellos mismos) el destino del mundo antes de que el Oscuro escape de su prisión y comience la Última Batalla.",
+        trailer: "https://www.youtube.com/embed/2kOMw4mm2mU ", // Enlace al tráiler
         rating: "7.5/10"
     },
     {

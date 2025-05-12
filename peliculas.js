@@ -1,5 +1,35 @@
 // videos.js
 const peliculasDisponibles = {
+"1276073": {
+        "title": "Pánico en el tren bala",
+        "360p": "https://v3.fiestareel.com/mov/2025/1276073-94333/480/480p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3",
+        "720p": "https://v3.fiestareel.com/mov/2025/1276073-94333/720/720p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3",
+        "1080p": "https://v3.fiestareel.com/mov/2025/1276073-94333/720/720p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3"
+    },
+"1249213": {
+        "title": "Drop: Amenaza anónima",
+        "360p": "https://v3.fiestareel.com/mov/2025/1249213-94336/480/480p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3",
+        "720p": "https://v3.fiestareel.com/mov/2025/1249213-94336/720/720p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3",
+        "1080p": "https://v3.fiestareel.com/mov/2025/1249213-94336/720/720p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3"
+    },
+"1210938": {
+        "title": "Revelación",
+        "360p": "https://v3.fiestareel.com/mov/2025/1210938-90148/480/480p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3",
+        "720p": "https://v3.fiestareel.com/mov/2025/1210938-90148/720/720p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3",
+        "1080p": "https://v3.fiestareel.com/mov/2025/1210938-90148/720/720p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3"
+    },
+"1013601": {
+        "title": "The Alto Knights",
+        "360p": "https://v3.fiestareel.com/mov/2025/1013601-93809/480/480p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3",
+        "720p": "https://v3.fiestareel.com/mov/2025/1013601-93809/720/720p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3",
+        "1080p": "https://v3.fiestareel.com/mov/2025/1013601-93809/720/720p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3"
+    },
+"931349": {
+        "title": "Ash",
+        "360p": "https://v3.fiestareel.com/mov/2025/931349-93920/480/480p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3",
+        "720p": "https://v3.fiestareel.com/mov/2025/931349-93920/720/720p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3",
+        "1080p": "https://v3.fiestareel.com/mov/2025/931349-93920/720/720p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3"
+    },
 "1104845": {
         "title": "Plankton: La Película",
         "360p": "https://v2.fiestareel.com/mov/2025/1104845-156766/480/480p.m3u8?did=XVzwN5etnKWL0z9T39Xda&dt=3",
@@ -50,9 +80,9 @@ const peliculasDisponibles = {
     },
     "696506": {
         "title": "Mickey 17",
-        "360p": "https://v2.fiestareel.com/mov/2025/696506-156750/480/480p.m3u8",
-        "720p": "https://v2.fiestareel.com/mov/2025/696506-156750/720/720p.m3u8",
-        "1080p": "https://v2.fiestareel.com/mov/2025/696506-156750/720/720p.m3u8"
+        "360p": "https://v3.fiestareel.com/mov/2025/696506-93029/480/480p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3",
+        "720p": "https://v3.fiestareel.com/mov/2025/696506-93029/720/720p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3",
+        "1080p": "https://v3.fiestareel.com/mov/2025/696506-93029/720/720p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3"
     },
     "1357633": {
         "title": "Solo Leveling: Segundo Despertar",
@@ -68,9 +98,9 @@ const peliculasDisponibles = {
     },
     "1405338": {
         "title": "Oni-Goroshi: Ciudad de los demonios",
-        "360p": "https://v2.fiestareel.com/mov/2025/1405338-156658/480/480p.m3u8",
-        "720p": "https://v2.fiestareel.com/mov/2025/1405338-156658/720/720p.m3u8",
-        "1080p": "https://v2.fiestareel.com/mov/2025/1405338-156658/720/720p.m3u8"
+        "360p": "https://v3.fiestareel.com/mov/2025/1405338-156756/480/480p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3",
+        "720p": "https://v3.fiestareel.com/mov/2025/1405338-156756/720/720p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3",
+        "1080p": "https://v3.fiestareel.com/mov/2025/1405338-156756/720/720p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3"
     },
     "1272149": {
         "title": "Bridget Jones: Loca Por Él",

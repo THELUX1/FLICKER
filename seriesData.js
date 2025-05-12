@@ -1,12 +1,12 @@
 // Series manuales
 const manualSeries = [
     {
-        id: 194807,
-        title: "Porno Y Helado",
-        image: "https://media.themoviedb.org/t/p/w220_and_h330_face/4BOfJlIY99rCrDFI2nR0ID6Isu8.jpg",
-        link: "seriesDetalles.html?type=series&id=194807",
-        year: "2022",
-        genres: ["Comedia"]
+        id: 71914,
+        title: "La Rueda Del Tiempo",
+        image: "https://media.themoviedb.org/t/p/w220_and_h330_face/2KsxHDAiBABc2v99DGmXiVy4RoG.jpg",
+        link: "seriesDetalles.html?type=series&id=71914",
+        year: "2021",
+        genres: ["Ciencia ficción", "Fantasía", "Drama"]
     },
     {
         id: 2,

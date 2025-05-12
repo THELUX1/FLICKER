@@ -8,81 +8,60 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="js/global.js"></script>
-    <script type="module">
-        import seriesDetails from './seriesDetails.js'; // Importar los detalles de las series
-        import seriesSeasons from './seriesSeasons.js'; // Importar las temporadas y episodios
+    <script type="module">        
+    import seriesDetails from './seriesDetails.js';
+    import seriesSeasons from './seriesSeasons.js';
 
-        const apiKey = '995449ccaf6d840acc029f95c7d210dd'; // Tu API key de TMDb
-        const urlParams = new URLSearchParams(window.location.search);
-        const seriesId = urlParams.get('id'); // Obtenemos el ID de la serie
+    const apiKey = '995449ccaf6d840acc029f95c7d210dd';
+    const urlParams = new URLSearchParams(window.location.search);
+    const seriesId = urlParams.get('id');
 
-        // Variable global para almacenar los detalles de la serie
-        let seriesData = null;
+    let seriesData = null;
 
-        // Función para mostrar un toast (notificación)
-        function showToast(message, type) {
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.innerText = message;
+    async function fetchTrailerFromLocal(seriesId) {
+        try {
+            const response = await fetch('trailers.json');
+            if (!response.ok) throw new Error("No se pudo cargar trailers.json");
 
-            document.body.appendChild(toast);
+            const trailers = await response.json();
+            if (!Array.isArray(trailers)) throw new Error("Formato incorrecto en trailers.json");
 
-            // Mostrar el toast
-            setTimeout(() => {
-                toast.classList.add('show');
-            }, 100);
-
-            // Ocultar el toast después de 3 segundos
-            setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => {
-                    document.body.removeChild(toast);
-                }, 300); // Esperar a que termine la animación de desvanecimiento
-            }, 3000);
+            const trailerData = trailers.find(t => t.id === parseInt(seriesId));
+            return trailerData ? trailerData.trailer : null;
+        } catch (error) {
+            console.error('Error cargando trailers.json:', error);
+            return null;
         }
+    }
 
-        // Función para obtener el tráiler desde la API de TMDb
-        async function fetchTrailer(seriesId) {
-            try {
-                const response = await fetch(
-                    `https://api.themoviedb.org/3/tv/${seriesId}/videos?api_key=${apiKey}&language=es-MX`
-                );
+    async function fetchTrailerFromAPI(seriesId) {
+        try {
+            const response = await fetch(
+                `https://api.themoviedb.org/3/tv/${seriesId}/videos?api_key=${apiKey}&language=es-MX`
+            );
+            if (!response.ok) throw new Error("No se pudo obtener el tráiler de TMDb");
 
-                if (!response.ok) {
-                    throw new Error(`Error en la respuesta: ${response.status} ${response.statusText}`);
-                }
+            const data = await response.json();
+            if (!data.results) return null;
 
-                const data = await response.json();
-
-                if (!data || !data.results || !Array.isArray(data.results)) {
-                    console.error('La respuesta no contiene datos válidos:', data);
-                    return null;
-                }
-
-                // Buscar el tráiler en los resultados
-                const trailer = data.results.find(video => video.type === 'Trailer' && video.site === 'YouTube');
-
-                // Devolver el enlace del tráiler si se encuentra
-                return trailer ? `https://www.youtube.com/embed/${trailer.key}` : null;
-            } catch (error) {
-                console.error('Error obteniendo el tráiler:', error);
-                return null;
-            }
+            const trailer = data.results.find(video => video.type === 'Trailer' && video.site === 'YouTube');
+            return trailer ? `https://www.youtube.com/embed/${trailer.key}` : null;
+        } catch (error) {
+            console.error('Error obteniendo el tráiler desde la API:', error);
+            return null;
         }
+    }
 
-        // Función para obtener los detalles de la serie desde la API de TMDb
-        async function fetchSeriesDetailsFromAPI(seriesId) {
+    async function fetchSeriesDetails(seriesId) {
+        let seriesData = seriesDetails.find(s => s.id === parseInt(seriesId)) || null;
+
+        if (!seriesData) {
             try {
-                const detailsResponse = await fetch(
-                    `https://api.themoviedb.org/3/tv/${seriesId}?api_key=${apiKey}&language=es-MX`
-                );
-                const details = await detailsResponse.json();
-                console.log('Respuesta de la API (detalles):', details); // Verificar la respuesta completa
+                const response = await fetch(`https://api.themoviedb.org/3/tv/${seriesId}?api_key=${apiKey}&language=es-MX`);
+                if (!response.ok) throw new Error("No se pudo obtener detalles de la serie");
 
-                const trailer = await fetchTrailer(seriesId);
-                console.log('Tráiler obtenido:', trailer); // Verificar el tráiler
-
-                return {
+                const details = await response.json();
+                seriesData = {
                     id: details.id,
                     title: details.name || "Sin título",
                     year: details.first_air_date?.split('-')[0] || 'N/A',
@@ -90,8 +69,8 @@
                     synopsis: details.overview || "Sin sinopsis disponible.",
                     image: details.poster_path 
                         ? `https://image.tmdb.org/t/p/w500${details.poster_path}`
-                        : 'https://via.placeholder.com/500x750?text=Imagen+no+disponible', // Imagen por defecto
-                    trailer: trailer,
+                        : 'https://via.placeholder.com/500x750?text=Imagen+no+disponible',
+                    trailer: null,
                     type: 'tv'
                 };
             } catch (error) {
@@ -100,229 +79,110 @@
             }
         }
 
-        // Función para obtener los detalles de la serie desde el archivo local
-        function fetchSeriesDetailsFromLocal(seriesId) {
-            console.log('Buscando serie en seriesDetails.js...'); // Depuración
-            console.log('ID de la serie buscada:', seriesId); // Depuración
-            console.log('Datos en seriesDetails.js:', seriesDetails); // Depuración
-
-            const serie = seriesDetails.find(s => s.id === parseInt(seriesId));
-            if (serie) {
-                console.log('Serie encontrada en seriesDetails.js:', serie); // Depuración
-                return {
-                    id: serie.id,
-                    title: serie.title,
-                    year: serie.year,
-                    rating: serie.rating,
-                    synopsis: serie.synopsis,
-                    image: serie.image,
-                    trailer: serie.trailer,
-                    type: 'tv'
-                };
-            }
-            console.log('Serie no encontrada en seriesDetails.js'); // Depuración
-            return null;
+        let trailer = await fetchTrailerFromLocal(seriesId);
+        if (!trailer) {
+            trailer = await fetchTrailerFromAPI(seriesId);
         }
 
-        // Función para obtener los detalles (local o API)
-        async function fetchSeriesDetails(seriesId) {
-            // Primero buscar en el archivo local
-            let seriesData = fetchSeriesDetailsFromLocal(seriesId);
-
-            // Si no se encuentra en el archivo local, buscar en la API
-            if (!seriesData) {
-                console.log('Recurriendo a la API para obtener detalles de la serie...'); // Depuración
-                seriesData = await fetchSeriesDetailsFromAPI(seriesId);
-            }
-
-            return seriesData;
-        }
-
-        // Función para mostrar las temporadas y episodios
-        function showSeasonsAndEpisodes(seriesId) {
-            const series = seriesSeasons.find(s => s.seriesId === parseInt(seriesId));
-            if (series) {
-                const seasonsContainer = document.getElementById('seasons-container');
-                const seasonSelector = document.getElementById('season-selector');
-
-                // Crear el selector de temporadas
-                seasonSelector.innerHTML = series.seasons.map(season => `
-                    <option value="${season.seasonNumber}">Temporada ${season.seasonNumber}</option>
-                `).join('');
-
-                // Mostrar los episodios de la temporada seleccionada
-                // Mostrar los episodios de la temporada seleccionada
-const showEpisodes = (seasonNumber) => {
-    const selectedSeason = series.seasons.find(s => s.seasonNumber === seasonNumber);
-    if (selectedSeason) {
-        seasonsContainer.innerHTML = selectedSeason.episodes.map(episode => `
-            <div class="episode">
-                <img src="${episode.image}" alt="${episode.title}">
-                <div class="episode-info">
-                    <h4>${episode.title}</h4> <!-- Solo muestra el título del episodio -->
-                    <p>${episode.description}</p>
-                    <span>Duración: ${episode.duration}</span>
-                    <div class="quality-options">
-                        ${Object.keys(episode.qualities).map(quality => `
-                            <button class="quality-option" data-url="${episode.qualities[quality]}" data-episode-number="${episode.episodeNumber}">
-                                ${quality}
-                            </button>
-                        `).join('')}
-                    </div>
-                </div>
-            </div>
-        `).join('');
-    } else {
-        seasonsContainer.innerHTML = '<p>No hay episodios disponibles para esta temporada.</p>';
+        seriesData.trailer = trailer;
+        return seriesData;
     }
-};
 
-                // Mostrar los episodios de la primera temporada por defecto
-                showEpisodes(1);
+    function showSeasonsAndEpisodes(seriesId) {
+        const series = seriesSeasons.find(s => s.seriesId === parseInt(seriesId));
+        if (series) {
+            const seasonsContainer = document.getElementById('seasons-container');
+            const seasonSelector = document.getElementById('season-selector');
 
-                // Cambiar los episodios cuando se selecciona una temporada
-                seasonSelector.addEventListener('change', (event) => {
-                    const selectedSeasonNumber = parseInt(event.target.value);
-                    showEpisodes(selectedSeasonNumber);
-                });
+            seasonSelector.innerHTML = series.seasons.map(season => `
+                <option value="${season.seasonNumber}">Temporada ${season.seasonNumber}</option>
+            `).join('');
 
-                // Manejar la selección de calidad
-                seasonsContainer.addEventListener('click', (event) => {
-                    if (event.target.classList.contains('quality-option')) {
-                        const videoUrl = event.target.getAttribute('data-url');
-                        const episodeNumber = event.target.getAttribute('data-episode-number');
-                        window.location.href = `Reproductor.html?video=${encodeURIComponent(videoUrl)}&type=series&episodeNumber=${episodeNumber}`;
-                    }
-                });
-            } else {
-                console.error('No se encontraron temporadas para esta serie.');
-            }
-        }
-
-        // Inicialización
-        if (seriesId) {
-            console.log(`Buscando detalles para la serie con ID ${seriesId}...`); // Depuración
-            fetchSeriesDetails(seriesId).then(data => {
-                if (data) {
-                    seriesData = data; // Almacenar los detalles en la variable global
-                    console.log('Detalles obtenidos:', seriesData); // Depuración
-                    document.getElementById('series-title').innerText = seriesData.title;
-                    document.getElementById('series-rating').innerText = seriesData.rating;
-                    document.getElementById('series-year').innerText = seriesData.year;
-                    document.getElementById('series-synopsis').innerText = seriesData.synopsis;
-                    document.getElementById('series-backdrop').style.backgroundImage = `url('${seriesData.image}')`;
-                    
-                    if (seriesData.trailer) {
-                        document.getElementById('series-trailer').src = `${seriesData.trailer}?autoplay=1`;
-                    } else {
-                        document.querySelector('.trailer-container').style.display = 'none';
-                    }
-
-                    // Ocultar el botón de reproducción
-                    document.getElementById('playButton').style.display = 'none';
-
-                    // Actualizar el botón "Me gusta"
-                    const likedSeries = JSON.parse(localStorage.getItem('likedSeries') || '[]');
-                    updateLikeButton(likedSeries.some(s => s.id === seriesData.id));
-
-                    // Mostrar las temporadas y episodios
-                    showSeasonsAndEpisodes(seriesId);
+            function showEpisodes(seasonNumber) {
+                const selectedSeason = series.seasons.find(s => s.seasonNumber === seasonNumber);
+                if (selectedSeason) {
+                    seasonsContainer.innerHTML = selectedSeason.episodes.map(episode => `
+                        <div class="episode">
+                            <img src="${episode.image}" alt="${episode.title}">
+                            <div class="episode-info">
+                                <h4>${episode.title}</h4>
+                                <p>${episode.description}</p>
+                                <span>Duración: ${episode.duration}</span>
+                                <button class="play-episode" data-url="${episode.qualities['360p']}" data-episode-number="${episode.episodeNumber}">
+                                    Reproducir
+                                </button>
+                            </div>
+                        </div>
+                    `).join('');
                 } else {
-                    console.error('No se pudieron obtener los detalles de la serie.'); // Depuración
+                    seasonsContainer.innerHTML = '<p>No hay episodios disponibles para esta temporada.</p>';
+                }
+            }
+
+            showEpisodes(1);
+
+            seasonSelector.addEventListener('change', (event) => {
+                showEpisodes(parseInt(event.target.value));
+            });
+
+            seasonsContainer.addEventListener('click', (event) => {
+                if (event.target.classList.contains('play-episode')) {
+                    const videoUrl = event.target.getAttribute('data-url');
+                    const episodeNumber = event.target.getAttribute('data-episode-number');
+                    window.location.href = `Reproductor.html?video=${encodeURIComponent(videoUrl)}&type=series&episodeNumber=${episodeNumber}&movieId=${seriesId}`;
                 }
             });
+        } else {
+            console.error('No se encontraron temporadas para esta serie.');
         }
+    }
 
-        // Función para manejar "Me gusta"
-        function toggleLike() {
-            if (!seriesData) {
-                console.error('No se han cargado los detalles de la serie.');
-                return;
+    if (seriesId) {
+        fetchSeriesDetails(seriesId).then(data => {
+            if (data) {
+                seriesData = data;
+                document.getElementById('series-title').innerText = seriesData.title;
+                document.getElementById('series-rating').innerText = seriesData.rating;
+                document.getElementById('series-year').innerText = seriesData.year;
+                document.getElementById('series-synopsis').innerText = seriesData.synopsis;
+                document.getElementById('series-backdrop').style.backgroundImage = `url('${seriesData.image}')`;
+
+                const trailerElement = document.getElementById('series-trailer');
+                if (seriesData.trailer) {
+                    trailerElement.src = `${seriesData.trailer}?autoplay=1`;
+                    trailerElement.style.display = 'block';
+                } else {
+                    document.querySelector('.trailer-container').style.display = 'none';
+                }
+
+                showSeasonsAndEpisodes(seriesId);
             }
+                   });
+    }
+</script>
 
-            const likedSeries = JSON.parse(localStorage.getItem('likedSeries') || '[]');
-            const isLiked = likedSeries.some(s => s.id === seriesData.id);
-
-            const seriesInfo = {
-                id: seriesData.id,
-                title: seriesData.title,
-                image: seriesData.image,
-                link: window.location.href,
-                type: 'tv' // Añadir un campo para identificar que es una serie
-            };
-
-            if (isLiked) {
-                const updatedSeries = likedSeries.filter(s => s.id !== seriesData.id);
-                localStorage.setItem('likedSeries', JSON.stringify(updatedSeries));
-                showToast(`${seriesData.title} eliminado de Me gusta`, 'success');
-            } else {
-                likedSeries.unshift(seriesInfo);
-                localStorage.setItem('likedSeries', JSON.stringify(likedSeries));
-                showToast(`${seriesData.title} añadido a Me gusta`, 'success');
-            }
-
-            updateLikeButton(!isLiked);
-        }
-
-        // Función para actualizar el botón "Me gusta"
-        function updateLikeButton(isLiked) {
-            const likeButton = document.getElementById('mark-watched-detail');
-            const likeText = document.getElementById('like-text');
-            if (isLiked) {
-                likeText.innerText = "No me gusta";
-                likeButton.classList.add('liked');
-            } else {
-                likeText.innerText = "Me gusta";
-                likeButton.classList.remove('liked');
-            }
-        }
-
-        // Configurar el botón "Me gusta"
-        document.getElementById('mark-watched-detail').addEventListener('click', toggleLike);
-    </script>
 </head>
 <body>
     <section class="series-detail-container">
         <div class="series-backdrop" id="series-backdrop"></div>
         <div class="series-content">
-            <div class="main-info">
-                <div class="trailer-container featured-trailer">
-                    <div class="trailer-wrapper">
-                        <iframe class="series-trailer" id="series-trailer" allowfullscreen></iframe>
-                    </div>
-                </div>
-                <div class="series-info">
-                    <h1 id="series-title"></h1>
-                    <div class="series-meta">
-                        <span id="series-rating"></span>
-                        <span id="series-year"></span>
-                    </div>
-                    <p id="series-synopsis"></p>
-                    <div class="series-actions">
-                        <a id="playButton" style="display: none;">
-                            <button class="play-button">
-                                <svg class="play-icon" viewBox="0 0 24 24">
-                                    <path d="M8 5v14l11-7z" />
-                                </svg>
-                                Reproducir
-                            </button>
-                        </a>
-                        <button class="add-list-button" id="mark-watched-detail">
-                            <svg class="add-icon" viewBox="0 0 24 24">
-                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-                            </svg>
-                            <span id="like-text">Me gusta</span>
-                        </button>
-                    </div>
-                </div>
+            <h1 id="series-title"></h1>
+            <div class="series-meta">
+                <span id="series-rating"></span>
+                <span id="series-year"></span>
             </div>
-            <!-- Selector de temporadas -->
+            <p id="series-synopsis"></p>
+
+            <div class="trailer-container">
+                <iframe class="series-trailer" id="series-trailer" allowfullscreen></iframe>
+            </div>
+
             <div class="season-selector-container">
                 <label for="season-selector">Seleccionar temporada:</label>
-                <select id="season-selector" class="season-selector"></select>
+                <select id="season-selector"></select>
             </div>
-            <!-- Contenedor para episodios -->
-            <div id="seasons-container" class="seasons-container"></div>
+
+            <div id="seasons-container"></div>
         </div>
     </section>
 </body>

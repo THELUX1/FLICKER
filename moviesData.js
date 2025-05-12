@@ -27,6 +27,46 @@ const hiddenMovies = [
 ];
 const manualMovies = [
 {
+          id: 1276073,
+          title: "Ash",
+          image: "https://s.lupacine.com/image/t/p/w500/jmzxlDBwgvRbpPJzNQwizyn9UEn.jpg",
+          link: "detalles.html?type=movie&id=1276073",
+          year: "2025",
+          genres: ["Drama", "Suspenso", "Acción","Crimen"] // <-- Asegúrate de que esto esté definido
+      },
+{
+          id: 1249213,
+          title: "Drop: Amenaza anónima",
+          image: "https://s.lupacine.com/image/t/p/w500/dS2S5lpfgRIRQOb7LDCjNsQqKjp.jpg",
+          link: "detalles.html?type=movie&id=1249213",
+          year: "2025",
+          genres: ["Terror", "Suspenso", "Misterio"] // <-- Asegúrate de que esto esté definido
+      },
+{
+          id: 1210938,
+          title: "Revelación",
+          image: "https://s.lupacine.com/image/t/p/w500/ak0HlRVsVzh8mvwIUZpZr0z6uqW.jpg",
+          link: "detalles.html?type=movie&id=1210938",
+          year: "2025",
+          genres: ["Suspenso", "Crimen", "Misterio"] // <-- Asegúrate de que esto esté definido
+      },
+{
+          id: 1013601,
+          title: "The Alto Knights",
+          image: "https://s.lupacine.com/image/t/p/w500/95KmR0xNuZZ6DNESDwLKWGIBvMg.jpg",
+          link: "detalles.html?type=movie&id=1013601",
+          year: "2025",
+          genres: ["Crimen", "Drama", "Historia"] // <-- Asegúrate de que esto esté definido
+      },
+{
+          id: 931349,
+          title: "Ash",
+          image: "https://s.lupacine.com/image/t/p/w500/nRa8B3tQCUK6pVwjasIyQehbvpF.jpg",
+          link: "detalles.html?type=movie&id=931349",
+          year: "2025",
+          genres: ["Terror", "Suspenso", "Ciencia ficción"] // <-- Asegúrate de que esto esté definido
+      },
+{
           id: 1104845,
           title: "Plankton: La Película",
           image: "https://s.lupacine.com/image/t/p/w500/hGaUNLF5VZbg9ovPTyjm9Rv5xWz.jpg",

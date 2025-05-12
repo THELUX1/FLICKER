@@ -178,3 +178,43 @@ iframe.series-trailer {
 .quality-option:hover {
     background-color: #666; /* Cambia el color al hacer hover */
 }
+/* Estilos base para el botón de reproducción */
+.play-episode {
+    background-color: #e50914; /* Color rojo de Netflix, puedes cambiarlo */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Espacio entre el ícono y el texto */
+}
+
+/* Efecto hover para el botón */
+.play-episode:hover {
+    background-color: #f40612; /* Un tono más claro de rojo */
+    transform: scale(1.05); /* Ligero aumento de tamaño al hacer hover */
+}
+
+/* Efecto activo (cuando se hace clic) */
+.play-episode:active {
+    background-color: #d30812; /* Un tono más oscuro de rojo */
+    transform: scale(0.95); /* Ligera reducción de tamaño al hacer clic */
+}
+
+/* Estilos para el ícono de reproducción (si usas un ícono) */
+.play-episode i {
+    font-size: 18px; /* Tamaño del ícono */
+}
+
+/* Estilos para el botón cuando está deshabilitado */
+.play-episode:disabled {
+    background-color: #ccc; /* Color gris para estado deshabilitado */
+    cursor: not-allowed;
+    opacity: 0.7;
+}

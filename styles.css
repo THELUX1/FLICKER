@@ -60,6 +60,27 @@ body {
     border-radius: 8px; /* Bordes redondeados */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para resaltar */
 }
+/* Lazy Loading Styles */
+.lazy-image {
+    background-color: #f0f0f0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.loaded-image {
+    opacity: 1;
+}
+
+/* Placeholder SVG (mismo aspecto que tus imágenes) */
+.movie-card img {
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Resto de tus estilos existentes... */
 
 @keyframes spin {
     0% { transform: rotate(0deg); }

@@ -1,5 +1,17 @@
 // videos.js
 const peliculasDisponibles = {
+"1087891": {
+        "title": "El amateur: Operación venganza",
+        "360p": "https://v3.fiestareel.com/mov/2025/1087891-93642/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2025/1087891-93642/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2025/1087891-93642/720/720p.m3u8"
+    },
+"1254786": {
+        "title": "Mi Lista De Deseos",
+        "360p": "https://v3.fiestareel.com/mov/2025/1254786-93807/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2025/1254786-93807/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2025/1254786-93807/720/720p.m3u8"
+    },
 "1276073": {
         "title": "Pánico en el tren bala",
         "360p": "https://v3.fiestareel.com/mov/2025/1276073-94333/480/480p.m3u8?did=Ur3a-ToHk81RdltNWN5Js&dt=3",

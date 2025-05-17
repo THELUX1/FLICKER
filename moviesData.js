@@ -26,94 +26,6 @@ const hiddenMovies = [
 ];
 const manualMovies = [
 {
-          id: 1276073,
-          title: "Ash",
-          image: "https://s.lupacine.com/image/t/p/w500/jmzxlDBwgvRbpPJzNQwizyn9UEn.jpg",
-          link: "detalles.html?type=movie&id=1276073",
-          year: "2025",
-          genres: ["Drama", "Suspenso", "Acción","Crimen"] // <-- Asegúrate de que esto esté definido
-      },
-{
-          id: 1249213,
-          title: "Drop: Amenaza anónima",
-          image: "https://s.lupacine.com/image/t/p/w500/dS2S5lpfgRIRQOb7LDCjNsQqKjp.jpg",
-          link: "detalles.html?type=movie&id=1249213",
-          year: "2025",
-          genres: ["Terror", "Suspenso", "Misterio"] // <-- Asegúrate de que esto esté definido
-      },
-{
-          id: 1210938,
-          title: "Revelación",
-          image: "https://s.lupacine.com/image/t/p/w500/ak0HlRVsVzh8mvwIUZpZr0z6uqW.jpg",
-          link: "detalles.html?type=movie&id=1210938",
-          year: "2025",
-          genres: ["Suspenso", "Crimen", "Misterio"] // <-- Asegúrate de que esto esté definido
-      },
-{
-          id: 1013601,
-          title: "The Alto Knights",
-          image: "https://s.lupacine.com/image/t/p/w500/95KmR0xNuZZ6DNESDwLKWGIBvMg.jpg",
-          link: "detalles.html?type=movie&id=1013601",
-          year: "2025",
-          genres: ["Crimen", "Drama", "Historia"] // <-- Asegúrate de que esto esté definido
-      },
-{
-          id: 931349,
-          title: "Ash",
-          image: "https://s.lupacine.com/image/t/p/w500/nRa8B3tQCUK6pVwjasIyQehbvpF.jpg",
-          link: "detalles.html?type=movie&id=931349",
-          year: "2025",
-          genres: ["Terror", "Suspenso", "Ciencia ficción"] // <-- Asegúrate de que esto esté definido
-      },
-{
-          id: 1104845,
-          title: "Plankton: La Película",
-          image: "https://s.lupacine.com/image/t/p/w500/hGaUNLF5VZbg9ovPTyjm9Rv5xWz.jpg",
-          link: "detalles.html?type=movie&id=1104845",
-          year: "2025",
-          genres: ["Animación", "Comedia", "Aventura", "Familia", "Fantasía"] // <-- Asegúrate de que esto esté definido
-      },
-{
-          id: 1356039,
-          title: "Counterstrike",
-          image: "https://s.lupacine.com/image/t/p/w500/lI2uFlSEkwXKljqiry7coaJ6wIS.jpg",
-          link: "detalles.html?type=movie&id=1356039",
-          year: "2025",
-          genres: ["Acción", "Fantasía", "Suspenso"] // <-- Asegúrate de que esto esté definido
-      },
-{
-          id: 1124620,
-          title: "El Mono",
-          image: "https://s.lupacine.com/image/t/p/w500/yYa8Onk9ow7ukcnfp2QWVvjWYel.jpg",
-          link: "detalles.html?type=movie&id=1124620",
-          year: "2025",
-          genres: ["Comedia", "Terror"] // <-- Asegúrate de que esto esté definido
-      },
-{
-          id: 799766,
-          title: "Better Man",
-          image: "https://media.themoviedb.org/t/p/w220_and_h330_face/otXaS8K5coAwmUyGxBsNz9mWs8H.jpg",
-          link: "detalles.html?type=movie&id=799766",
-          year: "2025",
-          genres: ["Música", "Drama"] // <-- Asegúrate de que esto esté definido
-      },
-{
-          id: 1140535,
-          title: "Presencia",
-          image: "https://media.themoviedb.org/t/p/w220_and_h330_face/kc7YIx6KNiXm1dpqlhqdX3eTL7a.jpg",
-          link: "detalles.html?type=movie&id=1140535",
-          year: "2025",
-          genres: ["Drama", "Terror"] // <-- Asegúrate de que esto esté definido
-      },
-{
-          id: 1418522,
-          title: "Delicia",
-          image: "https://s.lupacine.com/image/t/p/w500/o1ZIvviAEuIHcH9x6sv112mSvTR.jpg",
-          link: "detalles.html?type=movie&id=1418522",
-          year: "2025",
-          genres: ["Drama", "Suspenso"] // <-- Asegúrate de que esto esté definido
-      },
-{
           id: 777443,
           title: "Estado Eléctrico",
           image: "https://media.themoviedb.org/t/p/w220_and_h330_face/nCuSMDWhWGJAPdp9rSDIogG5X82.jpg",
@@ -304,7 +216,110 @@ const manualMovies = [
         link: "detalles.html?type=movie&id=939243", // Usamos el ID de TMDb
         year: "2024"
     },
-    
+{
+          id: 1104845,
+          title: "Plankton: La Película",
+          image: "https://s.lupacine.com/image/t/p/w500/hGaUNLF5VZbg9ovPTyjm9Rv5xWz.jpg",
+          link: "detalles.html?type=movie&id=1104845",
+          year: "2025",
+          genres: ["Animación", "Comedia", "Aventura", "Familia", "Fantasía"] // <-- Asegúrate de que esto esté definido
+      },
+{
+          id: 1356039,
+          title: "Counterstrike",
+          image: "https://s.lupacine.com/image/t/p/w500/lI2uFlSEkwXKljqiry7coaJ6wIS.jpg",
+          link: "detalles.html?type=movie&id=1356039",
+          year: "2025",
+          genres: ["Acción", "Fantasía", "Suspenso"] // <-- Asegúrate de que esto esté definido
+      },
+{
+          id: 1124620,
+          title: "El Mono",
+          image: "https://s.lupacine.com/image/t/p/w500/yYa8Onk9ow7ukcnfp2QWVvjWYel.jpg",
+          link: "detalles.html?type=movie&id=1124620",
+          year: "2025",
+          genres: ["Comedia", "Terror"] // <-- Asegúrate de que esto esté definido
+      },
+{
+          id: 799766,
+          title: "Better Man",
+          image: "https://media.themoviedb.org/t/p/w220_and_h330_face/otXaS8K5coAwmUyGxBsNz9mWs8H.jpg",
+          link: "detalles.html?type=movie&id=799766",
+          year: "2025",
+          genres: ["Música", "Drama"] // <-- Asegúrate de que esto esté definido
+      },
+{
+          id: 1140535,
+          title: "Presencia",
+          image: "https://media.themoviedb.org/t/p/w220_and_h330_face/kc7YIx6KNiXm1dpqlhqdX3eTL7a.jpg",
+          link: "detalles.html?type=movie&id=1140535",
+          year: "2025",
+          genres: ["Drama", "Terror"] // <-- Asegúrate de que esto esté definido
+      },
+{
+          id: 1418522,
+          title: "Delicia",
+          image: "https://s.lupacine.com/image/t/p/w500/o1ZIvviAEuIHcH9x6sv112mSvTR.jpg",
+          link: "detalles.html?type=movie&id=1418522",
+          year: "2025",
+          genres: ["Drama", "Suspenso"] // <-- Asegúrate de que esto esté definido
+      },
+      {
+          id: 1276073,
+          title: "Bullet Train Explosion",
+          image: "https://s.lupacine.com/image/t/p/w500/jmzxlDBwgvRbpPJzNQwizyn9UEn.jpg",
+          link: "detalles.html?type=movie&id=1276073",
+          year: "2025",
+          genres: ["Drama", "Suspenso", "Acción","Crimen"] // <-- Asegúrate de que esto esté definido
+      },
+      {
+          id: 1249213,
+          title: "Drop: Amenaza anónima",
+          image: "https://s.lupacine.com/image/t/p/w500/dS2S5lpfgRIRQOb7LDCjNsQqKjp.jpg",
+          link: "detalles.html?type=movie&id=1249213",
+          year: "2025",
+          genres: ["Terror", "Suspenso", "Misterio"] // <-- Asegúrate de que esto esté definido
+      },
+      {
+          id: 1210938,
+          title: "Revelación",
+          image: "https://s.lupacine.com/image/t/p/w500/ak0HlRVsVzh8mvwIUZpZr0z6uqW.jpg",
+          link: "detalles.html?type=movie&id=1210938",
+          year: "2025",
+          genres: ["Suspenso", "Crimen", "Misterio"] // <-- Asegúrate de que esto esté definido
+      },
+{
+          id: 1013601,
+          title: "The Alto Knights",
+          image: "https://s.lupacine.com/image/t/p/w500/95KmR0xNuZZ6DNESDwLKWGIBvMg.jpg",
+          link: "detalles.html?type=movie&id=1013601",
+          year: "2025",
+          genres: ["Crimen", "Drama", "Historia"] // <-- Asegúrate de que esto esté definido
+      },
+{
+          id: 931349,
+          title: "Ash",
+          image: "https://s.lupacine.com/image/t/p/w500/nRa8B3tQCUK6pVwjasIyQehbvpF.jpg",
+          link: "detalles.html?type=movie&id=931349",
+          year: "2025",
+          genres: ["Terror", "Suspenso", "Ciencia ficción"] // <-- Asegúrate de que esto esté definido
+      },
+      {
+          id: 1254786,
+          title: "Mi Lista De Deseos",
+          image: "https://s.lupacine.com/image/t/p/w500/5fg98cVo7da7OIK45csdLSd4NaU.jpg",
+          link: "detalles.html?type=movie&id=1254786",
+          year: "2025",
+          genres: ["Romance", "Comedia", "Drama"] // <-- Asegúrate de que esto esté definido
+      },
+      {
+          id: 1087891,
+          title: "El amateur: Operación venganza",
+          image: "https://s.lupacine.com/image/t/p/w500/SNEoUInCa5fAgwuEBMIMBGvkkh.jpg",
+          link: "detalles.html?type=movie&id=1087891",
+          year: "2025",
+          genres: ["Suspenso", "Acción"] // <-- Asegúrate de que esto esté definido
+      },
 ];
 
 // Películas de acción (vacío)

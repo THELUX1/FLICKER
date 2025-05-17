@@ -20,7 +20,7 @@ body {
     transform: translate(-50%, -50%);
     width: 100vw;
     height: 100vh;
-    background: black; /* Fondo negro para todo el contenedor */
+    background: black;
     border-radius: 10px;
     overflow: hidden;
     display: flex;
@@ -34,7 +34,7 @@ video {
     object-fit: contain;
     border-radius: 10px;
     outline: none;
-    background: black; /* Aseguramos que el video tenga fondo negro */
+    background: black;
     display: none;
 }
 
@@ -64,7 +64,7 @@ video {
     position: fixed;
     top: 50%;
     left: 49%;
-    transform: translate(-50%, -50%); /* Centrar el loader */
+    transform: translate(-50%, -50%);
     width: 50px;
     height: 50px;
     border: 4px solid #ffffff;
@@ -80,7 +80,7 @@ video {
     100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-/* Controles generales */
+/* Controles generales - VERSIÓN MEJORADA */
 .controls {
     display: flex;
     align-items: center;
@@ -91,63 +91,52 @@ video {
     bottom: 0;
     left: 0;
     background: rgba(0, 0, 0, 0.7);
-    box-sizing: border-box; /* Incluye padding en el ancho total */
-}
-
-/* Ajustes para pantallas anchas (horizontal) */
-@media (min-width: 480px) {
-    .controls {
-        justify-content: space-between; /* Distribuye elementos uniformemente */
-    }
-
-    #timeline {
-        margin: 0 15px; /* Más espacio en pantallas grandes */
-    }
+    box-sizing: border-box;
+    justify-content: space-between;
 }
 
 /* Barra de tiempo */
 #timeline {
     flex-grow: 1;
-    min-width: 50px; /* Evita que colapse en pantallas pequeñas */
+    min-width: 50px;
+    margin: 0 10px;
+    cursor: pointer;
 }
 
-/* Botones */
+/* Botones - VERSIÓN MEJORADA */
 #play-btn, 
 #skip-forward-btn, 
 #fullscreen-btn, 
 #fit-screen-btn, 
 #quality-btn {
+    width: 30px;
+    min-width: 30px;
+    text-align: center;
     flex-shrink: 0;
-    width: 20px; /* Ancho fijo para consistencia */
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+/* Íconos consistentes */
+button i {
+    font-size: 20px;
+    width: 20px;
+    display: inline-block;
 }
 
 /* Contenedor de tiempo */
 #time-display {
     flex-shrink: 0;
-    min-width: 50px; /* Evita saltos de línea */
+    min-width: 80px;
     text-align: center;
+    font-size: 14px;
 }
 
 .controls.hidden {
     opacity: 0;
     pointer-events: none;
-}
-
-button {
-    background: transparent;
-    border: none;
-    color: white;
-    cursor: pointer;
-    font-size: 18px;
-}
-
-button i {
-    font-size: 20px;
-}
-
-input[type="range"] {
-    width: 40%;
-    cursor: pointer;
 }
 
 /* Menú de calidad */
@@ -198,9 +187,9 @@ input[type="range"] {
 /* Notificación estilo Netflix */
 .notification {
     position: absolute;
-    top: 20px; /* Cambiar a posición superior */
-    left: 50%; /* Centrar horizontalmente */
-    transform: translateX(-50%); /* Ajustar centrado */
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     background: rgba(0, 0, 0, 0.8);
     color: white;
     padding: 10px 20px;
@@ -208,7 +197,7 @@ input[type="range"] {
     font-size: 14px;
     display: none;
     z-index: 10;
-    animation: fadeInOut 6s ease-in-out; /* Aumentar de 3s a 6s */
+    animation: fadeInOut 6s ease-in-out;
 }
 
 @keyframes fadeInOut {
@@ -221,23 +210,47 @@ input[type="range"] {
 /* Media Queries para dispositivos móviles */
 @media (max-width: 768px) and (orientation: portrait) {
     .notification {
-        top: 10px; /* Ajustar posición en modo vertical */
-        font-size: 12px; /* Reducir tamaño de fuente */
-        padding: 8px 16px; /* Reducir padding */
+        top: 10px;
+        font-size: 12px;
+        padding: 8px 16px;
+    }
+    
+    /* Ajustes para controles en móviles */
+    .controls {
+        padding: 8px;
+    }
+    
+    #play-btn, 
+    #skip-forward-btn, 
+    #fullscreen-btn, 
+    #fit-screen-btn, 
+    #quality-btn {
+        width: 25px;
+        min-width: 25px;
+    }
+    
+    button i {
+        font-size: 18px;
+    }
+    
+    #time-display {
+        min-width: 70px;
+        font-size: 12px;
     }
 }
-/* Estilos generales para los controles */
+
+/* Eliminar efectos no deseados en controles */
 #customControls button,
 #customControls input,
 #customControls div,
 #back-btn {
-    -webkit-tap-highlight-color: transparent; /* Eliminar el resaltado azul en móviles */
-    outline: none; /* Eliminar el contorno en el foco */
-    box-shadow: none; /* Eliminar sombras no deseadas */
-    user-select: none; /* Evitar la selección de texto */
-    -webkit-user-select: none; /* Compatibilidad con navegadores WebKit */
-    -moz-user-select: none; /* Compatibilidad con Firefox */
-    -ms-user-select: none; /* Compatibilidad con Internet Explorer/Edge */
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+    box-shadow: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 /* Estilo personalizado para el foco */
@@ -245,20 +258,20 @@ input[type="range"] {
 #customControls input:focus,
 #customControls div:focus,
 #back-btn:focus {
-    background-color: rgba(255, 255, 255, 0.1); /* Cambiar el color de fondo al enfocar */
-    border: 1px solid rgba(255, 255, 255, 0.3); /* Añadir un borde sutil */
-    animation: focus-animation 0.5s ease-out; /* Animación suave */
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    animation: focus-animation 0.5s ease-out;
     border-radius: 5px;
 }
 
 /* Animación para el foco */
 @keyframes focus-animation {
     0% {
-        background-color: rgba(255, 255, 255, 0.1); /* Inicio de la animación */
+        background-color: rgba(255, 255, 255, 0.1);
         border-color: rgba(255, 255, 255, 0.3);
     }
     100% {
-        background-color: transparent; /* Fin de la animación */
+        background-color: transparent;
         border-color: transparent;
     }
 }
@@ -271,15 +284,17 @@ div:active {
     outline: none;
     box-shadow: none;
 }
-/* Agregar al CSS existente */
+
+/* Efectos especiales para video */
 video[style*="cover"] {
-    transform: scale(1.1); /* Efecto de zoom suave */
+    transform: scale(1.1);
     transition: transform 0.3s ease;
 }
 
 #fit-screen-btn.active {
     background: rgba(255, 255, 255, 0.2);
 }
+
 .skip-animation {
     animation: skip 0.5s ease-in-out;
 }
@@ -308,6 +323,7 @@ video[style*="cover"] {
     0% { opacity: 1; }
     100% { opacity: 0; }
 }
+
 .stream-btn {
     position: absolute;
     top: 10px;
@@ -325,6 +341,7 @@ video[style*="cover"] {
 .stream-btn:hover {
     background-color: rgba(0, 0, 0, 0.8);
 }
+
 /* Estilo para ocultar los controles */
 #customControls {
     transition: opacity 0.5s ease;
@@ -332,7 +349,7 @@ video[style*="cover"] {
 
 #customControls.hidden {
     opacity: 0;
-    pointer-events: none; /* Evitar interacciones cuando está oculto */
+    pointer-events: none;
 }
 
 /* Estilo para ocultar el botón de transmisión */
@@ -342,5 +359,5 @@ video[style*="cover"] {
 
 #stream-btn.hidden {
     opacity: 0;
-    pointer-events: none; /* Evitar interacciones cuando está oculto */
+    pointer-events: none;
 }

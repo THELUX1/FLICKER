@@ -373,6 +373,65 @@
             opacity: 0;
             pointer-events: none;
         }
+
+        /* Controles de gestos mejorados */
+        .gesture-overlay {
+            position: absolute;
+            top: 10%;
+            height: 70%;
+            width: 30%;
+            z-index: 5;
+            display: none;
+            touch-action: none;
+        }
+
+        #brightness-control {
+            left: 0;
+        }
+
+        #volume-control {
+            right: 0;
+        }
+
+        .gesture-indicator {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: rgba(51, 0, 0, 0.9);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            border: 1px solid #ff3333;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        #brightness-indicator {
+            left: 30px;
+            top: 20%;
+        }
+
+        #volume-indicator {
+            right: 30px;
+            top: 20%;
+        }
+
+        .gesture-active .gesture-indicator {
+            opacity: 1;
+        }
+
+        .gesture-value {
+            font-size: 14px;
+            margin-top: 5px;
+            font-weight: bold;
+            color: #ff9999;
+        }
     </style>
 </head>
 <body>
@@ -400,6 +459,19 @@
     <div class="quality-container" id="quality-container"></div>
     <div class="loader" id="loader"></div>
     <div class="skip-indicator" id="skip-indicator">+10s</div>
+    
+    <!-- Controles de gestos -->
+    <div class="gesture-overlay" id="brightness-control"></div>
+    <div class="gesture-overlay" id="volume-control"></div>
+    
+    <div class="gesture-indicator" id="brightness-indicator">
+        <i class="fas fa-sun"></i>
+        <div class="gesture-value">100%</div>
+    </div>
+    <div class="gesture-indicator" id="volume-indicator">
+        <i class="fas fa-volume-up"></i>
+        <div class="gesture-value">100%</div>
+    </div>
 </div>
 
 <script>
@@ -793,6 +865,171 @@ streamBtn.addEventListener("click", showControls);
 streamBtn.addEventListener("click", () => {
     showNotification("Funcionalidad de transmisión a TV simulada");
 });
+
+// Variables para controles de brillo y volumen mejorados
+let brightness = 1;
+let volume = 1;
+let isBrightnessControlActive = false;
+let isVolumeControlActive = false;
+let startY = 0;
+let brightnessIndicatorVisible = false;
+let volumeIndicatorVisible = false;
+
+// Elementos del DOM para controles de gestos mejorados
+const brightnessControl = document.getElementById('brightness-control');
+const volumeControl = document.getElementById('volume-control');
+const brightnessIndicator = document.getElementById('brightness-indicator');
+const volumeIndicator = document.getElementById('volume-indicator');
+
+// Habilitar controles solo en dispositivos táctiles
+function checkTouchDevice() {
+    return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+}
+
+if (checkTouchDevice()) {
+    brightnessControl.style.display = 'block';
+    volumeControl.style.display = 'block';
+    
+    // Eventos mejorados para control de brillo
+    brightnessControl.addEventListener('touchstart', (e) => {
+        if (e.touches.length > 1) return; // Ignorar multitouch
+        isBrightnessControlActive = true;
+        startY = e.touches[0].clientY;
+        videoContainer.classList.add('gesture-active');
+        showBrightnessIndicator();
+        e.preventDefault();
+    }, { passive: false });
+    
+    brightnessControl.addEventListener('touchmove', (e) => {
+        if (!isBrightnessControlActive || e.touches.length > 1) return;
+        
+        const currentY = e.touches[0].clientY;
+        const deltaY = startY - currentY;
+        // Sensibilidad reducida (400 en lugar de 200)
+        const change = deltaY / 500; 
+        
+        brightness = Math.max(0.3, Math.min(1.5, brightness + change));
+        applyBrightness();
+        
+        startY = currentY;
+        e.preventDefault();
+    }, { passive: false });
+    
+    brightnessControl.addEventListener('touchend', () => {
+        if (!isBrightnessControlActive) return;
+        isBrightnessControlActive = false;
+        videoContainer.classList.remove('gesture-active');
+        hideBrightnessIndicator();
+    }, { passive: false });
+    
+    // Eventos mejorados para control de volumen
+    volumeControl.addEventListener('touchstart', (e) => {
+        if (e.touches.length > 1) return; // Ignorar multitouch
+        isVolumeControlActive = true;
+        startY = e.touches[0].clientY;
+        videoContainer.classList.add('gesture-active');
+        showVolumeIndicator();
+        e.preventDefault();
+    }, { passive: false });
+    
+    volumeControl.addEventListener('touchmove', (e) => {
+        if (!isVolumeControlActive || e.touches.length > 1) return;
+        
+        const currentY = e.touches[0].clientY;
+        const deltaY = startY - currentY;
+        // Sensibilidad reducida (400 en lugar de 200)
+        const change = deltaY / 500;
+        
+        volume = Math.max(0, Math.min(1, volume + change));
+        applyVolume();
+        
+        startY = currentY;
+        e.preventDefault();
+    }, { passive: false });
+    
+    volumeControl.addEventListener('touchend', () => {
+        if (!isVolumeControlActive) return;
+        isVolumeControlActive = false;
+        videoContainer.classList.remove('gesture-active');
+        hideVolumeIndicator();
+    }, { passive: false });
+    
+    // Mostrar indicador de brillo
+    function showBrightnessIndicator() {
+        brightnessIndicatorVisible = true;
+        brightnessIndicator.style.display = 'flex';
+        brightnessIndicator.style.opacity = '1';
+        updateBrightnessIndicator();
+    }
+    
+    // Ocultar indicador de brillo con retraso
+    function hideBrightnessIndicator() {
+        brightnessIndicatorVisible = false;
+        setTimeout(() => {
+            if (!brightnessIndicatorVisible) {
+                brightnessIndicator.style.opacity = '0';
+                setTimeout(() => {
+                    brightnessIndicator.style.display = 'none';
+                }, 300);
+            }
+        }, 1000);
+    }
+    
+    // Actualizar indicador de brillo
+    function updateBrightnessIndicator() {
+        brightnessIndicator.innerHTML = `
+            <i class="fas fa-sun"></i>
+            <div class="gesture-value">${Math.round(brightness * 100)}%</div>
+        `;
+    }
+    
+    // Mostrar indicador de volumen
+    function showVolumeIndicator() {
+        volumeIndicatorVisible = true;
+        volumeIndicator.style.display = 'flex';
+        volumeIndicator.style.opacity = '1';
+        updateVolumeIndicator();
+    }
+    
+    // Ocultar indicador de volumen con retraso
+    function hideVolumeIndicator() {
+        volumeIndicatorVisible = false;
+        setTimeout(() => {
+            if (!volumeIndicatorVisible) {
+                volumeIndicator.style.opacity = '0';
+                setTimeout(() => {
+                    volumeIndicator.style.display = 'none';
+                }, 300);
+            }
+        }, 1000);
+    }
+    
+    // Actualizar indicador de volumen
+    function updateVolumeIndicator() {
+        const volumeIcon = volume === 0 ? 'fa-volume-mute' : 
+                         volume < 0.3 ? 'fa-volume-down' : 'fa-volume-up';
+        volumeIndicator.innerHTML = `
+            <i class="fas ${volumeIcon}"></i>
+            <div class="gesture-value">${Math.round(volume * 100)}%</div>
+        `;
+    }
+    
+    // Aplicar brillo al video
+    function applyBrightness() {
+        video.style.filter = `brightness(${brightness})`;
+        updateBrightnessIndicator();
+    }
+    
+    // Aplicar volumen al video
+    function applyVolume() {
+        video.volume = volume;
+        updateVolumeIndicator();
+    }
+    
+    // Inicializar valores
+    applyBrightness();
+    applyVolume();
+}
 </script>
 
 </body>

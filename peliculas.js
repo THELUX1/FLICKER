@@ -1,5 +1,11 @@
 // videos.js
 const peliculasDisponibles = {
+"1197306": {
+        "title": "Rescate implacable",
+        "360p": "https://v3.fiestareel.com/mov/2025/1197306-92430/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2025/1197306-92430/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2025/1197306-92430/720/720p.m3u8"
+    },
 "1087891": {
         "title": "El amateur: Operación venganza",
         "360p": "https://v3.fiestareel.com/mov/2025/1087891-93642/480/480p.m3u8",

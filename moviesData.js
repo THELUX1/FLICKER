@@ -320,6 +320,14 @@ const manualMovies = [
           year: "2025",
           genres: ["Suspenso", "Acción"] // <-- Asegúrate de que esto esté definido
       },
+     {
+          id: 1197306,
+          title: "Rescate implacable",
+          image: "https://s.lupacine.com/image/t/p/w500/6FRFIogh3zFnVWn7Z6zcYnIbRcX.jpg",
+          link: "detalles.html?type=movie&id=1197306",
+          year: "2025",
+          genres: ["Acción", "Suspenso", "Crimen"] // <-- Asegúrate de que esto esté definido
+      },
 ];
 
 // Películas de acción (vacío)

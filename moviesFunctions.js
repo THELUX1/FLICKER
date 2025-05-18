@@ -4,21 +4,28 @@ import { hiddenMovies, manualMovies, accionMovies, dramaMovies } from './moviesD
 const genreCategories = {};
 
 // Función para clasificar las películas por género
-function classifyMoviesByGenre(movies) {
+// Función para clasificar las películas por género
+function classifyMoviesByGenre(movies, isManual = false) {
     movies.forEach(movie => {
         if (movie.genres) {
             movie.genres.forEach(genre => {
                 if (!genreCategories[genre]) {
                     genreCategories[genre] = [];
                 }
-                genreCategories[genre].push(movie);
+                // Si es una película manual (recién agregada), la insertamos al principio
+                if (isManual) {
+                    genreCategories[genre].unshift(movie);
+                } else {
+                    genreCategories[genre].push(movie);
+                }
             });
         }
     });
 }
 
 // Clasificar las películas manuales, de acción, de drama y las ocultas
-classifyMoviesByGenre(manualMovies);
+// Pasamos true para manualMovies para que se agreguen al principio
+classifyMoviesByGenre(manualMovies, true);
 classifyMoviesByGenre(accionMovies);
 classifyMoviesByGenre(dramaMovies);
 classifyMoviesByGenre(hiddenMovies);

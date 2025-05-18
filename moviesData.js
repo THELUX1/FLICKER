@@ -1,28 +1,5 @@
 const hiddenMovies = [
-{
-          id: 1426674,
-          title: "Una Historia De Amor En Copenhague",
-          image: "https://s.lupacine.com/image/t/p/w500/aau2E9HW5TvlxoNPHET6ZnAcV72.jpg",
-          link: "detalles.html?type=movie&id=1426674",
-          year: "2025",
-          genres: ["Drama", "Romance"] // <-- Asegúrate de que esto esté definido
-      },
-    {
-        id: 1422179,
-        title: "Por El Mal Camino",
-        image: "https://s.lupacine.com/image/t/p/w500/7uVdqyf7xiHeGjxhnRTKjGnO0Gm.jpg",
-        link: "detalles.html?type=movie&id=1422179",
-        year: "2025",
-        genres: ["Comedia", "Drama"]
-    },
-    {
-        id: 1426142,
-        title: "Ricos, Sin Duda",
-        image: "https://s.lupacine.com/image/t/p/w500/cr6y0nWdfPb3yZT9Iz63zTE1dQE.jpg",
-        link: "detalles.html?type=movie&id=1426142",
-        year: "2025",
-        genres: ["Romance", "Comedia"]
-    }
+    
 ];
 const manualMovies = [
 {
@@ -383,6 +360,94 @@ const manualMovies = [
           link: "detalles.html?type=movie&id=668489",
           year: "2025",
           genres: ["Acción", "Crimen", "Suspenso"] // <-- Asegúrate de que esto esté definido
+      },
+      {
+          id: 1333100,
+          title: "Attack on Titan: EL ATAQUE FINAL",
+          image: "https://s.lupacine.com/image/t/p/w500/wgwldDDlTDDMrluOMkpSA8lyKjv.jpg",
+          link: "detalles.html?type=movie&id=1333100",
+          year: "2024",
+          genres: ["Animación", "Aventura", "Acción","Drama","Fantasía"] // <-- Asegúrate de que esto esté definido
+      },
+      {
+          id: 1144430,
+          title: "La bala perdida 3",
+          image: "https://s.lupacine.com/image/t/p/w500/qycPITRqXgPai7zj1gKffjCdSB5.jpg",
+          link: "detalles.html?type=movie&id=1144430",
+          year: "2025",
+          genres: ["Acción", "Suspenso", "Crimen","Drama"] // <-- Asegúrate de que esto esté definido
+      },
+      {
+          id: 1297763,
+          title: "Batman Ninja vs La Liga Yakuza",
+          image: "https://s.lupacine.com/image/t/p/w500/sVVT6GYFErVv0Lcc9NvqCu0iOxO.jpg",
+          link: "detalles.html?type=movie&id=1297763",
+          year: "2025",
+          genres: ["Animación", "Acción"] // <-- Asegúrate de que esto esté definido
+      },
+      {
+          id: 929204,
+          title: "Wallace y Gromit: La venganza se sirve con plumas",
+          image: "https://s.lupacine.com/image/t/p/w500/6BxK38ehxuX2dJmZIMpJcVNbYks.jpg",
+          link: "detalles.html?type=movie&id=929204",
+          year: "2024",
+          genres: ["Familia", "Comedia", "Aventura","Animación"] // <-- Asegúrate de que esto esté definido
+      },
+      {
+          id: 1299652,
+          title: "Watchmen: Capítulo 2",
+          image: "https://s.lupacine.com/image/t/p/w500/4rBObJFpiWJOG7aIlRrOUniAkBs.jpg",
+          link: "detalles.html?type=movie&id=1299652",
+          year: "2024",
+          genres: ["Animación", "Drama", "Acción","Ciencia ficción","Misterio"] // <-- Asegúrate de que esto esté definido
+      },
+      {
+          id: 1469239,
+          title: "Karol G: Mañana fue muy bonito",
+          image: "https://s.lupacine.com/image/t/p/w500/5aXoQYwaQ7JJVUWclHAEXJgiS2M.jpg",
+          link: "detalles.html?type=movie&id=1469239",
+          year: "2025",
+          genres: ["Música", "Documetal"] // <-- Asegúrate de que esto esté definido
+      },
+      {
+          id: 1233413,
+          title: "Los Pecadores",
+          image: "https://s.lupacine.com/image/t/p/w500/jYfMTSiFFK7ffbY2lay4zyvTkEk.jpg",
+          link: "detalles.html?type=movie&id=1233413",
+          year: "2025",
+          genres: ["Terror", "Suspenso","Drama","Acción","Western","Música"] // <-- Asegúrate de que esto esté definido
+      },
+      {
+          id: 1075456,
+          title: "O'Dessa",
+          image: "https://s.lupacine.com/image/t/p/w500/xbdRxyr1u5dbhvMm14w7J1jJWQS.jpg",
+          link: "detalles.html?type=movie&id=1075456",
+          year: "2025",
+          genres: ["Música", "Drama", "Ciencia ficción"] // <-- Asegúrate de que esto esté definido
+      },
+      {
+          id: 906126,
+          title: "La sociedad de la nieve",
+          image: "https://s.lupacine.com/image/t/p/w500/2e853FDVSIso600RqAMunPxiZjq.jpg",
+          link: "detalles.html?type=movie&id=906126",
+          year: "2023",
+          genres: ["Historia", "Drama",] // <-- Asegúrate de que esto esté definido
+      },
+      {
+          id: 1061699,
+          title: "Seis Triple Ocho",
+          image: "https://s.lupacine.com/image/t/p/w500/7tvAnzZj9e9AjdoHaN9jshm2Cjw.jpg",
+          link: "detalles.html?type=movie&id=1061699",
+          year: "2024",
+          genres: ["Drama", "Historia", "Bélica"] // <-- Asegúrate de que esto esté definido
+      },
+      {
+          id: 661539,
+          title: "Un completo desconocido",
+          image: "https://s.lupacine.com/image/t/p/w500/llWl3GtNoXosbvYboelmoT459NM.jpg",
+          link: "detalles.html?type=movie&id=661539",
+          year: "2024",
+          genres: ["Drama", "Música", "Historia"] // <-- Asegúrate de que esto esté definido
       },
 ];
 

@@ -4,9 +4,14 @@ import { hiddenMovies, manualMovies, accionMovies, dramaMovies } from './moviesD
 const genreCategories = {};
 
 // Función para clasificar las películas por género
-// Función para clasificar las películas por género
+// Agrega esta variable al inicio del archivo para llevar registro del orden de agregado
+let movieAddOrder = 0;
+
 function classifyMoviesByGenre(movies, isManual = false) {
     movies.forEach(movie => {
+        // Asignamos un timestamp de orden de agregado (inverso para que los más nuevos tengan números mayores)
+        movie.addOrder = movieAddOrder++;
+        
         if (movie.genres) {
             movie.genres.forEach(genre => {
                 if (!genreCategories[genre]) {
@@ -33,13 +38,31 @@ classifyMoviesByGenre(hiddenMovies);
 // Función para generar el contenido de la página principal
 function generarContenido(container) {
     const continueWatchingMovies = getContinueWatchingMovies();
+    
+    // Ordenar manualMovies por año descendente y luego por orden de agregado descendente
+    const sortedManualMovies = [...manualMovies].sort((a, b) => {
+        if (b.year !== a.year) {
+            return (b.year || 0) - (a.year || 0); // Ordenar por año descendente
+        }
+        return b.addOrder - a.addOrder; // Si el año es igual, ordenar por orden de agregado
+    });
+
     const visibleCategories = {
         "Seguir viendo": continueWatchingMovies,
-        "Recién Agregado": manualMovies.slice(-12).reverse(),
-        "Acción": accionMovies,
-        "Drama": dramaMovies,
-        ...genreCategories
+        "Recién Agregado": sortedManualMovies.slice(0, 12), // Tomar las 12 más recientes
+        "Acción": [...accionMovies].sort((a, b) => (b.year || 0) - (a.year || 0)),
+        "Drama": [...dramaMovies].sort((a, b) => (b.year || 0) - (a.year || 0)),
     };
+
+    // Ordenar también las categorías por género
+    Object.keys(genreCategories).forEach(genre => {
+        visibleCategories[genre] = [...genreCategories[genre]].sort((a, b) => {
+            if (b.year !== a.year) {
+                return (b.year || 0) - (a.year || 0); // Ordenar por año descendente
+            }
+            return b.addOrder - a.addOrder; // Si el año es igual, ordenar por orden de agregado
+        });
+    });
 
     container.innerHTML = Object.entries(visibleCategories)
         .map(([category, movies]) => {
@@ -56,7 +79,7 @@ function generarContenido(container) {
         .join('');
 
     setupRemoveButtons();
-    setupLazyLoading(); // Configurar el lazy loading después de generar el contenido
+    setupLazyLoading();
 }
 
 // Función para crear una tarjeta de película con lazy loading

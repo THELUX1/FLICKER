@@ -1,5 +1,71 @@
 // videos.js
 const peliculasDisponibles = {
+"661539": {
+        "title": "Un completo desconocido",
+        "360p": "https://v3.fiestareel.com/mov/2024/661539-93794/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2024/661539-93794/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2024/661539-93794/720/720p.m3u8"
+    },
+"1061699": {
+        "title": "Seis Triple Ocho",
+        "360p": "https://v3.fiestareel.com/mov/2024/1061699-92488/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2024/1061699-92488/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2024/1061699-92488/720/720p.m3u8"
+    },
+"1144430": {
+        "title": "La bala perdida 3",
+        "360p": "https://v3.fiestareel.com/mov/2025/1144430-94413/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2025/1144430-94413/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2025/1144430-94413/720/720p.m3u8"
+    },
+"906126": {
+        "title": "La sociedad de la nieve",
+        "360p": "https://v3.fiestareel.com/mov/2023/906126-5/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2023/906126-5/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2023/906126-5/720/720p.m3u8"
+    },
+"929204": {
+        "title": "Wallace y Gromit: La venganza se sirve con plumas",
+        "360p": "https://v3.fiestareel.com/mov/2024/929204-156586/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2024/929204-156586/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2024/929204-156586/720/720p.m3u8"
+    },
+"1299652": {
+        "title": "Watchmen: Capítulo 2",
+        "360p": "https://v3.fiestareel.com/mov/2024/1299652-156589/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2024/1299652-156589/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2024/1299652-156589/720/720p.m3u8"
+    },
+"1469239": {
+        "title": "Karol G: Mañana fue muy bonito",
+        "360p": "https://v3.fiestareel.com/mov/2025/1469239-94512/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2025/1469239-94512/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2025/1469239-94512/720/720p.m3u8"
+    },
+"1233413": {
+        "title": "Los Pecadores",
+        "360p": "https://v3.fiestareel.com/mov/2025/1233413-93641/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2025/1233413-93641/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2025/1233413-93641/720/720p.m3u8"
+    },
+"1075456": {
+        "title": "O'Dessa",
+        "360p": "https://v3.fiestareel.com/mov/2025/1075456-89958/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2025/1075456-89958/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2025/1075456-89958/720/720p.m3u8"
+    },
+"1297763": {
+        "title": "Batman Ninja vs La Liga Yakuza",
+        "360p": "https://v3.fiestareel.com/mov/2025/1297763-156864/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2025/1297763-156864/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2025/1297763-156864/720/720p.m3u8"
+    },
+"1333100": {
+        "title": "EL ATAQUE FINAL",
+        "360p": "https://v3.fiestareel.com/mov/2024/1333100-92495/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2024/1333100-92495/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2024/1333100-92495/720/720p.m3u8"
+    },
 "668489": {
         "title": "Estragos",
         "360p": "https://v3.fiestareel.com/mov/2025/668489-94014/480/480p.m3u8",

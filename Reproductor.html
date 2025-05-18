@@ -423,6 +423,51 @@
             font-weight: bold;
             color: #ff9999;
         }
+
+        /* Diálogo de permisos */
+        .permission-dialog {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(51, 0, 0, 0.95);
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #ff3333;
+            z-index: 1001;
+            max-width: 80%;
+            text-align: center;
+            display: none;
+        }
+
+        .permission-dialog h3 {
+            margin-top: 0;
+            color: #ff9999;
+        }
+
+        .permission-dialog p {
+            margin-bottom: 20px;
+        }
+
+        .permission-btn {
+            background: #ff3333;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: all 0.2s ease;
+        }
+
+        .permission-btn:hover {
+            background: #ff6666;
+        }
+
+        .permission-btn.secondary {
+            background: transparent;
+            border: 1px solid #ff3333;
+        }
     </style>
 </head>
 <body>
@@ -457,6 +502,14 @@
     <div class="gesture-indicator" id="brightness-indicator">
         <i class="fas fa-sun"></i>
         <div class="gesture-value">100%</div>
+    </div>
+    
+    <!-- Diálogo para permisos de brillo -->
+    <div class="permission-dialog" id="brightnessPermissionDialog">
+        <h3>Control de Brillo</h3>
+        <p>¿Permitir que esta aplicación ajuste el brillo de tu pantalla?</p>
+        <button class="permission-btn" id="grantBrightnessBtn">Permitir</button>
+        <button class="permission-btn secondary" id="denyBrightnessBtn">Denegar</button>
     </div>
 </div>
 
@@ -857,10 +910,17 @@ let brightness = 1;
 let isBrightnessControlActive = false;
 let startY = 0;
 let brightnessIndicatorVisible = false;
+let brightnessPermissionGranted = false;
 
 // Elementos del DOM para control de brillo
 const brightnessControl = document.getElementById('brightness-control');
 const brightnessIndicator = document.getElementById('brightness-indicator');
+const brightnessPermissionDialog = document.getElementById('brightnessPermissionDialog');
+const grantBrightnessBtn = document.getElementById('grantBrightnessBtn');
+const denyBrightnessBtn = document.getElementById('denyBrightnessBtn');
+
+// Comprobar si la API de Screen Brightness está disponible
+const isScreenBrightnessAPISupported = 'screen' in navigator && 'brightness' in navigator.screen;
 
 // Habilitar controles solo en dispositivos táctiles
 function checkTouchDevice() {
@@ -870,23 +930,67 @@ function checkTouchDevice() {
 if (checkTouchDevice()) {
     brightnessControl.style.display = 'block';
     
-    // Eventos mejorados para control de brillo del dispositivo
+    // Mostrar diálogo de permisos al primer toque
     brightnessControl.addEventListener('touchstart', (e) => {
-        if (e.touches.length > 1) return; // Ignorar multitouch
+        if (e.touches.length > 1) return;
+        
+        // Si ya tenemos permisos o la API no está disponible, continuar
+        if (brightnessPermissionGranted || !isScreenBrightnessAPISupported) {
+            handleBrightnessTouchStart(e);
+            return;
+        }
+        
+        // Mostrar diálogo de permisos
+        brightnessPermissionDialog.style.display = 'block';
+        e.preventDefault();
+    }, { passive: false });
+    
+    // Manejar concesión de permisos
+    grantBrightnessBtn.addEventListener('click', async () => {
+        try {
+            // Intentar obtener permisos (esto es experimental)
+            const permissionStatus = await navigator.permissions.query({ 
+                name: 'screen-brightness' 
+            });
+            
+            if (permissionStatus.state === 'granted') {
+                brightnessPermissionGranted = true;
+                brightnessPermissionDialog.style.display = 'none';
+                showNotification('Permiso para control de brillo concedido');
+            } else {
+                showNotification('No se pudo obtener permiso para control de brillo');
+            }
+        } catch (error) {
+            console.error('Error al solicitar permisos:', error);
+            // En algunos navegadores la API puede funcionar sin permisos explícitos
+            brightnessPermissionGranted = true;
+            brightnessPermissionDialog.style.display = 'none';
+            showNotification('Control de brillo habilitado');
+        }
+    });
+    
+    // Manejar denegación de permisos
+    denyBrightnessBtn.addEventListener('click', () => {
+        brightnessPermissionDialog.style.display = 'none';
+        showNotification('Control de brillo deshabilitado');
+    });
+    
+    // Eventos para control de brillo
+    function handleBrightnessTouchStart(e) {
+        if (e.touches.length > 1) return;
         isBrightnessControlActive = true;
         startY = e.touches[0].clientY;
         videoContainer.classList.add('gesture-active');
         showBrightnessIndicator();
         e.preventDefault();
-    }, { passive: false });
+    }
     
     brightnessControl.addEventListener('touchmove', (e) => {
         if (!isBrightnessControlActive || e.touches.length > 1) return;
         
         const currentY = e.touches[0].clientY;
         const deltaY = startY - currentY;
-        // Sensibilidad reducida (500 en lugar de 200)
-        const change = deltaY / 500; 
+        const change = deltaY / 500;
         
         brightness = Math.max(0.1, Math.min(1, brightness + change));
         setDeviceBrightness();
@@ -932,24 +1036,30 @@ if (checkTouchDevice()) {
     }
     
     // Función para ajustar el brillo del dispositivo
-    function setDeviceBrightness() {
-        // En una aplicación nativa, aquí llamarías a la API del dispositivo
-        // Esta es una implementación simulada para el navegador
+    async function setDeviceBrightness() {
         updateBrightnessIndicator();
         
-        // En un entorno real (AppCreator), necesitarías usar su API para controlar el brillo
-        // Por ejemplo:
+        // Intentar usar la API experimental de Screen Brightness
+        if (isScreenBrightnessAPISupported && brightnessPermissionGranted) {
+            try {
+                await navigator.screen.brightness.set(brightness);
+                return;
+            } catch (error) {
+                console.error('Error al ajustar brillo con API:', error);
+            }
+        }
+        
+        // Fallback para navegadores sin soporte
         try {
-            // Esto es solo un ejemplo - necesitarás adaptarlo a la API específica de AppCreator
+            // Simulación visual para navegador
+            document.body.style.backgroundColor = `rgba(0, 0, 0, ${1 - brightness * 0.5})`;
+            
+            // Intentar con la API de AppCreator si existe
             if (window.AppCreator && window.AppCreator.setBrightness) {
                 window.AppCreator.setBrightness(brightness);
-            } else {
-                console.log("Brillo ajustado a:", brightness);
-                // Simulación para navegador
-                document.body.style.backgroundColor = `rgba(0, 0, 0, ${1 - brightness * 0.5})`;
             }
         } catch (e) {
-            console.error("Error al ajustar el brillo:", e);
+            console.error("Error en fallback de brillo:", e);
         }
     }
     

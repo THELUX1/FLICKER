@@ -44,7 +44,7 @@ const manualMovies = [
     {
           id: 696506,
           title: "Mickey 17",
-          image: "https://media.themoviedb.org/t/p/w220_and_h330_face/fjIHkLGIZdjKIKe252gSFt5QzVK.jpg",
+          image: "https://s.lupacine.com/image/t/p/w500/edKpE9B5qN3e559OuMCLZdW1iBZ.jpg",
           link: "detalles.html?type=movie&id=696506",
           year: "2025",
           genres: ["Ciencia ficción", "Aventura", "Comedia"] // <-- Asegúrate de que esto esté definido
@@ -327,6 +327,62 @@ const manualMovies = [
           link: "detalles.html?type=movie&id=1197306",
           year: "2025",
           genres: ["Acción", "Suspenso", "Crimen"] // <-- Asegúrate de que esto esté definido
+      },
+      {
+          id: 974573,
+          title: "Otro pequeño favor",
+          image: "https://s.lupacine.com/image/t/p/w500/zboCGZ4aIqPMd7VFI4HWnmc7KYJ.jpg",
+          link: "detalles.html?type=movie&id=974573",
+          year: "2025",
+          genres: ["Comedia", "Suspenso", "Crimen"] // <-- Asegúrate de que esto esté definido
+      },
+      {
+          id: 1244944,
+          title: "La mujer de las sombras",
+          image: "https://s.lupacine.com/image/t/p/w500/n0WS2TsNcS6dtaZKzxipyO7LuCJ.jpg",
+          link: "detalles.html?type=movie&id=1244944",
+          year: "2025",
+          genres: ["Terror", "Suspenso", "Misterio"] // <-- Asegúrate de que esto esté definido
+      },
+      {
+          id: 1195506,
+          title: "Novocaine",
+          image: "https://s.lupacine.com/image/t/p/w500/xmMHGz9dVRaMY6rRAlEX4W0Wdhm.jpg",
+          link: "detalles.html?type=movie&id=1195506",
+          year: "2025",
+          genres: ["Acción", "Suspenso", "Comedia"] // <-- Asegúrate de que esto esté definido
+      },
+      {
+          id: 950387,
+          title: "Una película de Minecraft",
+          image: "https://s.lupacine.com/image/t/p/w500/yFHHfHcUgGAxziP1C3lLt0q2T4s.jpg",
+          link: "detalles.html?type=movie&id=950387",
+          year: "2025",
+          genres: ["Aventura", "Fantasía", "Comedia","Familia"] // <-- Asegúrate de que esto esté definido
+      },
+      {
+          id: 1233069,
+          title: "Extraterritorial",
+          image: "https://s.lupacine.com/image/t/p/w500/jM2uqCZNKbiyStyzXOERpMqAbdx.jpg",
+          link: "detalles.html?type=movie&id=1233069",
+          year: "2025",
+          genres: ["Acción", "Suspenso"] // <-- Asegúrate de que esto esté definido
+      },
+      {
+          id: 986056,
+          title: "Thunderbolts*",
+          image: "https://s.lupacine.com/image/t/p/w500/m9EtP1Yrzv6v7dMaC9mRaGhd1um.jpg",
+          link: "detalles.html?type=movie&id=986056",
+          year: "2025",
+          genres: ["Drama","Acción", "Aventura", "Ciencia ficción"] // <-- Asegúrate de que esto esté definido
+      },
+      {
+          id: 668489,
+          title: "Estragos",
+          image: "https://s.lupacine.com/image/t/p/w500/r46leE6PSzLR3pnVzaxx5Q30yUF.jpg",
+          link: "detalles.html?type=movie&id=668489",
+          year: "2025",
+          genres: ["Acción", "Crimen", "Suspenso"] // <-- Asegúrate de que esto esté definido
       },
 ];
 

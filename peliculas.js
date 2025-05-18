@@ -1,5 +1,47 @@
 // videos.js
 const peliculasDisponibles = {
+"668489": {
+        "title": "Estragos",
+        "360p": "https://v3.fiestareel.com/mov/2025/668489-94014/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2025/668489-94014/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2025/668489-94014/720/720p.m3u8"
+    },
+"986056": {
+        "title": "Thunderbolts*",
+        "360p": "https://v3.fiestareel.com/mov/2025/986056-94322/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2025/986056-94322/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2025/986056-94322/720/720p.m3u8"
+    },
+"1233069": {
+        "title": "Extraterritorial",
+        "360p": "https://v3.fiestareel.com/mov/2025/1233069-94188/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2025/1233069-94188/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2025/1233069-94188/720/720p.m3u8"
+    },
+"950387": {
+        "title": "Una película de Minecraft",
+        "360p": "https://v3.fiestareel.com/mov/2025/950387-92962/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2025/950387-92962/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2025/950387-92962/720/720p.m3u8"
+    },
+"1195506": {
+        "title": "Novocaine",
+        "360p": "https://v3.fiestareel.com/mov/2025/1195506-93746/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2025/1195506-93746/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2025/1195506-93746/720/720p.m3u8"
+    },
+"1244944": {
+        "title": "La mujer de las sombras",
+        "360p": "https://v3.fiestareel.com/mov/2025/1244944-93805/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2025/1244944-93805/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2025/1244944-93805/720/720p.m3u8"
+    },
+"974573": {
+        "title": "Otro pequeño favor",
+        "360p": "https://v3.fiestareel.com/mov/2025/974573-94326/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2025/974573-94326/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2025/974573-94326/720/720p.m3u8"
+    },
 "1197306": {
         "title": "Rescate implacable",
         "360p": "https://v3.fiestareel.com/mov/2025/1197306-92430/480/480p.m3u8",

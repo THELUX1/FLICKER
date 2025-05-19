@@ -13,8 +13,6 @@ body {
     min-height: 100vh;
 }
 
-/* HEADER */
-
 /* PÁGINA DE DETALLES */
 .movie-detail-container {
     position: relative;
@@ -51,18 +49,6 @@ body {
     padding: 20px 5%;
     max-width: 1400px;
     margin: 0 auto;
-}
-
-.back-button .btn2 {
-    background: #ffffff50;
-    border: 1px solid #ffffff;
-    color: white;
-    padding: 12px 25px;
-    border-radius: 25px;
-    cursor: pointer;
-    margin-bottom: 5px;
-    transition: all 0.3s ease;
-    
 }
 
 .movie-poster {
@@ -133,8 +119,7 @@ body {
 .add-list-button {
     background: linear-gradient(135deg, #d80009 0%, #ff0a00 100%);
     color: white;
-    position: relative;
-    padding: 10px 32px;
+    padding: 14px 32px; /* Igual que .play-button */
     border: none;
     border-radius: 8px;
     font-size: 1.1rem;

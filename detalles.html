@@ -7,60 +7,74 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Contenedor principal de acciones */
-.movie-actions {
-    display: flex;
-    justify-content: space-between; /* Separa izquierda y derecha */
-    align-items: flex-start; /* Alinea al inicio */
-    gap: 20px; /* Espacio entre columnas */
-}
+        .left-actions a,
+        .left-actions button {
+            margin-bottom: 10px;
+        }
 
-/* Columna izquierda: Reproducir y Reporte */
-.left-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 12px; /* Espacio entre botones */
-    flex-grow: 1; /* Ocupa el espacio disponible */
-}
+        /* Carrusel de películas similares */
+        #similar-movies-container {
+        width: 100vw;
+        margin-left: calc(-1 * (100vw - 100%) / 2); /*         centrar si hay un contenedor centrado */
+        background-color: ;
+        border-radius: 5px;
+        position: relative;
+        z-index: 2;
+        margin-top: -20px;
+        padding: 0 0 20px;
+       }
 
-/* Botón "Me gusta" (posición original) */
-.add-list-button {
-    margin-left: auto; /* Lo empuja a la derecha */
-    /* Mantén tus estilos originales (ejemplo:) */
-    background: #2e2e2e;
-    padding: 10px 20px;
-    border-radius: 5px;
-}
+        #similar-movies-container h2 {
+            margin-bottom: 10px;
+            font-size: 1.5em;
+            color: #fff;
+        }
 
-/* Estilos para el botón de reporte */
-.report-button {
-    background-color: #ff4444;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    width: 100%; /* Mismo ancho que "Reproducir" */
-}
+        .carousel-similares {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 10px;
+        }
 
-.report-button:hover {
-    background-color: #cc0000;
-}
+        .carousel-similares a {
+            flex: 0 0 auto;
+            scroll-snap-align: start;
+            width: 130px;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+        }
 
-.report-icon {
-    width: 20px;
-    height: 20px;
-    fill: currentColor;
-}
+        .carousel-similares img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .carousel-similares p {
+            margin: 5px 0 0;
+            font-size: 0.9em;
+        }
+
+        .carousel-similares a img {
+         transition: transform 0.3s ease;
+         will-change: transform;
+        }
+        .carousel-similares a img:active {
+        transform: scale(1.05);
+        transition: transform 0.2s ease;
+       }
     </style>
+    <script src="moviesData.js" type="module"></script>
     <script src="peliculas.js"></script>
     <script src="js/global.js"></script>
     <script src="seriesSeasons.js"></script>
     <script type="module">
         import seriesDetails from './seriesDetails.js';
+        import { manualMovies } from './moviesData.js';
 
         const apiKey = '995449ccaf6d840acc029f95c7d210dd';
         let movie = null;
@@ -186,6 +200,35 @@
             return false;
         }
 
+        function mostrarPeliculasSimilares(generosActuales, movieId) {
+            const similares = manualMovies.filter(pelicula => {
+                if (!pelicula.genres || pelicula.id === parseInt(movieId)) return false;
+                return pelicula.genres.some(g => generosActuales.includes(g));
+            });
+
+            const container = document.getElementById('similar-movies-container');
+            if (similares.length > 0) {
+                const titulo = document.createElement('h2');
+                titulo.textContent = "Puede que también te gusten";
+                container.appendChild(titulo);
+
+                const carrusel = document.createElement('div');
+                carrusel.className = 'carousel-similares';
+
+                similares.forEach(pelicula => {
+                    const card = document.createElement('a');
+                    card.href = pelicula.link;
+                    card.innerHTML = `
+                        <img src="${pelicula.image}" alt="${pelicula.title}">
+                        <p>${pelicula.title}</p>
+                    `;
+                    carrusel.appendChild(card);
+                });
+
+                container.appendChild(carrusel);
+            }
+        }
+
         if (movieId && type) {
             fetchDetails(movieId, type).then(movieData => {
                 if (movieData) {
@@ -196,7 +239,6 @@
                     if (movie.duration) document.getElementById('movie-duration').innerText = movie.duration;
                     document.getElementById('movie-synopsis').innerText = movie.synopsis;
                     document.getElementById('movie-backdrop').style.backgroundImage = `url('${movie.image}')`;
-                    
                     if (movie.trailer) {
                         document.getElementById('movie-trailer').src = `${movie.trailer}?autoplay=1`;
                     } else {
@@ -210,7 +252,7 @@
                     const playButton = document.getElementById('playButton');
                     if (isContentAvailable(movieId, type)) {
                         playButton.style.display = 'block';
-                        document.getElementById('reportButton').style.display = 'block'; // Mostrar botón de reporte
+                        document.getElementById('reportButton').style.display = 'block';
 
                         if (type === 'movie') {
                             const videoUrl = peliculasDisponibles[movieId]['360p'];
@@ -228,6 +270,13 @@
 
                     const likedMovies = JSON.parse(localStorage.getItem('likedMovies') || '[]');
                     updateLikeButton(likedMovies.some(m => m.id === movie.id && m.type === type));
+
+                    if (type === 'movie') {
+                        const peliculaManual = manualMovies.find(p => p.id === parseInt(movieId));
+                        if (peliculaManual?.genres) {
+                            mostrarPeliculasSimilares(peliculaManual.genres, movieId);
+                        }
+                    }
                 }
             });
         }
@@ -271,30 +320,19 @@
 
         document.getElementById('mark-watched-detail').addEventListener('click', toggleLike);
 
-        // Configurar el botón de reporte
-        // Reemplaza el evento click del botón de reporte con esto:
-document.getElementById('reportButton').addEventListener('click', function() {
-    const movieTitle = movie?.title || "Contenido no disponible";
-    const playButton = document.getElementById('playButton');
-    
-    try {
-        // Obtener el enlace del reproductor
-        const urlParams = new URL(playButton.href).searchParams;
-        const videoUrl = decodeURIComponent(urlParams.get('video'));
-
-        // Crear enlace mailto
-        const mailtoLink = `mailto:flickersoporte@gmail.com?
-            subject=${encodeURIComponent(`Reporte de enlace caído: ${movieTitle}`)}
-            &body=${encodeURIComponent(`El enlace de "${movieTitle}" está caído:\n${videoUrl}`)}`;
-
-        // Abrir en el navegador externo
-        window.open(mailtoLink, '_system'); // '_system' abre el navegador por defecto
-
-    } catch (error) {
-        showToast('Error al generar el reporte', 'error');
-        console.error('Error:', error);
-    }
-});
+        document.getElementById('reportButton').addEventListener('click', function() {
+            const movieTitle = movie?.title || "Contenido no disponible";
+            const playButton = document.getElementById('playButton');
+            try {
+                const urlParams = new URL(playButton.href).searchParams;
+                const videoUrl = decodeURIComponent(urlParams.get('video'));
+                const mailtoLink = `mailto:flickersoporte@gmail.com?subject=${encodeURIComponent(`Reporte de enlace caído: ${movieTitle}`)}&body=${encodeURIComponent(`El enlace de "${movieTitle}" está caído:\n${videoUrl}`)}`;
+                window.open(mailtoLink, '_system');
+            } catch (error) {
+                showToast('Error al generar el reporte', 'error');
+                console.error('Error:', error);
+            }
+        });
     </script>
 </head>
 <body>
@@ -316,37 +354,36 @@ document.getElementById('reportButton').addEventListener('click', function() {
                     </div>
                     <p id="movie-synopsis"></p>
                     <div class="movie-actions">
-    <!-- Columna izquierda: Reproducir y Reporte -->
-    <div class="left-actions">
-        <!-- Botón Reproducir -->
-        <a id="playButton" style="display: none;">
-            <button class="play-button">
-                <svg class="play-icon" viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z" />
-                </svg>
-                Reproducir
-            </button>
-        </a>
+                        <div class="left-actions">
+                            <a id="playButton" style="display: none;">
+                                <button class="play-button">
+                                    <svg class="play-icon" viewBox="0 0 24 24">
+                                        <path d="M8 5v14l11-7z" />
+                                    </svg>
+                                    Reproducir
+                                </button>
+                            </a>
 
-        <!-- Botón de Reporte -->
-        <button class="report-button" id="reportButton" style="display: none;">
-            <svg class="report-icon" viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-            </svg>
-            <span>Reportar enlace</span>
-        </button>
-    </div>
+                            <button class="report-button" id="reportButton" style="display: none;">
+                                <svg class="report-icon" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                                </svg>
+                                <span>Reportar enlace</span>
+                            </button>
+                        </div>
 
-    <!-- Botón "Me gusta" (derecha) -->
-    <button class="add-list-button" id="mark-watched-detail">
-        <svg class="add-icon" viewBox="0 0 24 24">
-            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-        </svg>
-        <span id="like-text">Me gusta</span>
-                   </button>
-                 </div>
-               </div>
+                        <button class="add-list-button" id="mark-watched-detail">
+                            <svg class="add-icon" viewBox="0 0 24 24">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                            </svg>
+                            <span id="like-text">Me gusta</span>
+                        </button>
+                    </div>
+                </div>
             </div>
+
+            <!-- Carrusel dentro de movie-content -->
+            <section id="similar-movies-container" class="movie-section"></section>
         </div>
     </section>
 </body>

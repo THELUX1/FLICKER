@@ -88,7 +88,7 @@ const peliculasDisponibles = {
         "title": "Una película de Minecraft",
         "360p": "https://v3.fiestareel.com/mov/2025/950387-92962/480/480p.m3u8",
         "720p": "https://v3.fiestareel.com/mov/2025/950387-92962/720/720p.m3u8",
-        "1080p": "https://v3.fiestareel.com/mov/2025/950387-92962/720/720p.m3u8"
+        "1080p": "https://m5qilv3g2l.premilkyway.com/hls2/01/10323/140zfukhaplj_,l,n,.urlset/index-f2-v1-a1.m3u8?t=vpQL4y7w1XT1G3t8yWz_j52i4oSqW712myJD6q8GUTU&s=1747614205&e=129600&f=51617860&srv=ts09ruf2imyzcv&i=0.4&sp=500&p1=ts09ruf2imyzcv&p2=ts09ruf2imyzcv&asn=264619"
     },
 "1195506": {
         "title": "Novocaine",

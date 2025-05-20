@@ -7,67 +7,33 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        .left-actions a,
-        .left-actions button {
-            margin-bottom: 10px;
-        }
-
-        /* Carrusel de películas similares */
-        #similar-movies-container {
-        width: 100vw;
-        margin-left: calc(-1 * (100vw - 100%) / 2); /*         centrar si hay un contenedor centrado */
-        background-color: ;
-        border-radius: 5px;
+    /* Estilos actualizados para el carrusel */
+    #similar-movies-container {
+        width: 100%;
+        margin: 30px 0;
+        padding: 20px 0;
         position: relative;
-        z-index: 2;
-        margin-top: -20px;
-        padding: 0 0 20px;
-       }
+    }
 
-        #similar-movies-container h2 {
-            margin-bottom: 10px;
-            font-size: 1.5em;
-            color: #fff;
-        }
+    .carousel-similares {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: calc((100% / 3) - 15px);
+        gap: 15px;
+        padding: 0 15px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+    }
 
+    @media (max-width: 768px) {
         .carousel-similares {
-            display: flex;
-            overflow-x: auto;
-            gap: 15px;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-            padding-bottom: 10px;
+            grid-auto-columns: calc((100% / 2) - 10px);
         }
+    }
 
-        .carousel-similares a {
-            flex: 0 0 auto;
-            scroll-snap-align: start;
-            width: 130px;
-            text-align: center;
-            text-decoration: none;
-            color: white;
-        }
-
-        .carousel-similares img {
-            width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-        }
-
-        .carousel-similares p {
-            margin: 5px 0 0;
-            font-size: 0.9em;
-        }
-
-        .carousel-similares a img {
-         transition: transform 0.3s ease;
-         will-change: transform;
-        }
-        .carousel-similares a img:active {
-        transform: scale(1.05);
-        transition: transform 0.2s ease;
-       }
-    </style>
+   
+</style>
     <script src="moviesData.js" type="module"></script>
     <script src="peliculas.js"></script>
     <script src="js/global.js"></script>
@@ -335,54 +301,53 @@
         });
     </script>
 </head>
+       <!-- Mantener todo el head igual -->
+<!-- Solo cambiar la estructura del body para mejor mobile -->
 <body>
     <section class="movie-detail-container">
         <div class="movie-backdrop" id="movie-backdrop"></div>
         <div class="movie-content">
-            <div class="main-info">
-                <div class="trailer-container featured-trailer">
-                    <div class="trailer-wrapper">
-                        <iframe class="movie-trailer" id="movie-trailer" allowfullscreen></iframe>
-                    </div>
+            <div class="trailer-container featured-trailer">
+                <div class="trailer-wrapper">
+                    <iframe class="movie-trailer" id="movie-trailer" allowfullscreen></iframe>
                 </div>
-                <div class="movie-info">
-                    <h1 id="movie-title"></h1>
-                    <div class="movie-meta">
-                        <span id="movie-rating"></span>
-                        <span id="movie-year"></span>
-                        <span id="movie-duration"></span>
-                    </div>
-                    <p id="movie-synopsis"></p>
-                    <div class="movie-actions">
-                        <div class="left-actions">
-                            <a id="playButton" style="display: none;">
-                                <button class="play-button">
-                                    <svg class="play-icon" viewBox="0 0 24 24">
-                                        <path d="M8 5v14l11-7z" />
-                                    </svg>
-                                    Reproducir
-                                </button>
-                            </a>
-
-                            <button class="report-button" id="reportButton" style="display: none;">
-                                <svg class="report-icon" viewBox="0 0 24 24">
-                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-                                </svg>
-                                <span>Reportar enlace</span>
-                            </button>
-                        </div>
-
-                        <button class="add-list-button" id="mark-watched-detail">
-                            <svg class="add-icon" viewBox="0 0 24 24">
-                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+            </div>
+            
+            <div class="movie-info">
+                <h1 class="movie-title-detail" id="movie-title"></h1>
+                <div class="movie-meta">
+                    <span id="movie-rating"></span>
+                    <span id="movie-year"></span>
+                    <span id="movie-duration"></span>
+                </div>
+                <p class="movie-synopsis" id="movie-synopsis"></p>
+                
+                <div class="movie-actions">
+                    <div class="left-actions">
+                        <a id="playButton" style="display: none;" class="play-button">
+                            <svg class="play-icon" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z" />
                             </svg>
-                            <span id="like-text">Me gusta</span>
+                            Reproducir
+                        </a>
+
+                        <button class="report-button" id="reportButton" style="display: none;">
+                            <svg class="report-icon" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                            </svg>
+                            Reportar
                         </button>
                     </div>
+
+                    <button class="add-list-button" id="mark-watched-detail">
+                        <svg class="add-icon" viewBox="0 0 24 24">
+                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                        </svg>
+                        <span id="like-text">Me gusta</span>
+                    </button>
                 </div>
             </div>
 
-            <!-- Carrusel dentro de movie-content -->
             <section id="similar-movies-container" class="movie-section"></section>
         </div>
     </section>

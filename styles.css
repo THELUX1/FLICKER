@@ -225,7 +225,7 @@ input:focus {
 }
 
 .movie-section {
-    margin-bottom: 40px;
+    margin-bottom: 9px;
 }
 
 .section-title {
@@ -307,10 +307,41 @@ button {
     -webkit-tap-highlight-color: transparent;
 }
 
-/* Eliminar outline en los enlaces */
-a {
-    text-decoration: none !important;
-    color: inherit;
+/* Eliminar outline y efectos de focus en todos los elementos interactivos */
+a, 
+button, 
+input, 
+img, 
+.movie-card,
+.nav-icon {
+    -webkit-tap-highlight-color: transparent !important;
+    outline: none !important;
+    -webkit-focus-ring-color: transparent !important;
+}
+
+/* Eliminar específicamente el focus en imágenes y enlaces */
+img:focus, 
+a:focus, 
+button:focus, 
+input:focus,
+.movie-card:focus,
+.nav-icon:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Eliminar el resaltado nativo en navegadores WebKit (Chrome, Safari) */
+* {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Para elementos específicos de tu aplicación */
+.movie-card a:focus,
+.movie-card img:focus,
+.nav-icon:focus {
+    outline: 0 !important;
+    box-shadow: none !important;
 }
 
 /* Asegurar que los enlaces de las tarjetas no muestren efectos no deseados */

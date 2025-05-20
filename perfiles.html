@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrar Perfiles - CineStream</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="global.js"></script>
+    <script type="module" src="profileManager.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <div class="logo-glass">
+                <h1 class="logo">Flicker</h1>
+            </div>
+        </div>
+    </header>
+
+    <main class="profiles-container">
+        <h1>Administrar Perfiles</h1>
+        
+        <div class="profiles-grid" id="profiles-grid">
+            <!-- Los perfiles se cargarán aquí dinámicamente -->
+        </div>
+        
+        <button id="add-profile-btn" class="add-profile-btn">
+            <i class="fas fa-plus"></i> Añadir Perfil
+        </button>
+        
+        <div id="profile-modal" class="modal">
+            <div class="modal-content">
+                <h2 id="modal-title">Crear Nuevo Perfil</h2>
+                <input type="text" id="profile-name" class="profile-name-input" placeholder="Nombre del perfil" maxlength="20">
+                <div class="avatar-selection">
+                    <div class="avatar-option selected" data-avatar="1"><i class="fas fa-user"></i></div>
+                    <div class="avatar-option" data-avatar="2"><i class="fas fa-user-tie"></i></div>
+                    <div class="avatar-option" data-avatar="3"><i class="fas fa-user-astronaut"></i></div>
+                    <div class="avatar-option" data-avatar="4"><i class="fas fa-user-ninja"></i></div>
+                    <div class="avatar-option" data-avatar="5"><i class="fas fa-user-graduate"></i></div>
+                </div>
+                <div class="modal-buttons">
+                    <button id="modal-cancel" class="modal-button cancel">Cancelar</button>
+                    <button id="modal-confirm" class="modal-button confirm">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Barra de navegación inferior -->
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-icon">
+            <i class="fas fa-home"></i>
+            <span>Inicio</span>
+        </a>
+        <a href="series.html" class="nav-icon">
+            <i class="fas fa-tv"></i>
+            <span>Series</span>
+        </a>
+        <a href="me-gusta.html" class="nav-icon">
+            <i class="fas fa-heart"></i>
+            <span>Me gusta</span>
+        </a>
+    </nav>
+</body>
+</html>

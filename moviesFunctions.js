@@ -1,15 +1,15 @@
 import { hiddenMovies, manualMovies, accionMovies, dramaMovies } from './moviesData.js';
+import { profileManager } from './profileManager.js';
 
 // Crear un objeto para almacenar las categorías de géneros
 const genreCategories = {};
 
-// Función para clasificar las películas por género
-// Agrega esta variable al inicio del archivo para llevar registro del orden de agregado
+// Variable para llevar registro del orden de agregado
 let movieAddOrder = 0;
 
 function classifyMoviesByGenre(movies, isManual = false) {
     movies.forEach(movie => {
-        // Asignamos un timestamp de orden de agregado (inverso para que los más nuevos tengan números mayores)
+        // Asignamos un timestamp de orden de agregado
         movie.addOrder = movieAddOrder++;
         
         if (movie.genres) {
@@ -29,7 +29,6 @@ function classifyMoviesByGenre(movies, isManual = false) {
 }
 
 // Clasificar las películas manuales, de acción, de drama y las ocultas
-// Pasamos true para manualMovies para que se agreguen al principio
 classifyMoviesByGenre(manualMovies, true);
 classifyMoviesByGenre(accionMovies);
 classifyMoviesByGenre(dramaMovies);
@@ -38,40 +37,38 @@ classifyMoviesByGenre(hiddenMovies);
 // Función para generar el contenido de la página principal
 function generarContenido(container) {
     const continueWatchingMovies = getContinueWatchingMovies();
-    
-    // Ordenar manualMovies por año descendente y luego por orden de agregado descendente
+    console.log("Películas para 'Seguir viendo':", continueWatchingMovies); // DEBUG
+
     const sortedManualMovies = [...manualMovies].sort((a, b) => {
         if (b.year !== a.year) {
-            return (b.year || 0) - (a.year || 0); // Ordenar por año descendente
+            return (b.year || 0) - (a.year || 0);
         }
-        return b.addOrder - a.addOrder; // Si el año es igual, ordenar por orden de agregado
+        return b.addOrder - a.addOrder;
     });
 
     const visibleCategories = {
         "Seguir viendo": continueWatchingMovies,
-        "Recién Agregado": sortedManualMovies.slice(0, 12), // Tomar las 12 más recientes
+        "Recién Agregado": sortedManualMovies.slice(0, 12),
         "Acción": [...accionMovies].sort((a, b) => (b.year || 0) - (a.year || 0)),
         "Drama": [...dramaMovies].sort((a, b) => (b.year || 0) - (a.year || 0)),
     };
 
-    // Ordenar también las categorías por género
     Object.keys(genreCategories).forEach(genre => {
         visibleCategories[genre] = [...genreCategories[genre]].sort((a, b) => {
             if (b.year !== a.year) {
-                return (b.year || 0) - (a.year || 0); // Ordenar por año descendente
+                return (b.year || 0) - (a.year || 0);
             }
-            return b.addOrder - a.addOrder; // Si el año es igual, ordenar por orden de agregado
+            return b.addOrder - a.addOrder;
         });
     });
 
     container.innerHTML = Object.entries(visibleCategories)
         .map(([category, movies]) => {
-            if (movies.length === 0) return '';
             return `
                 <section class="movie-section">
                     <h2 class="section-title">${category}</h2>
                     <div class="movies-container">
-                        ${movies.map(movie => createMovieCard(movie)).join('')}
+                        ${movies.length > 0 ? movies.map(movie => createMovieCard(movie)).join('') : '<p class="no-movies">No hay contenido disponible.</p>'}
                     </div>
                 </section>
             `;
@@ -141,13 +138,20 @@ function setupLazyLoading() {
     }
 }
 
-// Resto del código permanece igual...
+// Función para obtener películas en "Seguir viendo" con soporte para perfiles
 function getContinueWatchingMovies() {
     const continueWatching = [];
+    const currentProfile = profileManager.getCurrentProfile();
+    
+    if (!currentProfile) return continueWatching;
+    
+    // Buscamos las claves que corresponden al perfil actual
+    const profilePrefix = `profile_${currentProfile.id}_progress_`;
+    
     for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
-        if (key.startsWith("progress_")) {
-            const movieId = key.split("_")[1];
+        if (key.startsWith(profilePrefix)) {
+            const movieId = key.split('_')[3];
             const progress = localStorage.getItem(key);
             const movie = manualMovies.find(m => m.id == movieId) || 
                           accionMovies.find(m => m.id == movieId) ||
@@ -170,18 +174,22 @@ function showConfirmModal(title, callback) {
     const confirmYes = document.getElementById('confirm-yes');
     const confirmNo = document.getElementById('confirm-no');
 
-    confirmMessage.textContent = `¿Estás seguro de que quieres eliminar "${title}" de "Seguir viendo"?`;
-    modal.style.display = 'flex';
+    if (confirmMessage) confirmMessage.textContent = `¿Estás seguro de que quieres eliminar "${title}" de "Seguir viendo"?`;
+    if (modal) modal.style.display = 'flex';
 
-    confirmYes.onclick = () => {
-        modal.style.display = 'none';
-        callback(true);
-    };
+    if (confirmYes) {
+        confirmYes.onclick = () => {
+            if (modal) modal.style.display = 'none';
+            callback(true);
+        };
+    }
 
-    confirmNo.onclick = () => {
-        modal.style.display = 'none';
-        callback(false);
-    };
+    if (confirmNo) {
+        confirmNo.onclick = () => {
+            if (modal) modal.style.display = 'none';
+            callback(false);
+        };
+    }
 }
 
 function setupRemoveButtons() {
@@ -200,8 +208,12 @@ function setupRemoveButtons() {
     });
 }
 
+// Función para eliminar de "Seguir viendo" con soporte para perfiles
 function removeFromContinueWatching(movieId) {
-    localStorage.removeItem(`progress_${movieId}`);
+    const currentProfile = profileManager.getCurrentProfile();
+    if (!currentProfile) return;
+    
+    localStorage.removeItem(`profile_${currentProfile.id}_progress_${movieId}`);
     showToast(`Película eliminada de "Seguir viendo"`, 'success');
     setTimeout(() => {
         window.location.reload();
@@ -323,6 +335,11 @@ function setupSearch() {
                 </div>
             `;
             item.addEventListener('click', () => {
+                const currentProfile = profileManager.getCurrentProfile();
+                if (currentProfile) {
+                    // Guardamos el último visto con el prefijo del perfil
+                    localStorage.setItem(`profile_${currentProfile.id}_lastViewed`, movie.id);
+                }
                 window.location.href = movie.link;
             });
             searchResults.appendChild(item);
@@ -343,5 +360,5 @@ document.addEventListener('DOMContentLoaded', () => {
     setupSearch();
 });
 
-// Exportar funciones si es necesario
+// Exportar funciones
 export { generarContenido, setupSearch };

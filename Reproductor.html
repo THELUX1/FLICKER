@@ -795,5 +795,74 @@ streamBtn.addEventListener("click", () => {
 });
 </script>
 
+
+<script type="module">
+import { profileManager } from './profileManager.js';
+
+const video = document.getElementById("video");
+
+// Obtener parámetros de la URL
+const urlParams = new URLSearchParams(window.location.search);
+const videoUrl = urlParams.get('video');
+const movieId = urlParams.get('movieId');
+const type = urlParams.get('type');
+const episodeNumber = urlParams.get('episodeNumber');
+
+// Función para guardar progreso con perfil
+function saveProgress() {
+    const profile = profileManager.getCurrentProfile();
+    if (!profile) return;
+
+    if (type === 'series') {
+        const progressData = {
+            seriesId: movieId,
+            episodeNumber: episodeNumber,
+            currentTime: video.currentTime,
+            duration: video.duration
+        };
+        localStorage.setItem(`profile_${profile.id}_seriesProgress_${movieId}_${episodeNumber}`, JSON.stringify(progressData));
+    } else {
+        localStorage.setItem(`profile_${profile.id}_progress_${movieId}`, video.currentTime);
+    }
+}
+
+// Función para cargar progreso con perfil
+function loadProgress() {
+    const profile = profileManager.getCurrentProfile();
+    if (!profile) return;
+
+    if (type === 'series') {
+        const savedProgress = localStorage.getItem(`profile_${profile.id}_seriesProgress_${movieId}_${episodeNumber}`);
+        if (savedProgress) {
+            const data = JSON.parse(savedProgress);
+            video.currentTime = data.currentTime || 0;
+        }
+    } else {
+        const savedProgress = localStorage.getItem(`profile_${profile.id}_progress_${movieId}`);
+        if (savedProgress) {
+            video.currentTime = parseFloat(savedProgress);
+        }
+    }
+}
+
+// Función para eliminar progreso
+function clearProgress() {
+    const profile = profileManager.getCurrentProfile();
+    if (!profile) return;
+
+    if (type === 'series') {
+        localStorage.removeItem(`profile_${profile.id}_seriesProgress_${movieId}_${episodeNumber}`);
+    } else {
+        localStorage.removeItem(`profile_${profile.id}_progress_${movieId}`);
+    }
+}
+
+// Eventos
+video.addEventListener("pause", saveProgress);
+window.addEventListener("beforeunload", saveProgress);
+video.addEventListener("ended", clearProgress);
+document.addEventListener("DOMContentLoaded", loadProgress);
+</script>
+
 </body>
 </html>

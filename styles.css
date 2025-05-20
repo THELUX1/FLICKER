@@ -2,94 +2,29 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
-}
-
-:root {
-    --gradient-opacity: 0;
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
-    background-color: #000000;
+    background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
     color: white;
-    min-height: 200vh;
+    min-height: 100vh;
     overflow-x: hidden;
 }
 
 /* Header */
 .header {
     display: flex;
-    justify-content: space-between; /* Logo a la izquierda, ícono a la derecha */
+    justify-content: space-between;
     align-items: center;
-    padding: 1% 5%;
-    background: #373737;
+    padding: 15px 5%;
+    background: rgba(0, 0, 0, 0.8);
     backdrop-filter: blur(10px);
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 1000;
-}
-.loader {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    z-index: 1000;
-    display: none; /* Oculto por defecto */
-}
-
-.loader-spinner {
-    border: 8px solid #f3f3f3; /* Light grey */
-    border-top: 8px solid #ff4444; /* Red */
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 20px; /* Espacio entre el spinner y el texto */
-}
-
-.loader-text {
-    color: #ffffff; /* Color blanco para el texto */
-    font-size: 16px;
-    font-weight: bold;
-    margin: 0;
-    padding: 10px 20px; /* Espaciado interno */
-    background-color: rgba(255, 68, 68, 0.9); /* Fondo rojo con transparencia */
-    border: 2px solid #ff4444; /* Borde rojo */
-    border-radius: 8px; /* Bordes redondeados */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para resaltar */
-}
-/* Lazy Loading Styles */
-.lazy-image {
-    background-color: #f0f0f0;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.loaded-image {
-    opacity: 1;
-}
-
-/* Placeholder SVG (mismo aspecto que tus imágenes) */
-.movie-card img {
-    aspect-ratio: 2/3;
-    object-fit: cover;
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-}
-
-/* Resto de tus estilos existentes... */
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    border-bottom: 1px solid rgba(255, 10, 0, 0.3);
 }
 
 .logo-glass {
@@ -98,135 +33,159 @@ body {
     padding: 12px 25px;
     border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .logo {
-    color: #d90900;
+    color: #ff0a00;
     font-size: 2rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 10px rgba(255, 10, 0, 0.5);
 }
 
-/* Contenedor de búsqueda fuera del header */
-.search-overlay {
-    outline: none;
+/* Loader */
+.loader {
     position: fixed;
-    top: 20px; /* Ajusta la posición vertical */
-    right: 20px; /* Ajusta la posición horizontal */
-    z-index: 1001; /* Asegúrate de que esté por encima del header */
-    display: flex;
-    align-items: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 1000;
+    display: none;
 }
 
-/* Ícono de búsqueda */
+.loader-spinner {
+    border: 5px solid rgba(255, 255, 255, 0.1);
+    border-top: 5px solid #ff0a00;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+.loader-text {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Search */
+.search-overlay {
+    position: fixed;
+    top: 25px;
+    right: 5%;
+    z-index: 1001;
+}
+
 .search-icon-button {
-    outline: none;
     background: none;
     border: none;
     color: #ffffff;
     font-size: 1.2rem;
     cursor: pointer;
     transition: all 0.3s ease;
-    padding: 2px;
+    padding: 8px;
     border-radius: 50%;
-    -webkit-tap-highlight-color: transparent; /* Elimina el resaltado en dispositivos táctiles */
-    -webkit-focus-ring-color: transparent; /* Elimina el resaltado en navegadores WebKit */
-}
-
-.search-icon-button:hover {
-    outline: none;
-    color: #E50914;
     background: rgba(255, 255, 255, 0.1);
 }
 
-.search-icon-button:focus {
+.search-icon-button:hover {
+    color: #ff0a00;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Eliminar outline azul en elementos interactivos */
+button:focus, 
+a:focus,
+input:focus {
     outline: none !important;
     box-shadow: none !important;
 }
 
-/* Barra de búsqueda */
+/* Corregir posición de la barra de búsqueda */
 .search-wrapper {
-    display: none; /* Oculto por defecto */
+    display: none;
     position: absolute;
-    top: 179%; /* Se despliega debajo del ícono de búsqueda */
-    right: 55%; /* Alineado a la derecha del ícono */
-    background: #0000007d;
+    top: 50px;
+    right: 0;
+    width: 300px;
+    background: rgba(0, 0, 0, 0.9);
     border-radius: 12px;
-    padding: 10px;
+    padding: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     z-index: 1000;
-    width: 300px; /* Ancho fijo para la barra de búsqueda */
+    width: 300px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .search-input {
     width: 100%;
-    padding: 12px 45px 12px 20px;
+    padding: 12px 45px 12px 15px;
     border: none;
     border-radius: 30px;
-    background: white;
-    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.1);
     color: white;
     font-size: 1rem;
     transition: all 0.3s ease;
-    outline: none;
 }
 
 .search-input:focus {
-    outline: none;
     background: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 0 15px rgba(229, 9, 20, 0.3);
+    box-shadow: 0 0 0 2px rgba(255, 10, 0, 0.5);
 }
 
-.search-button {
-    outline: none;
+.search-button.close-search {
     position: absolute;
+    top: 15px;
     right: 15px;
     background: none;
     border: none;
     color: rgba(255, 255, 255, 0.7);
     cursor: pointer;
     font-size: 1.2rem;
-    transition: all 0.3s ease;
-}
-
-.search-button.close-search {
-    position: absolute;
-    top: 20px;
-    right: 25px;
-    background: none;
-    border: none;
-    color: rgba(255, 255, 255, 0.7);
-    cursor: pointer;
-    font-size: 1.2rem;
-    transition: all 0.3s ease;
 }
 
 .search-button.close-search:hover {
-    color: #E50914; /* Cambia el color al hacer hover */
+    color: #ff0a00;
 }
 
-.search-overlay.active .search-button .search-icon {
+.search-results {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: rgba(20, 20, 20, 0.95);
+    border-radius: 12px;
+    padding: 10px;
+    max-height: 400px;
+    overflow-y: auto;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     display: none;
-}
-
-.search-overlay.active .search-button .close-icon {
-    display: block;
-    color: #E50914;
+    z-index: 1000;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .search-result-item {
     display: flex;
     align-items: center;
-    padding: 12px;
+    padding: 10px;
     border-radius: 8px;
     margin-bottom: 8px;
-    background: #000000;
+    background: rgba(255, 255, 255, 0.05);
     transition: all 0.2s ease;
     cursor: pointer;
 }
 
 .search-result-item:hover {
-    background: #00abff35;
-    transform: translateX(5px);
+    background: rgba(255, 10, 0, 0.2);
 }
 
 .search-result-item img {
@@ -235,126 +194,66 @@ body {
     border-radius: 4px;
     margin-right: 15px;
     object-fit: cover;
+    background: #333; /* Fondo mientras carga */
+    /* Cambiar a lazy loading */
+    src: data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 75'%3E%3C/svg%3E;
+    data-src: attr(data-src);
+    loading: lazy;
+    class: lazy-image;
 }
 
 .search-result-info h3 {
     font-size: 1rem;
     margin-bottom: 4px;
+    font-weight: 500;
 }
 
 .search-result-info p {
     font-size: 0.8rem;
-    opacity: 0.7;
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .no-results {
     padding: 15px;
     text-align: center;
-    color: white;
+    color: rgba(255, 255, 255, 0.7);
 }
 
-/* Sección Hero */
-.hero {
-    position: relative;
-    height: 70vh;
-    min-height: 400px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    margin-bottom: 2rem;
-}
-
-.image-container {
-    border: 1px solid #ff0a00;
-    border-radius: 20px;
-    padding: 10px;
-    background: #000000;
-    box-shadow: 0 0 20px #ff000a;
-    margin-bottom: 1rem;
-    max-width: 300px;
-}
-
-.featured-image {
-    width: 100%;
-    max-width: 100%;
-    border-radius: 15px;
-    height: auto;
-}
-
-.hero-content {
-    text-align: center;
-    z-index: 2;
-    padding-top: 80px;
-}
-
-.hero-title {
-    font-size: 2.8rem;
-    margin-bottom: 0.8rem;
-    text-shadow: 2px 2px 4px #00000081;
-}
-
-.hero-actions {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    margin-top: 1rem;
-}
-
-.hero-button {
-    background: #ff0a00;
-    color: white;
-    padding: 12px 30px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1.1rem;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    margin: 0 10px;
-}
-
-.hero-button.secondary {
-    background: #ff0a008b;
-}
-
-.hero-button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 15px rgba(229, 9, 20, 0.4);
-}
-
-.hero-button:hover {
-    background: #ff000a;
-}
-
-.hero-button.secondary:hover {
-    background: rgba(89, 89, 89, 0.7);
-}
-
-.hero-button:active {
-    transform: scale(0.95);
-}
-
-/* Contenido Principal */
+/* Main Content */
 .content {
-    position: relative;
-    z-index: 2;
-    padding-top: 80vh;
-    margin-top: -70vh;
-    background: transparent;
-    margin-bottom: 60px;
+    padding: 100px 5% 80px;
 }
 
-/* Carrusel de Películas */
+.movie-section {
+    margin-bottom: 40px;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+    color: white;
+    position: relative;
+    padding-left: 15px;
+}
+
+.section-title::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 5px;
+    height: 70%;
+    width: 4px;
+    background: #ff0a00;
+    border-radius: 2px;
+}
+
 .movies-container {
     display: flex;
     overflow-x: auto;
-    gap: 1px;
-    scroll-snap-type: x mandatory;
-    padding: 20px 0;
-    white-space: nowrap;
-    align-items: stretch;
+    gap: 15px;
+    padding: 10px 0;
+    scrollbar-width: none;
 }
 
 .movies-container::-webkit-scrollbar {
@@ -363,254 +262,89 @@ body {
 
 .movie-card {
     position: relative;
-    flex: 0 0 180px;
-    height: 100%;
+    flex: 0 0 150px;
     border-radius: 10px;
     overflow: hidden;
-    transition: transform 0.6s ease, box-shadow 0.6s ease;
+    transition: transform 0.3s ease;
     scroll-snap-align: start;
-    display: flex;
-    flex-direction: column;
-}
-
-.movie-card a {
-    text-decoration: none;
-    color: inherit;
-}
-
-.movie-card a:hover {
-    text-decoration: none;
-    color: inherit;
-}
-
-.movie-card a:focus {
-    outline: none;
-}
-
-.movie-card img {
-    min-height: 200px;
-    width: 90%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    border-radius: 10px;
-    transition: transform 1.0s;
-    margin: 0 auto;
-}
-
-.movie-title {
-    position: absolute;
-    bottom: 1px;
-    left: 10px;
-    right: 10px;
-    font-size: 16px;
-    font-weight: bold;
-    color: white;
-    background: rgba(0, 0, 0, 0.6);
-    padding: 5px;
-    border-radius: 4px;
-    z-index: 1;
-    overflow: hidden;
-    word-wrap: break-word;
-    white-space: normal;
 }
 
 .movie-card:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
+    z-index: 10;
+}
+
+.movie-card img {
+    width: 100%;
+    height: 225px;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+    transition: transform 0.3s ease;
 }
 
 .movie-card:hover img {
-    transform: scale(1.30);
-}
-/* Añade estos estilos */
-.lazy-image {
-    background: #2a2a2a;
-    border-radius: 8px;
-    min-height: 450px;
-    transition: opacity 0.3s ease;
+    transform: scale(1.03);
 }
 
-.lazy-image[data-src] {
-    opacity: 0;
-}
-
-.lazy-image:not([data-src]) {
-    opacity: 1;
-}
-
-.movie-card:hover .movie-title {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.movies-container::after {
-    content: '';
-    flex: 0 0 1rem;
-}
-@keyframes shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
-}
-.movie-card img:not([src]) {
-    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite;
-}
-/* Barra de navegación inferior */
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: #373737;
-    backdrop-filter: blur(20px);
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 10px 0;
-    z-index: 1000;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
-}
-
-.nav-icon {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-decoration: none;
+.movie-title {
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 500;
     color: white;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-    outline: none; /* Elimina el outline predeterminado */
-    -webkit-tap-highlight-color: transparent; /* Elimina el resaltado en dispositivos táctiles */
+    white-space: normal;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    text-decoration: none !important; /* Elimina el subrayado */
 }
-
-.nav-icon i {
-    font-size: 1.5rem;
-    margin-bottom: 1px;
-}
-
-.nav-icon:hover {
-    color: #E50914;
-    transform: translateY(-5px);
-}
-
-/* Eliminar el focus azul del botón "Me gusta" */
-.nav-icon:focus {
-    outline: none !important; /* Elimina el outline en el estado :focus */
-    box-shadow: none !important; /* Elimina cualquier sombra predeterminada */
-}
-/* Resultados de búsqueda */
-.search-results {
-    position: absolute;
-    top: 385%; /* Ajusta la posición vertical */
-    left: -265px; /* Alineado a la izquierda del contenedor de búsqueda */
-    right: 0; /* Ocupa todo el ancho disponible */
-    background: #ffffff54;
-    border-radius: 12px;
-    padding: 15px;
-    max-height: 400px;
-    overflow-y: auto;
-    backdrop-filter: blur(20px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    display: none;
-    z-index: 1000;
-    width: 250px; /* Asegura que ocupe todo el ancho del contenedor padre */
-}
-
-/* Elementos individuales de los resultados de búsqueda */
-.search-result-item {
-    display: flex;
-    align-items: center;
-    padding: 12px;
-    border-radius: 8px;
-    margin-bottom: 8px;
-    background: #000000;
-    transition: all 0.2s ease;
-    cursor: pointer;
-    outline: none; /* Elimina el outline predeterminado */
-    -webkit-tap-highlight-color: transparent; /* Elimina el resaltado en dispositivos táctiles */
-}
-
-.search-result-item:focus {
-    outline: none !important; /* Elimina el outline en el estado :focus */
-    box-shadow: none !important; /* Elimina cualquier sombra predeterminada */
-}
-
-.search-result-item:hover {
-    background: rgba(229, 9, 20, 0.2);
-    transform: translateX(5px);
-}
-
-.search-result-item img {
-    width: 50px;
-    height: 75px;
-    border-radius: 4px;
-    margin-right: 15px;
-    object-fit: cover;
-}
-
-.search-result-info h3 {
-    font-size: 1rem;
-    margin-bottom: 4px;
-}
-
-.search-result-info p {
-    font-size: 0.8rem;
-    opacity: 0.7;
-}
-
-.no-results {
-    padding: 15px;
-    text-align: center;
-    color: rgba(255, 255, 255, 0.5);
-} 
-/* Eliminar outline y tap highlight */
-.movie-card a:focus {
-    outline: none;
-}
-
-/* Para navegadores WebKit (Chrome, Safari) */
-.movie-card a {
+/* Asegurar que los botones no muestren outline */
+button {
     -webkit-tap-highlight-color: transparent;
 }
 
-/* Opcional: mantener accesibilidad con estilo alternativo */
-.movie-card a:focus-visible {
-    outline: 2px solid #ffffff90;
-    outline-offset: 2px;
+/* Eliminar outline en los enlaces */
+a {
+    text-decoration: none !important;
+    color: inherit;
 }
-#sentinel {
-    height: 1px;
-    width: 100%;
-    visibility: hidden;
+
+/* Asegurar que los enlaces de las tarjetas no muestren efectos no deseados */
+.movie-card a {
+    text-decoration: none !important;
+    outline: none;
 }
 .movie-year {
     position: absolute;
-    top: 10px; /* Ajusta la posición vertical */
-    left: 10px; /* Ajusta la posición horizontal */
-    font-size: 14px;
-    font-weight: bold;
+    top: 10px;
+    left: 10px;
+    font-size: 12px;
+    font-weight: 600;
     color: white;
-    background: #ff0a0087; /* Fondo semitransparente */
-    padding: 5px 10px;
+    background: rgba(255, 10, 0, 0.8);
+    padding: 3px 8px;
     border-radius: 4px;
     z-index: 1;
 }
-/* Estilos para la barra de progreso */
+
 .progress-bar {
     width: 100%;
-    height: 5px;
-    background-color: #444;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.1);
     border-radius: 2px;
-    margin-top: 5px;
+    margin-top: 8px;
+    overflow: hidden;
 }
 
 .progress {
     height: 100%;
-    background-color: #e50914;
-    border-radius: 2px;
+    background-color: #ff0a00;
 }
-/* Estilos para el botón de eliminar */
+
 .remove-button {
     position: absolute;
     top: 10px;
@@ -618,45 +352,63 @@ body {
     background: rgba(0, 0, 0, 0.7);
     border: none;
     color: white;
-    width: 30px;
-    height: 30px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
-    z-index: 10;
-    appearance: none; /* Elimina estilos predeterminados */
-    -webkit-appearance: none; /* Para Chrome y Safari */
-    -moz-appearance: none; /* Para Firefox */
+    z-index: 2;
 }
 
 .remove-button:hover {
-    background: #E50914;
+    background: #ff0a00;
     transform: scale(1.1);
 }
 
-.remove-button:focus {
-    outline: none !important;
-    box-shadow: none !important;
-    background: rgba(0, 0, 0, 0.7) !important;
+/* Bottom Navigation */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 12px 0;
+    z-index: 1000;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.remove-button:focus-visible {
-    outline: none !important;
-    box-shadow: none !important;
+.nav-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
 }
 
-.remove-button:focus-within {
-    outline: none !important;
-    box-shadow: none !important;
+.nav-icon i {
+    font-size: 1.3rem;
+    margin-bottom: 4px;
 }
 
-.remove-button i {
-    font-size: 14px;
+.nav-icon:hover, .nav-icon.active {
+    color: #ff0a00;
+    transform: translateY(-3px);
 }
-/* Estilos para el modal de confirmación */
+
+.nav-icon span {
+    font-size: 0.7rem;
+}
+
+/* Modal */
 .modal {
     display: none;
     position: fixed;
@@ -664,7 +416,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.8);
     backdrop-filter: blur(5px);
     justify-content: center;
     align-items: center;
@@ -672,19 +424,21 @@ body {
 }
 
 .modal-content {
-    background: rgba(20, 20, 20, 0.95);
-    padding: 20px;
-    border-radius: 10px;
+    background: rgba(30, 30, 30, 0.95);
+    padding: 25px;
+    border-radius: 12px;
     text-align: center;
-    max-width: 400px;
+    max-width: 350px;
     width: 90%;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .modal-content p {
     font-size: 16px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     color: white;
+    line-height: 1.5;
 }
 
 .modal-buttons {
@@ -694,21 +448,22 @@ body {
 }
 
 .modal-button {
-    padding: 10px 20px;
+    padding: 10px 25px;
     border: none;
     border-radius: 6px;
     cursor: pointer;
     font-size: 14px;
+    font-weight: 500;
     transition: all 0.3s ease;
 }
 
 .modal-button.confirm {
-    background: #E50914;
+    background: #ff0a00;
     color: white;
 }
 
 .modal-button.confirm:hover {
-    background: #c40812;
+    background: #e00900;
 }
 
 .modal-button.cancel {
@@ -719,92 +474,56 @@ body {
 .modal-button.cancel:hover {
     background: rgba(89, 89, 89, 0.7);
 }
+
 /* Responsive */
 @media (max-width: 768px) {
-    .hero-title {
-        font-size: 2.2rem;
+    .header {
+        padding: 12px 5%;
     }
-
-    .image-container {
-        max-width: 250px;
+    
+    .logo {
+        font-size: 1.8rem;
     }
-
-    .hero-button {
-        padding: 10px 20px;
-        font-size: 1rem;
-    }
-
+    
     .movie-card {
-        flex: 0 0 150px;
+        flex: 0 0 130px;
     }
-
+    
     .movie-card img {
-        height: 225px;
+        height: 195px;
     }
-
-    .search-container {
-        position: fixed;
-        top: 70px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 90%;
-        z-index: 1000;
-        display: none;
-    }
-
-    .search-container.active {
-        display: block;
-    }
-
-    .search-results {
-        max-height: 60vh;
+    
+    .search-wrapper {
+        width: 280px;
     }
 }
 
 @media (max-width: 480px) {
-    .hero {
-        height: auto;
-        min-height: unset;
-        padding: 20px 0;
-        margin-bottom: 1rem;
+    .content {
+        padding: 90px 4% 70px;
     }
-
-    .image-container {
-        max-width: 250px;
-        padding: 5px;
-        margin-bottom: 0.5rem;
-    }
-
-    .hero-title {
-        font-size: 1.5rem;
-        margin-bottom: 0.5rem;
-    }
-
-    .hero-actions {
-        flex-direction: column;
-        gap: 10px;
-        margin-top: 0.5rem;
-    }
-
-    .hero-button {
-        padding: 8px 16px;
-        font-size: 0.9rem;
-    }
-
+    
     .movie-card {
-        flex: 20px 40px 100px;
+        flex: 0 0 110px;
     }
-
+    
     .movie-card img {
-        height: 200px;
+        height: 165px;
     }
-
-    .search-container {
-        top: 60px;
-        width: 90%;
+    
+    .movie-title {
+        font-size: 13px;
     }
-
-    .search-input {
-        font-size: 0.9rem;
+    
+    .section-title {
+        font-size: 1.3rem;
+    }
+    
+    .bottom-nav {
+        padding: 10px 0;
+    }
+    
+    .nav-icon i {
+        font-size: 1.2rem;
     }
 }

@@ -88,7 +88,9 @@ body {
 .play-button {
     background: linear-gradient(135deg, #d80009 0%, #ff0a00 100%);
     color: white;
+    text-align: center;
 }
+
 .add-list-button {
     background: rgba(255, 255, 255, 0.1);
     color: white;
@@ -174,26 +176,32 @@ body {
     font-size: 0.95rem;
 }
 
-/* CARRUSEL SIMILARES - ACTUALIZADO */
+/* CARRUSEL SIMILARES - MEJORADO */
 #similar-movies-container {
     width: 100%;
-    margin: 20px 0;
-    padding: 15px;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    overflow: hidden;
+    margin: 40px 0;
+    padding: 0;
+    position: relative;
+}
+
+.similar-title {
+    font-size: 1.5rem;
+    margin: 0 0 30px 0;
+    color: white;
+    font-weight: 600;
+    padding: 0 15px;
 }
 
 .carousel-similares {
     display: grid;
     grid-auto-flow: column;
-    grid-auto-columns: calc((100% / 3) - 10px);
+    grid-auto-columns: 45%;
     gap: 15px;
-    padding: 10px;
+    padding: 0 15px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; /* Ocultar scrollbar en Firefox */
+    scrollbar-width: none;
 }
 
 /* Ocultar scrollbar en Chrome/Safari */
@@ -210,15 +218,23 @@ body {
 
 .carousel-similares img {
     width: 100%;
+    height: auto;
+    min-height: 150px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     transition: transform 0.3s ease;
+    aspect-ratio: 2/3;
+    object-fit: cover;
 }
 
 .carousel-similares p {
-    margin-top: 8px;
-    font-size: 0.9rem;
+    margin-top: 12px;
+    font-size: 1rem;
     text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 5px;
 }
 
 .carousel-similares a:hover img {
@@ -283,7 +299,36 @@ body {
         margin: 25px auto;
     }
 
-    .carousel-similares a {
-        width: 150px;
+    .similar-title {
+        font-size: 1.8rem;
+        margin-bottom: 35px;
+        padding: 0 20px;
+    }
+
+    .carousel-similares {
+        grid-auto-columns: 30%;
+        padding: 0 20px;
+        gap: 20px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .carousel-similares {
+        grid-auto-columns: 22%;
+    }
+
+    .carousel-similares img {
+        min-height: 250px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .carousel-similares {
+        grid-auto-columns: 18%;
+        padding: 0 30px;
+    }
+
+    .carousel-similares img {
+        min-height: 280px;
     }
 }

@@ -703,3 +703,46 @@ input:focus,
         font-size: 1.2rem;
     }
 }
+/* Estilos para navegación TV */
+body[data-tv-mode="true"] [data-focusable] {
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+body[data-tv-mode="true"] [data-focusable].focused {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 3px #ff0a00;
+    z-index: 10;
+}
+
+body[data-tv-mode="true"] .movie-card.focused {
+    transform: scale(1.1);
+}
+
+body[data-tv-mode="true"] .nav-icon.focused {
+    color: #ff0a00;
+    transform: translateY(-5px);
+}
+
+body[data-tv-mode="true"] .search-icon-button.focused,
+body[data-tv-mode="true"] .profile-icon-button.focused {
+    color: #ff0a00;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Mejorar visibilidad de elementos enfocados en TV */
+body[data-tv-mode="true"] .modal-button.focused {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 3px white;
+}
+
+/* Ajustar scroll para TV */
+body[data-tv-mode="true"] .movies-container {
+    scroll-behavior: smooth;
+    padding: 20px 0;
+}
+
+/* Estilo para el botón activo en la barra de navegación */
+body[data-tv-mode="true"] .nav-icon.active.focused {
+    transform: translateY(-5px) scale(1.1);
+}

@@ -1,774 +1,211 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
+:root {
+  --bg: #0d0d0d;
+  --card-bg: #1a1a1a;
+  --accent: #ff4747;
+  --text: #fff;
 }
 
-:root {
-    --gradient-opacity: 0;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    background-color: black;
-    color: white;
-    min-height: 200vh;
-    overflow-x: hidden;
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
 }
 
-/* Header */
-.header {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    padding: 1rem 5%;
-    z-index: 1000;
-    background: #0300335e;
-    backdrop-filter: blur(10px);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.liked-content {
+  padding: 0;
+  margin: 0;  
 }
 
-.logo-glass {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(12px);
-    padding: 12px 25px;
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
+.liked-title {
+  font-size: 2rem;
+  text-align: center;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
 }
 
-.logo {
-    color: #ff000a;
-    font-size: 2rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+.carousel-section {
+  margin-bottom: 2.5rem;
+  padding: 0;
+  margin: 0;
 }
 
-/* Menú Hamburguesa */
-.menu-hamburguesa {
-    display: none;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.8rem;
-    cursor: pointer;
-    z-index: 1001;
-    padding: 10px;
-    border-radius: 8px;
-    transition: all 0.3s ease;
+.carousel-title {
+  font-size: 1.4rem;
+  margin-left: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
-.nav-menu {
-    display: none;
-    position: fixed;
-    top: 0;
-    right: 0;
-    height: 100vh;
-    width: 280px;
-    background: rgba(20, 20, 20, 0.98);
-    backdrop-filter: blur(20px);
-    flex-direction: column;
-    padding: 6rem 2rem;
-    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
-    transform: translateX(100%);
-    transition: transform 0.3s ease-out;
-    z-index: 1001;
+.carousel {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 0.8rem;
+  padding-bottom: 0.5rem;
+  padding-inline: 0.5rem;
+  padding: 0 0 1rem 0;
+  margin: 0;
 }
 
-.nav-menu.active {
-    display: flex;
-    transform: translateX(0);
+.carousel::-webkit-scrollbar {
+  display: none;
 }
 
-.nav-link {
-    color: white;
-    text-decoration: none;
-    padding: 1rem;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    position: relative;
-    font-size: 1.1rem;
+.card {
+  min-width: 110px;
+  max-width: 120px;
+  background: var(--card-bg);
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
 }
 
-.nav-link::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 0;
-    height: 2px;
-    background: #E50914;
-    transition: width 0.3s ease;
+.card:hover {
+  transform: scale(1.05);
 }
 
-.nav-link:hover {
-    background: rgba(255, 255, 255, 0.05);
+@media (min-width: 600px) {
+  .card {
+    min-width: 130px;
+    max-width: 140px;
+  }
 }
 
-.nav-link:hover::before {
-    width: 100%;
+@media (min-width: 1024px) {
+  .card {
+    min-width: 160px;
+    max-width: 180px;
+  }
 }
 
-.close-menu {
-    position: absolute;
-    top: 1.5rem;
-    right: 1.5rem;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 2rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    z-index: 1001;
+.card-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  outline: none;
 }
 
-.close-menu:hover {
-    transform: rotate(90deg);
-    color: #E50914;
+.card-image {
+  width: 100%;
+  display: block;
+  border-bottom: 1px solid #333;
 }
 
-/* Sección Hero */
-.hero {
-    position: relative;
-    height: 70vh;
-    min-height: 400px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    margin-bottom: 2rem;
+.card-title {
+  font-size: 0.8rem;
+  padding: 0.4rem;
+  text-align: center;
 }
 
-.image-container {
-    border: 1px solid #E50914;
-    border-radius: 20px;
-    padding: 10px;
-    background: rgba(0, 0, 0, 0.5);
-    box-shadow: 0 0 40px rgba(229, 9, 20, 0.5);
-    margin-bottom: 1rem;
-    max-width: 300px;
+/* Eliminar focus azul en enlaces y botones */
+a, button {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
-.featured-image {
-    width: 100%;
-    max-width: 100%;
-    border-radius: 15px;
-    height: auto;
-}
-
-.hero-content {
-    text-align: center;
-    z-index: 2;
-    padding-top: 80px;
-}
-
-.hero-title {
-    font-size: 2.8rem;
-    margin-bottom: 0.8rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.hero-description {
-    font-size: 1.1rem;
-    margin-bottom: 1.5rem;
-    opacity: 0.9;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.hero-actions {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    margin-top: 1rem;
-}
-
-/* Estilos base para los botones */
-.hero-button {
-    background: #E50914; /* Color rojo de Netflix */
-    color: white;
-    padding: 12px 30px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1.1rem;
-    transition: all 0.3s ease; /* Transición suave */
-    position: relative;
-    overflow: hidden;
-    margin: 0 10px; /* Espacio entre botones */
-}
-
-.hero-button.secondary {
-    background: rgba(109, 109, 110, 0.7); /* Color gris para "Me gusta" */
-}
-
-/* Efecto de escala al hacer hover */
-.hero-button:hover {
-    transform: scale(1.05); /* Aumenta ligeramente el tamaño */
-    box-shadow: 0 4px 15px rgba(229, 9, 20, 0.4); /* Sombra más pronunciada */
-}
-
-/* Cambio de color de fondo al hacer hover */
-.hero-button:hover {
-    background: #c40812; /* Rojo más oscuro para "Reproducir" */
-}
-
-.hero-button.secondary:hover {
-    background: rgba(89, 89, 89, 0.7); /* Gris más oscuro para "Me gusta" */
-}
-
-/* Efecto de "pulsación" al hacer clic */
-.hero-button:active {
-    transform: scale(0.95); /* Reduce ligeramente el tamaño al hacer clic */
-}
-
-/* Contenido Principal */
-.content {
-    position: relative;
-    z-index: 2;
-    padding-top: 80vh;
-    margin-top: -80vh;
-    background: transparent;
-}
-
-/* Carrusel de Películas */
-.movies-container {
-    display: flex;
-    overflow-x: auto; /* Permite desplazamiento horizontal */
-    gap: 1px; /* Espaciado entre tarjetas */
-    scroll-snap-type: x mandatory;
-    padding: 20px 0;
-    white-space: nowrap;
-    align-items: stretch; /* Asegura que las tarjetas se estiren en altura */
-}
-
-.movies-container::-webkit-scrollbar {
-    display: none;
-}
-
-.movie-card {
-    position: relative;
-    flex: 0 0 180px; /* Ancho fijo de la tarjeta */
-    height: 100%; /* Asegura que la tarjeta ocupe toda la altura disponible en el contenedor */
-    border-radius: 10px;
-    overflow: hidden;
-    transition: transform 0.6s ease, box-shadow 0.6s ease;
-    scroll-snap-align: start;
-    display: flex;
-    flex-direction: column;
-}
-
-/* Estilos para los enlaces dentro de las tarjetas de películas */
-.movie-card a {
-    text-decoration: none;
-    color: inherit;
-}
-
-.movie-card a:hover {
-    text-decoration: none;
-    color: inherit;
-}
-
-.movie-card a:focus {
-    outline: none;
-}
-
-.movie-card img {
-    width: 90%; /* Ajusta este valor según lo que necesites */
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    border-radius: 10px;
-    transition: transform 1.0s;
-    margin: 0 auto; /* Centrar la imagen */
-}
-
-.movie-title {
-    position: absolute;
-    bottom: 1px; /* Ajusta según el lugar donde desees que aparezca */
-    left: 10px;
-    right: 10px;
-    font-size: 16px; /* Ajusta el tamaño según lo necesites */
-    font-weight: bold;
-    color: white; /* Asegura que el texto sea legible */
-    background: rgba(0, 0, 0, 0.6); /* Fondo semitransparente para contraste */
-    padding: 5px;
-    border-radius: 4px;
-    z-index: 1; /* Asegura que el título esté sobre la imagen */
-    overflow: hidden;
-    word-wrap: break-word; /* Permite que el texto se divida en varias líneas */
-    white-space: normal; /* Permite que el texto se rompa y se ajuste a varias líneas */
-}
-
-.movie-card:hover {
-    transform: scale(1.1);
-}
-
-.movie-card:hover img {
-    transform: scale(1.30);
-}
-
-.movie-card:hover .movie-title {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.movies-container::after {
-    content: '';
-    flex: 0 0 1rem;
-}
-
-/* Sistema de Búsqueda */
-.search-container {
-    position: relative;
-    margin-left: auto;
-    margin-right: 20px;
-    width: 300px;
-}
-
-.search-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.search-input {
-    width: 100%;
-    padding: 12px 45px 12px 20px;
-    border: none;
-    border-radius: 30px;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    color: white;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    opacity: 1;
-    position: static;
-}
-
-.search-input:focus {
-    outline: none;
-    background: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 0 15px rgba(229, 9, 20, 0.3);
-}
-
-.search-button {
-    position: absolute;
-    right: 15px;
-    background: none;
-    border: none;
-    color: rgba(255, 255, 255, 0.7);
-    cursor: pointer;
-    font-size: 1.2rem;
-    transition: all 0.3s ease;
-}
-
-.search-button .close-icon {
-    display: none;
-}
-
-.search-container.active .search-button .search-icon {
-    display: none;
-}
-
-.search-container.active .search-button .close-icon {
-    display: block;
-    color: #E50914;
-}
-
-.search-results {
-    position: absolute;
-    top: 120%;
-    left: 0;
-    right: 0;
-    background: rgba(20, 20, 20, 0.98);
-    border-radius: 12px;
-    padding: 15px;
-    max-height: 400px;
-    overflow-y: auto;
-    backdrop-filter: blur(20px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    display: none;
-    z-index: 1000;
-}
-
-.search-result-item {
-    display: flex;
-    align-items: center;
-    padding: 12px;
-    border-radius: 8px;
-    margin-bottom: 8px;
-    background: rgba(255, 255, 255, 0.05);
-    transition: all 0.2s ease;
-    cursor: pointer;
-}
-
-.search-result-item:hover {
-    background: rgba(229, 9, 20, 0.2);
-    transform: translateX(5px);
-}
-
-.search-result-item img {
-    width: 50px;
-    height: 75px;
-    border-radius: 4px;
-    margin-right: 15px;
-    object-fit: cover;
-}
-
-.search-result-info h3 {
-    font-size: 1rem;
-    margin-bottom: 4px;
-}
-
-.search-result-info p {
-    font-size: 0.8rem;
-    opacity: 0.7;
-}
-
-.no-results {
-    padding: 15px;
-    text-align: center;
-    color: rgba(255, 255, 255, 0.5);
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .menu-hamburguesa {
-        display: block;
-    }
-
-    .hero-title {
-        font-size: 2.2rem;
-    }
-
-    .hero-description {
-        font-size: 1rem;
-    }
-
-    .image-container {
-        max-width: 250px;
-    }
-
-    .hero-button {
-        padding: 10px 20px;
-        font-size: 1rem;
-    }
-
-    .movie-card {
-        flex: 0 0 150px;
-    }
-
-    .movie-card img {
-        height: 225px;
-    }
-
-    .search-container {
-        position: fixed;
-        top: 70px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 90%;
-        z-index: 1000;
-        display: none;
-    }
-
-    .search-container.active {
-        display: block;
-    }
-
-    .search-results {
-        max-height: 60vh;
-    }
-}
-
-@media (max-width: 480px) {
-    .hero {
-        height: auto;
-        min-height: unset;
-        padding: 20px 0;
-        margin-bottom: 1rem;
-    }
-
-    .image-container {
-        max-width: 250px;
-        padding: 5px;
-        margin-bottom: 0.5rem;
-    }
-
-    .hero-title {
-        font-size: 1.5rem;
-        margin-bottom: 0.5rem;
-    }
-
-    .hero-description {
-        font-size: 0.9rem;
-        margin-bottom: 1rem;
-    }
-
-    .hero-actions {
-        flex-direction: column;
-        gap: 10px;
-        margin-top: 0.5rem;
-    }
-
-    .hero-button {
-        padding: 8px 16px;
-        font-size: 0.9rem;
-    }
-
-    .movie-card {
-        flex: 20px 40px 100px;
-    }
-
-    .movie-card img {
-        height: 200px;
-    }
-
-    .search-container {
-        top: 60px;
-        width: 90%;
-    }
-
-    .search-input {
-        font-size: 0.9rem;
-    }
-}
-
-/* Carrusel Me gusta */
-.liked-container {
-    margin-top: 90px;
-    display: flex;
-    overflow-x: auto; /* Permite desplazamiento horizontal */
-    gap: 1px; /* Espaciado entre tarjetas */
-    scroll-snap-type: x mandatory;
-    padding: 20px 0;
-    white-space: nowrap;
-    align-items: stretch;
-}
-.section-title {
-    position: absolute;
-    margin-top: -6px;
-    left: 8px;
-    font-size: 24px;
-    color: #fff;
-    margin-bottom: 20px;
-    z-index: 10000;
-}
-
-.liked-carousel {
-    display: flex;
-    gap: 1rem;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    padding: 1rem 0;
-    scroll-snap-type: x mandatory;
-}
-
-.liked-carousel::-webkit-scrollbar {
-    display: none;
-}
-
-.liked-controls {
-    position: absolute;
-    top: 50%;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    transform: translateY(-50%);
-    pointer-events: none;
-}
-
-.liked-btn {
-    pointer-events: all;
-    background: rgba(0, 0, 0, 0.7);
-    border: none;
-    color: white;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.liked-btn:hover {
-    background: #E50914;
-    transform: scale(1.1);
-}
-
-/* Ajustes para tarjetas en carrusel */
-.liked-carousel .movie-card {
-    flex: 0 0 150px;
-    scroll-snap-align: start;
-    position: relative;
-    transition: transform 0.3s ease;
-}
-
-.liked-carousel .movie-card:hover {
-    transform: scale(1.0);
-    z-index: 2;
-}
-
+a:focus,
+a:active,
+button:focus,
+button:active {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Botón eliminar */
+.remove-button {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: rgba(255, 71, 71, 0.85);
+  color: white;
+  border: none;
+  padding: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.8rem;
+  z-index: 2;
+}
+
+.remove-button:hover {
+  background: rgba(255, 71, 71, 1);
+}
+
+/* Mensaje vacío */
 .liked-empty {
-    text-align: center;
-    padding: 4rem 0;
-    width: 100%;
+  text-align: center;
+  padding: 2rem;
+  color: #888;
 }
 
-/* Estilos para el botón de eliminar "Me gusta" */
-.remove-liked {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: rgba(0, 0, 0, 0.7);
-    border: none;
-    color: white;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    z-index: 10;
+.liked-empty i {
+  font-size: 3rem;
+  color: var(--accent);
 }
 
-.remove-liked:hover {
-    background: #E50914;
-    transform: scale(1.0);
-}
-
-.remove-liked i {
-    font-size: 14px;
-}
-
-/* Estilos para el modal de confirmación */
+/* Modal */
 .modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(5px);
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
 .modal-content {
-    background: rgba(20, 20, 20, 0.95);
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    max-width: 400px;
-    width: 90%;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-}
-
-.modal-content p {
-    font-size: 16px;
-    margin-bottom: 20px;
-    color: white;
+  background: #222;
+  padding: 2rem;
+  border-radius: 10px;
+  max-width: 90%;
+  text-align: center;
 }
 
 .modal-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
 }
 
 .modal-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: all 0.3s ease;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 .modal-button.confirm {
-    background: #E50914;
-    color: white;
-}
-
-.modal-button.confirm:hover {
-    background: #c40812;
+  background: var(--accent);
+  color: white;
 }
 
 .modal-button.cancel {
-    background: rgba(109, 109, 110, 0.7);
-    color: white;
+  background: #555;
+  color: white;
+}
+/* Eliminar el efecto azul de enfoque/tap en enlaces, botones e imágenes */
+a, button, img {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-focus-ring-color: transparent;
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
 }
 
-.modal-button.cancel:hover {
-    background: rgba(89, 89, 89, 0.7);
-}
-
-/* Eliminar el contorno azul al hacer clic */
-button, a, img {
-    outline: none;
-    -webkit-tap-highlight-color: transparent;
-}
-
-/* También para elementos con focus */
-button:focus, a:focus, img:focus {
-    outline: none;
-    box-shadow: none;
-}
-
-/* Si hay botones con hover, asegurarse de que no cambie el color */
-button:hover, a:hover {
-    background-color: inherit;
-}
-
-/* Transiciones para cambios de página */
-.page {
-    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-}
-
-.page-enter {
-    opacity: 0;
-    transform: translateY(20px);
-}
-
-.page-enter-active {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.page-exit {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.page-exit-active {
-    opacity: 0;
-    transform: translateY(-20px);
-}
-
-/* Estilos para el botón "Volver" */
-.back-button {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    z-index: 1000;
-}
-
-.back-button:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: scale(1.05);
+/* También evita selección accidental de texto */
+a, button, img, .card {
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
 }

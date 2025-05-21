@@ -176,7 +176,7 @@ body {
 /* Estilos para el botón de configuración en el header */
 .profile-icon-container {
     position: absolute;
-    right: 60px;
+    right: 20px;
     top: 52%;
     transform: translateY(-50%);
 }
@@ -226,7 +226,7 @@ body {
 .search-overlay {
     position: fixed;
     top: 25px;
-    right: 5%;
+    right: 60px;
     z-index: 1001;
 }
 
@@ -239,7 +239,6 @@ body {
     transition: all 0.3s ease;
     padding: 8px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
 }
 
 .search-icon-button:hover {
@@ -289,13 +288,13 @@ input:focus {
 
 .search-button.close-search {
     position: absolute;
-    top: 15px;
-    right: 15px;
+    top: 20px;
+    right: 25px;
     background: none;
     border: none;
     color: rgba(255, 255, 255, 0.7);
     cursor: pointer;
-    font-size: 1.2rem;
+    font-size: 1.7rem;
 }
 
 .search-button.close-search:hover {

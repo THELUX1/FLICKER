@@ -1,327 +1,272 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalles - CineStream</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="moviesData.js" type="module"></script>
-    <script src="peliculas.js"></script>
-    <script src="js/global.js"></script>
-    <script src="seriesSeasons.js"></script>
-    <script type="module">
-        import seriesDetails from './seriesDetails.js';
-        import { manualMovies } from './moviesData.js';
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Detalles - CineStream</title>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+  <script src="moviesData.js" type="module"></script>
+  <script src="peliculas.js"></script>
+  <script src="js/global.js"></script>
+  <script src="seriesSeasons.js"></script>
+  <script type="module">
+    import seriesDetails from './seriesDetails.js';
+    import { manualMovies } from './moviesData.js';
+    import { profileManager } from './profileManager.js';
 
-        const apiKey = '995449ccaf6d840acc029f95c7d210dd';
-        let movie = null;
-        const urlParams = new URLSearchParams(window.location.search);
-        const movieId = urlParams.get('id');
-        const type = urlParams.get('type');
+    const apiKey = '995449ccaf6d840acc029f95c7d210dd';
+    let movie = null;
+    const urlParams = new URLSearchParams(window.location.search);
+    const movieId = urlParams.get('id');
+    const type = urlParams.get('type');
 
-        function showToast(message, type) {
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.innerText = message;
+    function showToast(message, type) {
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerText = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 100);
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => document.body.removeChild(toast), 300);
+      }, 3000);
+    }
 
-            document.body.appendChild(toast);
+    async function fetchTrailer(movieId, type) {
+      try {
+        const res = await fetch(`https://api.themoviedb.org/3/${type}/${movieId}/videos?api_key=${apiKey}&language=es-MX`);
+        const data = await res.json();
+        const trailer = data.results?.find(v => v.type === 'Trailer' && v.site === 'YouTube');
+        return trailer ? `https://www.youtube.com/embed/${trailer.key}` : null;
+      } catch (err) {
+        console.error('Error obteniendo el tráiler:', err);
+        return null;
+      }
+    }
 
-            setTimeout(() => {
-                toast.classList.add('show');
-            }, 100);
+    async function fetchDetailsFromAPI(movieId, type) {
+      try {
+        const detailsRes = await fetch(`https://api.themoviedb.org/3/${type}/${movieId}?api_key=${apiKey}&language=es-MX`);
+        const details = await detailsRes.json();
+        const trailer = await fetchTrailer(movieId, type);
 
-            setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => {
-                    document.body.removeChild(toast);
-                }, 300);
-            }, 3000);
-        }
+        return {
+          id: details.id,
+          title: type === 'movie' ? details.title : details.name || "Sin título",
+          year: type === 'movie'
+            ? details.release_date?.split('-')[0] || 'N/A'
+            : details.first_air_date?.split('-')[0] || 'N/A',
+          rating: details.vote_average ? `${details.vote_average}/10` : 'N/A',
+          duration: type === 'movie'
+            ? details.runtime ? `${Math.floor(details.runtime / 60)}h ${details.runtime % 60}m` : 'N/A'
+            : null,
+          synopsis: details.overview || "Sin sinopsis disponible.",
+          image: details.poster_path 
+            ? `https://image.tmdb.org/t/p/w500${details.poster_path}`
+            : 'https://via.placeholder.com/500x750?text=Imagen+no+disponible',
+          trailer,
+          type
+        };
+      } catch (err) {
+        console.error('Error en fetchDetailsFromAPI:', err);
+        return null;
+      }
+    }
 
-        async function fetchTrailer(movieId, type) {
-            try {
-                const response = await fetch(
-                    `https://api.themoviedb.org/3/${type}/${movieId}/videos?api_key=${apiKey}&language=es-MX`
-                );
+    function fetchDetailsFromLocal(movieId) {
+      const serie = seriesDetails.find(s => s.id === parseInt(movieId));
+      return serie ? {
+        id: serie.id,
+        title: serie.title,
+        year: serie.year,
+        rating: serie.rating,
+        duration: null,
+        synopsis: serie.synopsis,
+        image: serie.image,
+        trailer: serie.trailer,
+        type: 'tv'
+      } : null;
+    }
 
-                if (!response.ok) {
-                    throw new Error(`Error en la respuesta: ${response.status} ${response.statusText}`);
-                }
+    async function fetchDetails(movieId, type) {
+      return type === 'tv' 
+        ? fetchDetailsFromLocal(movieId) || await fetchDetailsFromAPI(movieId, type)
+        : await fetchDetailsFromAPI(movieId, type);
+    }
 
-                const data = await response.json();
+    function isContentAvailable(movieId, type) {
+      if (type === 'movie') return peliculasDisponibles?.hasOwnProperty(movieId);
+      if (type === 'tv') return seriesDisponibles?.some(s => s.id === parseInt(movieId));
+      return false;
+    }
 
-                if (!data || !data.results || !Array.isArray(data.results)) {
-                    console.error('La respuesta no contiene datos válidos:', data);
-                    return null;
-                }
+    function toggleLike() {
+      const currentProfile = profileManager.getCurrentProfile();
+      if (!currentProfile) {
+        showToast('Debes tener un perfil activo para usar Me gusta', 'error');
+        return;
+      }
 
-                const trailer = data.results.find(video => video.type === 'Trailer' && video.site === 'YouTube');
-                return trailer ? `https://www.youtube.com/embed/${trailer.key}` : null;
-            } catch (error) {
-                console.error('Error obteniendo el tráiler:', error);
-                return null;
-            }
-        }
+      const key = `profile_${currentProfile.id}_liked${movie.type === 'movie' ? 'Movies' : 'Series'}`;
+      const liked = JSON.parse(localStorage.getItem(key) || '[]');
+      const isLiked = liked.some(m => m.id === movie.id && m.type === movie.type);
 
-        async function fetchDetailsFromAPI(movieId, type) {
-            try {
-                const detailsResponse = await fetch(
-                    `https://api.themoviedb.org/3/${type}/${movieId}?api_key=${apiKey}&language=es-MX`
-                );
-                const details = await detailsResponse.json();
+      const movieData = {
+        id: movie.id,
+        type: movie.type,
+        title: movie.title,
+        image: movie.image,
+        link: window.location.href
+      };
 
-                const trailer = await fetchTrailer(movieId, type);
+      const updated = isLiked
+        ? liked.filter(m => !(m.id === movie.id && m.type === movie.type))
+        : [movieData, ...liked];
 
-                return {
-                    id: details.id,
-                    title: type === 'movie' ? details.title : details.name || "Sin título",
-                    year: type === 'movie' 
-                        ? details.release_date?.split('-')[0] || 'N/A'
-                        : details.first_air_date?.split('-')[0] || 'N/A',
-                    rating: details.vote_average ? `${details.vote_average}/10` : 'N/A',
-                    duration: type === 'movie' 
-                        ? details.runtime 
-                            ? `${Math.floor(details.runtime / 60)}h ${details.runtime % 60}m` 
-                            : 'N/A' 
-                        : null,
-                    synopsis: details.overview || "Sin sinopsis disponible.",
-                    image: details.poster_path 
-                        ? `https://image.tmdb.org/t/p/w500${details.poster_path}`
-                        : 'https://via.placeholder.com/500x750?text=Imagen+no+disponible',
-                    trailer: trailer,
-                    type: type
-                };
-            } catch (error) {
-                console.error('Error obteniendo detalles desde la API:', error);
-                return null;
-            }
-        }
+      localStorage.setItem(key, JSON.stringify(updated));
+      updateLikeButton(!isLiked);
+      showToast(`${movie.title} ${isLiked ? 'eliminado de' : 'añadido a'} Me gusta`, 'success');
+    }
 
-        function fetchDetailsFromLocal(movieId) {
-            const serie = seriesDetails.find(s => s.id === parseInt(movieId));
-            if (serie) {
-                return {
-                    id: serie.id,
-                    title: serie.title,
-                    year: serie.year,
-                    rating: serie.rating,
-                    duration: null,
-                    synopsis: serie.synopsis,
-                    image: serie.image,
-                    trailer: serie.trailer,
-                    type: 'tv'
-                };
-            }
-            return null;
-        }
+    function updateLikeButton(isLiked) {
+      const btn = document.getElementById('mark-watched-detail');
+      const text = document.getElementById('like-text');
+      text.innerText = isLiked ? "No me gusta" : "Me gusta";
+      btn.classList.toggle('liked', isLiked);
+    }
 
-        async function fetchDetails(movieId, type) {
-            if (type === 'tv') {
-                let details = fetchDetailsFromLocal(movieId);
-                if (!details) {
-                    details = await fetchDetailsFromAPI(movieId, type);
-                }
-                return details;
-            } else if (type === 'movie') {
-                return await fetchDetailsFromAPI(movieId, type);
-            }
-            return null;
-        }
+    function mostrarPeliculasSimilares(generosActuales, movieId) {
+      const similares = manualMovies.filter(pelicula => {
+        if (!pelicula.genres || pelicula.id === parseInt(movieId)) return false;
+        return pelicula.genres.some(g => generosActuales.includes(g));
+      });
 
-        function isContentAvailable(movieId, type) {
-            if (type === 'movie') {
-                return peliculasDisponibles.hasOwnProperty(movieId);
-            } else if (type === 'tv') {
-                return seriesDisponibles.some(serie => serie.id === parseInt(movieId));
-            }
-            return false;
-        }
+      const container = document.getElementById('similar-movies-container');
+      if (similares.length > 0) {
+        const titulo = document.createElement('h2');
+        titulo.textContent = "Puede que también te gusten";
+        container.appendChild(titulo);
 
-        function mostrarPeliculasSimilares(generosActuales, movieId) {
-            const similares = manualMovies.filter(pelicula => {
-                if (!pelicula.genres || pelicula.id === parseInt(movieId)) return false;
-                return pelicula.genres.some(g => generosActuales.includes(g));
-            });
+        const carrusel = document.createElement('div');
+        carrusel.className = 'carousel-similares';
 
-            const container = document.getElementById('similar-movies-container');
-            if (similares.length > 0) {
-                const titulo = document.createElement('h2');
-                titulo.textContent = "Puede que también te gusten";
-                container.appendChild(titulo);
-
-                const carrusel = document.createElement('div');
-                carrusel.className = 'carousel-similares';
-
-                similares.forEach(pelicula => {
-                    const card = document.createElement('a');
-                    card.href = pelicula.link;
-                    card.innerHTML = `
-                        <img src="${pelicula.image}" alt="${pelicula.title}">
-                        <p>${pelicula.title}</p>
-                    `;
-                    carrusel.appendChild(card);
-                });
-
-                container.appendChild(carrusel);
-            }
-        }
-
-        if (movieId && type) {
-            fetchDetails(movieId, type).then(movieData => {
-                if (movieData) {
-                    movie = movieData;
-                    document.getElementById('movie-title').innerText = movie.title;
-                    document.getElementById('movie-rating').innerText = movie.rating;
-                    document.getElementById('movie-year').innerText = movie.year;
-                    if (movie.duration) document.getElementById('movie-duration').innerText = movie.duration;
-                    document.getElementById('movie-synopsis').innerText = movie.synopsis;
-                    document.getElementById('movie-backdrop').style.backgroundImage = `url('${movie.image}')`;
-                    if (movie.trailer) {
-                        document.getElementById('movie-trailer').src = `${movie.trailer}?autoplay=1`;
-                    } else {
-                        document.querySelector('.trailer-container').style.display = 'none';
-                    }
-
-                    if (type === 'tv') {
-                        document.getElementById('movie-duration').style.display = 'none';
-                    }
-
-                    const playButton = document.getElementById('playButton');
-                    if (isContentAvailable(movieId, type)) {
-                        playButton.style.display = 'block';
-                        document.getElementById('reportButton').style.display = 'block';
-
-                        if (type === 'movie') {
-                            const videoUrl = peliculasDisponibles[movieId]['360p'];
-                            playButton.href = `Reproductor.html?video=${encodeURIComponent(videoUrl)}&movieId=${movieId}`;
-                        } else if (type === 'tv') {
-                            const serieEncontrada = seriesDisponibles.find(serie => serie.id === parseInt(movieId));
-                            if (serieEncontrada) {
-                                playButton.href = `Reproductor.html?video=${encodeURIComponent(serieEncontrada.videoUrl)}&movieId=${movieId}`;
-                            }
-                        }
-                    } else {
-                        playButton.style.display = 'none';
-                        document.getElementById('reportButton').style.display = 'none';
-                    }
-
-                    const likedMovies = JSON.parse(localStorage.getItem('likedMovies') || '[]');
-                    updateLikeButton(likedMovies.some(m => m.id === movie.id && m.type === type));
-
-                    if (type === 'movie') {
-                        const peliculaManual = manualMovies.find(p => p.id === parseInt(movieId));
-                        if (peliculaManual?.genres) {
-                            mostrarPeliculasSimilares(peliculaManual.genres, movieId);
-                        }
-                    }
-                }
-            });
-        }
-
-        function toggleLike() {
-            const likedMovies = JSON.parse(localStorage.getItem('likedMovies') || '[]');
-            const isLiked = likedMovies.some(m => m.id === movie.id && m.type === type);
-
-            const movieData = {
-                id: movie.id,
-                type: type,
-                title: movie.title,
-                image: movie.image,
-                link: window.location.href
-            };
-
-            if (isLiked) {
-                const updatedMovies = likedMovies.filter(m => !(m.id === movie.id && m.type === type));
-                localStorage.setItem('likedMovies', JSON.stringify(updatedMovies));
-                showToast(`${movie.title} eliminado de Me gusta`, 'success');
-            } else {
-                likedMovies.unshift(movieData);
-                localStorage.setItem('likedMovies', JSON.stringify(likedMovies));
-                showToast(`${movie.title} añadido a Me gusta`, 'success');
-            }
-
-            updateLikeButton(!isLiked);
-        }
-
-        function updateLikeButton(isLiked) {
-            const likeButton = document.getElementById('mark-watched-detail');
-            const likeText = document.getElementById('like-text');
-            if (isLiked) {
-                likeText.innerText = "No me gusta";
-                likeButton.classList.add('liked');
-            } else {
-                likeText.innerText = "Me gusta";
-                likeButton.classList.remove('liked');
-            }
-        }
-
-        document.getElementById('mark-watched-detail').addEventListener('click', toggleLike);
-
-        document.getElementById('reportButton').addEventListener('click', function() {
-            const movieTitle = movie?.title || "Contenido no disponible";
-            const playButton = document.getElementById('playButton');
-            try {
-                const urlParams = new URL(playButton.href).searchParams;
-                const videoUrl = decodeURIComponent(urlParams.get('video'));
-                const mailtoLink = `mailto:flickersoporte@gmail.com?subject=${encodeURIComponent(`Reporte de enlace caído: ${movieTitle}`)}&body=${encodeURIComponent(`El enlace de "${movieTitle}" está caído:\n${videoUrl}`)}`;
-                window.open(mailtoLink, '_system');
-            } catch (error) {
-                showToast('Error al generar el reporte', 'error');
-                console.error('Error:', error);
-            }
+        similares.forEach(pelicula => {
+          const card = document.createElement('a');
+          card.href = pelicula.link;
+          card.innerHTML = `<img src="${pelicula.image}" alt="${pelicula.title}"><p>${pelicula.title}</p>`;
+          carrusel.appendChild(card);
         });
-    </script>
+
+        container.appendChild(carrusel);
+      }
+    }
+
+    if (movieId && type) {
+      fetchDetails(movieId, type).then(movieData => {
+        if (!movieData) return;
+        movie = movieData;
+        document.getElementById('movie-title').innerText = movie.title;
+        document.getElementById('movie-rating').innerText = movie.rating;
+        document.getElementById('movie-year').innerText = movie.year;
+        if (movie.duration) document.getElementById('movie-duration').innerText = movie.duration;
+        document.getElementById('movie-synopsis').innerText = movie.synopsis;
+        document.getElementById('movie-backdrop').style.backgroundImage = `url('${movie.image}')`;
+
+        if (movie.trailer) {
+          document.getElementById('movie-trailer').src = `${movie.trailer}?autoplay=1`;
+        } else {
+          document.querySelector('.trailer-container').style.display = 'none';
+        }
+
+        if (type === 'tv') {
+          document.getElementById('movie-duration').style.display = 'none';
+        }
+
+        const playButton = document.getElementById('playButton');
+        if (isContentAvailable(movieId, type)) {
+          playButton.style.display = 'block';
+          document.getElementById('reportButton').style.display = 'block';
+
+          if (type === 'movie') {
+            const videoUrl = peliculasDisponibles[movieId]['360p'];
+            playButton.href = `Reproductor.html?video=${encodeURIComponent(videoUrl)}&movieId=${movieId}`;
+          } else if (type === 'tv') {
+            const serie = seriesDisponibles.find(s => s.id === parseInt(movieId));
+            if (serie) {
+              playButton.href = `Reproductor.html?video=${encodeURIComponent(serie.videoUrl)}&movieId=${movieId}`;
+            }
+          }
+        }
+
+        const currentProfile = profileManager.getCurrentProfile();
+        if (currentProfile) {
+          const key = `profile_${currentProfile.id}_liked${type === 'movie' ? 'Movies' : 'Series'}`;
+          const liked = JSON.parse(localStorage.getItem(key) || '[]');
+          updateLikeButton(liked.some(m => m.id === movie.id && m.type === type));
+        }
+
+        if (type === 'movie') {
+          const peliculaManual = manualMovies.find(p => p.id === parseInt(movieId));
+          if (peliculaManual?.genres) {
+            mostrarPeliculasSimilares(peliculaManual.genres, movieId);
+          }
+        }
+      });
+    }
+
+    document.getElementById('mark-watched-detail').addEventListener('click', toggleLike);
+    document.getElementById('reportButton')?.addEventListener('click', () => {
+      try {
+        const playButton = document.getElementById('playButton');
+        const urlParams = new URL(playButton.href).searchParams;
+        const videoUrl = decodeURIComponent(urlParams.get('video'));
+        const mailto = `mailto:flickersoporte@gmail.com?subject=Reporte de enlace caído: ${movie.title}&body=El enlace de "${movie.title}" está caído:\n${videoUrl}`;
+        window.open(mailto, '_system');
+      } catch (e) {
+        showToast("Error al generar el reporte", "error");
+      }
+    });
+  </script>
 </head>
-       <!-- Mantener todo el head igual -->
-<!-- Solo cambiar la estructura del body para mejor mobile -->
+
 <body>
-    <section class="movie-detail-container">
-        <div class="movie-backdrop" id="movie-backdrop"></div>
-        <div class="movie-content">
-            <div class="trailer-container featured-trailer">
-                <div class="trailer-wrapper">
-                    <iframe class="movie-trailer" id="movie-trailer" allowfullscreen></iframe>
-                </div>
-            </div>
-            
-            <div class="movie-info">
-                <h1 class="movie-title-detail" id="movie-title"></h1>
-                <div class="movie-meta">
-                    <span id="movie-rating"></span>
-                    <span id="movie-year"></span>
-                    <span id="movie-duration"></span>
-                </div>
-                <p class="movie-synopsis" id="movie-synopsis"></p>
-                
-                <div class="movie-actions">
-                    <div class="left-actions">
-                        <a id="playButton" style="display: none;" class="play-button">
-                            <svg class="play-icon" viewBox="0 0 24 24">
-                                <path d="M8 5v14l11-7z" />
-                            </svg>
-                            Reproducir
-                        </a>
-
-                        <button class="report-button" id="reportButton" style="display: none;">
-                            <svg class="report-icon" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-                            </svg>
-                            Reportar
-                        </button>
-                    </div>
-
-                    <button class="add-list-button" id="mark-watched-detail">
-                        <svg class="add-icon" viewBox="0 0 24 24">
-                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-                        </svg>
-                        <span id="like-text">Me gusta</span>
-                    </button>
-                </div>
-            </div>
-
-            <section id="similar-movies-container" class="movie-section"></section>
+  <section class="movie-detail-container">
+    <div class="movie-backdrop" id="movie-backdrop"></div>
+    <div class="movie-content">
+      <div class="trailer-container featured-trailer">
+        <div class="trailer-wrapper">
+          <iframe class="movie-trailer" id="movie-trailer" allowfullscreen></iframe>
         </div>
-    </section>
+      </div>
+      <div class="movie-info">
+        <h1 class="movie-title-detail" id="movie-title"></h1>
+        <div class="movie-meta">
+          <span id="movie-rating"></span>
+          <span id="movie-year"></span>
+          <span id="movie-duration"></span>
+        </div>
+        <p class="movie-synopsis" id="movie-synopsis"></p>
+
+        <div class="movie-actions">
+          <div class="left-actions">
+            <a id="playButton" style="display: none;" class="play-button">
+              <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              Reproducir
+            </a>
+            <button class="report-button" id="reportButton" style="display: none;">
+              <svg class="report-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+              Reportar
+            </button>
+          </div>
+          <button class="add-list-button" id="mark-watched-detail">
+            <svg class="add-icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+            <span id="like-text">Me gusta</span>
+          </button>
+        </div>
+      </div>
+      <section id="similar-movies-container" class="movie-section"></section>
+    </div>
+  </section>
 </body>
 </html>

@@ -1,68 +1,266 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administrar Perfiles - CineStream</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="global.js"></script>
-    <script type="module" src="profileManager.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Perfiles - CineStream</title>
+  <style>
+.upload-label {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: #444;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+#profile-name {
+  width: 100%;
+  padding: 0.6rem;
+  margin-bottom: 1rem;
+  border: none;
+  border-radius: 6px;
+  background: #333;
+  color: white;
+}
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #0d0d0d;
+      color: #fff;
+    }
+
+    .container {
+      padding: 1rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #ff4747;
+    }
+
+    #profiles-grid {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      justify-content: center;
+    }
+
+    .profile-card {
+      background: #1a1a1a;
+      padding: 1rem;
+      border-radius: 12px;
+      text-align: center;
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+
+    .profile-card:hover {
+      transform: scale(1.03);
+    }
+
+    .profile-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 auto 0.5rem;
+      border: 3px solid #444;
+      background: #222;
+    }
+
+    .profile-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-name {
+      margin: 0.5rem 0;
+    }
+
+    .profile-actions {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .profile-actions button {
+      background: transparent;
+      border: none;
+      color: #ccc;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .profile-actions button:hover {
+      color: #ff4747;
+    }
+
+    #add-profile-btn {
+      display: block;
+      margin: 2rem auto 1rem;
+      padding: 0.7rem 1.2rem;
+      font-size: 1rem;
+      background: #ff4747;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    /* Modal */
+    #profile-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .modal-content {
+      background: #222;
+      padding: 2rem;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .modal-content h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .modal-content input,
+    .modal-content button {
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    .avatar-preview {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 1rem;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid #444;
+      background: #333;
+    }
+
+    .avatar-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    #avatar-input {
+      display: block;
+      width: 100%;
+      background: #333;
+      color: white;
+      padding: 0.5rem;
+      border-radius: 6px;
+      border: none;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .modal-buttons button {
+      flex: 1;
+      padding: 0.7rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .modal-confirm {
+      background: #ff4747;
+      color: white;
+    }
+
+    .modal-cancel {
+      background: #444;
+      color: white;
+    }
+    @keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.profile-card {
+  opacity: 0;
+  animation: fadeInUp 0.6s ease forwards;
+}
+/* Eliminar específicamente el focus en imágenes y enlaces */
+img:focus, 
+a:focus, 
+button:focus, 
+input:focus,
+.movie-card:focus,
+.nav-icon:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Eliminar el resaltado nativo en navegadores WebKit (Chrome, Safari) */
+* {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-tap-highlight-color: transparent;
+}
+  </style>
 </head>
 <body>
-    <header class="header">
-        <div class="logo-container">
-            <div class="logo-glass">
-                <h1 class="logo">Flicker</h1>
-            </div>
-        </div>
-    </header>
+  <div class="container">
+    <h1>Selecciona tu perfil</h1>
+    <div id="profiles-grid"></div>
+    <button id="add-profile-btn">+ Nuevo perfil</button>
+  </div>
 
-    <main class="profiles-container">
-        <h1>Administrar Perfiles</h1>
-        
-        <div class="profiles-grid" id="profiles-grid">
-            <!-- Los perfiles se cargarán aquí dinámicamente -->
-        </div>
-        
-        <button id="add-profile-btn" class="add-profile-btn">
-            <i class="fas fa-plus"></i> Añadir Perfil
-        </button>
-        
-        <div id="profile-modal" class="modal">
-            <div class="modal-content">
-                <h2 id="modal-title">Crear Nuevo Perfil</h2>
-                <input type="text" id="profile-name" class="profile-name-input" placeholder="Nombre del perfil" maxlength="20">
-                <div class="avatar-selection">
-                    <div class="avatar-option selected" data-avatar="1"><i class="fas fa-user"></i></div>
-                    <div class="avatar-option" data-avatar="2"><i class="fas fa-user-tie"></i></div>
-                    <div class="avatar-option" data-avatar="3"><i class="fas fa-user-astronaut"></i></div>
-                    <div class="avatar-option" data-avatar="4"><i class="fas fa-user-ninja"></i></div>
-                    <div class="avatar-option" data-avatar="5"><i class="fas fa-user-graduate"></i></div>
-                </div>
-                <div class="modal-buttons">
-                    <button id="modal-cancel" class="modal-button cancel">Cancelar</button>
-                    <button id="modal-confirm" class="modal-button confirm">Guardar</button>
-                </div>
-            </div>
-        </div>
-    </main>
+  <!-- Modal -->
+  <div id="profile-modal">
+    <div class="modal-content">
+      <h2 id="modal-title">Nuevo Perfil</h2>
+      <div class="avatar-preview" id="avatar-preview"></div>
+      <input type="file" id="avatar-input" accept="image/*" />
+      <input type="text" id="profile-name" placeholder="Nombre del perfil" />
+      <div class="modal-buttons">
+        <button class="modal-confirm" id="modal-confirm">Guardar</button>
+        <button class="modal-cancel" id="modal-cancel">Cancelar</button>
+      </div>
+    </div>
+  </div>
 
-    <!-- Barra de navegación inferior -->
-    <nav class="bottom-nav">
-        <a href="index.html" class="nav-icon">
-            <i class="fas fa-home"></i>
-            <span>Inicio</span>
-        </a>
-        <a href="series.html" class="nav-icon">
-            <i class="fas fa-tv"></i>
-            <span>Series</span>
-        </a>
-        <a href="me-gusta.html" class="nav-icon">
-            <i class="fas fa-heart"></i>
-            <span>Me gusta</span>
-        </a>
-    </nav>
+  <script type="module">
+import { profileManager } from './profileManager.js';
+</script>
+
+<!-- Modal de confirmación -->
+<div id="confirm-modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 999;">
+  <div style="background: #222; padding: 2rem; border-radius: 10px; max-width: 90%; text-align: center;">
+    <p style="margin-bottom: 1rem;">¿Eliminar este perfil?</p>
+    <div style="display: flex; gap: 1rem; justify-content: center;">
+      <button id="confirm-yes" style="padding: 0.5rem 1rem; background: #ff4747; color: white; border: none; border-radius: 6px;">Eliminar</button>
+      <button id="confirm-no" style="padding: 0.5rem 1rem; background: #444; color: white; border: none; border-radius: 6px;">Cancelar</button>
+    </div>
+  </div>
+</div>
 </body>
+
 </html>

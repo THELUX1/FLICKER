@@ -1,158 +1,126 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Me gusta - CineStream</title>
-    <link rel="stylesheet" href="me-gusta.css">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="js/global.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Me gusta - CineStream</title>
+  <link rel="stylesheet" href="me-gusta.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 </head>
 <body>
-    <header class="header">
-        <div class="logo-container">
-            <div class="logo-glass">
-                <h1 class="logo">Flicker</h1>
-            </div>
-        </div>
-        
-    </header>
+  <main class="liked-content">
+    <h1 class="liked-title">Mi lista</h1>
+    <div id="content"></div>
+  </main>
 
-    <main class="content" id="content">
-        <!-- Aquí se cargarán las películas y series marcadas como "Me gusta" -->
-    </main>
-
-    <!-- Modal de confirmación -->
-    <div id="confirm-modal" class="modal">
-        <div class="modal-content">
-            <p id="confirm-message">¿Estás seguro de que quieres eliminar este contenido de la lista de Me gusta?</p>
-            <div class="modal-buttons">
-                <button id="confirm-yes" class="modal-button confirm">Sí, eliminar</button>
-                <button id="confirm-no" class="modal-button cancel">Cancelar</button>
-            </div>
-        </div>
+  <!-- Modal de confirmación -->
+  <div id="confirm-modal" class="modal">
+    <div class="modal-content">
+      <p id="confirm-message">¿Eliminar este contenido de tu lista?</p>
+      <div class="modal-buttons">
+        <button id="confirm-yes" class="modal-button confirm">Sí</button>
+        <button id="confirm-no" class="modal-button cancel">Cancelar</button>
+      </div>
     </div>
+  </div>
 
-    <script>
-        // Función para cargar las películas y series "Me gusta"
-        function loadLikedContent() {
-            const storedMovies = localStorage.getItem('likedMovies');
-            const storedSeries = localStorage.getItem('likedSeries');
-            return {
-                movies: storedMovies ? JSON.parse(storedMovies) : [],
-                series: storedSeries ? JSON.parse(storedSeries) : []
-            };
-        }
+  <script type="module">
+    import { profileManager } from './profileManager.js';
 
-        // Función para generar el contenido de la página
-        function generarContenido(container) {
-            const { movies, series } = loadLikedContent();
-            const data = {
-                "Películas": movies,
-                "Series": series
-            };
+    function loadLikedContent() {
+      const profile = profileManager.getCurrentProfile();
+      if (!profile) return { movies: [], series: [] };
 
-            container.innerHTML = Object.entries(data).map(([category, items]) => {
-                const isLiked = category === "Películas" || category === "Series";
-                return `
-                    <section class="movie-section ${isLiked ? 'liked-section' : ''}">
-                        <h2 class="section-title">${category}</h2>
-                        ${items.length > 0 ? `
-                            <div class="${isLiked ? 'liked-container' : 'movies-container'}">
-                                ${items.map(item => createContentCard(item, isLiked)).join('')}
-                            </div>
-                        ` : isLiked ? `
-                            <div class="liked-empty">
-                                <i class="fas fa-heart"></i>
-                                <p>No has añadido ningún contenido a Me gusta todavía</p>
-                            </div>
-                        ` : ''}
-                    </section>
-                `;
-            }).join('');
-        }
+      const id = profile.id;
+      return {
+        movies: JSON.parse(localStorage.getItem(`profile_${id}_likedMovies`) || '[]'),
+        series: JSON.parse(localStorage.getItem(`profile_${id}_likedSeries`) || '[]')
+      };
+    }
 
-        // Función para crear una tarjeta de contenido (película o serie)
-        function createContentCard(item, isLiked = false) {
-            return `
-                <div class="movie-card">
-                    <a href="${item.link}">
-                        <img src="${item.image}" alt="${item.title}">
-                        <div class="movie-title">${item.title}</div>
-                    </a>
-                    ${isLiked ? `
-                        <button class="remove-liked" onclick="removeFromLiked('${item.title}', '${item.type}')">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    ` : ''}
-                </div>
-            `;
-        }
+    function generarContenido(container) {
+      const { movies, series } = loadLikedContent();
+      const data = { Películas: movies, Series: series };
+      let html = '';
 
-        // Función para mostrar el modal de confirmación
-        function showConfirmModal(title, callback) {
-            const modal = document.getElementById('confirm-modal');
-            const confirmMessage = document.getElementById('confirm-message');
-            const confirmYes = document.getElementById('confirm-yes');
-            const confirmNo = document.getElementById('confirm-no');
-
-            confirmMessage.textContent = `¿Estás seguro de que quieres eliminar "${title}" de la lista de Me gusta?`;
-            modal.style.display = 'flex';
-
-            confirmYes.onclick = () => {
-                modal.style.display = 'none';
-                callback(true);
-            };
-
-            confirmNo.onclick = () => {
-                modal.style.display = 'none';
-                callback(false);
-            };
-        }
-
-        // Función para eliminar un contenido de "Me gusta"
-        function removeFromLiked(title, type) {
-            showConfirmModal(title, (confirmed) => {
-                if (confirmed) {
-                    if (type === 'movie') {
-                        const likedMovies = JSON.parse(localStorage.getItem('likedMovies') || '[]');
-                        const updatedMovies = likedMovies.filter(movie => movie.title !== title);
-                        localStorage.setItem('likedMovies', JSON.stringify(updatedMovies));
-                    } else if (type === 'tv') {
-                        const likedSeries = JSON.parse(localStorage.getItem('likedSeries') || '[]');
-                        const updatedSeries = likedSeries.filter(series => series.title !== title);
-                        localStorage.setItem('likedSeries', JSON.stringify(updatedSeries));
-                    }
-                    generarContenido(document.getElementById('content'));
-                }
-            });
-        }
-
-        // Configuración del menú hamburguesa
-        function setupMenu() {
-            const menuBtn = document.querySelector('.menu-hamburguesa');
-            const navMenu = document.querySelector('.nav-menu');
-            const closeBtn = document.querySelector('.close-menu');
-
-            if (menuBtn && navMenu && closeBtn) {
-                menuBtn.addEventListener('click', () => {
-                    navMenu.classList.add('active');
-                });
-
-                closeBtn.addEventListener('click', () => {
-                    navMenu.classList.remove('active');
-                });
+      for (const [categoria, items] of Object.entries(data)) {
+        html += `
+          <section class="carousel-section">
+            <h2 class="carousel-title">${categoria}</h2>
+            ${
+              items.length > 0
+                ? `<div class="carousel">
+                    ${items.map(item => createCard(item)).join('')}
+                  </div>`
+                : `<div class="liked-empty">
+                    <i class="fas fa-heart-broken"></i>
+                    <p>No hay ${categoria.toLowerCase()} en tu lista aún</p>
+                  </div>`
             }
-        }
+          </section>
+        `;
+      }
 
-        // Cargar el contenido al iniciar la página
-        document.addEventListener('DOMContentLoaded', () => {
-            const content = document.getElementById('content');
-            if (content) generarContenido(content);
-            setupMenu();
-        });
-    </script>
-    
+      container.innerHTML = html;
+    }
+
+    function createCard(item) {
+      const encodedTitle = encodeURIComponent(item.title);
+      return `
+        <div class="card">
+          <a href="${item.link}" class="card-link" tabindex="-1">
+            <img src="${item.image}" alt="${item.title}" class="card-image"/>
+            <div class="card-title">${item.title}</div>
+          </a>
+          <button class="remove-button" data-title="${encodedTitle}" data-type="${item.type}">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      `;
+    }
+
+    function showConfirmModal(title, callback) {
+      const modal = document.getElementById('confirm-modal');
+      document.getElementById('confirm-message').textContent =
+        `¿Eliminar "${title}" de tu lista?`;
+      modal.style.display = 'flex';
+
+      document.getElementById('confirm-yes').onclick = () => {
+        modal.style.display = 'none';
+        callback(true);
+      };
+      document.getElementById('confirm-no').onclick = () => {
+        modal.style.display = 'none';
+        callback(false);
+      };
+    }
+
+    window.removeFromLiked = function (title, type) {
+      const profile = profileManager.getCurrentProfile();
+      if (!profile) return;
+
+      const key = `profile_${profile.id}_liked${type === 'movie' ? 'Movies' : 'Series'}`;
+      const liked = JSON.parse(localStorage.getItem(key) || '[]');
+      const updated = liked.filter(item => item.title !== title);
+      localStorage.setItem(key, JSON.stringify(updated));
+      generarContenido(document.getElementById('content'));
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('content');
+      generarContenido(container);
+
+      container.addEventListener('click', (e) => {
+        if (e.target.closest('.remove-button')) {
+          const btn = e.target.closest('.remove-button');
+          const title = decodeURIComponent(btn.dataset.title);
+          const type = btn.dataset.type;
+          showConfirmModal(title, confirmed => {
+            if (confirmed) removeFromLiked(title, type);
+          });
+        }
+      });
+    });
+  </script>
 </body>
 </html>

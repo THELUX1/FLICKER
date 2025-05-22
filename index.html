@@ -10,23 +10,21 @@
     <script type="module" src="moviesData.js"></script>
     <script type="module" src="moviesFunctions.js"></script>
     <script src="global.js"></script>
-    <!-- Nuevo script para navegación TV -->
-    <script src="tvNavigation.js"></script>
 </head>
-<body data-tv-mode="false">
+<body>
     <!-- Contenedor de búsqueda -->
     <div class="search-overlay">
-        <button class="search-icon-button" data-focusable>
-            <i class="fas fa-search"></i>
+    <button class="search-icon-button">
+        <i class="fas fa-search"></i>
+    </button>
+    <div class="search-wrapper">
+        <input type="text" class="search-input" placeholder="Buscar películas y series...">
+        <button class="search-button close-search">
+            <i class="fas fa-times"></i>
         </button>
-        <div class="search-wrapper">
-            <input type="text" class="search-input" placeholder="Buscar películas y series..." data-focusable>
-            <button class="search-button close-search" data-focusable>
-                <i class="fas fa-times"></i>
-            </button>
-            <div class="search-results"></div>
-        </div>
+        <div class="search-results"></div>
     </div>
+</div>
 
     <header class="header">
         <div class="logo-container">
@@ -34,11 +32,12 @@
                 <h1 class="logo">Flicker</h1>
             </div>
         </div>
-        <div class="profile-icon-container">
-            <a href="perfiles.html" class="profile-icon-button" data-focusable>
-                <i class="fas fa-user-cog"></i>
-            </a>
-        </div>
+        <!-- Agrega esto en el header, después del logo-container -->
+<div class="profile-icon-container">
+    <a href="perfiles.html" class="profile-icon-button">
+        <i class="fas fa-user-cog"></i>
+    </a>
+</div>
     </header>
    
     <!-- Modal de confirmación -->
@@ -46,8 +45,8 @@
         <div class="modal-content">
             <p id="confirm-message">¿Estás seguro de que quieres eliminar esta película de "Seguir viendo"?</p>
             <div class="modal-buttons">
-                <button id="confirm-yes" class="modal-button confirm" data-focusable>Sí, eliminar</button>
-                <button id="confirm-no" class="modal-button cancel" data-focusable>Cancelar</button>
+                <button id="confirm-yes" class="modal-button confirm">Sí, eliminar</button>
+                <button id="confirm-no" class="modal-button cancel">Cancelar</button>
             </div>
         </div>
     </div>
@@ -59,21 +58,19 @@
     </div>
 
     <!-- Contenido principal -->
-    <main class="content" id="content">
-        <!-- Las secciones de películas se generarán dinámicamente -->
-    </main>
+    <main class="content" id="content"></main>
 
     <!-- Barra de navegación inferior -->
     <nav class="bottom-nav">
-        <a href="index.html" class="nav-icon" data-focusable data-nav-item>
+        <a href="index.html" class="nav-icon">
             <i class="fas fa-home"></i>
             <span>Inicio</span>
         </a>
-        <a href="series.html" class="nav-icon" data-focusable data-nav-item>
+        <a href="series.html" class="nav-icon">
             <i class="fas fa-tv"></i>
             <span>Series</span>
         </a>
-        <a href="me-gusta.html" class="nav-icon" data-focusable data-nav-item>
+        <a href="me-gusta.html" class="nav-icon">
             <i class="fas fa-heart"></i>
             <span>Me gusta</span>
         </a>

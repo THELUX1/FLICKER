@@ -1,5 +1,23 @@
 // videos.js
 const peliculasDisponibles = {
+"650033": {
+        "title": "Gravedad cero",
+        "360p": "https://v3.fiestareel.com/mov/2022/650033-94938/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2022/650033-94938/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2022/650033-94938/720/720p.m3u8"
+    },
+"574475": {
+        "title": "Destino final lazos de sangre",
+        "360p": "https://v3.fiestareel.com/mov/2025/574475-94939/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2025/574475-94939/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2025/574475-94939/720/720p.m3u8"
+    },
+"896536": {
+        "title": "La Leyenda de Ochi",
+        "360p": "https://v3.fiestareel.com/mov/2025/896536-94904/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2025/896536-94904/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2025/896536-94904/720/720p.m3u8"
+    },
 "661539": {
         "title": "Un completo desconocido",
         "360p": "https://v3.fiestareel.com/mov/2024/661539-93794/480/480p.m3u8",

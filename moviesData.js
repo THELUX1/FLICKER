@@ -449,6 +449,30 @@ const manualMovies = [
           year: "2024",
           genres: ["Drama", "Música", "Historia"] // <-- Asegúrate de que esto esté definido
       },
+      {
+          id: 650033,
+          title: "Gravedad cero",
+          image: "https://s.lupacine.com/image/t/p/w500/tB66c6dnu9dG60mta8TF8zmeGJn.jpg",
+          link: "detalles.html?type=movie&id=650033",
+          year: "2025",
+          genres: ["Ciencia ficción}", "Suspenso"] // <-- Asegúrate de que esto esté definido
+      },
+      {
+          id: 896536,
+          title: "La Leyenda de Ochi",
+          image: "https://s.lupacine.com/image/t/p/w500/wVujUVvY4qvKARAslItQ4ARKqtz.jpg",
+          link: "detalles.html?type=movie&id=896536",
+          year: "2025",
+          genres: ["Fantasía", "Aventura", "Familia"] // <-- Asegúrate de que esto esté definido
+      },
+      {
+          id: 574475,
+          title: "Destino final lazos de sangre",
+          image: "https://s.lupacine.com/image/t/p/w500/6WxhEvFsauuACfv8HyoVX6mZKFj.jpg",
+          link: "detalles.html?type=movie&id=574475",
+          year: "2025",
+          genres: ["Terror", "Misterio"] // <-- Asegúrate de que esto esté definido
+      },
 ];
 
 // Películas de acción (vacío)

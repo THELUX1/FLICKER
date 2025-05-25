@@ -174,7 +174,7 @@ function showConfirmModal(title, callback) {
     const confirmYes = document.getElementById('confirm-yes');
     const confirmNo = document.getElementById('confirm-no');
 
-    if (confirmMessage) confirmMessage.textContent = `¿Estás seguro de que quieres eliminar "${title}" de "Seguir viendo"?`;
+    if (confirmMessage) confirmMessage.textContent = `¿Estás seguro de que quieres eliminar "${title}"?`;
     if (modal) modal.style.display = 'flex';
 
     if (confirmYes) {

@@ -473,6 +473,14 @@ const manualMovies = [
           year: "2025",
           genres: ["Terror", "Misterio"] // <-- Asegúrate de que esto esté definido
       },
+      {
+          id: 552524,
+          title: "Lilo y Stitch",
+          image: "https://image.tmdb.org/t/p/w185/bE7mPFSx5pHwiwvdzjgrtHAgDg8.jpg",
+          link: "detalles.html?type=movie&id=552524",
+          year: "2025",
+          genres: ["Familia", "Comedia", "Ciencia ficción"] // <-- Asegúrate de que esto esté definido
+      },
 ];
 
 // Películas de acción (vacío)

@@ -1,5 +1,11 @@
 // videos.js
 const peliculasDisponibles = {
+"552524": {
+        "title": "Lilo y Stitch",
+        "360p": "https://vpk1g9itdgtk.acek-cdn.com/hls2/01/05197/0vn5cpfjqhfi_n/index-v1-a1.m3u8?t=R5xd6QgBDcxN3QFr1JwEfVKu08nUeC5VpKXJBjafzq4&s=1748226520&e=129600&f=25986430&srv=pgnp5flcy8ev&i=0.4&sp=500&p1=pgnp5flcy8ev&p2=pgnp5flcy8ev&asn=264619",
+        "720p": "https://swiftplayers.com/stream/bT_mTpuHZUqq2dmHEoqdyQ/kjhhiuahiuhgihdf/1748269840/52089930/index-v1-a1.m3u8",
+        "1080p": "https://swiftplayers.com/stream/bT_mTpuHZUqq2dmHEoqdyQ/kjhhiuahiuhgihdf/1748269840/52089930/index-v1-a1.m3u8"
+    },
 "650033": {
         "title": "Gravedad cero",
         "360p": "https://v3.fiestareel.com/mov/2022/650033-94938/480/480p.m3u8",

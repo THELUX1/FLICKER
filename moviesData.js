@@ -476,7 +476,7 @@ const manualMovies = [
       {
           id: 552524,
           title: "Lilo y Stitch",
-          image: "https://image.tmdb.org/t/p/w185/bE7mPFSx5pHwiwvdzjgrtHAgDg8.jpg",
+          image: "https://s.lupacine.com/image/t/p/w500/tUae3mefrDVTgm5mRzqWnZK6fOP.jpg",
           link: "detalles.html?type=movie&id=552524",
           year: "2025",
           genres: ["Familia", "Comedia", "Ciencia ficción"] // <-- Asegúrate de que esto esté definido

@@ -407,7 +407,7 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/5aXoQYwaQ7JJVUWclHAEXJgiS2M.jpg",
           link: "detalles.html?type=movie&id=1469239",
           year: "2025",
-          genres: ["Música", "Documetal"] // <-- Asegúrate de que esto esté definido
+          genres: ["Música", "Documental"] // <-- Asegúrate de que esto esté definido
       },
       {
           id: 1233413,
@@ -442,6 +442,14 @@ const manualMovies = [
           genres: ["Drama", "Historia", "Bélica"] // <-- Asegúrate de que esto esté definido
       },
       {
+          id: 850920,
+          title: "Escapada de espanto",
+          image: "https://s.lupacine.com/image/t/p/w500/5lMu14IMuHo0hKYCwCIogt7IioX.jpg",
+          link: "detalles.html?type=movie&id=850920",
+          year: "2025",
+          genres: ["Terror", "Comedia"] // <-- Asegúrate de que esto esté definido
+      },
+      {
           id: 661539,
           title: "Un completo desconocido",
           image: "https://s.lupacine.com/image/t/p/w500/llWl3GtNoXosbvYboelmoT459NM.jpg",
@@ -455,7 +463,7 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/tB66c6dnu9dG60mta8TF8zmeGJn.jpg",
           link: "detalles.html?type=movie&id=650033",
           year: "2025",
-          genres: ["Ciencia ficción}", "Suspenso"] // <-- Asegúrate de que esto esté definido
+          genres: ["Ciencia ficción", "Suspenso"] // <-- Asegúrate de que esto esté definido
       },
       {
           id: 896536,
@@ -480,6 +488,22 @@ const manualMovies = [
           link: "detalles.html?type=movie&id=552524",
           year: "2025",
           genres: ["Familia", "Comedia", "Ciencia ficción"] // <-- Asegúrate de que esto esté definido
+      },
+      {
+          id: 1098006,
+          title: "La fuente de la eterna juventud",
+          image: "https://s.lupacine.com/image/t/p/w500/4iWjGghUj2uyHo2Hyw8NFBvsNGm.jpg",
+          link: "detalles.html?type=movie&id=1098006",
+          year: "2025",
+          genres: ["Aventura", "Fantasía", "Misterio"] // <-- Asegúrate de que esto esté definido
+      },
+      {
+          id: 1390394,
+          title: "Vini Jr.",
+          image: "https://s.lupacine.com/image/t/p/w500/4ImGMcwpy4k2zmcXBSFYNK6kRr9.jpg",
+          link: "detalles.html?type=movie&id=1390394",
+          year: "2025",
+          genres: ["Documental"] // <-- Asegúrate de que esto esté definido
       },
 ];
 

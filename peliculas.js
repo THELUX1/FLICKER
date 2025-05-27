@@ -1,5 +1,23 @@
 // videos.js
 const peliculasDisponibles = {
+"850920": {
+        "title": "Escapada de espanto",
+        "360p": "https://v3.fiestareel.com/mov/2025/850920-90165/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2025/850920-90165/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2025/850920-90165/720/720p.m3u8"
+    },
+"1390394": {
+        "title": "Vini Jr.",
+        "360p": "https://v3.fiestareel.com/mov/2025/1390394-94892/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2025/1390394-94892/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2025/1390394-94892/720/720p.m3u8"
+    },
+"1098006": {
+        "title": "La fuente de la eterna juventud",
+        "360p": "https://v3.fiestareel.com/mov/2022/1098006-96436/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2022/1098006-96436/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2022/1098006-96436/720/720p.m3u8"
+    },
 "552524": {
         "title": "Lilo y Stitch",
         "360p": "https://v3.fiestareel.com/mov/2025/552524-95229/480/480p.m3u8",

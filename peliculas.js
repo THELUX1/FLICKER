@@ -38,9 +38,9 @@ const peliculasDisponibles = {
     },
 "574475": {
         "title": "Destino final lazos de sangre",
-        "360p": "https://v3.fiestareel.com/mov/2025/574475-94939/480/480p.m3u8",
-        "720p": "https://v3.fiestareel.com/mov/2025/574475-94939/720/720p.m3u8",
-        "1080p": "https://v3.fiestareel.com/mov/2025/574475-94939/720/720p.m3u8"
+        "360p": "https://v3.fiestareel.com/mov/2025/574475-102930/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2025/574475-102930/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2025/574475-102930/720/720p.m3u8"
     },
 "896536": {
         "title": "La Leyenda de Ochi",

@@ -1,5 +1,11 @@
 // videos.js
 const peliculasDisponibles = {
+"1001414": {
+        "title": "Fear Street: Prom Queen",
+        "360p": "https://v3.fiestareel.com/mov/2022/1001414-98854/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2022/1001414-98854/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2022/1001414-98854/720/720p.m3u8"
+    },
 "850920": {
         "title": "Escapada de espanto",
         "360p": "https://v3.fiestareel.com/mov/2025/850920-90165/480/480p.m3u8",

@@ -505,6 +505,14 @@ const manualMovies = [
           year: "2025",
           genres: ["Documental"] // <-- Asegúrate de que esto esté definido
       },
+      {
+          id: 1001414,
+          title: "Fear Street: Prom Queen",
+          image: "https://s.lupacine.com/image/t/p/w500/gevScWYkF8l5i9NjFSXo8HfPNyy.jpg",
+          link: "detalles.html?type=movie&id=1001414",
+          year: "2025",
+          genres: ["Terror", "Suspenso"] // <-- Asegúrate de que esto esté definido
+      },
 ];
 
 // Películas de acción (vacío)

@@ -1,5 +1,11 @@
 // videos.js
 const peliculasDisponibles = {
+"1376434": {
+        "title": "Predator: Killer of Killers",
+        "360p": "https://v3.fiestareel.com/mov/2022/1376434-103327/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2022/1376434-103327/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2022/1376434-103327/720/720p.m3u8"
+    },
 "1001414": {
         "title": "Fear Street: Prom Queen",
         "360p": "https://v3.fiestareel.com/mov/2022/1001414-98854/480/480p.m3u8",

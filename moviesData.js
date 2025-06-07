@@ -513,6 +513,14 @@ const manualMovies = [
           year: "2025",
           genres: ["Terror", "Suspenso"] // <-- Asegúrate de que esto esté definido
       },
+      {
+          id: 1376434,
+          title: "Predator: Killer of Killers",
+          image: "https://media.themoviedb.org/t/p/w260_and_h390_bestv2/8upWJ1KTR1bAPqXCHAuVOhfuiAZ.jpg",
+          link: "detalles.html?type=movie&id=1376434",
+          year: "2025",
+          genres: ["Acción", "Ciencia ficción", "Animación"] // <-- Asegúrate de que esto esté definido
+      },
 ];
 
 // Películas de acción (vacío)

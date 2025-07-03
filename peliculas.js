@@ -98,9 +98,9 @@ const peliculasDisponibles = {
     },
 "1233413": {
         "title": "Los Pecadores",
-        "360p": "https://v3.fiestareel.com/mov/2025/1233413-93641/480/480p.m3u8",
-        "720p": "https://v3.fiestareel.com/mov/2025/1233413-93641/720/720p.m3u8",
-        "1080p": "https://v3.fiestareel.com/mov/2025/1233413-93641/720/720p.m3u8"
+        "360p": "https://v3.fiestareel.com/mov/2025/1233413-103457/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2025/1233413-103457/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2025/1233413-103457/720/720p.m3u8"
     },
 "1075456": {
         "title": "O'Dessa",

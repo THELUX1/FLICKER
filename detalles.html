@@ -105,7 +105,7 @@
 async function toggleLike() {
     const currentProfile = profileManager.getCurrentProfile();
     if (!currentProfile) {
-        showToast('Debes tener un perfil activo para usar Me gusta', 'error');
+        showToast('Debes tener un perfil activo para usar esta función', 'error');
         return;
     }
 

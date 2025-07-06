@@ -101,33 +101,37 @@
       return false;
     }
 
-    function toggleLike() {
-      const currentProfile = profileManager.getCurrentProfile();
-      if (!currentProfile) {
+    // En detalles.html (dentro del script)
+async function toggleLike() {
+    const currentProfile = profileManager.getCurrentProfile();
+    if (!currentProfile) {
         showToast('Debes tener un perfil activo para usar Me gusta', 'error');
         return;
-      }
+    }
 
-      const key = `profile_${currentProfile.id}_liked${movie.type === 'movie' ? 'Movies' : 'Series'}`;
-      const liked = JSON.parse(localStorage.getItem(key) || '[]');
-      const isLiked = liked.some(m => m.id === movie.id && m.type === movie.type);
+    const key = `profile_${currentProfile.id}_liked${movie.type === 'movie' ? 'Movies' : 'Series'}`;
+    const liked = JSON.parse(localStorage.getItem(key) || '[]');
+    const isLiked = liked.some(m => m.id === movie.id && m.type === movie.type);
 
-      const movieData = {
+    // Obtener datos completos de la película
+    const movieData = {
         id: movie.id,
         type: movie.type,
         title: movie.title,
         image: movie.image,
-        link: window.location.href
-      };
+        year: movie.year,
+        genres: movie.genres || [],
+        link: `detalles.html?type=${movie.type}&id=${movie.id}`
+    };
 
-      const updated = isLiked
+    const updated = isLiked
         ? liked.filter(m => !(m.id === movie.id && m.type === movie.type))
         : [movieData, ...liked];
 
-      localStorage.setItem(key, JSON.stringify(updated));
-      updateLikeButton(!isLiked);
-      showToast(`${movie.title} ${isLiked ? 'eliminado de' : 'añadido a'} Me gusta`, 'success');
-    }
+    localStorage.setItem(key, JSON.stringify(updated));
+    updateLikeButton(!isLiked);
+    showToast(`${movie.title} ${isLiked ? 'eliminado de' : 'añadido a'} Me gusta`, 'success');
+}
 
     function updateLikeButton(isLiked) {
       const btn = document.getElementById('mark-watched-detail');

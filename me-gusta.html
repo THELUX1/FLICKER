@@ -64,20 +64,23 @@
       container.innerHTML = html;
     }
 
-    function createCard(item) {
-      const encodedTitle = encodeURIComponent(item.title);
-      return `
+    // En me-gusta.html
+function createCard(item) {
+    return `
         <div class="card">
-          <a href="${item.link}" class="card-link" tabindex="-1">
-            <img src="${item.image}" alt="${item.title}" class="card-image"/>
-            <div class="card-title">${item.title}</div>
-          </a>
-          <button class="remove-button" data-title="${encodedTitle}" data-type="${item.type}">
-            <i class="fas fa-trash"></i>
-          </button>
+            <a href="${item.link}" class="card-link">
+                <img src="${item.image}" alt="${item.title}" class="card-image"/>
+                <div class="card-info">
+                    <div class="card-title">${item.title}</div>
+                    ${item.year ? `<div class="card-year">${item.year}</div>` : ''}
+                </div>
+            </a>
+            <button class="remove-button" data-id="${item.id}" data-type="${item.type}">
+                <i class="fas fa-trash"></i>
+            </button>
         </div>
-      `;
-    }
+    `;
+}
 
     function showConfirmModal(title, callback) {
       const modal = document.getElementById('confirm-modal');
@@ -95,31 +98,36 @@
       };
     }
 
-    window.removeFromLiked = function (title, type) {
-      const profile = profileManager.getCurrentProfile();
-      if (!profile) return;
+    // En me-gusta.html
+window.removeFromLiked = function (id, type) {
+    const profile = profileManager.getCurrentProfile();
+    if (!profile) return;
 
-      const key = `profile_${profile.id}_liked${type === 'movie' ? 'Movies' : 'Series'}`;
-      const liked = JSON.parse(localStorage.getItem(key) || '[]');
-      const updated = liked.filter(item => item.title !== title);
-      localStorage.setItem(key, JSON.stringify(updated));
-      generarContenido(document.getElementById('content'));
-    };
+    const key = `profile_${profile.id}_liked${type === 'movie' ? 'Movies' : 'Series'}`;
+    const liked = JSON.parse(localStorage.getItem(key) || '[]');
+    const updated = liked.filter(item => item.id != id);
+    localStorage.setItem(key, JSON.stringify(updated));
+    generarContenido(document.getElementById('content'));
+};
 
     document.addEventListener('DOMContentLoaded', () => {
       const container = document.getElementById('content');
       generarContenido(container);
 
-      container.addEventListener('click', (e) => {
-        if (e.target.closest('.remove-button')) {
-          const btn = e.target.closest('.remove-button');
-          const title = decodeURIComponent(btn.dataset.title);
-          const type = btn.dataset.type;
-          showConfirmModal(title, confirmed => {
-            if (confirmed) removeFromLiked(title, type);
-          });
+      // En me-gusta.html
+container.addEventListener('click', (e) => {
+    if (e.target.closest('.remove-button')) {
+        const btn = e.target.closest('.remove-button');
+        const id = btn.dataset.id;
+        const type = btn.dataset.type;
+        const item = loadLikedContent()[type === 'movie' ? 'movies' : 'series']
+            .find(item => item.id == id);
+        
+        showConfirmModal(item.title, confirmed => {
+            if (confirmed) removeFromLiked(id, type);
+        });
         }
-      });
+     });
     });
   </script>
 </body>

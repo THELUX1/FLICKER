@@ -567,7 +567,7 @@ const manualMovies = [
           image: "https://media.themoviedb.org/t/p/w220_and_h330_face/hvIqaDUC48dwfd7taKczB7909Qg.jpg",
           link: "detalles.html?type=movie&id=1100988",
           year: "2025",
-          genres: ["Acción", "Crimen", "Suspenso"] // <-- Asegúrate de que esto esté definido
+          genres: ["Terror","Suspenso","Ciencia ficción"] // <-- Asegúrate de que esto esté definido
       },
 ];
 

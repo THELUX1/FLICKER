@@ -1,5 +1,41 @@
 // videos.js
 const peliculasDisponibles = {
+"1100988": {
+        "title": "Exterminio: La evolución",
+        "360p": "https://v3.fiestareel.com/mov/2022/1100988-104282/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2022/1100988-104282/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2022/1100988-104282/720/720p.m3u8"
+    },
+"1426680": {
+        "title": "Nuestros Tiempos",
+        "360p": "https://v3.fiestareel.com/mov/2022/1426680-103611/720/720p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2022/1426680-103611/480/480p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2022/1426680-103611/480/480p.m3u8"
+    },
+"1097311": {
+        "title": "Echo Valley",
+        "360p": "https://v3.fiestareel.com/mov/2025/1097311-103768/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2025/1097311-103768/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2025/1097311-103768/720/720p.m3u8"
+    },
+"1239193": {
+        "title": "Actores encubiertos",
+        "360p": "https://v3.fiestareel.com/mov/2025/1239193-103747/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2025/1239193-103747/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2025/1239193-103747/720/720p.m3u8"
+    },
+"749170": {
+        "title": "Jefes de Estado",
+        "360p": "https://v3.fiestareel.com/mov/2025/749170-104859/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2025/749170-104859/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2025/749170-104859/720/720p.m3u8"
+    },
+"803796": {
+        "title": "Las guerreras k-pop",
+        "360p": "https://v3.fiestareel.com/mov/2022/803796-104247/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2022/803796-104247/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2022/803796-104247/720/720p.m3u8"
+    },
 "1376434": {
         "title": "Predator: Killer of Killers",
         "360p": "https://v3.fiestareel.com/mov/2022/1376434-103327/480/480p.m3u8",
@@ -32,9 +68,9 @@ const peliculasDisponibles = {
     },
 "552524": {
         "title": "Lilo y Stitch",
-        "360p": "https://v3.fiestareel.com/mov/2025/552524-95229/480/480p.m3u8",
-        "720p": "https://v3.fiestareel.com/mov/2025/552524-95229/720/720p.m3u8",
-        "1080p": "https://v3.fiestareel.com/mov/2025/552524-95229/720/720p.m3u8"
+        "360p": "https://v3.fiestareel.com/mov/2025/552524-104491/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2025/552524-104491/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2025/552524-104491/720/720p.m3u8"
     },
 "650033": {
         "title": "Gravedad cero",
@@ -44,9 +80,9 @@ const peliculasDisponibles = {
     },
 "574475": {
         "title": "Destino final lazos de sangre",
-        "360p": "https://v3.fiestareel.com/mov/2025/574475-102930/480/480p.m3u8",
-        "720p": "https://v3.fiestareel.com/mov/2025/574475-102930/720/720p.m3u8",
-        "1080p": "https://v3.fiestareel.com/mov/2025/574475-102930/720/720p.m3u8"
+        "360p": "https://v3.fiestareel.com/mov/2022/574475-104245/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2022/574475-104245/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2022/574475-104245/720/720p.m3u8"
     },
 "896536": {
         "title": "La Leyenda de Ochi",

@@ -88,7 +88,7 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/ajb1rMiorchfRemYHZCkbV9DBg6.jpg",
           link: "detalles.html?type=movie&id=1138749",
           year: "2023",
-          genres: ["Acción", "Suspenso", "Crimen"] // <-- Asegúrate de que esto esté definido
+          genres: ["Acción", "Suspenso", "Crímen"] // <-- Asegúrate de que esto esté definido
       },
     {
           id: 558449,
@@ -128,7 +128,7 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/fQ9hzto0cUuxjfzqNAiAnNJo8O7.jpg",
           link: "detalles.html?type=movie&id=1405338",
           year: "2025",
-          genres: ["Acción", "Crimen", "Fantasía", "Suspenso"] // <-- Asegúrate de que esto esté definido
+          genres: ["Acción", "Crímen", "Fantasía", "Suspenso"] // <-- Asegúrate de que esto esté definido
       },
     {
         id: 950396, // ID de TMDb para "Fight Club"
@@ -247,7 +247,7 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/jmzxlDBwgvRbpPJzNQwizyn9UEn.jpg",
           link: "detalles.html?type=movie&id=1276073",
           year: "2025",
-          genres: ["Drama", "Suspenso", "Acción","Crimen"] // <-- Asegúrate de que esto esté definido
+          genres: ["Drama", "Suspenso", "Acción","Crímen"] // <-- Asegúrate de que esto esté definido
       },
       {
           id: 1249213,
@@ -263,7 +263,7 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/ak0HlRVsVzh8mvwIUZpZr0z6uqW.jpg",
           link: "detalles.html?type=movie&id=1210938",
           year: "2025",
-          genres: ["Suspenso", "Crimen", "Misterio"] // <-- Asegúrate de que esto esté definido
+          genres: ["Suspenso", "Crímen", "Misterio"] // <-- Asegúrate de que esto esté definido
       },
 {
           id: 1013601,
@@ -271,7 +271,7 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/95KmR0xNuZZ6DNESDwLKWGIBvMg.jpg",
           link: "detalles.html?type=movie&id=1013601",
           year: "2025",
-          genres: ["Crimen", "Drama", "Historia"] // <-- Asegúrate de que esto esté definido
+          genres: ["Crímen", "Drama", "Historia"] // <-- Asegúrate de que esto esté definido
       },
 {
           id: 931349,
@@ -303,7 +303,7 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/6FRFIogh3zFnVWn7Z6zcYnIbRcX.jpg",
           link: "detalles.html?type=movie&id=1197306",
           year: "2025",
-          genres: ["Acción", "Suspenso", "Crimen"] // <-- Asegúrate de que esto esté definido
+          genres: ["Acción", "Suspenso", "Crímen"] // <-- Asegúrate de que esto esté definido
       },
       {
           id: 974573,
@@ -311,7 +311,7 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/zboCGZ4aIqPMd7VFI4HWnmc7KYJ.jpg",
           link: "detalles.html?type=movie&id=974573",
           year: "2025",
-          genres: ["Comedia", "Suspenso", "Crimen"] // <-- Asegúrate de que esto esté definido
+          genres: ["Comedia", "Suspenso", "Crímen"] // <-- Asegúrate de que esto esté definido
       },
       {
           id: 1244944,
@@ -359,7 +359,7 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/r46leE6PSzLR3pnVzaxx5Q30yUF.jpg",
           link: "detalles.html?type=movie&id=668489",
           year: "2025",
-          genres: ["Acción", "Crimen", "Suspenso"] // <-- Asegúrate de que esto esté definido
+          genres: ["Acción", "Crímen", "Suspenso"] // <-- Asegúrate de que esto esté definido
       },
       {
           id: 1333100,
@@ -375,7 +375,7 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/qycPITRqXgPai7zj1gKffjCdSB5.jpg",
           link: "detalles.html?type=movie&id=1144430",
           year: "2025",
-          genres: ["Acción", "Suspenso", "Crimen","Drama"] // <-- Asegúrate de que esto esté definido
+          genres: ["Acción", "Suspenso", "Crímen","Drama"] // <-- Asegúrate de que esto esté definido
       },
       {
           id: 1297763,
@@ -520,6 +520,54 @@ const manualMovies = [
           link: "detalles.html?type=movie&id=1376434",
           year: "2025",
           genres: ["Acción", "Ciencia ficción", "Animación"] // <-- Asegúrate de que esto esté definido
+      },
+      {
+          id: 1426680,
+          title: "Nuestros Tiempos",
+          image: "https://s3.fiestareel.com/image/t/p/w500/iJWSUAMJI9mRSzVBJXVUg7iIoJM.jpg",
+          link: "detalles.html?type=movie&id=1426680",
+          year: "2025",
+          genres: ["Ciencia ficción", "Romance", "Comedia"] // <-- Asegúrate de que esto esté definido
+      },
+      {
+          id: 1097311,
+          title: "Echo Valley",
+          image: "https://s3.fiestareel.com/image/t/p/w500/3Ey3HuqZdrx1rfxRkfiOXDFtvtl.jpg",
+          link: "detalles.html?type=movie&id=1097311",
+          year: "2025",
+          genres: ["Drama", "Suspenso"] // <-- Asegúrate de que esto esté definido
+      },
+      {
+          id: 1239193,
+          title: "Actores encubiertos",
+          image: "https://s3.fiestareel.com/image/t/p/w500/1vXTHTbSQJs9r2hp4Uk08XzKwPp.jpg",
+          link: "detalles.html?type=movie&id=1239193",
+          year: "2025",
+          genres: ["Acción", "Comedia", "Crímen"] // <-- Asegúrate de que esto esté definido
+      },
+      {
+          id: 803796,
+          title: "Las guerreras k-pop",
+          image: "https://s3.fiestareel.com/image/t/p/w500/jfS5KEfiwsS35ieZvdUdJKkwLlZ.jpg",
+          link: "detalles.html?type=movie&id=803796",
+          year: "2025",
+          genres: ["Animación","Música","Fantasía", "Acción","Comedia"] // <-- Asegúrate de que esto esté definido
+      },
+      {
+          id: 749170,
+          title: "Jefes de Estado",
+          image: "https://s3.fiestareel.com/image/t/p/w500/lVgE5oLzf7ABmzyASEVcjYyHI41.jpg",
+          link: "detalles.html?type=movie&id=749170",
+          year: "2025",
+          genres: ["Acción", "Comedia", "Suspenso"] // <-- Asegúrate de que esto esté definido
+      },
+      {
+          id: 1100988,
+          title: "Exterminio: La evolución",
+          image: "https://media.themoviedb.org/t/p/w220_and_h330_face/hvIqaDUC48dwfd7taKczB7909Qg.jpg",
+          link: "detalles.html?type=movie&id=1100988",
+          year: "2025",
+          genres: ["Acción", "Crimen", "Suspenso"] // <-- Asegúrate de que esto esté definido
       },
 ];
 

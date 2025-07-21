@@ -53,7 +53,7 @@ const manualMovies = [
     {
           id: 774370,
           title: "Las aventuras de Dog Man",
-          image: "https://s.lupacine.com/image/t/p/w500/89wNiexZdvLQ41OQWIsQy4O6jAQ.jpg",
+          image: "https://s3.fiestareel.com/image/t/p/w500/89wNiexZdvLQ41OQWIsQy4O6jAQ.jpg",
           link: "detalles.html?type=movie&id=774370",
           year: "2025",
           genres: ["Animación", "Aventura", "Acción", "Comedia", "Familia"] // <-- Asegúrate de que esto esté definido
@@ -69,7 +69,7 @@ const manualMovies = [
     {
           id: 912649,
           title: "Venom: El último baile",
-          image: "https://s.lupacine.com/image/t/p/w500/vGXptEdgZIhPg3cGlc7e8sNPC2e.jpg",
+          image: "https://s3.fiestareel.com/image/t/p/w500/vGXptEdgZIhPg3cGlc7e8sNPC2e.jpg",
           link: "detalles.html?type=movie&id=912649",
           year: "2024",
           genres: ["Aventura", "Acción", "Suspenso", "Ciencia ficción"] // <-- Asegúrate de que esto esté definido
@@ -93,7 +93,7 @@ const manualMovies = [
     {
           id: 558449,
           title: "Gladiador II",
-          image: "https://s.lupacine.com/image/t/p/w500/2cxhvwyEwRlysAmRH4iodkvo0z5.jpg",
+          image: "https://s3.fiestareel.com/image/t/p/w500/2cxhvwyEwRlysAmRH4iodkvo0z5.jpg",
           link: "detalles.html?type=movie&id=558449",
           year: "2024",
           genres: ["Aventura", "Drama", "Acción", "Historia"] // <-- Asegúrate de que esto esté definido
@@ -125,7 +125,7 @@ const manualMovies = [
     {
           id: 1405338,
           title: "Oni-Goroshi: Ciudad de los demonios",
-          image: "https://s.lupacine.com/image/t/p/w500/fQ9hzto0cUuxjfzqNAiAnNJo8O7.jpg",
+          image: "https://s3.fiestareel.com/image/t/p/w500/g5PqsFFrayyRL1Ldgib2lMYuJXg.jpg",
           link: "detalles.html?type=movie&id=1405338",
           year: "2025",
           genres: ["Acción", "Crímen", "Fantasía", "Suspenso"] // <-- Asegúrate de que esto esté definido
@@ -236,7 +236,7 @@ const manualMovies = [
 {
           id: 1418522,
           title: "Delicia",
-          image: "https://s.lupacine.com/image/t/p/w500/o1ZIvviAEuIHcH9x6sv112mSvTR.jpg",
+          image: "https://s3.fiestareel.com/image/t/p/w500/o1ZIvviAEuIHcH9x6sv112mSvTR.jpg",
           link: "detalles.html?type=movie&id=1418522",
           year: "2025",
           genres: ["Drama", "Suspenso"] // <-- Asegúrate de que esto esté definido
@@ -292,7 +292,7 @@ const manualMovies = [
       {
           id: 1087891,
           title: "El amateur: Operación venganza",
-          image: "https://s.lupacine.com/image/t/p/w500/SNEoUInCa5fAgwuEBMIMBGvkkh.jpg",
+          image: "https://s3.fiestareel.com/image/t/p/w500/SNEoUInCa5fAgwuEBMIMBGvkkh.jpg",
           link: "detalles.html?type=movie&id=1087891",
           year: "2025",
           genres: ["Suspenso", "Acción"] // <-- Asegúrate de que esto esté definido
@@ -324,7 +324,7 @@ const manualMovies = [
       {
           id: 1195506,
           title: "Novocaine",
-          image: "https://s.lupacine.com/image/t/p/w500/xmMHGz9dVRaMY6rRAlEX4W0Wdhm.jpg",
+          image: "https://s3.fiestareel.com/image/t/p/w500/xmMHGz9dVRaMY6rRAlEX4W0Wdhm.jpg",
           link: "detalles.html?type=movie&id=1195506",
           year: "2025",
           genres: ["Acción", "Suspenso", "Comedia"] // <-- Asegúrate de que esto esté definido
@@ -332,7 +332,7 @@ const manualMovies = [
       {
           id: 950387,
           title: "Una película de Minecraft",
-          image: "https://s.lupacine.com/image/t/p/w500/yFHHfHcUgGAxziP1C3lLt0q2T4s.jpg",
+          image: "https://s3.fiestareel.com/image/t/p/w500/yFHHfHcUgGAxziP1C3lLt0q2T4s.jpg",
           link: "detalles.html?type=movie&id=950387",
           year: "2025",
           genres: ["Aventura", "Fantasía", "Comedia","Familia"] // <-- Asegúrate de que esto esté definido
@@ -380,7 +380,7 @@ const manualMovies = [
       {
           id: 1297763,
           title: "Batman Ninja vs La Liga Yakuza",
-          image: "https://s.lupacine.com/image/t/p/w500/sVVT6GYFErVv0Lcc9NvqCu0iOxO.jpg",
+          image: "https://s3.fiestareel.com/image/t/p/w500/sVVT6GYFErVv0Lcc9NvqCu0iOxO.jpg",
           link: "detalles.html?type=movie&id=1297763",
           year: "2025",
           genres: ["Animación", "Acción"] // <-- Asegúrate de que esto esté definido
@@ -404,7 +404,7 @@ const manualMovies = [
       {
           id: 1469239,
           title: "Karol G: Mañana fue muy bonito",
-          image: "https://s.lupacine.com/image/t/p/w500/5aXoQYwaQ7JJVUWclHAEXJgiS2M.jpg",
+          image: "https://s3.fiestareel.com/image/t/p/w500/5aXoQYwaQ7JJVUWclHAEXJgiS2M.jpg",
           link: "detalles.html?type=movie&id=1469239",
           year: "2025",
           genres: ["Música", "Documental"] // <-- Asegúrate de que esto esté definido
@@ -428,7 +428,7 @@ const manualMovies = [
       {
           id: 906126,
           title: "La sociedad de la nieve",
-          image: "https://s.lupacine.com/image/t/p/w500/2e853FDVSIso600RqAMunPxiZjq.jpg",
+          image: "https://s3.fiestareel.com/image/t/p/w500/2e853FDVSIso600RqAMunPxiZjq.jpg",
           link: "detalles.html?type=movie&id=906126",
           year: "2023",
           genres: ["Historia", "Drama",] // <-- Asegúrate de que esto esté definido
@@ -444,7 +444,7 @@ const manualMovies = [
       {
           id: 850920,
           title: "Escapada de espanto",
-          image: "https://s.lupacine.com/image/t/p/w500/5lMu14IMuHo0hKYCwCIogt7IioX.jpg",
+          image: "https://s3.fiestareel.com/image/t/p/w500/5lMu14IMuHo0hKYCwCIogt7IioX.jpg",
           link: "detalles.html?type=movie&id=850920",
           year: "2025",
           genres: ["Terror", "Comedia"] // <-- Asegúrate de que esto esté definido
@@ -460,7 +460,7 @@ const manualMovies = [
       {
           id: 650033,
           title: "Gravedad cero",
-          image: "https://s.lupacine.com/image/t/p/w500/tB66c6dnu9dG60mta8TF8zmeGJn.jpg",
+          image: "https://s3.fiestareel.com/image/t/p/w500/oY1b65zg8IwsbNdr7SEiQ7ohZ7u.jpg",
           link: "detalles.html?type=movie&id=650033",
           year: "2025",
           genres: ["Ciencia ficción", "Suspenso"] // <-- Asegúrate de que esto esté definido

@@ -577,6 +577,15 @@ const manualMovies = [
           year: "2025",
           genres: ["Acción", "Fantasía"] // <-- Asegúrate de que esto esté definido
       },
+      {
+      id: 1071585,
+          title: "M3GAN 2.0",
+          image: "https://s3.fiestareel.com/image/t/p/w500/4a63rQqIDTrYNdcnTXdPsQyxVLo.jpg",
+          link: "detalles.html?type=movie&id=1071585",
+          year: "2025",
+          genres: ["Acción", "Ciencia ficción", "Suspenso"] // <-- Asegúrate de que esto esté definido
+      },
+      
 ];
 
 // Películas de acción (vacío)

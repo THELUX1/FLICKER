@@ -1,5 +1,11 @@
 // videos.js
 const peliculasDisponibles = {
+"1071585": {
+        "title": "M3GAN 2.0",
+        "360p": "https://v2.fiestareel.com/mov/2025/1071585-110817/480/480p.m3u8",
+        "720p": "https://v2.fiestareel.com/mov/2025/1071585-110817/720/720p.m3u8",
+        "1080p": "https://v2.fiestareel.com/mov/2025/1071585-110817/720/720p.m3u8"
+    },
 "846422": {
         "title": "La vieja guardia 2",
         "360p": "https://v2.fiestareel.com/mov/2025/846422-105290/480/480p.m3u8",

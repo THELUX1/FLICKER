@@ -569,6 +569,14 @@ const manualMovies = [
           year: "2025",
           genres: ["Terror","Suspenso","Ciencia ficción"] // <-- Asegúrate de que esto esté definido
       },
+      {
+          id: 846422,
+          title: "La vieja guardia 2",
+          image: "https://s3.fiestareel.com/image/t/p/w500/wqfu3bPLJaEWJVk3QOm0rKhxf1A.jpg",
+          link: "detalles.html?type=movie&id=846422",
+          year: "2025",
+          genres: ["Acción", "Fantasía"] // <-- Asegúrate de que esto esté definido
+      },
 ];
 
 // Películas de acción (vacío)

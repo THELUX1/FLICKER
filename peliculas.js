@@ -1,5 +1,17 @@
 // videos.js
 const peliculasDisponibles = {
+"1011477": {
+        "title": "Karate Kid: Leyendas",
+        "360p": "https://v3.fiestareel.com/mov/2025/668489-94014/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2025/668489-94014/720/720p.m3u8",
+        "1080p": "https://v3.fiestareel.com/mov/2025/668489-94014/720/720p.m3u8"
+    },
+"1234821": {
+        "title": "Jurassic World: Renace",
+        "360p": "https://v2.fiestareel.com/mov/2025/1234821-109762/480/480p.m3u8",
+        "720p": "https://v2.fiestareel.com/mov/2025/1234821-109762/720/720p.m3u8",
+        "1080p": "https://v2.fiestareel.com/mov/2025/1234821-109762/720/720p.m3u8"
+    },
 "1071585": {
         "title": "M3GAN 2.0",
         "360p": "https://v2.fiestareel.com/mov/2025/1071585-110817/480/480p.m3u8",

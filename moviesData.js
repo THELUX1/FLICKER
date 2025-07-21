@@ -570,12 +570,28 @@ const manualMovies = [
           genres: ["Terror","Suspenso","Ciencia ficción"] // <-- Asegúrate de que esto esté definido
       },
       {
+      id: 1234821,
+          title: "Jurassic World: Renace",
+          image: "https://s3.fiestareel.com/image/t/p/w500/q0fGCmjLu42MPlSO9OYWpI5w86I.jpg",
+          link: "detalles.html?type=movie&id=1234821",
+          year: "2025",
+          genres: ["Acción", "Ciencia ficción", "Aventura"] // <-- Asegúrate de que esto esté definido
+      },
+      {
           id: 846422,
           title: "La vieja guardia 2",
           image: "https://s3.fiestareel.com/image/t/p/w500/wqfu3bPLJaEWJVk3QOm0rKhxf1A.jpg",
           link: "detalles.html?type=movie&id=846422",
           year: "2025",
           genres: ["Acción", "Fantasía"] // <-- Asegúrate de que esto esté definido
+      },
+      {
+      id: 1011477,
+          title: "Karate Kid: Leyendas",
+          image: "https://s3.fiestareel.com/image/t/p/w500/AEgggzRr1vZCLY86MAp93li43z.jpg",
+          link: "detalles.html?type=movie&id=1011477",
+          year: "2025",
+          genres: ["Acción", "Aventura", "Drama"] // <-- Asegúrate de que esto esté definido
       },
       {
       id: 1071585,

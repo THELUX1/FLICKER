@@ -1,5 +1,11 @@
 // videos.js
 const peliculasDisponibles = {
+"846422": {
+        "title": "La vieja guardia 2",
+        "360p": "https://v2.fiestareel.com/mov/2025/846422-105290/480/480p.m3u8",
+        "720p": "https://v2.fiestareel.com/mov/2025/846422-105290/720/720p.m3u8",
+        "1080p": "https://v2.fiestareel.com/mov/2025/846422-105290/720/720p.m3u8"
+    },
 "1100988": {
         "title": "Exterminio: La evolución",
         "360p": "https://v3.fiestareel.com/mov/2022/1100988-104282/480/480p.m3u8",

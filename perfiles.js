@@ -226,33 +226,39 @@ async function exportData() {
     toggleLoading(true);
     
     try {
-        // Preparar datos para exportar
+        // 1. Preparar datos para exportar
         const dataToExport = {};
         for (let i = 0; i < localStorage.length; i++) {
             const key = localStorage.key(i);
             dataToExport[key] = localStorage.getItem(key);
         }
         
+        // 2. Crear el archivo JSON con cabecera de descarga
         const jsonData = JSON.stringify(dataToExport, null, 2);
         const fileName = `flicker_backup_${new Date().toISOString().split('T')[0]}.json`;
-        
-        // Crear blob con los datos
         const blob = new Blob([jsonData], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         
-        // Crear enlace de descarga
+        // 3. Crear iframe invisible para forzar descarga
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.src = url;
+        document.body.appendChild(iframe);
+        
+        // 4. Crear enlace como respaldo
         const a = document.createElement('a');
         a.href = url;
         a.download = fileName;
         document.body.appendChild(a);
         a.click();
         
-        // Limpiar
+        // 5. Limpieza después de la descarga
         setTimeout(() => {
             document.body.removeChild(a);
+            document.body.removeChild(iframe);
             URL.revokeObjectURL(url);
-            showToast('<i class="fas fa-check-circle"></i> Datos exportados correctamente');
-        }, 100);
+            showToast('<i class="fas fa-check-circle"></i> Descarga iniciada');
+        }, 1000);
         
     } catch (error) {
         console.error('Error en exportación:', error);

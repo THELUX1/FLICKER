@@ -221,29 +221,86 @@ function showDeleteConfirmation(profileId) {
 }
 
 // Exportar datos
-function exportData() {
+// Exportar datos con opción para móviles
+async function exportData() {
     toggleLoading(true);
     
-    setTimeout(() => {
+    try {
+        // Preparar datos para exportar
         const dataToExport = {};
         for (let i = 0; i < localStorage.length; i++) {
             const key = localStorage.key(i);
             dataToExport[key] = localStorage.getItem(key);
         }
-
-        const blob = new Blob([JSON.stringify(dataToExport, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `flicker_backup_${new Date().toISOString().split('T')[0]}.json`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-
-        showToast('<i class="fas fa-check-circle"></i> Datos exportados correctamente');
+        
+        const jsonData = JSON.stringify(dataToExport, null, 2);
+        const fileName = `flicker_backup_${new Date().toISOString().split('T')[0]}.json`;
+        
+        // Diferentes enfoques para navegador y aplicaciones web
+        if (window.showSaveFilePicker) {
+            // Método moderno para navegadores de escritorio
+            try {
+                const handle = await window.showSaveFilePicker({
+                    suggestedName: fileName,
+                    types: [{
+                        description: 'JSON Files',
+                        accept: {'application/json': ['.json']}
+                    }]
+                });
+                
+                const writable = await handle.createWritable();
+                await writable.write(jsonData);
+                await writable.close();
+                
+                showToast('<i class="fas fa-check-circle"></i> Datos exportados correctamente');
+            } catch (err) {
+                if (err.name !== 'AbortError') {
+                    console.error('Error al guardar archivo:', err);
+                    fallbackExport(jsonData, fileName);
+                }
+            }
+        } else if (navigator.share && /Mobile|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+            // Compartir archivo en dispositivos móviles
+            try {
+                const blob = new Blob([jsonData], { type: 'application/json' });
+                const file = new File([blob], fileName, { type: 'application/json' });
+                
+                await navigator.share({
+                    title: 'Exportar datos de Flicker',
+                    files: [file]
+                });
+                
+                showToast('<i class="fas fa-check-circle"></i> Datos compartidos correctamente');
+            } catch (err) {
+                console.error('Error al compartir:', err);
+                fallbackExport(jsonData, fileName);
+            }
+        } else {
+            // Método de respaldo para navegadores antiguos
+            fallbackExport(jsonData, fileName);
+        }
+    } catch (error) {
+        console.error('Error en exportación:', error);
+        showToast('<i class="fas fa-exclamation-triangle"></i> Error al exportar datos', 'error');
+    } finally {
         toggleLoading(false);
+    }
+}
+
+// Método de respaldo para exportación
+function fallbackExport(jsonData, fileName) {
+    const blob = new Blob([jsonData], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    
+    setTimeout(() => {
+        URL.revokeObjectURL(url);
     }, 100);
 }
 

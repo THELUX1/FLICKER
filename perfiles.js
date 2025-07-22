@@ -24,13 +24,60 @@ const defaultAvatars = [
     'https://i.pinimg.com/736x/47/ad/4f/47ad4f8c398d83bc6c4c8abb9df08276.jpg'
 ];
 
-// Variables globales
-let selectedAvatarUrl = '';
-let isDefaultAvatarSelected = false;
+// Estado global optimizado
+const state = {
+    selectedAvatarUrl: '',
+    isDefaultAvatarSelected: false,
+    dom: {
+        profileModal: null,
+        importFileInput: null,
+        loadingSpinner: null,
+        addProfileBtn: null,
+        importBtn: null
+    },
+    cache: {
+        avatarsLoaded: false,
+        modalInitialized: false
+    }
+};
 
-// Función para cargar avatares predeterminados en el grid
-function loadDefaultAvatars() {
+// Precargar imágenes
+function preloadImages(urls) {
+    urls.forEach(url => {
+        const img = new Image();
+        img.src = url;
+    });
+}
+
+// Mostrar/ocultar spinner
+function toggleLoading(show) {
+    state.dom.loadingSpinner?.classList.toggle('active', show);
+}
+
+// Mostrar toast de notificación
+function showToast(message, type = 'success') {
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.innerHTML = message;
+    document.body.appendChild(toast);
+
+    setTimeout(() => toast.classList.add('show'), 100);
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+
+// Cargar avatares predeterminados
+async function loadDefaultAvatars() {
+    if (!state.cache.avatarsLoaded) {
+        preloadImages(defaultAvatars);
+        state.cache.avatarsLoaded = true;
+    }
+
     const avatarsGrid = document.getElementById('avatars-grid');
+    if (!avatarsGrid) return;
+
     avatarsGrid.innerHTML = '';
     
     defaultAvatars.forEach(avatarUrl => {
@@ -44,8 +91,8 @@ function loadDefaultAvatars() {
             });
             
             this.classList.add('selected');
-            selectedAvatarUrl = avatarUrl;
-            isDefaultAvatarSelected = true;
+            state.selectedAvatarUrl = avatarUrl;
+            state.isDefaultAvatarSelected = true;
             hideError('avatar-error');
             
             document.getElementById('avatar-preview').innerHTML = 
@@ -56,25 +103,32 @@ function loadDefaultAvatars() {
     });
 }
 
+// Mostrar/ocultar errores
 function showError(elementId, message) {
     const element = document.getElementById(elementId);
-    element.textContent = message;
-    element.classList.add('show');
+    if (element) {
+        element.textContent = message;
+        element.classList.add('show');
+    }
 }
 
 function hideError(elementId) {
     const element = document.getElementById(elementId);
-    element.classList.remove('show');
+    if (element) element.classList.remove('show');
 }
 
+// Verificar si el nombre de perfil existe
 function profileNameExists(name) {
     return profileManager.profiles.some(
         profile => profile.name.toLowerCase() === name.toLowerCase()
     );
 }
 
+// Renderizar perfiles
 function renderProfiles() {
     const profilesGrid = document.getElementById('profiles-grid');
+    if (!profilesGrid) return;
+    
     profilesGrid.innerHTML = '';
     
     profileManager.profiles.forEach(profile => {
@@ -98,12 +152,12 @@ function renderProfiles() {
             }
         });
         
-        profileCard.querySelector('.edit-profile').addEventListener('click', (e) => {
+        profileCard.querySelector('.edit-profile')?.addEventListener('click', (e) => {
             e.stopPropagation();
             openEditProfileModal(profile.id);
         });
         
-        profileCard.querySelector('.delete-profile').addEventListener('click', (e) => {
+        profileCard.querySelector('.delete-profile')?.addEventListener('click', (e) => {
             e.stopPropagation();
             showDeleteConfirmation(profile.id);
         });
@@ -112,6 +166,7 @@ function renderProfiles() {
     });
 }
 
+// Abrir modal de edición
 function openEditProfileModal(profileId) {
     const profile = profileManager.profiles.find(p => p.id === profileId);
     if (!profile) return;
@@ -120,30 +175,38 @@ function openEditProfileModal(profileId) {
     document.getElementById('modal-title').textContent = 'Editar Perfil';
     document.getElementById('profile-name').value = profile.name;
     
-    selectedAvatarUrl = profile.avatar;
+    state.selectedAvatarUrl = profile.avatar;
     const avatarPreview = document.getElementById('avatar-preview');
-    avatarPreview.innerHTML = `<img src="${profile.avatar}" alt="Preview">`;
+    if (avatarPreview) {
+        avatarPreview.innerHTML = `<img src="${profile.avatar}" alt="Preview">`;
+    }
     
     const isDefault = defaultAvatars.includes(profile.avatar);
     if (isDefault) {
-        document.getElementById('default-avatars-btn').click();
+        document.getElementById('default-avatars-btn')?.click();
         setTimeout(() => {
             const avatarOptions = document.querySelectorAll('.avatar-option');
             avatarOptions.forEach(option => {
-                if (option.querySelector('img').src === profile.avatar) {
+                if (option.querySelector('img')?.src === profile.avatar) {
                     option.click();
                 }
             });
         }, 0);
     } else {
-        document.getElementById('custom-avatar-btn').click();
+        document.getElementById('custom-avatar-btn')?.click();
     }
     
-    document.getElementById('profile-modal').style.display = 'flex';
+    if (state.dom.profileModal) {
+        state.dom.profileModal.style.display = 'flex';
+        state.dom.profileModal.classList.add('active');
+    }
 }
 
+// Mostrar confirmación de eliminación
 function showDeleteConfirmation(profileId) {
     const confirmModal = document.getElementById('confirm-modal');
+    if (!confirmModal) return;
+    
     confirmModal.style.display = 'flex';
     
     document.getElementById('confirm-yes').onclick = () => {
@@ -157,206 +220,190 @@ function showDeleteConfirmation(profileId) {
     };
 }
 
+// Exportar datos
 function exportData() {
-    const dataToExport = {};
-    for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        dataToExport[key] = localStorage.getItem(key);
-    }
+    toggleLoading(true);
+    
+    setTimeout(() => {
+        const dataToExport = {};
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            dataToExport[key] = localStorage.getItem(key);
+        }
 
-    const blob = new Blob([JSON.stringify(dataToExport, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
+        const blob = new Blob([JSON.stringify(dataToExport, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
 
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `flicker_backup_${new Date().toISOString().split('T')[0]}.json`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `flicker_backup_${new Date().toISOString().split('T')[0]}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
 
-    showToast('Datos exportados correctamente (Descargas)', 'success');
+        showToast('<i class="fas fa-check-circle"></i> Datos exportados correctamente');
+        toggleLoading(false);
+    }, 100);
 }
 
+// Importar datos
 function importData() {
-    const fileInput = document.getElementById('import-file-input');
-    fileInput.click();
+    state.dom.importFileInput.click();
 
-    fileInput.addEventListener('change', (e) => {
+    state.dom.importFileInput.onchange = (e) => {
         const file = e.target.files[0];
         if (!file) return;
 
+        toggleLoading(true);
+        
         const reader = new FileReader();
         reader.onload = (event) => {
             try {
                 const importedData = JSON.parse(event.target.result);
-                
-                // Crear modal premium
-                const modalOverlay = document.createElement('div');
-                modalOverlay.className = 'import-confirm-overlay';
-                modalOverlay.innerHTML = `
-                    <div class="import-confirm-container">
-                        <div class="import-confirm-message">
-                            ¿Importar datos de respaldo?
-                            <small>Esta acción sobrescribirá todos los perfiles y configuraciones actuales</small>
-                        </div>
-                        <div class="import-confirm-buttons">
-                            <button id="import-confirm-yes" class="glow-on-hover" 
-                                style="background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-                                       color: #121212;
-                                       padding: 0.8rem 2rem;
-                                       border-radius: 12px;
-                                       border: none;
-                                       font-weight: 600;
-                                       cursor: pointer;
-                                       transition: all 0.3s;">
-                                <i class="fas fa-file-import"></i> Confirmar
-                            </button>
-                            <button id="import-confirm-no" 
-                                style="background: rgba(255, 255, 255, 0.05);
-                                       color: var(--accent);
-                                       padding: 0.8rem 2rem;
-                                       border-radius: 12px;
-                                       border: 1px solid rgba(255, 215, 0, 0.3);
-                                       font-weight: 600;
-                                       cursor: pointer;
-                                       transition: all 0.3s;">
-                                <i class="fas fa-times"></i> Cancelar
-                            </button>
-                        </div>
-                    </div>
-                `;
-                
-                document.body.appendChild(modalOverlay);
-                
-                // Hacer el modal semipermanente (no se cierra al hacer clic fuera)
-                const confirmYes = document.getElementById('import-confirm-yes');
-                const confirmNo = document.getElementById('import-confirm-no');
-                
-                confirmYes.onclick = () => {
-                    localStorage.clear();
-                    Object.keys(importedData).forEach(key => {
-                        localStorage.setItem(key, importedData[key]);
-                    });
-                    
-                    // Cambiar mensaje a confirmación
-                    modalOverlay.innerHTML = `
-                        <div class="import-confirm-container">
-                            <div class="import-confirm-message">
-                                <i class="fas fa-check-circle" style="font-size: 3rem; color: var(--accent); margin-bottom: 1rem;"></i>
-                                <div>¡Datos importados con éxito!</div>
-                                <small>La página se recargará automáticamente</small>
-                            </div>
-                        </div>
-                    `;
-                    
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 2000);
-                };
-                
-                confirmNo.onclick = () => {
-                    modalOverlay.style.animation = 'fadeIn 0.3s ease-out reverse';
-                    setTimeout(() => {
-                        modalOverlay.remove();
-                    }, 300);
-                };
-                
+                showImportConfirmation(importedData);
             } catch (error) {
                 showToast('<i class="fas fa-exclamation-triangle"></i> Error: Archivo no válido', 'error');
                 console.error('Error al importar:', error);
+            } finally {
+                toggleLoading(false);
             }
         };
         reader.readAsText(file);
+    };
+}
+
+// Mostrar confirmación de importación
+function showImportConfirmation(importedData) {
+    const modalOverlay = document.createElement('div');
+    modalOverlay.className = 'modal import-confirm-overlay';
+    modalOverlay.innerHTML = `
+        <div class="modal-content import-confirm-modal">
+            <div class="import-confirm-message">
+                ¿Importar datos de respaldo?
+                <small>Esta acción sobrescribirá todos los perfiles y configuraciones actuales</small>
+            </div>
+            <div class="import-confirm-buttons">
+                <button id="import-confirm-yes" class="import-confirm-btn import-confirm-yes">
+                    <i class="fas fa-file-import"></i> Confirmar
+                </button>
+                <button id="import-confirm-no" class="import-confirm-btn import-confirm-no">
+                    <i class="fas fa-times"></i> Cancelar
+                </button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modalOverlay);
+    
+    document.getElementById('import-confirm-yes').onclick = () => {
+        localStorage.clear();
+        Object.keys(importedData).forEach(key => {
+            localStorage.setItem(key, importedData[key]);
+        });
+        
+        modalOverlay.innerHTML = `
+            <div class="modal-content import-confirm-modal">
+                <div class="import-confirm-message">
+                    <i class="fas fa-check-circle" style="font-size: 3rem; color: var(--accent); margin-bottom: 1rem;"></i>
+                    <div>¡Datos importados con éxito!</div>
+                    <small>La página se recargará automáticamente</small>
+                </div>
+            </div>
+        `;
+        
+        setTimeout(() => {
+            window.location.reload();
+        }, 2000);
+    };
+    
+    document.getElementById('import-confirm-no').onclick = () => {
+        modalOverlay.style.animation = 'fadeIn 0.3s ease-out reverse';
+        setTimeout(() => {
+            modalOverlay.remove();
+        }, 300);
+        showToast('<i class="fas fa-ban"></i> Importación cancelada', 'error');
+    };
+}
+
+// Mostrar modal de nuevo perfil
+function showProfileModal() {
+    if (!state.cache.modalInitialized) {
+        initializeModal();
+        state.cache.modalInitialized = true;
+    }
+
+    profileManager.editingProfileId = null;
+    document.getElementById('modal-title').textContent = 'Nuevo Perfil';
+    document.getElementById('profile-name').value = '';
+    document.getElementById('avatar-preview').innerHTML = '';
+    state.selectedAvatarUrl = '';
+    state.isDefaultAvatarSelected = false;
+    
+    const avatarOptions = document.querySelectorAll('.avatar-option');
+    avatarOptions.forEach(el => el.classList.remove('selected'));
+    
+    document.getElementById('avatar-input').value = '';
+    hideError('name-error');
+    hideError('avatar-error');
+    
+    state.dom.profileModal.style.display = 'flex';
+    setTimeout(() => {
+        state.dom.profileModal.classList.add('active');
+    }, 10);
+    
+    // Cargar avatares en segundo plano
+    requestIdleCallback(() => {
+        loadDefaultAvatars();
     });
 }
 
-function showToast(message, type) {
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    toast.textContent = message;
-    document.body.appendChild(toast);
+// Inicializar modal
+function initializeModal() {
+    const profileModal = state.dom.profileModal;
+    if (!profileModal) return;
 
-    setTimeout(() => {
-        toast.classList.add('show');
-    }, 100);
-
-    setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => {
-            document.body.removeChild(toast);
-        }, 300);
-    }, 3000);
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    loadDefaultAvatars();
-    
-    const profileModal = document.getElementById('profile-modal');
-    const modalConfirm = document.getElementById('modal-confirm');
-    const modalCancel = document.getElementById('modal-cancel');
-    const profileNameInput = document.getElementById('profile-name');
-    const avatarInput = document.getElementById('avatar-input');
-    const addProfileBtn = document.getElementById('add-profile-btn');
-    
-    document.getElementById('default-avatars-btn').addEventListener('click', function() {
+    // Configurar eventos del modal
+    document.getElementById('default-avatars-btn')?.addEventListener('click', function() {
         document.getElementById('default-avatars-section').style.display = 'block';
         document.getElementById('custom-avatar-section').style.display = 'none';
         this.classList.add('active');
         document.getElementById('custom-avatar-btn').classList.remove('active');
-        isDefaultAvatarSelected = false;
-        selectedAvatarUrl = '';
+        state.isDefaultAvatarSelected = false;
+        state.selectedAvatarUrl = '';
         document.getElementById('avatar-preview').innerHTML = '';
         hideError('avatar-error');
         loadDefaultAvatars();
     });
     
-    document.getElementById('custom-avatar-btn').addEventListener('click', function() {
+    document.getElementById('custom-avatar-btn')?.addEventListener('click', function() {
         document.getElementById('default-avatars-section').style.display = 'none';
         document.getElementById('custom-avatar-section').style.display = 'block';
         this.classList.add('active');
         document.getElementById('default-avatars-btn').classList.remove('active');
-        isDefaultAvatarSelected = false;
+        state.isDefaultAvatarSelected = false;
     });
     
-    avatarInput.addEventListener('change', function(e) {
+    document.getElementById('avatar-input')?.addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onload = function(event) {
-                selectedAvatarUrl = event.target.result;
+                state.selectedAvatarUrl = event.target.result;
                 document.getElementById('avatar-preview').innerHTML = 
-                    `<img src="${selectedAvatarUrl}" alt="Preview">`;
+                    `<img src="${state.selectedAvatarUrl}" alt="Preview">`;
                 hideError('avatar-error');
             };
             reader.readAsDataURL(file);
         }
     });
     
-    profileNameInput.addEventListener('input', function() {
+    document.getElementById('profile-name')?.addEventListener('input', function() {
         hideError('name-error');
     });
     
-    addProfileBtn.addEventListener('click', function() {
-        profileManager.editingProfileId = null;
-        document.getElementById('modal-title').textContent = 'Nuevo Perfil';
-        profileNameInput.value = '';
-        document.getElementById('avatar-preview').innerHTML = '';
-        selectedAvatarUrl = '';
-        isDefaultAvatarSelected = false;
-        document.querySelectorAll('.avatar-option').forEach(el => {
-            el.classList.remove('selected');
-        });
-        avatarInput.value = '';
-        hideError('name-error');
-        hideError('avatar-error');
-        document.getElementById('default-avatars-btn').click();
-        loadDefaultAvatars();
-        profileModal.style.display = 'flex';
-    });
-    
-    modalConfirm.addEventListener('click', function() {
-        const profileName = profileNameInput.value.trim();
+    document.getElementById('modal-confirm')?.addEventListener('click', function() {
+        const profileName = document.getElementById('profile-name').value.trim();
         let isValid = true;
         
         if (!profileName) {
@@ -367,7 +414,7 @@ document.addEventListener('DOMContentLoaded', () => {
             isValid = false;
         }
         
-        if (!selectedAvatarUrl) {
+        if (!state.selectedAvatarUrl) {
             showError('avatar-error', 'Por favor selecciona un avatar');
             isValid = false;
         }
@@ -375,22 +422,40 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!isValid) return;
         
         if (profileManager.editingProfileId) {
-            profileManager.updateProfile(profileManager.editingProfileId, profileName, selectedAvatarUrl);
+            profileManager.updateProfile(profileManager.editingProfileId, profileName, state.selectedAvatarUrl);
         } else {
-            profileManager.addProfile(profileName, selectedAvatarUrl);
+            profileManager.addProfile(profileName, state.selectedAvatarUrl);
         }
         
         profileModal.style.display = 'none';
         renderProfiles();
     });
     
-    modalCancel.addEventListener('click', function() {
+    document.getElementById('modal-cancel')?.addEventListener('click', function() {
         profileModal.style.display = 'none';
     });
+}
 
-    // Eventos para exportar/importar
+// Inicialización
+document.addEventListener('DOMContentLoaded', () => {
+    // Cachear elementos del DOM
+    state.dom = {
+        profileModal: document.getElementById('profile-modal'),
+        importFileInput: document.getElementById('import-file-input'),
+        loadingSpinner: document.getElementById('loading-spinner'),
+        addProfileBtn: document.getElementById('add-profile-btn'),
+        importBtn: document.getElementById('import-data-btn')
+    };
+
+    // Precargar recursos
+    preloadImages(defaultAvatars);
+    loadDefaultAvatars();
+
+    // Asignar eventos
+    state.dom.addProfileBtn?.addEventListener('click', showProfileModal);
+    state.dom.importBtn?.addEventListener('click', importData);
     document.getElementById('export-data-btn')?.addEventListener('click', exportData);
-    document.getElementById('import-data-btn')?.addEventListener('click', importData);
-    
+
+    // Renderizar perfiles
     renderProfiles();
 });

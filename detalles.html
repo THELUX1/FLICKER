@@ -21,6 +21,30 @@
       padding: 0;
       box-sizing: border-box;
       font-family: 'Helvetica Neue', Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent !important;
+      tap-highlight-color: transparent !important;
+    }
+
+    /* Eliminar outline en todos los elementos interactivos */
+    a, button, input, textarea, select, [tabindex] {
+      outline: none !important;
+    }
+
+    /* Alternativa accesible para navegación por teclado */
+    a:focus-visible, 
+    button:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible,
+    select:focus-visible,
+    [tabindex]:focus-visible {
+      outline: 2px solid var(--primary) !important;
+      outline-offset: 2px;
+    }
+
+    /* Eliminar resaltado en imágenes con enlaces */
+    a img {
+      -webkit-user-drag: none;
+      user-drag: none;
     }
 
     body {
@@ -104,7 +128,6 @@
       color: var(--text-secondary);
     }
 
-    /* Estilo mejorado para el recuadro de sinopsis */
     .synopsis-container {
       background-color: rgba(20, 20, 20, 0.8);
       border-radius: 8px;
@@ -151,7 +174,6 @@
       color: var(--text-secondary);
     }
 
-    /* Botones con mejores animaciones */
     .movie-actions {
       display: flex;
       justify-content: space-between;
@@ -233,7 +255,6 @@
       color: #000;
     }
 
-    /* Carrusel de películas similares */
     .movie-section {
       margin-top: 40px;
     }
@@ -313,7 +334,6 @@
       margin: 0;
     }
 
-    /* Toast notifications */
     .toast {
       position: fixed;
       bottom: 20px;
@@ -344,7 +364,6 @@
       color: #000;
     }
 
-    /* Responsive design */
     @media (max-width: 768px) {
       .main-container {
         width: 98%;
@@ -547,7 +566,6 @@
         if (movie.duration) document.getElementById('movie-duration').innerText = movie.duration;
         document.getElementById('movie-synopsis').innerText = movie.synopsis;
         
-        // Configurar la imagen de fondo
         const background = document.createElement('div');
         background.className = 'background-image';
         background.style.backgroundImage = `url('${movie.image}')`;

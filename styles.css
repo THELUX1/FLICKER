@@ -1,48 +1,51 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
 
-body {
-    background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
-    color: white;
-    min-height: 100vh;
-    overflow-x: hidden;
-}
+        body {
+            background-color: #0f0f1a;
+            color: #ffffff;
+            position: relative;
+            padding-bottom: 80px;
+        }
 
-/* Header */
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 5%;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(10px);
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-    border-bottom: 1px solid rgba(255, 10, 0, 0.3);
-}
+        /* Header styles */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, transparent 100%);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
 
-.logo-glass {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(12px);
-    padding: 12px 25px;
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
 
-.logo {
-    color: #ff0a00;
-    font-size: 2rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-shadow: 0 2px 10px rgba(255, 10, 0, 0.5);
-}
+        .logo-glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 8px 15px;
+            border-radius: 8px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(to right, #ff4d4d, #f9cb28);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+        }
 /* Estilos para la página de perfiles */
 .profiles-container {
     padding: 20px;
@@ -165,7 +168,7 @@ body {
 }
 
 .avatar-option.selected {
-    background: #e50914;
+    background: linear-gradient(to right, #ff4d4d, #f9cb28);;
     transform: scale(1.1);
 }
 
@@ -188,7 +191,7 @@ body {
 }
 
 .profile-icon-button:hover {
-    color: #e50914;
+    color: #ff5e00;
 }
 /* Loader */
 .loader {
@@ -225,7 +228,7 @@ body {
 /* Search */
 .search-overlay {
     position: fixed;
-    top: 25px;
+    top: 20px;
     right: 60px;
     z-index: 1001;
 }
@@ -242,7 +245,7 @@ body {
 }
 
 .search-icon-button:hover {
-    color: #ff0a00;
+    color: #ff5e00;
     background: rgba(255, 255, 255, 0.2);
 }
 
@@ -259,14 +262,13 @@ input:focus {
     display: none;
     position: absolute;
     top: 50px;
-    right: 0;
+    right: 15px;
     width: 300px;
     background: rgba(0, 0, 0, 0.9);
     border-radius: 12px;
     padding: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 70px rgba(0, 0, 0, 0.5);
     z-index: 1000;
-    width: 300px;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -282,7 +284,7 @@ input:focus {
 }
 
 .search-input:focus {
-    background: rgba(255, 255, 255, 0.2);
+    background: #545454a3;
     box-shadow: 0 0 0 2px rgba(255, 10, 0, 0.5);
 }
 
@@ -298,7 +300,7 @@ input:focus {
 }
 
 .search-button.close-search:hover {
-    color: #ff0a00;
+    color: #ff7300;
 }
 
 .search-results {
@@ -389,7 +391,7 @@ input:focus {
     top: 5px;
     height: 70%;
     width: 4px;
-    background: #ff0a00;
+    background: linear-gradient(to right, #ff4d4d, #f9cb28);;
     border-radius: 2px;
 }
 
@@ -501,7 +503,7 @@ input:focus,
     font-size: 12px;
     font-weight: 600;
     color: white;
-    background: rgba(255, 10, 0, 0.8);
+    background: linear-gradient(to right, #ff4d4d, #f9cb28);
     padding: 3px 8px;
     border-radius: 4px;
     z-index: 1;
@@ -510,7 +512,7 @@ input:focus,
 .progress-bar {
     width: 100%;
     height: 4px;
-    background-color: rgba(255, 255, 255, 0.1);
+    background: linear-gradient(to right, #ff4d4d, #f9cb28);
     border-radius: 2px;
     margin-top: 8px;
     overflow: hidden;
@@ -518,14 +520,14 @@ input:focus,
 
 .progress {
     height: 100%;
-    background-color: #ff0a00;
+    background-color: #ff4d4d;
 }
 
 .remove-button {
     position: absolute;
     top: 10px;
     right: 10px;
-    background: rgba(0, 0, 0, 0.7);
+    background: #ff4d4d;
     border: none;
     color: white;
     width: 28px;
@@ -545,44 +547,35 @@ input:focus,
 }
 
 /* Bottom Navigation */
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.9);
-    backdrop-filter: blur(10px);
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 12px 0;
-    z-index: 1000;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #1a1a2e;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            z-index: 100;
+        }
 
-.nav-icon {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-decoration: none;
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.8rem;
-    transition: all 0.3s ease;
-}
+        .nav-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #a0a0a0;
+            text-decoration: none;
+            font-size: 12px;
+        }
 
-.nav-icon i {
-    font-size: 1.3rem;
-    margin-bottom: 4px;
-}
+        .nav-icon i {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
 
-.nav-icon:hover, .nav-icon.active {
-    color: #ff0a00;
-    transform: translateY(-3px);
-}
-
-.nav-icon span {
-    font-size: 0.7rem;
-}
+        .nav-icon.active {
+            color: #f9cb28;
+        }
 
 /* Modal */
 .modal {

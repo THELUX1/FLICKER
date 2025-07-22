@@ -221,7 +221,6 @@ function showDeleteConfirmation(profileId) {
 }
 
 // Exportar datos
-// Exportar datos
 async function exportData() {
     toggleLoading(true);
     
@@ -277,7 +276,7 @@ function importData() {
         if (!file) return;
 
         toggleLoading(true);
-        
+       
         const reader = new FileReader();
         reader.onload = (event) => {
             try {
@@ -297,19 +296,20 @@ function importData() {
 // Mostrar confirmación de importación
 function showImportConfirmation(importedData) {
     const modalOverlay = document.createElement('div');
-    modalOverlay.className = 'modal import-confirm-overlay';
+    modalOverlay.className = 'import-confirm-overlay';
     modalOverlay.innerHTML = `
-        <div class="modal-content import-confirm-modal">
+        <div class="import-confirm-modal">
             <div class="import-confirm-message">
-                ¿Importar datos de respaldo?
-                <small>Esta acción sobrescribirá todos los perfiles y configuraciones actuales</small>
+                <i class="fas fa-exclamation-triangle" style="color: var(--accent); font-size: 2rem; margin-bottom: 1rem;"></i>
+                <div>¿Importar datos de respaldo?</div>
+                <small>Esta acción sobrescribirá <strong>todos</strong> los perfiles y configuraciones actuales. Esta operación no se puede deshacer.</small>
             </div>
             <div class="import-confirm-buttons">
                 <button id="import-confirm-yes" class="import-confirm-btn import-confirm-yes">
-                    <i class="fas fa-file-import"></i> Confirmar
+                     Confirmar
                 </button>
                 <button id="import-confirm-no" class="import-confirm-btn import-confirm-no">
-                    <i class="fas fa-times"></i> Cancelar
+                     Cancelar
                 </button>
             </div>
         </div>
@@ -317,33 +317,72 @@ function showImportConfirmation(importedData) {
     
     document.body.appendChild(modalOverlay);
     
+    // Bloquear el scroll del cuerpo
+    document.body.style.overflow = 'hidden';
+    
     document.getElementById('import-confirm-yes').onclick = () => {
-        localStorage.clear();
-        Object.keys(importedData).forEach(key => {
-            localStorage.setItem(key, importedData[key]);
-        });
-        
         modalOverlay.innerHTML = `
-            <div class="modal-content import-confirm-modal">
+            <div class="import-confirm-modal">
                 <div class="import-confirm-message">
-                    <i class="fas fa-check-circle" style="font-size: 3rem; color: var(--accent); margin-bottom: 1rem;"></i>
-                    <div>¡Datos importados con éxito!</div>
-                    <small>La página se recargará automáticamente</small>
+                    <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem;"></i>
+                    <div>Importando datos...</div>
+                    <small>Por favor, no cierres la página</small>
                 </div>
             </div>
         `;
         
+        // Proceso de importación con retraso para mejor UX
         setTimeout(() => {
-            window.location.reload();
-        }, 2000);
+            try {
+                localStorage.clear();
+                Object.keys(importedData).forEach(key => {
+                    localStorage.setItem(key, importedData[key]);
+                });
+                
+                modalOverlay.innerHTML = `
+                    <div class="import-confirm-modal">
+                        <div class="import-confirm-message">
+                            <i class="fas fa-check-circle" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem;"></i>
+                            <div>¡Datos importados con éxito!</div>
+                            <small>La página se recargará automáticamente</small>
+                        </div>
+                    </div>
+                `;
+                
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
+            } catch (error) {
+                modalOverlay.innerHTML = `
+                    <div class="import-confirm-modal">
+                        <div class="import-confirm-message">
+                            <i class="fas fa-exclamation-circle" style="font-size: 2rem; color: #ff6b6b; margin-bottom: 1rem;"></i>
+                            <div>Error al importar datos</div>
+                            <small>${error.message}</small>
+                        </div>
+                        <button id="import-confirm-close" class="import-confirm-btn import-confirm-no" style="margin-top: 1.5rem;">
+                            <i class="fas fa-times"></i> Cerrar
+                        </button>
+                    </div>
+                `;
+                
+                document.getElementById('import-confirm-close').onclick = () => {
+                    modalOverlay.style.animation = 'fadeIn 0.3s ease-out reverse';
+                    setTimeout(() => {
+                        modalOverlay.remove();
+                        document.body.style.overflow = '';
+                    }, 300);
+                };
+            }
+        }, 500);
     };
     
     document.getElementById('import-confirm-no').onclick = () => {
         modalOverlay.style.animation = 'fadeIn 0.3s ease-out reverse';
         setTimeout(() => {
             modalOverlay.remove();
+            document.body.style.overflow = '';
         }, 300);
-        showToast('<i class="fas fa-ban"></i> Importación cancelada', 'error');
     };
 }
 

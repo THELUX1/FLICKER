@@ -544,7 +544,7 @@
       border-top-color: var(--accent);
       animation: spin 1s ease-in-out infinite;
     }
-
+    
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
@@ -569,6 +569,134 @@
         gap: 0.5rem;
       }
     }
+    /* Añade esto al final de tu CSS */
+.hidden-download {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+    pointer-events: none;
+}
+/* Estilos para el modal de confirmación de importación */
+.import-confirm-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    animation: fadeIn 0.3s ease-out forwards;
+}
+
+.import-confirm-modal {
+    background: var(--card-bg);
+    padding: 2.5rem;
+    border-radius: 20px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+    border: 2px solid var(--primary);
+    position: relative;
+    overflow: hidden;
+}
+
+.import-confirm-modal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(to right, var(--primary), var(--accent));
+}
+
+.import-confirm-message {
+    margin-bottom: 2rem;
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    line-height: 1.6;
+}
+
+.import-confirm-message small {
+    display: block;
+    margin-top: 1rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.import-confirm-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.import-confirm-btn {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 12px; /* Bordes muy redondeados */
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.import-confirm-yes {
+    background: linear-gradient(135deg, #FFA500, #FF8C00); /* Naranja */
+    color: #121212;
+}
+
+.import-confirm-no {
+    background: linear-gradient(135deg, #FFD700, #FFC107); /* Amarillo */
+    color: #121212;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.import-confirm-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.import-confirm-btn:active {
+    transform: translateY(0);
+}
+
+/* Efecto de brillo al pasar el mouse */
+.import-confirm-yes:hover {
+    box-shadow: 0 6px 12px rgba(255, 140, 0, 0.3);
+}
+
+.import-confirm-no:hover {
+    box-shadow: 0 6px 12px rgba(255, 215, 0, 0.3);
+}
+
+/* Para móviles */
+@media (max-width: 768px) {
+    .import-confirm-buttons {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    
+    .import-confirm-btn {
+        width: 100%;
+        padding: 0.9rem;
+    }
+}
+
   </style>
 </head>
 <body>
@@ -577,8 +705,8 @@
     
     <div class="data-actions">
       <button id="export-data-btn" class="data-action-button">
-        <i class="fas fa-file-export"></i> Exportar datos
-      </button>
+    <i class="fas fa-file-export"></i> Exportar datos
+     </button>
       <button id="import-data-btn" class="data-action-button">
         <i class="fas fa-file-import"></i> Importar datos
       </button>
@@ -648,30 +776,7 @@
 
   <script type="module" src="perfiles.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-<script>
-    // Detectar AppCreator y ajustar comportamientos
-    document.addEventListener('DOMContentLoaded', function() {
-        const isAppCreator = /AppCreator/i.test(navigator.userAgent) || window.AppCreator;
-        
-        if (isAppCreator) {
-            // Ajustes específicos para AppCreator
-            document.documentElement.style.setProperty('--primary', '#FF8C00');
-            document.documentElement.style.setProperty('--accent', '#FFC107');
-            
-            // Mejorar el rendimiento de animaciones
-            const style = document.createElement('style');
-            style.textContent = `
-                .profile-card {
-                    animation-duration: 0.4s;
-                }
-                #profile-modal {
-                    backdrop-filter: none;
-                    background: rgba(0, 0, 0, 0.9);
-                }
-            `;
-            document.head.appendChild(style);
-        }
-    });
-</script>
+  <!-- Añade esto antes del cierre del body -->
+<div id="download-container" class="hidden-download"></div>
 </body>
 </html>

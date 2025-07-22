@@ -221,7 +221,7 @@ function showDeleteConfirmation(profileId) {
 }
 
 // Exportar datos
-// Exportar datos con opción para móviles
+// Exportar datos compatible con AppCreator
 async function exportData() {
     toggleLoading(true);
     
@@ -236,49 +236,21 @@ async function exportData() {
         const jsonData = JSON.stringify(dataToExport, null, 2);
         const fileName = `flicker_backup_${new Date().toISOString().split('T')[0]}.json`;
         
-        // Diferentes enfoques para navegador y aplicaciones web
-        if (window.showSaveFilePicker) {
-            // Método moderno para navegadores de escritorio
-            try {
-                const handle = await window.showSaveFilePicker({
-                    suggestedName: fileName,
-                    types: [{
-                        description: 'JSON Files',
-                        accept: {'application/json': ['.json']}
-                    }]
-                });
-                
-                const writable = await handle.createWritable();
-                await writable.write(jsonData);
-                await writable.close();
-                
-                showToast('<i class="fas fa-check-circle"></i> Datos exportados correctamente');
-            } catch (err) {
-                if (err.name !== 'AbortError') {
-                    console.error('Error al guardar archivo:', err);
-                    fallbackExport(jsonData, fileName);
-                }
-            }
+        // Detectar si estamos en AppCreator
+        const isAppCreator = /AppCreator/i.test(navigator.userAgent) || window.AppCreator;
+        
+        if (isAppCreator) {
+            // Método específico para AppCreator
+            await exportInAppCreator(jsonData, fileName);
         } else if (navigator.share && /Mobile|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
             // Compartir archivo en dispositivos móviles
-            try {
-                const blob = new Blob([jsonData], { type: 'application/json' });
-                const file = new File([blob], fileName, { type: 'application/json' });
-                
-                await navigator.share({
-                    title: 'Exportar datos de Flicker',
-                    files: [file]
-                });
-                
-                showToast('<i class="fas fa-check-circle"></i> Datos compartidos correctamente');
-            } catch (err) {
-                console.error('Error al compartir:', err);
-                fallbackExport(jsonData, fileName);
-            }
+            await shareFile(jsonData, fileName);
         } else {
-            // Método de respaldo para navegadores antiguos
-            fallbackExport(jsonData, fileName);
+            // Método estándar para navegadores
+            downloadFile(jsonData, fileName);
         }
+        
+        showToast('<i class="fas fa-check-circle"></i> Datos exportados correctamente');
     } catch (error) {
         console.error('Error en exportación:', error);
         showToast('<i class="fas fa-exclamation-triangle"></i> Error al exportar datos', 'error');
@@ -287,14 +259,62 @@ async function exportData() {
     }
 }
 
-// Método de respaldo para exportación
-function fallbackExport(jsonData, fileName) {
-    const blob = new Blob([jsonData], { type: 'application/json' });
+// Método para AppCreator
+async function exportInAppCreator(data, filename) {
+    return new Promise((resolve, reject) => {
+        try {
+            // Crear un blob con los datos
+            const blob = new Blob([data], { type: 'application/json' });
+            const reader = new FileReader();
+            
+            reader.onload = function(event) {
+                try {
+                    // Usar la API de AppCreator si está disponible
+                    if (window.AppCreator && window.AppCreator.saveFile) {
+                        window.AppCreator.saveFile(filename, event.target.result);
+                        resolve();
+                    } else {
+                        // Fallback para AppCreator sin API específica
+                        downloadFile(data, filename);
+                        resolve();
+                    }
+                } catch (err) {
+                    reject(err);
+                }
+            };
+            
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+        } catch (err) {
+            reject(err);
+        }
+    });
+}
+
+// Método para compartir archivo en móviles
+async function shareFile(data, filename) {
+    try {
+        const blob = new Blob([data], { type: 'application/json' });
+        const file = new File([blob], filename, { type: 'application/json' });
+        
+        await navigator.share({
+            title: 'Exportar datos de Flicker',
+            files: [file]
+        });
+    } catch (err) {
+        console.error('Error al compartir:', err);
+        throw err;
+    }
+}
+
+// Método estándar de descarga
+function downloadFile(data, filename) {
+    const blob = new Blob([data], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     
     const a = document.createElement('a');
     a.href = url;
-    a.download = fileName;
+    a.download = filename;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);

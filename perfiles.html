@@ -648,5 +648,30 @@
 
   <script type="module" src="perfiles.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+<script>
+    // Detectar AppCreator y ajustar comportamientos
+    document.addEventListener('DOMContentLoaded', function() {
+        const isAppCreator = /AppCreator/i.test(navigator.userAgent) || window.AppCreator;
+        
+        if (isAppCreator) {
+            // Ajustes específicos para AppCreator
+            document.documentElement.style.setProperty('--primary', '#FF8C00');
+            document.documentElement.style.setProperty('--accent', '#FFC107');
+            
+            // Mejorar el rendimiento de animaciones
+            const style = document.createElement('style');
+            style.textContent = `
+                .profile-card {
+                    animation-duration: 0.4s;
+                }
+                #profile-modal {
+                    backdrop-filter: none;
+                    background: rgba(0, 0, 0, 0.9);
+                }
+            `;
+            document.head.appendChild(style);
+        }
+    });
+</script>
 </body>
 </html>

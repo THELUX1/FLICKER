@@ -5,195 +5,363 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Perfiles - CineStream</title>
   <style>
-.upload-label {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  background: #444;
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
-  margin-bottom: 1rem;
+      :root {
+  --primary: #FFA500;
+  --primary-dark: #FF8C00;
+  --accent: #FFD700;
+  --dark-bg: #121212;
+  --card-bg: #1E1E1E;
+  --text-primary: #FFFFFF;
+  --text-secondary: rgba(255, 255, 255, 0.7);
 }
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--dark-bg);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+.container {
+  padding: 2rem 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  font-weight: 600;
+  font-size: 2.2rem;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: -0.5px;
+}
+
+#profiles-grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  justify-items: center;
+}
+
+.profile-card {
+  width: 100%;
+  max-width: 180px;
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border: 1px solid rgba(255, 165, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.profile-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, rgba(255, 165, 0, 0) 70%);
+  transform: scale(0);
+  transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+  pointer-events: none;
+}
+
+.profile-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(255, 165, 0, 0.15);
+  border-color: rgba(255, 165, 0, 0.3);
+}
+
+.profile-card:hover::before {
+  transform: scale(1);
+}
+
+.profile-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 0 auto 1rem;
+  border: 3px solid var(--primary);
+  background: #2a2a2a;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(255, 165, 0, 0.2);
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-name {
+  font-weight: 500;
+  margin: 1rem 0;
+  color: var(--accent);
+  font-size: 1.1rem;
+}
+
+.profile-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.profile-actions button {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  padding: 0.3rem;
+}
+
+.profile-actions button:hover {
+  color: var(--primary);
+  transform: scale(1.1);
+}
+
+#add-profile-btn {
+  display: block;
+  margin: 3rem auto 1rem;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: #121212;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 16px rgba(255, 140, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+#add-profile-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.4s;
+}
+
+#add-profile-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 140, 0, 0.4);
+}
+
+#add-profile-btn:hover::after {
+  transform: translateX(100%);
+}
+
+#profile-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal-content {
+  background: var(--card-bg);
+  padding: 2.5rem;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 165, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.modal-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--primary), var(--accent));
+}
+
+.modal-content h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 1.8rem;
+}
+
+.avatar-preview {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--primary);
+  background: #2a2a2a;
+  box-shadow: 0 4px 12px rgba(255, 165, 0, 0.2);
+}
+
+.avatar-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#avatar-input {
+  display: none;
+}
+
 #profile-name {
   width: 100%;
-  padding: 0.6rem;
-  margin-bottom: 1rem;
+  padding: 0.8rem 1rem;
+  margin-bottom: 0.5rem;
   border: none;
-  border-radius: 6px;
-  background: #333;
-  color: white;
+  border-radius: 10px;
+  background: #2a2a2a;
+  color: var(--accent);
+  font-size: 1rem;
+  border: 1px solid rgba(255, 165, 0, 0.3);
+  transition: all 0.3s;
 }
 
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: #0d0d0d;
-      color: #fff;
-    }
+#profile-name:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(255, 165, 0, 0.2);
+}
 
-    .container {
-      padding: 1rem;
-      max-width: 800px;
-      margin: 0 auto;
-    }
+.modal-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
 
-    h1 {
-      text-align: center;
-      margin-bottom: 1.5rem;
-      color: #ff4747;
-    }
+.modal-buttons button {
+  flex: 1;
+  padding: 0.8rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
 
-    #profiles-grid {
-      display: grid;
-      gap: 1.5rem;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      justify-content: center;
-    }
+.modal-confirm {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: #121212;
+}
 
-    .profile-card {
-      background: #1a1a1a;
-      padding: 1rem;
-      border-radius: 12px;
-      text-align: center;
-      position: relative;
-      transition: transform 0.3s ease;
-    }
+.modal-cancel {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
 
-    .profile-card:hover {
-      transform: scale(1.03);
-    }
+.modal-buttons button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
 
-    .profile-avatar {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      overflow: hidden;
-      margin: 0 auto 0.5rem;
-      border: 3px solid #444;
-      background: #222;
-    }
+.default-avatars {
+  margin-bottom: 1.5rem;
+}
 
-    .profile-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+.default-avatars h3 {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
 
-    .profile-name {
-      margin: 0.5rem 0;
-    }
+.avatars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
+  max-height: 200px;
+  overflow-y: auto;
+  padding: 0.5rem;
+}
 
-    .profile-actions {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin-top: 0.5rem;
-    }
+.avatar-option {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.2s;
+}
 
-    .profile-actions button {
-      background: transparent;
-      border: none;
-      color: #ccc;
-      font-size: 1.2rem;
-      cursor: pointer;
-    }
+.avatar-option:hover {
+  transform: scale(1.05);
+  border-color: var(--primary);
+}
 
-    .profile-actions button:hover {
-      color: #ff4747;
-    }
+.avatar-option.selected {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3);
+}
 
-    #add-profile-btn {
-      display: block;
-      margin: 2rem auto 1rem;
-      padding: 0.7rem 1.2rem;
-      font-size: 1rem;
-      background: #ff4747;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
+.avatar-option img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
-    /* Modal */
-    #profile-modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.85);
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-    }
+.avatar-selection {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
 
-    .modal-content {
-      background: #222;
-      padding: 2rem;
-      border-radius: 10px;
-      width: 90%;
-      max-width: 400px;
-    }
+.avatar-selection button {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
 
-    .modal-content h2 {
-      text-align: center;
-      margin-bottom: 1rem;
-    }
+.avatar-selection button.active {
+  background: var(--primary);
+  color: #121212;
+  border-color: var(--primary);
+}
 
-    .modal-content input,
-    .modal-content button {
-      width: 100%;
-      margin-bottom: 1rem;
-    }
-
-    .avatar-preview {
-      width: 80px;
-      height: 80px;
-      margin: 0 auto 1rem;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 2px solid #444;
-      background: #333;
-    }
-
-    .avatar-preview img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    #avatar-input {
-      display: block;
-      width: 100%;
-      background: #333;
-      color: white;
-      padding: 0.5rem;
-      border-radius: 6px;
-      border: none;
-    }
-
-    .modal-buttons {
-      display: flex;
-      gap: 1rem;
-    }
-
-    .modal-buttons button {
-      flex: 1;
-      padding: 0.7rem;
-      font-weight: bold;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    .modal-confirm {
-      background: #ff4747;
-      color: white;
-    }
-
-    .modal-cancel {
-      background: #444;
-      color: white;
-    }
-    @keyframes fadeInUp {
+@keyframes fadeInUp {
   from {
     opacity: 0;
     transform: translateY(20px);
@@ -208,27 +376,284 @@
   opacity: 0;
   animation: fadeInUp 0.6s ease forwards;
 }
-/* Eliminar específicamente el focus en imágenes y enlaces */
-img:focus, 
-a:focus, 
-button:focus, 
-input:focus,
-.movie-card:focus,
-.nav-icon:focus {
-    outline: none !important;
-    box-shadow: none !important;
+
+#confirm-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 1rem;
 }
 
-/* Eliminar el resaltado nativo en navegadores WebKit (Chrome, Safari) */
-* {
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    -webkit-tap-highlight-color: transparent;
+#confirm-modal > div {
+  background: var(--card-bg);
+  padding: 2.5rem;
+  border-radius: 20px;
+  max-width: 90%;
+  text-align: center;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 165, 0, 0.2);
+}
+
+#confirm-modal p {
+  margin-bottom: 2rem;
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+#confirm-yes {
+  padding: 0.8rem 1.5rem;
+  background: linear-gradient(135deg, #FF4500, var(--primary-dark));
+  color: #121212;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+
+#confirm-no {
+  padding: 0.8rem 1.5rem;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+#confirm-yes:hover, #confirm-no:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.upload-label {
+  display: block;
+  width: 100%;
+  padding: 0.8rem;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: #121212;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.upload-label:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(255, 140, 0, 0.3);
+}
+
+.error-message {
+  color: #ff6b6b;
+  font-size: 0.9rem;
+  margin-top: -0.8rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  height: 0;
+}
+
+.error-message.show {
+  opacity: 1;
+  transform: translateY(0);
+  height: auto;
+}
+
+.avatar-error {
+  display: block;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* Nuevos estilos para los botones de exportar/importar */
+.data-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.data-action-button {
+  padding: 0.8rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.data-action-button i {
+  font-size: 1rem;
+}
+
+#export-data-btn {
+  background: linear-gradient(135deg, #4CAF50, #2E7D32);
+  color: white;
+}
+
+#import-data-btn {
+  background: linear-gradient(135deg, #2196F3, #1565C0);
+  color: white;
+}
+
+.data-action-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos para el toast */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 24px;
+  border-radius: 8px;
+  color: white;
+  font-weight: 500;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.toast.show {
+  opacity: 1;
+}
+
+.toast.success {
+  background: linear-gradient(135deg, #4CAF50, #2E7D32);
+}
+
+.toast.error {
+  background: linear-gradient(135deg, #F44336, #C62828);
+}
+.confirm-import-modal {
+  background: linear-gradient(135deg, #FF8C00, #FFA500) !important;
+  border: 2px solid #FFD700 !important;
+  color: #121212 !important;
+}
+
+/* Estilo premium para el modal de confirmación */
+.import-confirm-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.import-confirm-container {
+    background: linear-gradient(145deg, #1E1E1E, #2A2A2A);
+    border-radius: 24px;
+    border: 2px solid var(--primary);
+    box-shadow: 0 12px 40px rgba(255, 165, 0, 0.25),
+                inset 0 0 0 1px rgba(255, 215, 0, 0.1);
+    width: 90%;
+    max-width: 420px;
+    padding: 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.import-confirm-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+}
+
+.import-confirm-message {
+    color: var(--accent);
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    font-weight: 500;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.import-confirm-message small {
+    display: block;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    margin-top: 0.8rem;
+}
+
+.import-confirm-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Efecto de brillo al pasar el mouse */
+.glow-on-hover {
+    position: relative;
+    overflow: hidden;
+}
+
+.glow-on-hover::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 215, 0, 0.2),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+.glow-on-hover:hover::after {
+    left: 100%;
 }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Selecciona tu perfil</h1>
+    
+    <div class="data-actions">
+      <button id="export-data-btn" class="data-action-button">
+         Exportar datos
+      </button>
+      <button id="import-data-btn" class="data-action-button">
+         Importar datos
+      </button>
+      <input type="file" id="import-file-input" accept=".json" style="display: none;">
+    </div>
+    
     <div id="profiles-grid"></div>
     <button id="add-profile-btn">Nuevo perfil</button>
   </div>
@@ -237,9 +662,28 @@ input:focus,
   <div id="profile-modal">
     <div class="modal-content">
       <h2 id="modal-title">Nuevo Perfil</h2>
+      
       <div class="avatar-preview" id="avatar-preview"></div>
-      <input type="file" id="avatar-input" accept="image/*" />
-      <input type="text" id="profile-name" placeholder="Nombre del perfil" />
+      
+      <div class="avatar-selection">
+        <button class="active" id="default-avatars-btn">Predeterminados</button>
+        <button id="custom-avatar-btn">Personalizado</button>
+      </div>
+      
+      <div class="default-avatars" id="default-avatars-section">
+        <h3>Selecciona un avatar</h3>
+        <div class="avatars-grid" id="avatars-grid"></div>
+      </div>
+      
+      <div id="custom-avatar-section" style="display: none;">
+        <label for="avatar-input" class="upload-label">Subir imagen</label>
+        <input type="file" id="avatar-input" accept="image/*" />
+      </div>
+      
+      <input type="text" id="profile-name" placeholder="Nombre del perfil" maxlength="20" />
+      <div id="name-error" class="error-message"></div>
+      <div id="avatar-error" class="error-message avatar-error"></div>
+      
       <div class="modal-buttons">
         <button class="modal-confirm" id="modal-confirm">Guardar</button>
         <button class="modal-cancel" id="modal-cancel">Cancelar</button>
@@ -247,20 +691,18 @@ input:focus,
     </div>
   </div>
 
-  <script type="module">
-import { profileManager } from './profileManager.js';
-</script>
-
-<!-- Modal de confirmación -->
-<div id="confirm-modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 999;">
-  <div style="background: #222; padding: 2rem; border-radius: 10px; max-width: 90%; text-align: center;">
-    <p style="margin-bottom: 1rem;">¿Eliminar este perfil?¡Se Perderan Todos Sus Datos!</p>
-    <div style="display: flex; gap: 1rem; justify-content: center;">
-      <button id="confirm-yes" style="padding: 0.5rem 1rem; background: #ff4747; color: white; border: none; border-radius: 6px;">Eliminar</button>
-      <button id="confirm-no" style="padding: 0.5rem 1rem; background: #444; color: white; border: none; border-radius: 6px;">Cancelar</button>
+  <!-- Modal de confirmación -->
+  <div id="confirm-modal">
+    <div>
+      <p>¿Eliminar este perfil? ¡Se perderán todos sus datos!</p>
+      <div style="display: flex; gap: 1rem; justify-content: center;">
+        <button id="confirm-yes">Eliminar</button>
+        <button id="confirm-no">Cancelar</button>
+      </div>
     </div>
   </div>
-</div>
-</body>
 
+  <script type="module" src="perfiles.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+</body>
 </html>

@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script type="module" src="moviesData.js"></script>
     <script type="module" src="moviesFunctions.js"></script>
+    <script type="module" src="categories.js"></script>
     <script src="global.js"></script>
 </head>
 <body>
@@ -31,13 +32,23 @@
             <div class="logo-glass">
                 <h1 class="logo">Flicker</h1>
             </div>
-        </div>
-        <!-- Agrega esto en el header, después del logo-container -->
-<div class="profile-icon-container">
-    <a href="perfiles.html" class="profile-icon-button">
-        <i class="fas fa-user-cog"></i>
-    </a>
+            <div class="categories-dropdown">
+    <button class="categories-button">
+        Categorías
+        <svg class="categories-arrow" width="12" height="12" viewBox="0 0 24 24">
+            <path d="M7 10l5 5 5-5z" fill="currentColor"/>
+        </svg>
+    </button>
+    <div class="categories-menu">
+        <!-- Los géneros se cargarán aquí dinámicamente -->
+    </div>
 </div>
+        </div>
+        <div class="profile-icon-container">
+            <a href="perfiles.html" class="profile-icon-button">
+                <i class="fas fa-user-cog"></i>
+            </a>
+        </div>
     </header>
    
     <!-- Modal de confirmación -->

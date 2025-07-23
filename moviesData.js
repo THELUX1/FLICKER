@@ -29,7 +29,7 @@ const manualMovies = [
     {
           id: 1357633,
           title: "Solo Leveling: Segundo Despertar",
-          image: "https://s.lupacine.com/image/t/p/w500/dblIFen0bNZAq8icJXHwrjfymDW.jpg",
+          image: "https://s3.fiestareel.com/image/t/p/w500/dblIFen0bNZAq8icJXHwrjfymDW.jpg",
           link: "detalles.html?type=movie&id=1357633",
           year: "2024",
           genres: ["Acción", "Aventura", "Fantasía", "Animación"] // <-- Asegúrate de que esto esté definido
@@ -85,7 +85,7 @@ const manualMovies = [
     {
           id: 1138749,
           title: "The Island",
-          image: "https://s.lupacine.com/image/t/p/w500/ajb1rMiorchfRemYHZCkbV9DBg6.jpg",
+          image: "https://s3.fiestareel.com/image/t/p/w500/ajb1rMiorchfRemYHZCkbV9DBg6.jpg",
           link: "detalles.html?type=movie&id=1138749",
           year: "2023",
           genres: ["Acción", "Suspenso", "Crímen"] // <-- Asegúrate de que esto esté definido
@@ -252,7 +252,7 @@ const manualMovies = [
       {
           id: 1249213,
           title: "Drop: Amenaza anónima",
-          image: "https://s.lupacine.com/image/t/p/w500/dS2S5lpfgRIRQOb7LDCjNsQqKjp.jpg",
+          image: "https://s3.fiestareel.com/image/t/p/w500/hSQPSW8aLjsMBfwqGjgJ6HozTkp.jpg",
           link: "detalles.html?type=movie&id=1249213",
           year: "2025",
           genres: ["Terror", "Suspenso", "Misterio"] // <-- Asegúrate de que esto esté definido
@@ -388,7 +388,7 @@ const manualMovies = [
       {
           id: 929204,
           title: "Wallace y Gromit: La venganza se sirve con plumas",
-          image: "https://s.lupacine.com/image/t/p/w500/6BxK38ehxuX2dJmZIMpJcVNbYks.jpg",
+          image: "https://s3.fiestareel.com/image/t/p/w500/6BxK38ehxuX2dJmZIMpJcVNbYks.jpg",
           link: "detalles.html?type=movie&id=929204",
           year: "2024",
           genres: ["Familia", "Comedia", "Aventura","Animación"] // <-- Asegúrate de que esto esté definido
@@ -396,7 +396,7 @@ const manualMovies = [
       {
           id: 1299652,
           title: "Watchmen: Capítulo 2",
-          image: "https://s.lupacine.com/image/t/p/w500/4rBObJFpiWJOG7aIlRrOUniAkBs.jpg",
+          image: "https://s3.fiestareel.com/image/t/p/w500/4rBObJFpiWJOG7aIlRrOUniAkBs.jpg",
           link: "detalles.html?type=movie&id=1299652",
           year: "2024",
           genres: ["Animación", "Drama", "Acción","Ciencia ficción","Misterio"] // <-- Asegúrate de que esto esté definido
@@ -468,7 +468,7 @@ const manualMovies = [
       {
           id: 896536,
           title: "La Leyenda de Ochi",
-          image: "https://s.lupacine.com/image/t/p/w500/wVujUVvY4qvKARAslItQ4ARKqtz.jpg",
+          image: "https://s3.fiestareel.com/image/t/p/w500/qYyEelO4JfOwE0Ui5KsrCE0O8UA.jpg",
           link: "detalles.html?type=movie&id=896536",
           year: "2025",
           genres: ["Fantasía", "Aventura", "Familia"] // <-- Asegúrate de que esto esté definido
@@ -476,7 +476,7 @@ const manualMovies = [
       {
           id: 574475,
           title: "Destino final lazos de sangre",
-          image: "https://s.lupacine.com/image/t/p/w500/6WxhEvFsauuACfv8HyoVX6mZKFj.jpg",
+          image: "https://s3.fiestareel.com/image/t/p/w500/6WxhEvFsauuACfv8HyoVX6mZKFj.jpg",
           link: "detalles.html?type=movie&id=574475",
           year: "2025",
           genres: ["Terror", "Misterio"] // <-- Asegúrate de que esto esté definido
@@ -484,7 +484,7 @@ const manualMovies = [
       {
           id: 552524,
           title: "Lilo y Stitch",
-          image: "https://s.lupacine.com/image/t/p/w500/tUae3mefrDVTgm5mRzqWnZK6fOP.jpg",
+          image: "https://s3.fiestareel.com/image/t/p/w500/Y6pjszkKQUZ5uBbiGg7KWiCksJ.jpg",
           link: "detalles.html?type=movie&id=552524",
           year: "2025",
           genres: ["Familia", "Comedia", "Ciencia ficción"] // <-- Asegúrate de que esto esté definido
@@ -500,7 +500,7 @@ const manualMovies = [
       {
           id: 1390394,
           title: "Vini Jr.",
-          image: "https://s.lupacine.com/image/t/p/w500/4ImGMcwpy4k2zmcXBSFYNK6kRr9.jpg",
+          image: "https://s3.fiestareel.com/image/t/p/w500/4ImGMcwpy4k2zmcXBSFYNK6kRr9.jpg",
           link: "detalles.html?type=movie&id=1390394",
           year: "2025",
           genres: ["Documental"] // <-- Asegúrate de que esto esté definido

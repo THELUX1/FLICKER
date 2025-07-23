@@ -503,7 +503,7 @@ input:focus,
     font-size: 12px;
     font-weight: 600;
     color: white;
-    background: linear-gradient(to right, #ff4d4d, #f9cb28);
+    background: #343434ae;
     padding: 3px 8px;
     border-radius: 4px;
     z-index: 1;
@@ -545,7 +545,35 @@ input:focus,
     background: #ff0a00;
     transform: scale(1.1);
 }
+/* Botón de categorías */
+.categories-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(30, 30, 30, 0.8);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 8px 15px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-left: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
 
+.categories-button:hover {
+    background: rgba(50, 50, 50, 0.8);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.categories-arrow {
+    transition: transform 0.3s ease;
+}
+
+.categories-button.active .categories-arrow {
+    transform: rotate(180deg);
+}
 /* Bottom Navigation */
         .bottom-nav {
             position: fixed;
@@ -695,4 +723,84 @@ input:focus,
     .nav-icon i {
         font-size: 1.2rem;
     }
+}
+/* Menú de categorías - Versión mejorada */
+.categories-dropdown {
+    position: relative;
+    display: inline-block;
+    margin-left: 15px;
+}
+
+.categories-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(30, 30, 30, 0.8);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 8px 15px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.categories-button:hover {
+    background: rgba(50, 50, 50, 0.8);
+}
+
+.categories-menu {
+    position: absolute;
+    top: 55px;
+    left: -45px;
+    width: 220px;
+    max-height: 60vh;
+    overflow-y: auto;
+    background: rgba(40, 40, 40, 0.98);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    padding: 8px 0;
+    z-index: 1000;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.3) transparent;
+    display: none;
+}
+
+/* Scrollbar para WebKit */
+.categories-menu::-webkit-scrollbar {
+    width: 6px;
+}
+
+.categories-menu::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.categories-menu::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+.categories-dropdown.active .categories-menu {
+    display: block;
+}
+
+.category-item {
+    padding: 10px 20px;
+    color: #e0e0e0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    margin: 0 10px;
+}
+
+.category-item:last-child {
+    border-bottom: none;
+}
+
+.category-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #f9cb28;
 }

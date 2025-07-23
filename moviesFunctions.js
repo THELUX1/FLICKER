@@ -361,4 +361,5 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Exportar funciones
-export { generarContenido, setupSearch };
+// Al final de moviesFunctions.js
+export { generarContenido, setupSearch, createMovieCard }; // Añade createMovieCard a las exportaciones

@@ -37,7 +37,7 @@ classifyMoviesByGenre(hiddenMovies);
 // Función para generar el contenido de la página principal
 function generarContenido(container) {
     const continueWatchingMovies = getContinueWatchingMovies();
-    console.log("Películas para 'Seguir viendo':", continueWatchingMovies); // DEBUG
+    console.log("Películas para 'Continúa viendo':", continueWatchingMovies); // DEBUG
 
     const sortedManualMovies = [...manualMovies].sort((a, b) => {
         if (b.year !== a.year) {
@@ -47,7 +47,7 @@ function generarContenido(container) {
     });
 
     const visibleCategories = {
-        "Seguir viendo": continueWatchingMovies,
+        "Continúa viendo": continueWatchingMovies,
         "Recién Agregado": sortedManualMovies.slice(0, 12),
         "Acción": [...accionMovies].sort((a, b) => (b.year || 0) - (a.year || 0)),
         "Drama": [...dramaMovies].sort((a, b) => (b.year || 0) - (a.year || 0)),
@@ -214,7 +214,7 @@ function removeFromContinueWatching(movieId) {
     if (!currentProfile) return;
     
     localStorage.removeItem(`profile_${currentProfile.id}_progress_${movieId}`);
-    showToast(`Película eliminada de "Seguir viendo"`, 'success');
+    showToast(`Película eliminada`, 'success');
     setTimeout(() => {
         window.location.reload();
     }, 1000);

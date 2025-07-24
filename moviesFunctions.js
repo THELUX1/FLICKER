@@ -46,15 +46,16 @@ function generarContenido(container) {
         return b.addOrder - a.addOrder;
     });
 
-    const visibleCategories = {
-        "Continúa viendo": continueWatchingMovies,
+    // Objeto base con todas las categorías
+    const allCategories = {
         "Recién Agregado": sortedManualMovies.slice(0, 12),
         "Acción": [...accionMovies].sort((a, b) => (b.year || 0) - (a.year || 0)),
         "Drama": [...dramaMovies].sort((a, b) => (b.year || 0) - (a.year || 0)),
     };
 
+    // Añadir géneros
     Object.keys(genreCategories).forEach(genre => {
-        visibleCategories[genre] = [...genreCategories[genre]].sort((a, b) => {
+        allCategories[genre] = [...genreCategories[genre]].sort((a, b) => {
             if (b.year !== a.year) {
                 return (b.year || 0) - (a.year || 0);
             }
@@ -62,43 +63,92 @@ function generarContenido(container) {
         });
     });
 
-    container.innerHTML = Object.entries(visibleCategories)
-        .map(([category, movies]) => {
-            return `
-                <section class="movie-section">
-                    <h2 class="section-title">${category}</h2>
-                    <div class="movies-container">
-                        ${movies.length > 0 ? movies.map(movie => createMovieCard(movie)).join('') : '<p class="no-movies">No hay contenido disponible.</p>'}
-                    </div>
-                </section>
-            `;
-        })
-        .join('');
+    // Crear objeto final de categorías visibles
+    const visibleCategories = {...allCategories};
+
+    // Solo añadir "Continúa viendo" si hay películas con progreso
+    if (continueWatchingMovies.length > 0) {
+        visibleCategories["Continúa viendo"] = continueWatchingMovies;
+        
+        // Mover "Continúa viendo" al principio
+        const orderedCategories = {
+            "Continúa viendo": continueWatchingMovies,
+            ...allCategories
+        };
+        
+        container.innerHTML = Object.entries(orderedCategories)
+            .map(([category, movies]) => generateCategorySection(category, movies))
+            .join('');
+    } else {
+        container.innerHTML = Object.entries(visibleCategories)
+            .map(([category, movies]) => generateCategorySection(category, movies))
+            .join('');
+    }
 
     setupRemoveButtons();
     setupLazyLoading();
 }
 
+// Función auxiliar para generar secciones de categoría
+function generateCategorySection(category, movies) {
+    return `
+        <section class="movie-section">
+            <h2 class="section-title">${category}</h2>
+            <div class="movies-container">
+                ${movies.length > 0 ? movies.map(movie => createMovieCard(movie)).join('') : '<p class="no-movies">No hay contenido disponible.</p>'}
+            </div>
+        </section>
+    `;
+}
+
 // Función para crear una tarjeta de película con lazy loading
 function createMovieCard(movie) {
-    const progress = movie.progress ? `<div class="progress-bar"><div class="progress" style="width: ${(movie.progress / movie.duration) * 100}%"></div></div>` : '';
-    const removeButton = movie.progress ? `
-        <button class="remove-button" data-movie-id="${movie.id}">
+    // Calcular el porcentaje de progreso con validaciones
+    let progressPercentage = 0;
+    let showProgress = false;
+    
+    if (movie.progress && movie.duration) {
+        // Asegurar que el progreso no exceda el 95% de la duración
+        const maxValidProgress = movie.duration * 0.95;
+        const validProgress = Math.min(movie.progress, maxValidProgress);
+        progressPercentage = (validProgress / movie.duration) * 100;
+        showProgress = true;
+    }
+
+    // Crear elementos de la tarjeta
+    const progressBar = showProgress ? `
+        <div class="continue-progress" data-progress="${Math.round(progressPercentage)}%">
+            <div class="continue-progress-bar" style="width: ${progressPercentage}%"></div>
+        </div>
+    ` : '';
+
+    const removeButton = showProgress ? `
+        <button class="remove-button" data-movie-id="${movie.id}" aria-label="Eliminar de Continuar viendo">
             <i class="fas fa-trash"></i>
         </button>
     ` : '';
 
+    // Añadir indicador visual si está cerca del final
+    const nearEndBadge = (progressPercentage > 80 && progressPercentage <= 95) ? `
+        <div class="near-end-badge">Casi terminada</div>
+    ` : '';
+
     return `
-        <div class="movie-card">
-            <a href="${movie.link}">
-                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 450'%3E%3C/svg%3E" 
-                     data-src="${movie.image}" 
-                     alt="${movie.title}" 
-                     loading="lazy"
-                     class="lazy-image">
-                <div class="movie-title">${movie.title}</div>
-                ${movie.year ? `<div class="movie-year">${movie.year}</div>` : ''}
-                ${progress}
+        <div class="movie-card" data-movie-id="${movie.id}">
+            <a href="${movie.link}" class="movie-link">
+                <div class="movie-image-container">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 450'%3E%3C/svg%3E" 
+                         data-src="${movie.image}" 
+                         alt="${movie.title}" 
+                         loading="lazy"
+                         class="lazy-image">
+                    ${nearEndBadge}
+                </div>
+                <div class="movie-info">
+                    <div class="movie-title">${movie.title}</div>
+                    ${movie.year ? `<div class="movie-year">${movie.year}</div>` : ''}
+                </div>
+                ${progressBar}
             </a>
             ${removeButton}
         </div>
@@ -144,28 +194,32 @@ function getContinueWatchingMovies() {
     const currentProfile = profileManager.getCurrentProfile();
     
     if (!currentProfile) return continueWatching;
-    
-    // Buscamos las claves que corresponden al perfil actual
-    const profilePrefix = `profile_${currentProfile.id}_progress_`;
-    
+
+    const now = Date.now();
+    const oneWeekAgo = now - (7 * 24 * 60 * 60 * 1000); // Solo mostrar progresos de la última semana
+
     for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
-        if (key.startsWith(profilePrefix)) {
+        if (key.startsWith(`profile_${currentProfile.id}_progress_`)) {
             const movieId = key.split('_')[3];
-            const progress = localStorage.getItem(key);
-            const movie = manualMovies.find(m => m.id == movieId) || 
-                          accionMovies.find(m => m.id == movieId) ||
-                          hiddenMovies.find(m => m.id == movieId) || 
-                          dramaMovies.find(m => m.id == movieId);
-            if (movie) {
+            const progress = parseFloat(localStorage.getItem(key));
+            const movie = [...manualMovies, ...accionMovies, ...dramaMovies, ...hiddenMovies].find(m => m.id == movieId);
+
+            if (movie && progress > 0) {
+                // Validar que el progreso no sea mayor al 95% de la duración
+                const maxValidProgress = (movie.duration || 120 * 60) * 0.95;
+                const validProgress = Math.min(progress, maxValidProgress);
+                
                 continueWatching.push({
                     ...movie,
-                    progress: parseFloat(progress)
+                    progress: validProgress,
+                    duration: movie.duration || 120 * 60 // Duración en segundos
                 });
             }
         }
     }
-    return continueWatching;
+    
+    return continueWatching.sort((a, b) => b.progress - a.progress); // Ordenar por mayor progreso
 }
 
 function showConfirmModal(title, callback) {
@@ -174,34 +228,85 @@ function showConfirmModal(title, callback) {
     const confirmYes = document.getElementById('confirm-yes');
     const confirmNo = document.getElementById('confirm-no');
 
-    if (confirmMessage) confirmMessage.textContent = `¿Estás seguro de que quieres eliminar "${title}"?`;
-    if (modal) modal.style.display = 'flex';
+    // Asegurar que el modal esté encima de todo
+    if (modal) {
+        modal.style.zIndex = '1000';
+        modal.style.display = 'flex';
+        modal.setAttribute('aria-hidden', 'false');
+    }
 
+    // Mensaje más descriptivo
+    if (confirmMessage) {
+        confirmMessage.innerHTML = `
+            <p>¿Eliminar<strong>"${title}"</strong>de tu lista de progreso?</p>
+            <small>Esto borrará todos los datos de reproducción guardados.</small>
+        `;
+    }
+
+    // Limpiar eventos anteriores para evitar duplicados
+    const cleanUpEvents = () => {
+        if (confirmYes) confirmYes.onclick = null;
+        if (confirmNo) confirmNo.onclick = null;
+        document.onkeydown = null;
+    };
+
+    // Configurar botón Sí
     if (confirmYes) {
         confirmYes.onclick = () => {
-            if (modal) modal.style.display = 'none';
+            cleanUpEvents();
+            modal.style.display = 'none';
+            modal.setAttribute('aria-hidden', 'true');
             callback(true);
         };
     }
 
+    // Configurar botón No
     if (confirmNo) {
         confirmNo.onclick = () => {
-            if (modal) modal.style.display = 'none';
+            cleanUpEvents();
+            modal.style.display = 'none';
+            modal.setAttribute('aria-hidden', 'true');
             callback(false);
         };
     }
+
+    // Cerrar con tecla Escape
+    document.onkeydown = (e) => {
+        if (e.key === 'Escape') {
+            cleanUpEvents();
+            modal.style.display = 'none';
+            modal.setAttribute('aria-hidden', 'true');
+            callback(false);
+        }
+    };
 }
 
 function setupRemoveButtons() {
-    const removeButtons = document.querySelectorAll('.remove-button');
-    removeButtons.forEach(button => {
+    document.querySelectorAll('.remove-button').forEach(button => {
         button.addEventListener('click', (e) => {
             e.preventDefault();
+            e.stopPropagation();
+            
             const movieId = button.getAttribute('data-movie-id');
-            const movieTitle = manualMovies.find(m => m.id == movieId)?.title || "esta película";
-            showConfirmModal(movieTitle, (confirmed) => {
+            const movie = [...manualMovies, ...accionMovies, ...dramaMovies, ...hiddenMovies]
+                         .find(m => m.id == movieId);
+
+            if (!movie) return;
+
+            showConfirmModal(movie.title, (confirmed) => {
                 if (confirmed) {
-                    removeFromContinueWatching(movieId);
+                    // Animación de eliminación
+                    const card = button.closest('.movie-card');
+                    if (card) {
+                        card.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+                        card.style.transform = 'scale(0.8)';
+                        card.style.opacity = '0';
+                        
+                        setTimeout(() => {
+                            card.remove();
+                            removeFromContinueWatching(movieId);
+                        }, 300);
+                    }
                 }
             });
         });
@@ -213,29 +318,28 @@ function removeFromContinueWatching(movieId) {
     const currentProfile = profileManager.getCurrentProfile();
     if (!currentProfile) return;
     
-    localStorage.removeItem(`profile_${currentProfile.id}_progress_${movieId}`);
-    showToast(`Película eliminada`, 'success');
-    setTimeout(() => {
-        window.location.reload();
-    }, 1000);
-}
-
-function showToast(message, type) {
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    toast.innerText = message;
-    document.body.appendChild(toast);
-
-    setTimeout(() => {
-        toast.classList.add('show');
-    }, 100);
-
-    setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => {
-            document.body.removeChild(toast);
-        }, 300);
-    }, 3000);
+    // Eliminar todas las posibles variantes de progreso
+    const prefixes = [
+        `profile_${currentProfile.id}_progress_`,
+        `progress_`,
+        `profile_${currentProfile.id}_seriesProgress_`,
+        `seriesProgress_`
+    ];
+    
+    // Buscar y eliminar todas las coincidencias
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (prefixes.some(prefix => key.startsWith(prefix + movieId))) {
+            localStorage.removeItem(key);
+            console.log(`Eliminado: ${key}`); // Debug
+        }
+    }
+    
+    // Marcar como eliminado para el reproductor
+    sessionStorage.setItem(`deleted_${movieId}`, 'true');
+    
+    // No recargar inmediatamente (mejor experiencia de usuario)
+    showToast(`Película eliminada de "Continúa viendo"`, 'success');
 }
 
 function setupSearch() {
@@ -362,4 +466,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Exportar funciones
 // Al final de moviesFunctions.js
-export { generarContenido, setupSearch, createMovieCard }; // Añade createMovieCard a las exportaciones
+export { generarContenido, setupSearch, createMovieCard };

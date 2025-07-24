@@ -405,7 +405,19 @@
 <script>
 // Declarar hls como una variable global
 let hls;
+// Verificar si la película fue eliminada manualmente
+const checkDeletedProgress = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const movieId = urlParams.get('movieId');
+    
+    if (sessionStorage.getItem(`deleted_${movieId}`) === 'true') {
+        video.currentTime = 0; // Reiniciar si fue eliminada
+        sessionStorage.removeItem(`deleted_${movieId}`);
+    }
+};
 
+// Ejecutar al cargar el reproductor
+document.addEventListener('DOMContentLoaded', checkDeletedProgress);
 const video = document.getElementById("video");
 
 // Obtener parámetros de la URL
@@ -809,20 +821,32 @@ const type = urlParams.get('type');
 const episodeNumber = urlParams.get('episodeNumber');
 
 // Función para guardar progreso con perfil
-function saveProgress() {
-    const profile = profileManager.getCurrentProfile();
-    if (!profile) return;
+// En Reproductor.html
+let isSeeking = false;
 
-    if (type === 'series') {
-        const progressData = {
-            seriesId: movieId,
-            episodeNumber: episodeNumber,
-            currentTime: video.currentTime,
-            duration: video.duration
-        };
-        localStorage.setItem(`profile_${profile.id}_seriesProgress_${movieId}_${episodeNumber}`, JSON.stringify(progressData));
-    } else {
-        localStorage.setItem(`profile_${profile.id}_progress_${movieId}`, video.currentTime);
+video.addEventListener('seeking', () => {
+    isSeeking = true;
+});
+
+video.addEventListener('seeked', () => {
+    isSeeking = false;
+});
+
+function saveProgress() {
+    if (isSeeking) return; // No guardar durante adelantos/retrocesos
+    
+    const currentTime = video.currentTime;
+    const duration = video.duration;
+    
+    // Solo guardar si el usuario ha visto al menos 1 minuto y no está al final
+    if (currentTime > 60 && currentTime < duration - 10) {
+        const profile = profileManager.getCurrentProfile();
+        if (profile) {
+            localStorage.setItem(
+                `profile_${profile.id}_progress_${movieId}`,
+                currentTime.toString()
+            );
+        }
     }
 }
 

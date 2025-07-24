@@ -509,21 +509,42 @@ input:focus,
     border-radius: 4px;
     z-index: 1;
 }
-
-.progress-bar {
-    width: 100%;
+.continue-progress {
+    position: relative;
+    width: calc(100% - 20px);
     height: 4px;
-    background: linear-gradient(to right, #ff4d4d, #f9cb28);
+    background: rgba(255, 255, 255, 0.1);
+    margin: 8px 10px;
     border-radius: 2px;
-    margin-top: 8px;
     overflow: hidden;
 }
 
-.progress {
+.continue-progress-bar {
     height: 100%;
-    background-color: #ff4d4d;
+    background: linear-gradient(90deg, #ff3333, #ff6666);
+    width: 0%; /* Inicializado en 0, se actualiza con JS */
+    transition: width 0.5s ease;
 }
 
+.continue-progress::after {
+    content: attr(data-progress);
+    position: absolute;
+    right: 0;
+    top: -20px;
+    font-size: 12px;
+    color: #ff9999;
+}
+.near-end-badge {
+    position: absolute;
+    top: 140px;
+    right: 15px;
+    background: rgba(255, 51, 51, 0.9);
+    color: white;
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: bold;
+}
 .remove-button {
     position: absolute;
     top: 10px;

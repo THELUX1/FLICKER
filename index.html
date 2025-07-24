@@ -15,17 +15,17 @@
 <body>
     <!-- Contenedor de búsqueda -->
     <div class="search-overlay">
-    <button class="search-icon-button">
-        <i class="fas fa-search"></i>
-    </button>
-    <div class="search-wrapper">
-        <input type="text" class="search-input" placeholder="Buscar películas y series...">
-        <button class="search-button close-search">
-            <i class="fas fa-times"></i>
+        <button class="search-icon-button">
+            <i class="fas fa-search"></i>
         </button>
-        <div class="search-results"></div>
+        <div class="search-wrapper">
+            <input type="text" class="search-input" placeholder="Buscar películas y series...">
+            <button class="search-button close-search">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="search-results"></div>
+        </div>
     </div>
-</div>
 
     <header class="header">
         <div class="logo-container">
@@ -33,24 +33,19 @@
                 <h1 class="logo">Flicker</h1>
             </div>
             <div class="categories-dropdown">
-    <button class="categories-button">
-        Categorías
-        <svg class="categories-arrow" width="12" height="12" viewBox="0 0 24 24">
-            <path d="M7 10l5 5 5-5z" fill="currentColor"/>
-        </svg>
-    </button>
-    <div class="categories-menu">
-        <!-- Los géneros se cargarán aquí dinámicamente -->
-    </div>
-</div>
-        </div>
-        <div class="profile-icon-container">
-            <a href="perfiles.html" class="profile-icon-button">
-                <i class="fas fa-user-cog"></i>
-            </a>
+                <button class="categories-button">
+                    Categorías
+                    <svg class="categories-arrow" width="12" height="12" viewBox="0 0 24 24">
+                        <path d="M7 10l5 5 5-5z" fill="currentColor"/>
+                    </svg>
+                </button>
+                <div class="categories-menu">
+                    <!-- Los géneros se cargarán aquí dinámicamente -->
+                </div>
+            </div>
         </div>
     </header>
-   
+
     <!-- Modal de confirmación -->
     <div id="confirm-modal" class="modal">
         <div class="modal-content">
@@ -58,6 +53,48 @@
             <div class="modal-buttons">
                 <button id="confirm-yes" class="modal-button confirm">Sí, eliminar</button>
                 <button id="confirm-no" class="modal-button cancel">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Menú desplegable de ajustes -->
+    <div id="settings-menu" class="settings-menu">
+        <div class="settings-header">
+            <button class="close-settings">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h2>Ajustes</h2>
+        </div>
+        <div class="settings-content">
+            <div class="profile-section">
+                <a href="perfiles.html" class="profile-button">
+                    <div class="profile-button-content">
+                        <i class="fas fa-user-circle"></i>
+                        <span>Perfiles</span>
+                    </div>
+                </a>
+            </div>
+            <div class="settings-options">
+                <a href="#" class="settings-option">
+                    <i class="fas fa-moon"></i>
+                    <span>Modo Oscuro</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <a href="#" class="settings-option">
+                    <i class="fas fa-bell"></i>
+                    <span>Notificaciones</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <a href="#" class="settings-option">
+                    <i class="fas fa-lock"></i>
+                    <span>Privacidad</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <a href="#" class="settings-option">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Ayuda</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
             </div>
         </div>
     </div>
@@ -85,6 +122,25 @@
             <i class="fas fa-heart"></i>
             <span>Me gusta</span>
         </a>
+        <a id="settings-button" class="nav-icon">
+            <i class="fas fa-cog"></i>
+            <span>Ajustes</span>
+        </a>
     </nav>
+
+    <script>
+        // Control del menú de ajustes
+        document.getElementById('settings-button').addEventListener('click', function() {
+            const menu = document.getElementById('settings-menu');
+            menu.classList.add('active');
+            document.body.classList.add('menu-open');
+        });
+
+        document.querySelector('.close-settings').addEventListener('click', function() {
+            const menu = document.getElementById('settings-menu');
+            menu.classList.remove('active');
+            document.body.classList.remove('menu-open');
+        });
+    </script>
 </body>
 </html>

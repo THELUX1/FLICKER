@@ -229,7 +229,7 @@
 .search-overlay {
     position: fixed;
     top: 20px;
-    right: 60px;
+    right: 10px;
     z-index: 1001;
 }
 
@@ -241,6 +241,7 @@
     cursor: pointer;
     transition: all 0.3s ease;
     padding: 8px;
+    
     border-radius: 50%;
 }
 
@@ -262,7 +263,7 @@ input:focus {
     display: none;
     position: absolute;
     top: 50px;
-    right: 15px;
+    right: 55px;
     width: 300px;
     background: rgba(0, 0, 0, 0.9);
     border-radius: 12px;
@@ -803,4 +804,140 @@ input:focus,
 .category-item:hover {
     background: rgba(255, 255, 255, 0.05);
     color: #f9cb28;
+}
+/* Menú de ajustes */
+.settings-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 97%;
+    height: 100%;
+    background-color: #1a1a2e;
+    border-radius: 20px 0 0 20px;
+    z-index: 1000;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.settings-menu.active {
+    right: 0;
+    animation: bubbleIn 0.5s ease-out;
+}
+
+@keyframes bubbleIn {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+        right: -50%;
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+        right: 0;
+    }
+}
+
+/* Encabezado del menú */
+.settings-header {
+    padding: 25px 20px;
+    background-color: #16213e;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.settings-header h2 {
+    margin: 0;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.close-settings {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 5px;
+}
+
+/* Contenido del menú */
+.settings-content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+/* Sección de perfiles */
+.profile-section {
+    margin-bottom: 10px;
+}
+
+.profile-button {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.profile-button-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background-color: #16213e;
+    border-radius: 10px;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.profile-button-content:hover {
+    background-color: #0f3460;
+    transform: translateX(5px);
+}
+
+.profile-button-content i {
+    font-size: 1.5rem;
+    color: #ff6b6b;
+}
+
+/* Opciones de ajustes */
+.settings-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.settings-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    background-color: #16213e;
+    border-radius: 10px;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.settings-option i:first-child {
+    margin-right: 15px;
+    font-size: 1.2rem;
+    width: 24px;
+    text-align: center;
+}
+
+.settings-option:hover {
+    background-color: #0f3460;
+    transform: translateX(5px);
 }

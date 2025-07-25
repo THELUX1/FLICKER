@@ -8,6 +8,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 </head>
 <body>
+  <!-- Botón de cambio de tema -->
+  <button id="theme-toggle" class="theme-toggle">Claro</button>
+
   <main class="liked-content">
     <h1 class="liked-title">Mi lista</h1>
     <div id="content"></div>
@@ -26,6 +29,22 @@
 
   <script type="module">
     import { profileManager } from './profileManager.js';
+
+    // Tema Claro/Oscuro
+    const themeBtn = document.getElementById("theme-toggle");
+    themeBtn.onclick = () => {
+      document.body.classList.toggle("light-mode");
+      themeBtn.textContent = document.body.classList.contains("light-mode") ? "Oscuro" : "Claro";
+    };
+
+    // Recordar el tema con localStorage
+    if (localStorage.getItem("likedTheme") === "light") {
+      document.body.classList.add("light-mode");
+      themeBtn.textContent = "Oscuro";
+    }
+    themeBtn.addEventListener("click", () => {
+      localStorage.setItem("likedTheme", document.body.classList.contains("light-mode") ? "light" : "dark");
+    });
 
     function loadLikedContent() {
       const profile = profileManager.getCurrentProfile();
@@ -64,23 +83,22 @@
       container.innerHTML = html;
     }
 
-    // En me-gusta.html
-function createCard(item) {
-    return `
+    function createCard(item) {
+      return `
         <div class="card">
-            <a href="${item.link}" class="card-link">
-                <img src="${item.image}" alt="${item.title}" class="card-image"/>
-                <div class="card-info">
-                    <div class="card-title">${item.title}</div>
-                    ${item.year ? `<div class="card-year">${item.year}</div>` : ''}
-                </div>
-            </a>
-            <button class="remove-button" data-id="${item.id}" data-type="${item.type}">
-                <i class="fas fa-trash"></i>
-            </button>
+          <a href="${item.link}" class="card-link">
+            <img src="${item.image}" alt="${item.title}" class="card-image"/>
+            <div class="card-info">
+              <div class="card-title">${item.title}</div>
+              ${item.year ? `<div class="card-year">${item.year}</div>` : ''}
+            </div>
+          </a>
+          <button class="remove-button" data-id="${item.id}" data-type="${item.type}" title="Quitar de la lista">
+            <i class="fas fa-trash"></i>
+          </button>
         </div>
-    `;
-}
+      `;
+    }
 
     function showConfirmModal(title, callback) {
       const modal = document.getElementById('confirm-modal');
@@ -98,36 +116,34 @@ function createCard(item) {
       };
     }
 
-    // En me-gusta.html
-window.removeFromLiked = function (id, type) {
-    const profile = profileManager.getCurrentProfile();
-    if (!profile) return;
+    window.removeFromLiked = function (id, type) {
+      const profile = profileManager.getCurrentProfile();
+      if (!profile) return;
 
-    const key = `profile_${profile.id}_liked${type === 'movie' ? 'Movies' : 'Series'}`;
-    const liked = JSON.parse(localStorage.getItem(key) || '[]');
-    const updated = liked.filter(item => item.id != id);
-    localStorage.setItem(key, JSON.stringify(updated));
-    generarContenido(document.getElementById('content'));
-};
+      const key = `profile_${profile.id}_liked${type === 'movie' ? 'Movies' : 'Series'}`;
+      const liked = JSON.parse(localStorage.getItem(key) || '[]');
+      const updated = liked.filter(item => item.id != id);
+      localStorage.setItem(key, JSON.stringify(updated));
+      generarContenido(document.getElementById('content'));
+    };
 
     document.addEventListener('DOMContentLoaded', () => {
       const container = document.getElementById('content');
       generarContenido(container);
 
-      // En me-gusta.html
-container.addEventListener('click', (e) => {
-    if (e.target.closest('.remove-button')) {
-        const btn = e.target.closest('.remove-button');
-        const id = btn.dataset.id;
-        const type = btn.dataset.type;
-        const item = loadLikedContent()[type === 'movie' ? 'movies' : 'series']
+      container.addEventListener('click', (e) => {
+        if (e.target.closest('.remove-button')) {
+          const btn = e.target.closest('.remove-button');
+          const id = btn.dataset.id;
+          const type = btn.dataset.type;
+          const item = loadLikedContent()[type === 'movie' ? 'movies' : 'series']
             .find(item => item.id == id);
-        
-        showConfirmModal(item.title, confirmed => {
+
+          showConfirmModal(item.title, confirmed => {
             if (confirmed) removeFromLiked(id, type);
-        });
+          });
         }
-     });
+      });
     });
   </script>
 </body>

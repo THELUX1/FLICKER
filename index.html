@@ -1,3 +1,10 @@
+<!-- Cambios clave:
+  - El menú de ajustes (.settings-menu) ahora se despliega desde abajo hacia arriba.
+  - Se ajustó la estructura para que el menú esté en la parte inferior.
+  - La animación y colores "negros cálidos" se aplican en el CSS.
+  - El botón de ajustes abre el menú desde abajo y el botón de cerrar lo oculta.
+-->
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -57,11 +64,11 @@
         </div>
     </div>
 
-    <!-- Menú desplegable de ajustes -->
+    <!-- Menú desplegable de ajustes DESDE ABAJO HACIA ARRIBA -->
     <div id="settings-menu" class="settings-menu">
         <div class="settings-header">
             <button class="close-settings">
-                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-down"></i>
             </button>
             <h2>Ajustes</h2>
         </div>
@@ -129,7 +136,7 @@
     </nav>
 
     <script>
-        // Control del menú de ajustes
+        // Control del menú de ajustes desde abajo
         document.getElementById('settings-button').addEventListener('click', function() {
             const menu = document.getElementById('settings-menu');
             menu.classList.add('active');
@@ -140,6 +147,15 @@
             const menu = document.getElementById('settings-menu');
             menu.classList.remove('active');
             document.body.classList.remove('menu-open');
+        });
+
+        // Opcional: cerrar tocando fuera del menú (para móviles)
+        document.addEventListener('click', function(e) {
+            const menu = document.getElementById('settings-menu');
+            if (menu.classList.contains('active') && !menu.contains(e.target) && !e.target.closest('#settings-button')) {
+                menu.classList.remove('active');
+                document.body.classList.remove('menu-open');
+            }
         });
     </script>
 </body>

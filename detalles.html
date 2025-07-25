@@ -46,7 +46,13 @@
       -webkit-user-drag: none;
       user-drag: none;
     }
-
+    /* Impide la selección de texto en toda la página */
+body, html, * {
+  user-select: none;
+  -webkit-user-select: none;  /* Safari */
+  -moz-user-select: none;     /* Firefox */
+  -ms-user-select: none;      /* IE10+/Edge */
+}
     body {
       background-color: var(--background);
       color: var(--text);

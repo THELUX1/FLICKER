@@ -3,406 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reproductor M3U8 Rojo</title>
+    <title>Reproductor Moderno</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Nuevo CSS moderno -->
+    <link rel="stylesheet" href="Reproductor.css">
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script src="peliculas.js"></script>
-    <style>
-        /* Estilo para el cuerpo con tema rojo */
-        body {
-            background: #1a0000;
-            color: white;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            overflow: hidden;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-
-        /* Contenedor del video */
-        .video-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100vw;
-            height: 100vh;
-            background: black;
-            border-radius: 10px;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        video {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            border-radius: 10px;
-            outline: none;
-            background: black;
-            display: none;
-        }
-
-        /* Miniatura */
-        .thumbnail {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .play-overlay {
-            font-size: 55px;
-            color: #ff3333;
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 50%;
-            padding: 20px;
-            transition: all 0.3s ease;
-        }
-
-        .play-overlay:hover {
-            color: #ff6666;
-            transform: scale(1.1);
-        }
-
-        /* Estilos para el loader rojo */
-        .loader {
-            position: fixed;
-            top: 50%;
-            left: 49%;
-            transform: translate(-50%, -50%);
-            width: 50px;
-            height: 50px;
-            border: 4px solid #ff3333;
-            border-top: 4px solid #990000;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            z-index: 1000;
-        }
-
-        @keyframes spin {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-
-        /* Controles con tema rojo */
-        .controls {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            width: 100%;
-            padding: 10px;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            background: rgba(0, 0, 0, 0.8);
-            box-sizing: border-box;
-            justify-content: space-between;
-            border-top: 1px solid #ff3333;
-        }
-
-        #timeline {
-            flex-grow: 1;
-            min-width: 50px;
-            margin: 0 10px;
-            cursor: pointer;
-            height: 4px;
-            background: #330000;
-            border-radius: 2px;
-            appearance: none;
-        }
-
-        #timeline::-webkit-slider-thumb {
-            appearance: none;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #ff3333;
-            cursor: pointer;
-        }
-
-        #play-btn, 
-        #skip-forward-btn, 
-        #fullscreen-btn, 
-        #fit-screen-btn, 
-        #quality-btn {
-            width: 30px;
-            min-width: 30px;
-            text-align: center;
-            flex-shrink: 0;
-            background: transparent;
-            border: none;
-            color: white;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        #play-btn:hover, 
-        #skip-forward-btn:hover, 
-        #fullscreen-btn:hover, 
-        #fit-screen-btn:hover, 
-        #quality-btn:hover {
-            color: #ff3333;
-            transform: scale(1.1);
-        }
-
-        button i {
-            font-size: 20px;
-            width: 20px;
-            display: inline-block;
-        }
-
-        #time-display {
-            flex-shrink: 0;
-            min-width: 80px;
-            text-align: center;
-            font-size: 14px;
-            color: #ff9999;
-        }
-
-        .controls.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        /* Menú de calidad rojo */
-        .quality-container {
-            position: absolute;
-            right: 10px;
-            bottom: 50px;
-            background: rgba(51, 0, 0, 0.9);
-            padding: 5px;
-            border-radius: 5px;
-            display: none;
-            border: 1px solid #ff3333;
-        }
-
-        .quality-option {
-            padding: 5px 10px;
-            cursor: pointer;
-            font-size: 14px;
-            border-bottom: 1px solid rgba(255, 51, 51, 0.2);
-            transition: background 0.2s ease;
-        }
-
-        .quality-option:last-child {
-            border-bottom: none;
-        }
-
-        .quality-option:hover {
-            background: rgba(255, 51, 51, 0.3);
-        }
-
-        /* Botón Volver rojo */
-        .back-btn {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(51, 0, 0, 0.7);
-            border: none;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            z-index: 10;
-            transition: all 0.2s ease;
-            border: 1px solid #ff3333;
-        }
-
-        .back-btn:hover {
-            background: rgba(255, 51, 51, 0.3);
-        }
-
-        /* Notificación estilo rojo */
-        .notification {
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(51, 0, 0, 0.9);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 14px;
-            display: none;
-            z-index: 10;
-            animation: fadeInOut 6s ease-in-out;
-            border: 1px solid #ff3333;
-        }
-
-        @keyframes fadeInOut {
-            0% { opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { opacity: 0; }
-        }
-
-        /* Media Queries para dispositivos móviles */
-        @media (max-width: 768px) and (orientation: portrait) {
-            .notification {
-                top: 10px;
-                font-size: 12px;
-                padding: 8px 16px;
-            }
-            
-            .controls {
-                padding: 8px;
-            }
-            
-            #play-btn, 
-            #skip-forward-btn, 
-            #fullscreen-btn, 
-            #fit-screen-btn, 
-            #quality-btn {
-                width: 25px;
-                min-width: 25px;
-            }
-            
-            button i {
-                font-size: 18px;
-            }
-            
-            #time-display {
-                min-width: 70px;
-                font-size: 12px;
-            }
-        }
-
-        /* Eliminar efectos no deseados en controles */
-        #customControls button,
-        #customControls input,
-        #customControls div,
-        #back-btn {
-            -webkit-tap-highlight-color: transparent;
-            outline: none;
-            box-shadow: none;
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-        }
-
-        /* Efectos especiales para video */
-        video[style*="cover"] {
-            transform: scale(1.1);
-            transition: transform 0.3s ease;
-        }
-
-        #fit-screen-btn.active {
-            color: #ff3333;
-        }
-
-        .skip-animation {
-            animation: skip 0.5s ease-in-out;
-        }
-
-        @keyframes skip {
-            0% { transform: translateX(0); }
-            50% { transform: translateX(20px); }
-            100% { transform: translateX(0); }
-        }
-
-        .skip-indicator {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background-color: rgba(51, 0, 0, 0.8);
-            color: white;
-            padding: 10px 15px;
-            border-radius: 5px;
-            font-size: 16px;
-            display: none;
-            z-index: 1000;
-            animation: fadeOut 1.5s ease-in-out;
-            border: 1px solid #ff3333;
-        }
-
-        @keyframes fadeOut {
-            0% { opacity: 1; }
-            100% { opacity: 0; }
-        }
-
-        .stream-btn {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background-color: rgba(51, 0, 0, 0.7);
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 1000;
-            font-size: 16px;
-            transition: all 0.2s ease;
-            border: 1px solid #ff3333;
-        }
-
-        .stream-btn:hover {
-            background-color: rgba(255, 51, 51, 0.5);
-            transform: scale(1.1);
-        }
-
-        /* Estilo para ocultar los controles */
-        #customControls {
-            transition: opacity 0.5s ease;
-        }
-
-        #customControls.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        /* Estilo para ocultar el botón de transmisión */
-        #stream-btn {
-            transition: opacity 0.5s ease;
-        }
-
-        #stream-btn.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-    </style>
 </head>
 <body>
+    <!-- Botón para cambiar tema (oscuro/claro) -->
+    <button id="theme-toggle"
+        style="position: absolute; top: 22px; right: 22px; background: #23252b; color: #f0f0f0; border: none; border-radius: 7px; padding: 8px 18px; cursor: pointer; font-size: 15px; z-index: 9999; transition: background 0.22s, color 0.22s;">
+        Claro
+    </button>
 
-<div class="video-container" id="videoContainer">
-    <button class="stream-btn" id="stream-btn"><i class="fas fa-tv"></i></button>
-    <div class="notification" id="notification">Estás viendo: <span id="movie-title-notification"></span></div>
+    <div class="video-container" id="videoContainer">
+        <button class="stream-btn" id="stream-btn"><i class="fas fa-tv"></i></button>
+        <div class="notification" id="notification">Estás viendo: <span id="movie-title-notification"></span></div>
 
-    <div class="thumbnail" id="thumbnail" style="background-image: url('assets/thumbnail.jpg');">
-        <i class="fas fa-play play-overlay"></i>
+        <div class="thumbnail" id="thumbnail" style="background-image: url('assets/thumbnail.jpg');">
+            <i class="fas fa-play play-overlay"></i>
+        </div>
+
+        <video id="video" playsinline></video>
+
+        <div class="controls" id="customControls">
+            <button id="play-btn"><i class="fas fa-play"></i></button>
+            <button id="skip-forward-btn"><i class="fas fa-forward"></i></button>
+            <input type="range" id="timeline" min="0" value="0">
+            <span id="time-display">00:00</span>
+            <button id="fullscreen-btn"><i class="fas fa-expand"></i></button>
+            <button id="fit-screen-btn"><i class="fas fa-expand-arrows-alt"></i></button>
+            <button id="quality-btn"><i class="fas fa-cog"></i></button>
+        </div>
+
+        <div class="quality-container" id="quality-container"></div>
+        <div class="loader" id="loader"></div>
+        <div class="skip-indicator" id="skip-indicator">+10s</div>
     </div>
 
-    <video id="video" playsinline></video>
+    <!-- Script para el cambio de tema -->
+    <script>
+    // Tema Claro/Oscuro
+    const themeBtn = document.getElementById("theme-toggle");
+    themeBtn.onclick = () => {
+        document.body.classList.toggle("light-mode");
+        themeBtn.textContent = document.body.classList.contains("light-mode") ? "Oscuro" : "Claro";
+    };
 
-    <div class="controls" id="customControls">
-        <button id="play-btn"><i class="fas fa-play"></i></button>
-        <button id="skip-forward-btn"><i class="fas fa-forward"></i></button>
-        <input type="range" id="timeline" min="0" value="0">
-        <span id="time-display">00:00</span>
-        <button id="fullscreen-btn"><i class="fas fa-expand"></i></button>
-        <button id="fit-screen-btn"><i class="fas fa-expand-arrows-alt"></i></button>
-        <button id="quality-btn"><i class="fas fa-cog"></i></button>
-    </div>
-
-    <div class="quality-container" id="quality-container"></div>
-    <div class="loader" id="loader"></div>
-    <div class="skip-indicator" id="skip-indicator">+10s</div>
-</div>
-
-<script>
+    // Recordar el tema con localStorage
+    if (localStorage.getItem("theme") === "light") {
+        document.body.classList.add("light-mode");
+        themeBtn.textContent = "Oscuro";
+    }
+    themeBtn.addEventListener("click", () => {
+        localStorage.setItem("theme", document.body.classList.contains("light-mode") ? "light" : "dark");
+    });
+    </script>
+    <script>
 // Declarar hls como una variable global
 let hls;
 // Verificar si la película fue eliminada manualmente
@@ -887,6 +545,5 @@ window.addEventListener("beforeunload", saveProgress);
 video.addEventListener("ended", clearProgress);
 document.addEventListener("DOMContentLoaded", loadProgress);
 </script>
-
 </body>
 </html>

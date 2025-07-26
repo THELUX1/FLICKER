@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reproductor Moderno</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Nuevo CSS moderno -->
     <link rel="stylesheet" href="Reproductor.css">
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script src="peliculas.js"></script>
@@ -44,6 +43,33 @@
 
     <!-- Script para el cambio de tema -->
     <script>
+// Configurar el reproductor con HLS - Versión corregida
+if (Hls.isSupported()) {
+    hls = new Hls({
+        maxMaxBufferLength: 30,
+        maxBufferLength: 10,
+        enableWorker: false, // Soluciona problemas de audio en algunos dispositivos
+        lowLatencyMode: false
+    });
+    
+    hls.loadSource(initialUrl);
+    hls.attachMedia(video);
+    
+    // Forzar el audio al iniciar
+    video.muted = false;
+    video.volume = 1.0;
+    
+    hls.on(Hls.Events.MANIFEST_PARSED, function() {
+        video.play().catch(e => {
+            // Fallback para autoplay bloqueado
+            video.muted = true;
+            video.play();
+            showNotification("Presiona para activar el sonido");
+        });
+    });
+}
+</script>
+    <script>
     // Tema Claro/Oscuro
     const themeBtn = document.getElementById("theme-toggle");
     themeBtn.onclick = () => {
@@ -63,6 +89,8 @@
     <script>
 // Declarar hls como una variable global
 let hls;
+let isSeeking = false;
+
 // Verificar si la película fue eliminada manualmente
 const checkDeletedProgress = () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -82,8 +110,8 @@ const video = document.getElementById("video");
 const urlParams = new URLSearchParams(window.location.search);
 const videoUrl = urlParams.get('video');
 const movieId = urlParams.get('movieId');
-const type = urlParams.get('type'); // Obtener el tipo de contenido (película o serie)
-const episodeNumber = urlParams.get('episodeNumber'); // Obtener el número del episodio (solo para series)
+const type = urlParams.get('type');
+const episodeNumber = urlParams.get('episodeNumber');
 
 // Verificar que peliculasDisponibles esté cargado
 if (typeof peliculasDisponibles === 'undefined') {
@@ -136,79 +164,34 @@ function updateTime() {
 // Configurar un intervalo para actualizar el tiempo cada segundo
 let timeUpdateInterval;
 video.addEventListener("play", () => {
-    timeUpdateInterval = setInterval(updateTime, 1000); // Actualizar cada segundo
+    timeUpdateInterval = setInterval(updateTime, 1000);
 });
 
 video.addEventListener("pause", () => {
-    clearInterval(timeUpdateInterval); // Detener el intervalo cuando el video se pausa
+    clearInterval(timeUpdateInterval);
 });
 
-video.addEventListener("seeked", updateTime); // Actualizar al buscar en el video
+video.addEventListener("seeked", updateTime);
 
 // Inicializar el tiempo y la barra de progreso al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
-    updateTime(); // Mostrar el tiempo inicial
-});
-
-// Guardar el progreso de la reproducción
-video.addEventListener("pause", () => {
-    if (type === 'series') {
-        const progressData = {
-            seriesId: movieId, // ID de la serie
-            episodeNumber: episodeNumber, // Número del episodio
-            currentTime: video.currentTime, // Tiempo actual
-            duration: video.duration // Duración total del episodio
-        };
-        localStorage.setItem(`seriesProgress_${movieId}_${episodeNumber}`, JSON.stringify(progressData));
-    } else {
-        localStorage.setItem(`progress_${movieId}`, video.currentTime);
-    }
-});
-
-// Guardar el progreso cuando el usuario cierre la página
-window.addEventListener("beforeunload", () => {
-    if (type === 'series') {
-        const progressData = {
-            seriesId: movieId,
-            episodeNumber: episodeNumber,
-            currentTime: video.currentTime,
-            duration: video.duration
-        };
-        localStorage.setItem(`seriesProgress_${movieId}_${episodeNumber}`, JSON.stringify(progressData));
-    } else {
-        localStorage.setItem(`progress_${movieId}`, video.currentTime);
-    }
-});
-
-// Cargar el progreso guardado al iniciar la reproducción
-document.addEventListener("DOMContentLoaded", () => {
-    if (type === 'series') {
-        const savedProgress = localStorage.getItem(`seriesProgress_${movieId}_${episodeNumber}`);
-        if (savedProgress) {
-            const progressData = JSON.parse(savedProgress);
-            video.currentTime = progressData.currentTime;
-        }
-    } else {
-        const savedProgress = localStorage.getItem(`progress_${movieId}`);
-        if (savedProgress) {
-            video.currentTime = parseFloat(savedProgress);
-        }
-    }
-});
-
-// Eliminar el progreso cuando la película o episodio termine
-video.addEventListener("ended", () => {
-    if (type === 'series') {
-        localStorage.removeItem(`seriesProgress_${movieId}_${episodeNumber}`);
-    } else {
-        localStorage.removeItem(`progress_${movieId}`);
-    }
+    updateTime();
 });
 
 // Manejar la barra de progreso
 timeline.addEventListener("input", (e) => {
+    isSeeking = true;
     const seekTime = (e.target.value / 100) * video.duration;
     video.currentTime = seekTime;
+});
+
+video.addEventListener('seeking', () => {
+    isSeeking = true;
+});
+
+video.addEventListener('seeked', () => {
+    isSeeking = false;
+    updateTime();
 });
 
 // Mostrar notificación de reproducción
@@ -296,23 +279,19 @@ function addQualityOptions() {
     const qualityContainer = document.getElementById("quality-container");
     qualityContainer.innerHTML = '';
 
-    // Verificar que exista la película en el objeto
     if (!peliculasDisponibles[movieId]) {
         console.error('Película no encontrada en peliculasDisponibles');
         return;
     }
 
-    // Obtener las calidades disponibles (excluyendo 'title')
     const qualities = Object.keys(peliculasDisponibles[movieId])
         .filter(key => key !== "title")
         .sort((a, b) => {
-            // Ordenar de mayor a menor calidad
             const resA = parseInt(a);
             const resB = parseInt(b);
             return resB - resA;
         });
 
-    // Mostrar las opciones de calidad
     qualities.forEach(quality => {
         const option = document.createElement("div");
         option.className = "quality-option";
@@ -321,7 +300,6 @@ function addQualityOptions() {
             const currentTime = video.currentTime;
             const newUrl = peliculasDisponibles[movieId][quality];
             
-            // Verificar si la URL existe
             if (!newUrl || newUrl.trim() === "") {
                 showNotification(`Calidad ${quality} no disponible`);
                 return;
@@ -329,7 +307,7 @@ function addQualityOptions() {
 
             if (Hls.isSupported()) {
                 if (hls) {
-                    hls.destroy(); // Destruir la instancia anterior de Hls
+                    hls.destroy();
                 }
                 hls = new Hls({
                     maxMaxBufferLength: 30,
@@ -409,21 +387,18 @@ const skipForwardBtn = document.getElementById("skip-forward-btn");
 const skipIndicator = document.getElementById("skip-indicator");
 
 skipForwardBtn.addEventListener("click", () => {
-    video.currentTime += 10; // Adelantar 10 segundos
-
-    // Mostrar el indicador de segundos adelantados
+    video.currentTime += 10;
     skipIndicator.innerText = `+10s`;
     skipIndicator.style.display = "block";
     setTimeout(() => {
         skipIndicator.style.display = "none";
-    }, 1500); // Ocultar el indicador después de 1.5 segundos
+    }, 1500);
 
-    // Agregar animación al contenedor del video
     const videoContainer = document.getElementById("videoContainer");
     videoContainer.classList.add("skip-animation");
     setTimeout(() => {
         videoContainer.classList.remove("skip-animation");
-    }, 500); // Duración de la animación en milisegundos
+    }, 500);
 });
 
 // Ocultar/mostrar controles
@@ -441,109 +416,515 @@ function hideControls() {
 function showControls() {
     streamBtn.classList.remove("hidden");
     customControls.classList.remove("hidden");
-
-    // Reiniciar el temporizador de inactividad
     clearTimeout(inactivityTimer);
-    inactivityTimer = setTimeout(hideControls, 5000); // Ocultar después de 5 segundos
+    inactivityTimer = setTimeout(hideControls, 5000);
 }
 
-// Ocultar controles después de 5 segundos al cargar la página
 inactivityTimer = setTimeout(hideControls, 5000);
 
-// Mostrar controles cuando el usuario mueva el mouse sobre el reproductor
 videoContainer.addEventListener("mousemove", showControls);
-
-// Mostrar controles cuando el usuario interactúe con los controles
 customControls.addEventListener("click", showControls);
-
-// Mostrar controles cuando el usuario haga clic en el botón de transmisión
 streamBtn.addEventListener("click", showControls);
 
-// Simulación de Chromecast (en una implementación real usarías la API oficial)
+// Simulación de Chromecast
 streamBtn.addEventListener("click", () => {
     showNotification("Funcionalidad de transmisión a TV simulada");
 });
 </script>
 
-
 <script type="module">
-import { profileManager } from './profileManager.js';
+    import { profileManager } from './profileManager.js';
+    import UserTracker from './userTracking.js';
+    import { manualMovies, accionMovies, dramaMovies } from './moviesData.js';
 
-const video = document.getElementById("video");
+    // Declarar hls como una variable global
+    let hls;
+    let isSeeking = false;
+    const video = document.getElementById("video");
 
-// Obtener parámetros de la URL
-const urlParams = new URLSearchParams(window.location.search);
-const videoUrl = urlParams.get('video');
-const movieId = urlParams.get('movieId');
-const type = urlParams.get('type');
-const episodeNumber = urlParams.get('episodeNumber');
+    // Obtener parámetros de la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const videoUrl = urlParams.get('video');
+    const movieId = urlParams.get('movieId');
+    const type = urlParams.get('type');
+    const episodeNumber = urlParams.get('episodeNumber');
 
-// Función para guardar progreso con perfil
-// En Reproductor.html
-let isSeeking = false;
+    // Verificar que peliculasDisponibles esté cargado
+    if (typeof peliculasDisponibles === 'undefined') {
+        console.error('peliculasDisponibles no está definido');
+    }
 
-video.addEventListener('seeking', () => {
-    isSeeking = true;
-});
+    // Asignar el título de la película o el nombre del episodio
+    let movieTitle;
+    if (type === 'series') {
+        movieTitle = `Episodio ${episodeNumber}`;
+    } else {
+        movieTitle = peliculasDisponibles[movieId]?.title || "Película";
+    }
 
-video.addEventListener('seeked', () => {
-    isSeeking = false;
-});
+    // Mostrar el título en la notificación
+    document.getElementById("movie-title-notification").innerText = movieTitle;
 
-function saveProgress() {
-    if (isSeeking) return; // No guardar durante adelantos/retrocesos
-    
-    const currentTime = video.currentTime;
-    const duration = video.duration;
-    
-    // Solo guardar si el usuario ha visto al menos 1 minuto y no está al final
-    if (currentTime > 60 && currentTime < duration - 10) {
+    // Obtener metadatos de la película/serie
+    let movieData;
+    if (type === 'series') {
+        movieData = {
+            id: movieId,
+            title: `Episodio ${episodeNumber}`,
+            genres: peliculasDisponibles[movieId]?.genres || []
+        };
+    } else {
+        movieData = {
+            id: movieId,
+            title: peliculasDisponibles[movieId]?.title || "Película",
+            genres: peliculasDisponibles[movieId]?.genres || [],
+            directors: peliculasDisponibles[movieId]?.directors || [],
+            cast: peliculasDisponibles[movieId]?.cast || []
+        };
+    }
+
+    // Función para formatear el tiempo en HH:MM:SS o MM:SS
+    function formatTime(seconds) {
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+        const secs = Math.floor(seconds % 60);
+
+        if (hours > 0) {
+            return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        } else {
+            return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+    }
+
+    // Función para guardar progreso con perfil
+    function saveProgress() {
+        if (isSeeking) return;
+        
+        const currentTime = video.currentTime;
+        const duration = video.duration;
+        
+        if (currentTime > 60 && currentTime < duration - 10) {
+            const profile = profileManager.getCurrentProfile();
+            if (profile) {
+                if (type === 'series') {
+                    const progressData = {
+                        currentTime: currentTime,
+                        duration: duration,
+                        episodeNumber: episodeNumber
+                    };
+                    localStorage.setItem(
+                        `profile_${profile.id}_seriesProgress_${movieId}_${episodeNumber}`,
+                        JSON.stringify(progressData)
+                    );
+                } else {
+                    localStorage.setItem(
+                        `profile_${profile.id}_progress_${movieId}`,
+                        currentTime.toString()
+                    );
+                    
+                    // Registrar visualización para recomendaciones
+                    if (currentTime > duration * 0.7) { // Si vio más del 70%
+                        UserTracker.trackView(movieData, Math.floor(currentTime / 60));
+                    }
+                }
+            }
+        }
+    }
+
+    // Función para cargar progreso con perfil
+    function loadProgress() {
         const profile = profileManager.getCurrentProfile();
-        if (profile) {
-            localStorage.setItem(
-                `profile_${profile.id}_progress_${movieId}`,
-                currentTime.toString()
-            );
+        if (!profile) return;
+
+        if (type === 'series') {
+            const savedProgress = localStorage.getItem(`profile_${profile.id}_seriesProgress_${movieId}_${episodeNumber}`);
+            if (savedProgress) {
+                const data = JSON.parse(savedProgress);
+                video.currentTime = data.currentTime || 0;
+            }
+        } else {
+            const savedProgress = localStorage.getItem(`profile_${profile.id}_progress_${movieId}`);
+            if (savedProgress) {
+                video.currentTime = parseFloat(savedProgress);
+            }
         }
     }
-}
 
-// Función para cargar progreso con perfil
-function loadProgress() {
-    const profile = profileManager.getCurrentProfile();
-    if (!profile) return;
+    // Función para eliminar progreso
+    function clearProgress() {
+        const profile = profileManager.getCurrentProfile();
+        if (!profile) return;
 
-    if (type === 'series') {
-        const savedProgress = localStorage.getItem(`profile_${profile.id}_seriesProgress_${movieId}_${episodeNumber}`);
-        if (savedProgress) {
-            const data = JSON.parse(savedProgress);
-            video.currentTime = data.currentTime || 0;
-        }
-    } else {
-        const savedProgress = localStorage.getItem(`profile_${profile.id}_progress_${movieId}`);
-        if (savedProgress) {
-            video.currentTime = parseFloat(savedProgress);
+        if (type === 'series') {
+            localStorage.removeItem(`profile_${profile.id}_seriesProgress_${movieId}_${episodeNumber}`);
+        } else {
+            localStorage.removeItem(`profile_${profile.id}_progress_${movieId}`);
         }
     }
-}
 
-// Función para eliminar progreso
-function clearProgress() {
-    const profile = profileManager.getCurrentProfile();
-    if (!profile) return;
-
-    if (type === 'series') {
-        localStorage.removeItem(`profile_${profile.id}_seriesProgress_${movieId}_${episodeNumber}`);
-    } else {
-        localStorage.removeItem(`profile_${profile.id}_progress_${movieId}`);
+    // Configurar el reproductor con HLS
+    if (Hls.isSupported()) {
+        hls = new Hls({
+            maxMaxBufferLength: 30,
+            maxBufferLength: 10,
+            enableWorker: false,
+            lowLatencyMode: false
+        });
+        
+        // Usar la URL del parámetro o la primera calidad disponible
+        let initialUrl = videoUrl;
+        if (!initialUrl && peliculasDisponibles[movieId]) {
+            const qualities = Object.keys(peliculasDisponibles[movieId]).filter(key => key !== "title");
+            if (qualities.length > 0) {
+                initialUrl = peliculasDisponibles[movieId][qualities[0]];
+            }
+        }
+        
+        if (initialUrl) {
+            hls.loadSource(initialUrl);
+            hls.attachMedia(video);
+            
+            hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                video.play().catch(e => {
+                    video.muted = true;
+                    video.play();
+                    showNotification("Presiona para activar el sonido");
+                });
+                addQualityOptions();
+            });
+            
+            hls.on(Hls.Events.ERROR, function(event, data) {
+                if (data.fatal) {
+                    switch(data.type) {
+                        case Hls.ErrorTypes.NETWORK_ERROR:
+                            showNotification("Error de red. Intentando recuperar...");
+                            hls.startLoad();
+                            break;
+                        case Hls.ErrorTypes.MEDIA_ERROR:
+                            showNotification("Error de medios. Intentando recuperar...");
+                            hls.recoverMediaError();
+                            break;
+                        default:
+                            showNotification("Error al cargar el video");
+                            hls.destroy();
+                            break;
+                    }
+                }
+            });
+        }
+    } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+        video.src = videoUrl;
     }
-}
 
-// Eventos
-video.addEventListener("pause", saveProgress);
-window.addEventListener("beforeunload", saveProgress);
-video.addEventListener("ended", clearProgress);
-document.addEventListener("DOMContentLoaded", loadProgress);
+    // Mostrar notificación de reproducción
+    function showNotification(message) {
+        const notification = document.getElementById("notification");
+        notification.innerText = message;
+        notification.style.display = "block";
+        setTimeout(() => { notification.style.display = "none"; }, 3000);
+    }
+
+    // Agregar opciones de calidad
+    function addQualityOptions() {
+        const qualityContainer = document.getElementById("quality-container");
+        qualityContainer.innerHTML = '';
+
+        if (!peliculasDisponibles[movieId]) {
+            console.error('Película no encontrada en peliculasDisponibles');
+            return;
+        }
+
+        const qualities = Object.keys(peliculasDisponibles[movieId])
+            .filter(key => key !== "title")
+            .sort((a, b) => {
+                const resA = parseInt(a);
+                const resB = parseInt(b);
+                return resB - resA;
+            });
+
+        qualities.forEach(quality => {
+            const option = document.createElement("div");
+            option.className = "quality-option";
+            option.innerText = `Calidad: ${quality}`;
+            option.addEventListener("click", () => {
+                const currentTime = video.currentTime;
+                const newUrl = peliculasDisponibles[movieId][quality];
+                
+                if (!newUrl || newUrl.trim() === "") {
+                    showNotification(`Calidad ${quality} no disponible`);
+                    return;
+                }
+
+                if (Hls.isSupported()) {
+                    if (hls) {
+                        hls.destroy();
+                    }
+                    hls = new Hls({
+                        maxMaxBufferLength: 30,
+                        maxBufferLength: 10,
+                        maxBufferSize: 60 * 1000 * 1000,
+                        maxBufferHole: 0.5
+                    });
+                    hls.loadSource(newUrl);
+                    hls.attachMedia(video);
+                    hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                        video.currentTime = currentTime;
+                        video.play();
+                        showNotification(`Cambiando a calidad ${quality}`);
+                    });
+                    hls.on(Hls.Events.ERROR, function(event, data) {
+                        if (data.fatal) {
+                            switch(data.type) {
+                                case Hls.ErrorTypes.NETWORK_ERROR:
+                                    showNotification("Error de red. Intentando recuperar...");
+                                    hls.startLoad();
+                                    break;
+                                case Hls.ErrorTypes.MEDIA_ERROR:
+                                    showNotification("Error de medios. Intentando recuperar...");
+                                    hls.recoverMediaError();
+                                    break;
+                                default:
+                                    showNotification("Error al cargar esta calidad");
+                                    hls.destroy();
+                                    break;
+                            }
+                        }
+                    });
+                } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+                    video.src = newUrl;
+                    video.currentTime = currentTime;
+                    video.play();
+                    showNotification(`Cambiando a calidad ${quality}`);
+                }
+                qualityContainer.style.display = "none";
+            });
+            qualityContainer.appendChild(option);
+        });
+    }
+
+    // Eventos del reproductor
+    video.addEventListener("waiting", () => { 
+        document.getElementById("loader").style.display = "block"; 
+    });
+    
+    video.addEventListener("canplay", () => { 
+        document.getElementById("loader").style.display = "none"; 
+    });
+
+    document.getElementById("thumbnail").addEventListener("click", () => {
+        document.getElementById("thumbnail").style.display = "none";
+        video.style.display = "block";
+        video.play();
+        document.getElementById("play-btn").innerHTML = '<i class="fas fa-pause"></i>';
+        showNotification(`Reproduciendo: ${movieTitle}`);
+    });
+
+    document.getElementById("play-btn").addEventListener("click", () => {
+        if (video.paused) {
+            video.play();
+            document.getElementById("play-btn").innerHTML = '<i class="fas fa-pause"></i>';
+        } else {
+            video.pause();
+            document.getElementById("play-btn").innerHTML = '<i class="fas fa-play"></i>';
+        }
+    });
+
+    const qualityBtn = document.getElementById("quality-btn");
+    qualityBtn.addEventListener("click", () => {
+        const qualityContainer = document.getElementById("quality-container");
+        qualityContainer.style.display = qualityContainer.style.display === "block" ? "none" : "block";
+    });
+
+    // Botón de pantalla completa
+    const fullscreenBtn = document.getElementById("fullscreen-btn");
+    fullscreenBtn.addEventListener("click", () => {
+        if (!document.fullscreenElement) {
+            document.getElementById("videoContainer").requestFullscreen().catch(err => {
+                alert(`Error al intentar entrar en pantalla completa: ${err.message}`);
+            });
+        } else {
+            document.exitFullscreen();
+        }
+    });
+
+    // Botón de ajustar la relación de aspecto
+    const fitScreenBtn = document.getElementById("fit-screen-btn");
+    fitScreenBtn.addEventListener("click", () => {
+        if (video.style.objectFit === "cover") {
+            video.style.objectFit = "contain";
+            showNotification("Modo: Contener (sin recortar)");
+        } else {
+            video.style.objectFit = "cover";
+            showNotification("Modo: Cubrir (sin bordes)");
+        }
+    });
+
+    // Botón de adelantar 10 segundos con animación
+    const skipForwardBtn = document.getElementById("skip-forward-btn");
+    const skipIndicator = document.getElementById("skip-indicator");
+
+    skipForwardBtn.addEventListener("click", () => {
+        video.currentTime += 10;
+        skipIndicator.innerText = `+10s`;
+        skipIndicator.style.display = "block";
+        setTimeout(() => {
+            skipIndicator.style.display = "none";
+        }, 1500);
+
+        const videoContainer = document.getElementById("videoContainer");
+        videoContainer.classList.add("skip-animation");
+        setTimeout(() => {
+            videoContainer.classList.remove("skip-animation");
+        }, 500);
+    });
+
+    // Ocultar/mostrar controles
+    const streamBtn = document.getElementById("stream-btn");
+    const customControls = document.getElementById("customControls");
+    const videoContainer = document.getElementById("videoContainer");
+
+    let inactivityTimer;
+
+    function hideControls() {
+        streamBtn.classList.add("hidden");
+        customControls.classList.add("hidden");
+    }
+
+    function showControls() {
+        streamBtn.classList.remove("hidden");
+        customControls.classList.remove("hidden");
+        clearTimeout(inactivityTimer);
+        inactivityTimer = setTimeout(hideControls, 5000);
+    }
+
+    inactivityTimer = setTimeout(hideControls, 5000);
+
+    videoContainer.addEventListener("mousemove", showControls);
+    customControls.addEventListener("click", showControls);
+    streamBtn.addEventListener("click", showControls);
+
+    // Simulación de Chromecast
+    streamBtn.addEventListener("click", () => {
+        showNotification("Funcionalidad de transmisión a TV simulada");
+    });
+
+    // Eventos de progreso
+    video.addEventListener("ended", () => {
+        clearProgress();
+        UserTracker.trackView(movieData, Math.floor(video.duration / 60));
+        
+        // Mostrar recomendaciones al terminar
+        const similarMovies = UserTracker.getRecommendedMovies([...manualMovies, ...accionMovies, ...dramaMovies], 3)
+            .filter(m => m.id !== movieId);
+        
+        if (similarMovies.length > 0) {
+            const toast = document.createElement('div');
+            toast.className = 'recommendation-toast';
+            toast.innerHTML = `
+                <h4>Porque viste "${movieData.title}"</h4>
+                <div class="toast-recommendations">
+                    ${similarMovies.map(m => `
+                        <a href="${m.link}" class="toast-movie">
+                            <img src="${m.image}" alt="${m.title}">
+                            <span>${m.title}</span>
+                        </a>
+                    `).join('')}
+                </div>
+            `;
+            
+            document.body.appendChild(toast);
+            setTimeout(() => toast.classList.add('show'), 100);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 8000);
+        }
+    });
+
+    window.addEventListener("beforeunload", () => {
+        saveProgress();
+        if (video.currentTime > video.duration * 0.1) {
+            UserTracker.trackView(movieData, Math.floor(video.currentTime / 60));
+        }
+    });
+
+    // Cargar progreso al iniciar
+    document.addEventListener("DOMContentLoaded", () => {
+        loadProgress();
+        
+        // Registrar visita a los detalles
+        UserTracker.trackDetailView(movieData);
+    });
 </script>
+
+<style>
+/* Estilos para el toast de recomendaciones */
+.recommendation-toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 1000;
+    max-width: 90%;
+    width: 400px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.recommendation-toast.show {
+    opacity: 1;
+}
+
+.recommendation-toast h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #ff9e7d;
+}
+
+.toast-recommendations {
+    display: flex;
+    gap: 10px;
+}
+
+.toast-movie {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    font-size: 12px;
+    width: 80px;
+    text-align: center;
+}
+
+.toast-movie img {
+    width: 60px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    transition: transform 0.2s;
+}
+
+.toast-movie:hover img {
+    transform: scale(1.05);
+}
+
+/* Animación para el salto de tiempo */
+.skip-animation {
+    animation: skipPulse 0.5s ease-out;
+}
+
+@keyframes skipPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+</style>
 </body>
 </html>

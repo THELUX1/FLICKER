@@ -1,11 +1,10 @@
-// profileManager.js
-
 class ProfileManager {
     constructor() {
         this.profiles = JSON.parse(localStorage.getItem('profiles')) || [];
         this.currentProfileId = localStorage.getItem('currentProfileId') || null;
         this.editingProfileId = null;
         this.currentAvatar = '';
+        this.profileChangeCallbacks = [];
     }
 
     saveProfiles() {
@@ -33,6 +32,7 @@ class ProfileManager {
             profile.name = name;
             profile.avatar = avatar;
             this.saveProfiles();
+            this.notifyProfileChange();
             return true;
         }
         return false;
@@ -44,6 +44,7 @@ class ProfileManager {
         if (id === this.currentProfileId) {
             this.currentProfileId = this.profiles.length > 0 ? this.profiles[0].id : null;
             localStorage.setItem('currentProfileId', this.currentProfileId);
+            this.notifyProfileChange();
         }
         this.clearProfileData(id);
     }
@@ -51,6 +52,7 @@ class ProfileManager {
     setCurrentProfile(id) {
         this.currentProfileId = id;
         localStorage.setItem('currentProfileId', id);
+        this.notifyProfileChange();
     }
 
     getCurrentProfile() {
@@ -69,6 +71,7 @@ class ProfileManager {
         if (!profile) return;
         const profileKey = `profile_${profile.id}_${key}`;
         localStorage.setItem(profileKey, value);
+        this.notifyProfileChange();
     }
 
     clearProfileData(profileId) {
@@ -77,6 +80,14 @@ class ProfileManager {
                 localStorage.removeItem(key);
             }
         });
+    }
+
+    onProfileChange(callback) {
+        this.profileChangeCallbacks.push(callback);
+    }
+
+    notifyProfileChange() {
+        this.profileChangeCallbacks.forEach(callback => callback());
     }
 }
 

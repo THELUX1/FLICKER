@@ -661,5 +661,37 @@ const dramaMovies = [
         year: "2025"
     },
 ];
-// Exportar los arrays para que puedan ser usados en otros archivos
+// Al final del archivo:
+const userTracking = {
+    viewedMovies: [],
+    likedMovies: [],
+    viewedDetails: [],
+    watchedGenres: {},
+    likedGenres: {},
+    favoriteActors: {},
+    favoriteDirectors: {},
+    watchTime: {},
+    lastWatched: [],
+    preferencesUpdatedAt: null
+};
+
+// Asegurar que todas las películas tengan los campos necesarios
+manualMovies.forEach(movie => {
+    movie.directors = movie.directors || ["Director Desconocido"];
+    movie.cast = movie.cast || ["Actor Desconocido"];
+    movie.mood = movie.mood || "neutral";
+});
+
+accionMovies.forEach(movie => {
+    movie.directors = movie.directors || ["Director Desconocido"];
+    movie.cast = movie.cast || ["Actor Desconocido"];
+    movie.mood = movie.mood || "intense";
+});
+
+dramaMovies.forEach(movie => {
+    movie.directors = movie.directors || ["Director Desconocido"];
+    movie.cast = movie.cast || ["Actor Desconocido"];
+    movie.mood = movie.mood || "serious";
+});
+
 export { hiddenMovies, manualMovies, accionMovies, dramaMovies };

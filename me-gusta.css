@@ -66,7 +66,7 @@ body.light-mode .theme-toggle:hover {
   text-align: center;
   margin-bottom: 2.2rem;
   font-weight: 700;
-  color: var(--accent-dark);
+  color: white;
   letter-spacing: 1px;
   transition: color var(--transition);
 }
@@ -82,7 +82,7 @@ body.light-mode .liked-title {
   font-size: 1.25rem;
   margin-left: 1rem;
   margin-bottom: 1rem;
-  color: var(--accent-dark);
+  color: white;
   font-weight: 600;
   letter-spacing: 0.5px;
   transition: color var(--transition);

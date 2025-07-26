@@ -8,7 +8,10 @@ const manualMovies = [
           image: "https://media.themoviedb.org/t/p/w220_and_h330_face/nCuSMDWhWGJAPdp9rSDIogG5X82.jpg",
           link: "detalles.html?type=movie&id=777443",
           year: "2025",
-          genres: ["Ciencia ficción", "Aventura", "Drama"] // <-- Asegúrate de que esto esté definido
+          genres: ["Ciencia ficción", "Aventura", "Drama"],
+directors: ["Director Ejemplo"],
+        cast: ["Actor 1", "Actor 2"],
+        mood: "serious"
       },
     {
           id: 426063,
@@ -16,7 +19,10 @@ const manualMovies = [
           image: "https://media.themoviedb.org/t/p/w220_and_h330_face/jivUhECegXI3OYtPVflWoIDtENt.jpg",
           link: "detalles.html?type=movie&id=426063",
           year: "2024",
-          genres: ["Fantasía", "Terror"] // <-- Asegúrate de que esto esté definido
+          genres: ["Fantasía", "Terror"],
+          directors: ["Director Ejemplo"],
+          cast: ["Actor 1", "Actor 2"],
+          mood: "serious"
       },
     {
           id: 696506,
@@ -24,7 +30,10 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/edKpE9B5qN3e559OuMCLZdW1iBZ.jpg",
           link: "detalles.html?type=movie&id=696506",
           year: "2025",
-          genres: ["Ciencia ficción", "Aventura", "Comedia"] // <-- Asegúrate de que esto esté definido
+          genres: ["Ciencia ficción", "Aventura", "Comedia"],
+        directors: ["Director Ejemplo"],
+        cast: ["Actor 1", "Actor 2"],
+        mood: "serious"
       },
     {
           id: 1357633,
@@ -32,7 +41,10 @@ const manualMovies = [
           image: "https://s3.fiestareel.com/image/t/p/w500/dblIFen0bNZAq8icJXHwrjfymDW.jpg",
           link: "detalles.html?type=movie&id=1357633",
           year: "2024",
-          genres: ["Acción", "Aventura", "Fantasía", "Animación"] // <-- Asegúrate de que esto esté definido
+          genres: ["Anime","Animación", "Acción", "Fantasía", "Aventura"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
     {
           id: 710295,
@@ -40,7 +52,10 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/vtdEHG1j07PqLlVyhKNZRHTPKGt.jpg",
           link: "detalles.html?type=movie&id=710295",
           year: "2025",
-          genres: ["Terror", "Suspenso"] // <-- Asegúrate de que esto esté definido
+          genres: ["Terror", "Suspenso"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
     {
           id: 539972,
@@ -48,7 +63,10 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/1GvBhRxY6MELDfxFrete6BNhBB5.jpg",
           link: "detalles.html?type=movie&id=539972",
           year: "2024",
-          genres: ["Acción", "Aventura", "Fantasía", "Suspenso", "Ciencia ficción"] // <-- Asegúrate de que esto esté definido
+          genres: ["Acción", "Ciencia ficción", "Aventura", "Suspenso"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
     {
           id: 774370,
@@ -56,7 +74,10 @@ const manualMovies = [
           image: "https://s3.fiestareel.com/image/t/p/w500/89wNiexZdvLQ41OQWIsQy4O6jAQ.jpg",
           link: "detalles.html?type=movie&id=774370",
           year: "2025",
-          genres: ["Animación", "Aventura", "Acción", "Comedia", "Familia"] // <-- Asegúrate de que esto esté definido
+          genres: ["Animación", "Aventura", "Familia", "Comedia", "Acción"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
     {
           id: 516729,
@@ -64,7 +85,10 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/1ffZAucqfvQu36x1C49XfOdjuOG.jpg",
           link: "detalles.html?type=movie&id=516729",
           year: "2024",
-          genres: ["Aventura", "Comedia", "Familia"] // <-- Asegúrate de que esto esté definido
+          genres: ["Aventura", "Comedia", "Familia"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
     {
           id: 912649,
@@ -72,7 +96,10 @@ const manualMovies = [
           image: "https://s3.fiestareel.com/image/t/p/w500/vGXptEdgZIhPg3cGlc7e8sNPC2e.jpg",
           link: "detalles.html?type=movie&id=912649",
           year: "2024",
-          genres: ["Aventura", "Acción", "Suspenso", "Ciencia ficción"] // <-- Asegúrate de que esto esté definido
+          genres: ["Acción", "Ciencia ficción", "Suspenso"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
     {
           id: 1247019,
@@ -80,7 +107,10 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/uDW5eeFUYp1vaU2ymEdVBG6g7iq.jpg",
           link: "detalles.html?type=movie&id=1247019",
           year: "2024",
-          genres: ["Terror", "Acción", "Suspenso"] // <-- Asegúrate de que esto esté definido
+          genres: ["Terror", "Acción", "Suspenso"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
     {
           id: 1138749,
@@ -88,7 +118,10 @@ const manualMovies = [
           image: "https://s3.fiestareel.com/image/t/p/w500/ajb1rMiorchfRemYHZCkbV9DBg6.jpg",
           link: "detalles.html?type=movie&id=1138749",
           year: "2023",
-          genres: ["Acción", "Suspenso", "Crímen"] // <-- Asegúrate de que esto esté definido
+          genres: ["Acción", "Suspenso", "Crímen"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
     {
           id: 558449,
@@ -96,7 +129,10 @@ const manualMovies = [
           image: "https://s3.fiestareel.com/image/t/p/w500/2cxhvwyEwRlysAmRH4iodkvo0z5.jpg",
           link: "detalles.html?type=movie&id=558449",
           year: "2024",
-          genres: ["Aventura", "Drama", "Acción", "Historia"] // <-- Asegúrate de que esto esté definido
+          genres: ["Aventura", "Drama", "Acción", "Historia"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
     {
           id: 1201012,
@@ -104,7 +140,10 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/2E7me3rPi8HqaeheuD86YlpNX6k.jpg",
           link: "detalles.html?type=movie&id=1201012",
           year: "2025",
-          genres: ["Acción", "Comedia", "Romance"] // <-- Asegúrate de que esto esté definido
+          genres: ["Acción", "Comedia", "Romance"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
     {
           id: 1035048,
@@ -112,7 +151,10 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/tnfc0NJ3BzhJrGJhkkEd6MHBdq5.jpg",
           link: "detalles.html?type=movie&id=1035048",
           year: "2024",
-          genres: ["Acción", "Suspenso", "Ciencia ficción"] // <-- Asegúrate de que esto esté definido
+          genres: ["Acción", "Suspenso", "Ciencia ficción"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
     {
           id: 1352774,
@@ -120,7 +162,10 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/5wZNFUJAwyX6RCxdqrLO9lLWJ20.jpg",
           link: "detalles.html?type=movie&id=1352774",
           year: "2025",
-          genres: ["Terror"] // <-- Asegúrate de que esto esté definido
+          genres: ["Terror"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
     {
           id: 1405338,
@@ -128,21 +173,33 @@ const manualMovies = [
           image: "https://s3.fiestareel.com/image/t/p/w500/g5PqsFFrayyRL1Ldgib2lMYuJXg.jpg",
           link: "detalles.html?type=movie&id=1405338",
           year: "2025",
-          genres: ["Acción", "Crímen", "Fantasía", "Suspenso"] // <-- Asegúrate de que esto esté definido
+          genres: ["Acción", "Crímen", "Fantasía", "Suspenso"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
     {
         id: 950396, // ID de TMDb para "Fight Club"
         title: "El Abismo Secreto",
         image: "https://media.themoviedb.org/t/p/w220_and_h330_face/3s0jkMh0YUhIeIeioH3kt2X4st4.jpg",
         link: "detalles.html?type=movie&id=950396", // Usamos el ID de TMDb
-        year: "2025"
+        year: "2025",
+        genres: ["Romance", "Ciencia ficción","Suspenso"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
     },
     {
         id: 822119, // ID de TMDb para "Fight Club"
         title: "Capitán América: Un Nuevo Mundo",
         image: "https://media.themoviedb.org/t/p/w220_and_h330_face/xVwP4GCbEfO66JSSyonnAhU3Fad.jpg",
         link: "detalles.html?type=movie&id=822119", // Usamos el ID de TMDb
-        year: "2025"
+        year: "2025",
+        genres: ["Acción", "Ciencia ficción", "Suspenso"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
+        
     },
     {
         id: 1084199, // ID de TMDb para "Fight Club"
@@ -199,7 +256,10 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/hGaUNLF5VZbg9ovPTyjm9Rv5xWz.jpg",
           link: "detalles.html?type=movie&id=1104845",
           year: "2025",
-          genres: ["Animación", "Comedia", "Aventura", "Familia", "Fantasía"] // <-- Asegúrate de que esto esté definido
+          genres: ["Animación", "Comedia", "Aventura", "Familia", "Fantasía"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
 {
           id: 1356039,
@@ -207,7 +267,10 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/lI2uFlSEkwXKljqiry7coaJ6wIS.jpg",
           link: "detalles.html?type=movie&id=1356039",
           year: "2025",
-          genres: ["Acción", "Fantasía", "Suspenso"] // <-- Asegúrate de que esto esté definido
+          genres: ["Acción", "Fantasía", "Suspenso"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
 {
           id: 1124620,
@@ -215,7 +278,10 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/yYa8Onk9ow7ukcnfp2QWVvjWYel.jpg",
           link: "detalles.html?type=movie&id=1124620",
           year: "2025",
-          genres: ["Comedia", "Terror"] // <-- Asegúrate de que esto esté definido
+          genres: ["Comedia", "Terror"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
 {
           id: 799766,
@@ -223,7 +289,10 @@ const manualMovies = [
           image: "https://media.themoviedb.org/t/p/w220_and_h330_face/otXaS8K5coAwmUyGxBsNz9mWs8H.jpg",
           link: "detalles.html?type=movie&id=799766",
           year: "2025",
-          genres: ["Música", "Drama"] // <-- Asegúrate de que esto esté definido
+          genres: ["Música", "Drama"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
 {
           id: 1140535,
@@ -231,7 +300,10 @@ const manualMovies = [
           image: "https://media.themoviedb.org/t/p/w220_and_h330_face/kc7YIx6KNiXm1dpqlhqdX3eTL7a.jpg",
           link: "detalles.html?type=movie&id=1140535",
           year: "2025",
-          genres: ["Drama", "Terror"] // <-- Asegúrate de que esto esté definido
+          genres: ["Drama", "Terror"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
 {
           id: 1418522,
@@ -239,7 +311,10 @@ const manualMovies = [
           image: "https://s3.fiestareel.com/image/t/p/w500/o1ZIvviAEuIHcH9x6sv112mSvTR.jpg",
           link: "detalles.html?type=movie&id=1418522",
           year: "2025",
-          genres: ["Drama", "Suspenso"] // <-- Asegúrate de que esto esté definido
+          genres: ["Drama", "Suspenso"], 
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 1276073,
@@ -247,7 +322,10 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/jmzxlDBwgvRbpPJzNQwizyn9UEn.jpg",
           link: "detalles.html?type=movie&id=1276073",
           year: "2025",
-          genres: ["Drama", "Suspenso", "Acción","Crímen"] // <-- Asegúrate de que esto esté definido
+          genres: ["Drama", "Suspenso", "Acción","Crímen"], 
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 1249213,
@@ -255,7 +333,10 @@ const manualMovies = [
           image: "https://s3.fiestareel.com/image/t/p/w500/hSQPSW8aLjsMBfwqGjgJ6HozTkp.jpg",
           link: "detalles.html?type=movie&id=1249213",
           year: "2025",
-          genres: ["Terror", "Suspenso", "Misterio"] // <-- Asegúrate de que esto esté definido
+          genres: ["Terror", "Suspenso", "Misterio"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 1210938,
@@ -263,7 +344,10 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/ak0HlRVsVzh8mvwIUZpZr0z6uqW.jpg",
           link: "detalles.html?type=movie&id=1210938",
           year: "2025",
-          genres: ["Suspenso", "Crímen", "Misterio"] // <-- Asegúrate de que esto esté definido
+          genres: ["Suspenso", "Crímen", "Misterio"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
 {
           id: 1013601,
@@ -271,7 +355,10 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/95KmR0xNuZZ6DNESDwLKWGIBvMg.jpg",
           link: "detalles.html?type=movie&id=1013601",
           year: "2025",
-          genres: ["Crímen", "Drama", "Historia"] // <-- Asegúrate de que esto esté definido
+          genres: ["Crímen", "Drama", "Historia"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
 {
           id: 931349,
@@ -279,7 +366,10 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/nRa8B3tQCUK6pVwjasIyQehbvpF.jpg",
           link: "detalles.html?type=movie&id=931349",
           year: "2025",
-          genres: ["Terror", "Suspenso", "Ciencia ficción"] // <-- Asegúrate de que esto esté definido
+          genres: ["Terror", "Suspenso", "Ciencia ficción"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 1254786,
@@ -287,7 +377,10 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/5fg98cVo7da7OIK45csdLSd4NaU.jpg",
           link: "detalles.html?type=movie&id=1254786",
           year: "2025",
-          genres: ["Romance", "Comedia", "Drama"] // <-- Asegúrate de que esto esté definido
+          genres: ["Romance", "Comedia", "Drama"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 1087891,
@@ -295,7 +388,10 @@ const manualMovies = [
           image: "https://s3.fiestareel.com/image/t/p/w500/SNEoUInCa5fAgwuEBMIMBGvkkh.jpg",
           link: "detalles.html?type=movie&id=1087891",
           year: "2025",
-          genres: ["Suspenso", "Acción"] // <-- Asegúrate de que esto esté definido
+          genres: ["Suspenso", "Acción"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
      {
           id: 1197306,
@@ -303,7 +399,10 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/6FRFIogh3zFnVWn7Z6zcYnIbRcX.jpg",
           link: "detalles.html?type=movie&id=1197306",
           year: "2025",
-          genres: ["Acción", "Suspenso", "Crímen"] // <-- Asegúrate de que esto esté definido
+          genres: ["Acción", "Suspenso", "Crímen"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 974573,
@@ -311,7 +410,10 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/zboCGZ4aIqPMd7VFI4HWnmc7KYJ.jpg",
           link: "detalles.html?type=movie&id=974573",
           year: "2025",
-          genres: ["Comedia", "Suspenso", "Crímen"] // <-- Asegúrate de que esto esté definido
+          genres: ["Comedia", "Suspenso", "Crímen"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 1244944,
@@ -319,7 +421,10 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/n0WS2TsNcS6dtaZKzxipyO7LuCJ.jpg",
           link: "detalles.html?type=movie&id=1244944",
           year: "2025",
-          genres: ["Terror", "Suspenso", "Misterio"] // <-- Asegúrate de que esto esté definido
+          genres: ["Terror", "Suspenso", "Misterio"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 1195506,
@@ -327,7 +432,10 @@ const manualMovies = [
           image: "https://s3.fiestareel.com/image/t/p/w500/xmMHGz9dVRaMY6rRAlEX4W0Wdhm.jpg",
           link: "detalles.html?type=movie&id=1195506",
           year: "2025",
-          genres: ["Acción", "Suspenso", "Comedia"] // <-- Asegúrate de que esto esté definido
+          genres: ["Acción", "Suspenso", "Comedia"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 950387,
@@ -335,7 +443,10 @@ const manualMovies = [
           image: "https://s3.fiestareel.com/image/t/p/w500/yFHHfHcUgGAxziP1C3lLt0q2T4s.jpg",
           link: "detalles.html?type=movie&id=950387",
           year: "2025",
-          genres: ["Aventura", "Fantasía", "Comedia","Familia"] // <-- Asegúrate de que esto esté definido
+          genres: ["Aventura", "Fantasía", "Comedia","Familia"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 1233069,
@@ -343,7 +454,10 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/jM2uqCZNKbiyStyzXOERpMqAbdx.jpg",
           link: "detalles.html?type=movie&id=1233069",
           year: "2025",
-          genres: ["Acción", "Suspenso"] // <-- Asegúrate de que esto esté definido
+          genres: ["Acción", "Suspenso"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 986056,
@@ -351,7 +465,10 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/m9EtP1Yrzv6v7dMaC9mRaGhd1um.jpg",
           link: "detalles.html?type=movie&id=986056",
           year: "2025",
-          genres: ["Drama","Acción", "Aventura", "Ciencia ficción"] // <-- Asegúrate de que esto esté definido
+          genres: ["Drama","Acción", "Aventura", "Ciencia ficción"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 668489,
@@ -359,7 +476,10 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/r46leE6PSzLR3pnVzaxx5Q30yUF.jpg",
           link: "detalles.html?type=movie&id=668489",
           year: "2025",
-          genres: ["Acción", "Crímen", "Suspenso"] // <-- Asegúrate de que esto esté definido
+          genres: ["Acción", "Crímen", "Suspenso"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 1333100,
@@ -367,7 +487,10 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/wgwldDDlTDDMrluOMkpSA8lyKjv.jpg",
           link: "detalles.html?type=movie&id=1333100",
           year: "2024",
-          genres: ["Animación", "Aventura", "Acción","Drama","Fantasía"] // <-- Asegúrate de que esto esté definido
+          genres: ["Anime","Animación", "Aventura", "Acción","Drama","Fantasía"], 
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 1144430,
@@ -375,7 +498,10 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/qycPITRqXgPai7zj1gKffjCdSB5.jpg",
           link: "detalles.html?type=movie&id=1144430",
           year: "2025",
-          genres: ["Acción", "Suspenso", "Crímen","Drama"] // <-- Asegúrate de que esto esté definido
+          genres: ["Acción", "Suspenso", "Crímen","Drama"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 1297763,
@@ -383,7 +509,10 @@ const manualMovies = [
           image: "https://s3.fiestareel.com/image/t/p/w500/sVVT6GYFErVv0Lcc9NvqCu0iOxO.jpg",
           link: "detalles.html?type=movie&id=1297763",
           year: "2025",
-          genres: ["Animación", "Acción"] // <-- Asegúrate de que esto esté definido
+          genres: ["Animación","Acción"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 929204,
@@ -391,7 +520,10 @@ const manualMovies = [
           image: "https://s3.fiestareel.com/image/t/p/w500/6BxK38ehxuX2dJmZIMpJcVNbYks.jpg",
           link: "detalles.html?type=movie&id=929204",
           year: "2024",
-          genres: ["Familia", "Comedia", "Aventura","Animación"] // <-- Asegúrate de que esto esté definido
+          genres: ["Animación","Familia", "Comedia", "Aventura"], 
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 1299652,
@@ -399,7 +531,10 @@ const manualMovies = [
           image: "https://s3.fiestareel.com/image/t/p/w500/4rBObJFpiWJOG7aIlRrOUniAkBs.jpg",
           link: "detalles.html?type=movie&id=1299652",
           year: "2024",
-          genres: ["Animación", "Drama", "Acción","Ciencia ficción","Misterio"] // <-- Asegúrate de que esto esté definido
+          genres: ["Animación", "Drama", "Acción","Ciencia ficción","Misterio"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 1469239,
@@ -407,7 +542,10 @@ const manualMovies = [
           image: "https://s3.fiestareel.com/image/t/p/w500/5aXoQYwaQ7JJVUWclHAEXJgiS2M.jpg",
           link: "detalles.html?type=movie&id=1469239",
           year: "2025",
-          genres: ["Música", "Documental"] // <-- Asegúrate de que esto esté definido
+          genres: ["Música", "Documental"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 1233413,
@@ -415,7 +553,10 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/jYfMTSiFFK7ffbY2lay4zyvTkEk.jpg",
           link: "detalles.html?type=movie&id=1233413",
           year: "2025",
-          genres: ["Terror", "Suspenso","Drama","Acción","Western","Música"] // <-- Asegúrate de que esto esté definido
+          genres: ["Terror", "Suspenso","Drama","Acción","Western","Música"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 1075456,
@@ -423,7 +564,10 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/xbdRxyr1u5dbhvMm14w7J1jJWQS.jpg",
           link: "detalles.html?type=movie&id=1075456",
           year: "2025",
-          genres: ["Música", "Drama", "Ciencia ficción"] // <-- Asegúrate de que esto esté definido
+          genres: ["Música", "Drama", "Ciencia ficción"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 906126,
@@ -431,7 +575,10 @@ const manualMovies = [
           image: "https://s3.fiestareel.com/image/t/p/w500/2e853FDVSIso600RqAMunPxiZjq.jpg",
           link: "detalles.html?type=movie&id=906126",
           year: "2023",
-          genres: ["Historia", "Drama",] // <-- Asegúrate de que esto esté definido
+          genres: ["Historia", "Drama",],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 1061699,
@@ -439,7 +586,10 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/7tvAnzZj9e9AjdoHaN9jshm2Cjw.jpg",
           link: "detalles.html?type=movie&id=1061699",
           year: "2024",
-          genres: ["Drama", "Historia", "Bélica"] // <-- Asegúrate de que esto esté definido
+          genres: ["Drama", "Historia", "Bélica"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 850920,
@@ -447,7 +597,10 @@ const manualMovies = [
           image: "https://s3.fiestareel.com/image/t/p/w500/5lMu14IMuHo0hKYCwCIogt7IioX.jpg",
           link: "detalles.html?type=movie&id=850920",
           year: "2025",
-          genres: ["Terror", "Comedia"] // <-- Asegúrate de que esto esté definido
+          genres: ["Terror", "Comedia"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 661539,
@@ -455,7 +608,10 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/llWl3GtNoXosbvYboelmoT459NM.jpg",
           link: "detalles.html?type=movie&id=661539",
           year: "2024",
-          genres: ["Drama", "Música", "Historia"] // <-- Asegúrate de que esto esté definido
+          genres: ["Drama", "Música", "Historia"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 650033,
@@ -463,7 +619,10 @@ const manualMovies = [
           image: "https://s3.fiestareel.com/image/t/p/w500/oY1b65zg8IwsbNdr7SEiQ7ohZ7u.jpg",
           link: "detalles.html?type=movie&id=650033",
           year: "2025",
-          genres: ["Ciencia ficción", "Suspenso"] // <-- Asegúrate de que esto esté definido
+          genres: ["Ciencia ficción", "Suspenso"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 896536,
@@ -471,7 +630,10 @@ const manualMovies = [
           image: "https://s3.fiestareel.com/image/t/p/w500/qYyEelO4JfOwE0Ui5KsrCE0O8UA.jpg",
           link: "detalles.html?type=movie&id=896536",
           year: "2025",
-          genres: ["Fantasía", "Aventura", "Familia"] // <-- Asegúrate de que esto esté definido
+          genres: ["Fantasía", "Aventura", "Familia"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 574475,
@@ -479,7 +641,10 @@ const manualMovies = [
           image: "https://s3.fiestareel.com/image/t/p/w500/6WxhEvFsauuACfv8HyoVX6mZKFj.jpg",
           link: "detalles.html?type=movie&id=574475",
           year: "2025",
-          genres: ["Terror", "Misterio"] // <-- Asegúrate de que esto esté definido
+          genres: ["Terror", "Misterio"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 552524,
@@ -487,7 +652,10 @@ const manualMovies = [
           image: "https://s3.fiestareel.com/image/t/p/w500/Y6pjszkKQUZ5uBbiGg7KWiCksJ.jpg",
           link: "detalles.html?type=movie&id=552524",
           year: "2025",
-          genres: ["Familia", "Comedia", "Ciencia ficción"] // <-- Asegúrate de que esto esté definido
+          genres: ["Familia", "Comedia", "Ciencia ficción"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 1098006,
@@ -495,7 +663,10 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/4iWjGghUj2uyHo2Hyw8NFBvsNGm.jpg",
           link: "detalles.html?type=movie&id=1098006",
           year: "2025",
-          genres: ["Aventura", "Fantasía", "Misterio"] // <-- Asegúrate de que esto esté definido
+          genres: ["Aventura", "Fantasía", "Misterio"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 1390394,
@@ -503,7 +674,10 @@ const manualMovies = [
           image: "https://s3.fiestareel.com/image/t/p/w500/4ImGMcwpy4k2zmcXBSFYNK6kRr9.jpg",
           link: "detalles.html?type=movie&id=1390394",
           year: "2025",
-          genres: ["Documental"] // <-- Asegúrate de que esto esté definido
+          genres: ["Documental"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 1001414,
@@ -511,7 +685,10 @@ const manualMovies = [
           image: "https://s.lupacine.com/image/t/p/w500/gevScWYkF8l5i9NjFSXo8HfPNyy.jpg",
           link: "detalles.html?type=movie&id=1001414",
           year: "2025",
-          genres: ["Terror", "Suspenso"] // <-- Asegúrate de que esto esté definido
+          genres: ["Terror", "Suspenso"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 1376434,
@@ -519,7 +696,10 @@ const manualMovies = [
           image: "https://media.themoviedb.org/t/p/w260_and_h390_bestv2/8upWJ1KTR1bAPqXCHAuVOhfuiAZ.jpg",
           link: "detalles.html?type=movie&id=1376434",
           year: "2025",
-          genres: ["Acción", "Ciencia ficción", "Animación"] // <-- Asegúrate de que esto esté definido
+          genres: ["Animación", "Ciencia ficción", "Acción"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 1426680,
@@ -527,7 +707,10 @@ const manualMovies = [
           image: "https://s3.fiestareel.com/image/t/p/w500/iJWSUAMJI9mRSzVBJXVUg7iIoJM.jpg",
           link: "detalles.html?type=movie&id=1426680",
           year: "2025",
-          genres: ["Ciencia ficción", "Romance", "Comedia"] // <-- Asegúrate de que esto esté definido
+          genres: ["Ciencia ficción", "Romance", "Comedia"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 1097311,
@@ -535,7 +718,10 @@ const manualMovies = [
           image: "https://s3.fiestareel.com/image/t/p/w500/3Ey3HuqZdrx1rfxRkfiOXDFtvtl.jpg",
           link: "detalles.html?type=movie&id=1097311",
           year: "2025",
-          genres: ["Drama", "Suspenso"] // <-- Asegúrate de que esto esté definido
+          genres: ["Drama", "Suspenso"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 1239193,
@@ -543,7 +729,10 @@ const manualMovies = [
           image: "https://s3.fiestareel.com/image/t/p/w500/1vXTHTbSQJs9r2hp4Uk08XzKwPp.jpg",
           link: "detalles.html?type=movie&id=1239193",
           year: "2025",
-          genres: ["Acción", "Comedia", "Crímen"] // <-- Asegúrate de que esto esté definido
+          genres: ["Acción", "Comedia", "Crímen"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 803796,
@@ -551,7 +740,10 @@ const manualMovies = [
           image: "https://s3.fiestareel.com/image/t/p/w500/jfS5KEfiwsS35ieZvdUdJKkwLlZ.jpg",
           link: "detalles.html?type=movie&id=803796",
           year: "2025",
-          genres: ["Animación","Música","Fantasía", "Acción","Comedia"] // <-- Asegúrate de que esto esté definido
+          genres: ["Animación","Música","Fantasía", "Acción","Comedia"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 749170,
@@ -559,7 +751,10 @@ const manualMovies = [
           image: "https://s3.fiestareel.com/image/t/p/w500/lVgE5oLzf7ABmzyASEVcjYyHI41.jpg",
           link: "detalles.html?type=movie&id=749170",
           year: "2025",
-          genres: ["Acción", "Comedia", "Suspenso"] // <-- Asegúrate de que esto esté definido
+          genres: ["Acción", "Comedia", "Suspenso"], 
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 1100988,
@@ -567,7 +762,10 @@ const manualMovies = [
           image: "https://media.themoviedb.org/t/p/w220_and_h330_face/hvIqaDUC48dwfd7taKczB7909Qg.jpg",
           link: "detalles.html?type=movie&id=1100988",
           year: "2025",
-          genres: ["Terror","Suspenso","Ciencia ficción"] // <-- Asegúrate de que esto esté definido
+          genres: ["Terror","Suspenso","Ciencia ficción"], 
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
       id: 1234821,
@@ -575,7 +773,10 @@ const manualMovies = [
           image: "https://s3.fiestareel.com/image/t/p/w500/q0fGCmjLu42MPlSO9OYWpI5w86I.jpg",
           link: "detalles.html?type=movie&id=1234821",
           year: "2025",
-          genres: ["Acción", "Ciencia ficción", "Aventura"] // <-- Asegúrate de que esto esté definido
+          genres: ["Acción", "Ciencia ficción", "Aventura"], 
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
           id: 846422,
@@ -583,7 +784,10 @@ const manualMovies = [
           image: "https://s3.fiestareel.com/image/t/p/w500/wqfu3bPLJaEWJVk3QOm0rKhxf1A.jpg",
           link: "detalles.html?type=movie&id=846422",
           year: "2025",
-          genres: ["Acción", "Fantasía"] // <-- Asegúrate de que esto esté definido
+          genres: ["Acción", "Fantasía"],
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
       id: 1011477,
@@ -591,7 +795,10 @@ const manualMovies = [
           image: "https://s3.fiestareel.com/image/t/p/w500/AEgggzRr1vZCLY86MAp93li43z.jpg",
           link: "detalles.html?type=movie&id=1011477",
           year: "2025",
-          genres: ["Acción", "Aventura", "Drama"] // <-- Asegúrate de que esto esté definido
+          genres: ["Acción", "Aventura", "Drama"], 
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       {
       id: 1071585,
@@ -599,7 +806,10 @@ const manualMovies = [
           image: "https://s3.fiestareel.com/image/t/p/w500/4a63rQqIDTrYNdcnTXdPsQyxVLo.jpg",
           link: "detalles.html?type=movie&id=1071585",
           year: "2025",
-          genres: ["Acción", "Ciencia ficción", "Suspenso"] // <-- Asegúrate de que esto esté definido
+          genres: ["Acción", "Ciencia ficción", "Suspenso"], 
+           directors: ["Director Ejemplo"],
+           cast: ["Actor 1", "Actor 2"],
+           mood: "serious"
       },
       
 ];

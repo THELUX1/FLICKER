@@ -146,7 +146,7 @@ function generarContenido(container, forceRefresh = false) {
 
 function generateCategorySection(category, movies) {
     const isPersonalized = category === "Para ti" || 
-                         category.startsWith("Porque") || 
+                         category.startsWith("Similar") || 
                          category.startsWith("Más") ||
                          category.startsWith("Con tus") ||
                          category.startsWith("Dirigida");
@@ -232,7 +232,7 @@ function setupRecommendationTooltips() {
         const reasons = JSON.parse(card.getAttribute('data-reasons'));
         const tooltip = document.createElement('div');
         tooltip.className = 'recommendation-tooltip';
-        tooltip.innerHTML = `<strong>Porque:</strong> ${reasons.join('<br>• ')}`;
+        tooltip.innerHTML = `<strong>Similar:</strong> ${reasons.join('<br>• ')}`;
         card.appendChild(tooltip);
         
         card.addEventListener('mouseenter', () => {

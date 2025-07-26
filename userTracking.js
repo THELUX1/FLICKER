@@ -271,7 +271,7 @@ class UserTracker {
             const commonGenres = movie.genres?.filter(g => lastWatchedGenres.includes(g));
             if (commonGenres?.length > 0) {
                 score += 5 * commonGenres.length;
-                reasons.push(`Similar a tus recientes vistas`);
+                reasons.push(`a tus recientes vistas`);
             }
             
             if (score > 0) {

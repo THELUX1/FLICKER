@@ -372,7 +372,24 @@ input:focus {
     text-align: center;
     color: rgba(255, 255, 255, 0.7);
 }
+/* Estilos para resultados de búsqueda */
+.search-result-type {
+    display: inline-block;
+    background-color: rgba(255, 149, 0, 0.2);
+    color: var(--primary);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    margin-top: 5px;
+}
 
+.search-result-item .fa-tv {
+    color: var(--primary-light);
+}
+
+.search-result-item .fa-film {
+    color: var(--primary);
+}
 .movie-card.recommended.highlight {
     animation: highlightPulse 1.5s ease-out;
 }

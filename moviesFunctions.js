@@ -2,26 +2,18 @@ import { hiddenMovies, manualMovies, accionMovies, dramaMovies } from './moviesD
 import { profileManager } from './profileManager.js';
 import UserTracker from './userTracking.js';
 
-// Crear un objeto para almacenar las categorías de géneros
-const genreCategories = {};
-
-// Variable para llevar registro del orden de agregado
+const DEBUG_MODE = false;
 let movieAddOrder = 0;
-
-// Variable para almacenar las recomendaciones actuales
 let currentRecommendations = [];
 
 function classifyMoviesByGenre(movies, isManual = false) {
     movies.forEach(movie => {
-        // Asignamos un timestamp de orden de agregado
         movie.addOrder = movieAddOrder++;
-        
         if (movie.genres) {
             movie.genres.forEach(genre => {
                 if (!genreCategories[genre]) {
                     genreCategories[genre] = [];
                 }
-                // Si es una película manual (recién agregada), la insertamos al principio
                 if (isManual) {
                     genreCategories[genre].unshift(movie);
                 } else {
@@ -32,17 +24,29 @@ function classifyMoviesByGenre(movies, isManual = false) {
     });
 }
 
-// Clasificar las películas manuales, de acción, de drama y las ocultas
+const genreCategories = {};
 classifyMoviesByGenre(manualMovies, true);
 classifyMoviesByGenre(accionMovies);
 classifyMoviesByGenre(dramaMovies);
 classifyMoviesByGenre(hiddenMovies);
 
-// Función para generar el contenido de la página principal
-function generarContenido(container, forceRefresh = false) {
-    console.log("[MoviesFunctions] Generando contenido principal...");
+function getUniqueMovies(movieLists) {
+    const uniqueMovies = [];
+    const seenIds = new Set();
     
-    // Forzar actualización si es necesario
+    movieLists.forEach(list => {
+        list.forEach(movie => {
+            if (!seenIds.has(movie.id)) {
+                seenIds.add(movie.id);
+                uniqueMovies.push(movie);
+            }
+        });
+    });
+    
+    return uniqueMovies;
+}
+
+function generarContenido(container, forceRefresh = false) {
     if (forceRefresh) {
         UserTracker.refreshRecommendations();
     }
@@ -51,100 +55,93 @@ function generarContenido(container, forceRefresh = false) {
     const allMovies = [...manualMovies, ...accionMovies, ...dramaMovies, ...hiddenMovies];
     const currentProfile = profileManager.getCurrentProfile();
     
-    // Objeto con categorías base que siempre se muestran
     const baseCategories = {
-        "Recién agregado": [...manualMovies].slice(0, 12),
-        "Acción": [...accionMovies],
-        "Drama": [...dramaMovies],
+        "🎬 Novedades": [...manualMovies].slice(0, 12),
+        "💥 Acción y Aventura": getUniqueMovies([
+            accionMovies,
+            allMovies.filter(m => m.genres?.includes("Aventura"))
+        ]).slice(0, 12),
+        "🎭 Drama y Romance": getUniqueMovies([
+            dramaMovies,
+            allMovies.filter(m => m.genres?.includes("Romance"))
+        ]).slice(0, 12)
     };
 
-    // Categorías personalizadas (solo si el usuario tiene historial)
     const personalizedCategories = {};
-    
-    // Verificar si el usuario tiene suficiente historial para recomendaciones
+    const trackingData = UserTracker.getTrackingData();
     const hasViewingHistory = currentProfile && UserTracker.hasSufficientHistory();
     
     if (hasViewingHistory) {
-        console.log("[MoviesFunctions] Usuario tiene historial, generando recomendaciones personalizadas");
         currentRecommendations = UserTracker.getRecommendedMovies(allMovies);
-        const trackingData = UserTracker.getTrackingData();
         
         if (currentRecommendations.length > 0) {
-            personalizedCategories["Para ti"] = currentRecommendations;
-            
-            // Agrupar recomendaciones por razón
-            if (Object.keys(trackingData.likedGenres).length > 0 || 
-                Object.keys(trackingData.watchedGenres).length > 0) {
-                
-                currentRecommendations.forEach(movie => {
-                    if (movie.reasons) {
-                        movie.reasons.forEach(reason => {
-                            const reasonKey = reason.includes("Te gusta") ? 
-                                `Más como ${reason.split("Te gusta ")[1]}` : reason;
-                            
-                            if (!personalizedCategories[reasonKey]) {
-                                personalizedCategories[reasonKey] = [];
-                            }
-                            if (!personalizedCategories[reasonKey].some(m => m.id === movie.id)) {
-                                personalizedCategories[reasonKey].push(movie);
-                            }
-                        });
-                    }
-                });
+            personalizedCategories["🌟 Para ti"] = currentRecommendations;
+            const recommendedIds = new Set(currentRecommendations.map(m => m.id));
+
+            const newInGenres = allMovies.filter(movie => {
+                const isNew = movie.year && (movie.year == new Date().getFullYear() || 
+                                           movie.year == new Date().getFullYear() - 1);
+                const hasFavoriteGenre = movie.genres?.some(g => 
+                    UserTracker.getTopGenres().includes(g));
+                return isNew && hasFavoriteGenre && !recommendedIds.has(movie.id);
+            }).slice(0, 8);
+
+            if (newInGenres.length > 0) {
+                personalizedCategories["✨ Novedades en tus gustos"] = newInGenres;
             }
         }
-        
-        // Mostrar categorías por géneros favoritos
+
         const topGenres = UserTracker.getTopGenres(3, 'likes');
         topGenres.forEach(genre => {
             const genreMovies = allMovies.filter(movie => 
-                movie.genres?.includes(genre) && 
+                movie.genres?.includes(genre) &&
                 !trackingData.viewedMovies.includes(movie.id)
-            ).slice(0, 12);
+            ).slice(0, 8);
             
             if (genreMovies.length > 0) {
-                personalizedCategories[`Más ${genre} como te gusta`] = genreMovies;
+                personalizedCategories[`🎭 Más ${genre}`] = genreMovies;
             }
         });
     }
 
-    // Combinar todas las categorías
     const allCategories = {
-        ...(continueWatchingMovies.length > 0 ? {"Continúa viendo": continueWatchingMovies} : {}),
+        ...(continueWatchingMovies.length > 0 ? {"▶️ Continúa viendo": continueWatchingMovies} : {}),
         ...(hasViewingHistory ? personalizedCategories : {}),
         ...baseCategories,
         ...Object.fromEntries(
             Object.entries(genreCategories)
-                .map(([genre, movies]) => [genre, movies.slice(0, 12)])
+                .filter(([genre]) => !personalizedCategories[`🎭 Más ${genre}`])
+                .map(([genre, movies]) => [`🎭 ${genre}`, movies.slice(0, 8)])
         )
     };
 
-    // Ordenar categorías para mostrar primero las personalizadas
-    const categoryPriority = [
-        "Continúa viendo",
-        "Para ti",
-        ...Object.keys(personalizedCategories).filter(k => k !== "Para ti"),
-        "Recién agregado",
-        "Acción",
-        "Drama"
+    const categoryOrder = [
+        "▶️ Continúa viendo",
+        "🌟 Para ti",
+        "✨ Novedades en tus gustos",
+        ...Object.keys(personalizedCategories)
+            .filter(k => k !== "🌟 Para ti" && k !== "✨ Novedades en tus gustos"),
+        ...Object.keys(baseCategories),
+        ...Object.keys(genreCategories)
+            .filter(genre => !personalizedCategories[`🎭 Más ${genre}`])
+            .map(genre => `🎭 ${genre}`)
     ];
 
-    // Generar HTML en el orden deseado
-    container.innerHTML = categoryPriority
+    container.innerHTML = categoryOrder
         .filter(category => allCategories[category]?.length > 0)
         .map(category => generateCategorySection(category, allCategories[category]))
         .join('');
 
     setupRemoveButtons();
     setupLazyLoading();
-    
     if (hasViewingHistory) {
         setupRecommendationTooltips();
         highlightNewRecommendations();
     }
 }
 
-function generateCategorySection(category, movies) {
+// Generar sección de categoría
+function generateCategorySection(category, items) {
     const isPersonalized = category === "Para ti" || 
                          category.startsWith("Similar") || 
                          category.startsWith("Más") ||
@@ -159,12 +156,13 @@ function generateCategorySection(category, movies) {
         <section class="movie-section">
             <h2 class="section-title ${titleClass}">${icon}${category}</h2>
             <div class="movies-container ${isContinueWatching ? 'continue-watching' : ''}">
-                ${movies.length > 0 ? movies.map(movie => createMovieCard(movie)).join('') : '<p class="no-movies">No hay contenido disponible.</p>'}
+                ${items.length > 0 ? items.map(item => createMovieCard(item)).join('') : '<p class="no-movies">No hay películas disponibles.</p>'}
             </div>
         </section>
     `;
 }
 
+// Crear tarjeta de película
 function createMovieCard(movie) {
     // Calcular el porcentaje de progreso
     let progressPercentage = 0;
@@ -188,7 +186,7 @@ function createMovieCard(movie) {
     ` : '';
 
     const removeButton = showProgress ? `
-        <button class="remove-button" data-movie-id="${movie.id}" aria-label="Eliminar de Continuar viendo">
+        <button class="remove-button" data-media-id="${movie.id}" data-media-type="movie" aria-label="Eliminar de Continuar viendo">
             <i class="fas fa-trash"></i>
         </button>
     ` : '';
@@ -205,8 +203,8 @@ function createMovieCard(movie) {
 
     return `
         <div class="movie-card ${isRecommended ? 'recommended' : ''}" 
-             data-movie-id="${movie.id}" ${recommendationAttrs}>
-            <a href="${movie.link}" class="movie-link">
+             data-media-id="${movie.id}" data-media-type="movie" ${recommendationAttrs}>
+            <a href="${movie.link || `detalles.html?type=movie&id=${movie.id}`}" class="movie-link">
                 <div class="movie-image-container">
                     <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 450'%3E%3C/svg%3E" 
                          data-src="${movie.image}" 
@@ -227,6 +225,7 @@ function createMovieCard(movie) {
     `;
 }
 
+// Configurar tooltips de recomendaciones
 function setupRecommendationTooltips() {
     document.querySelectorAll('.movie-card[data-reasons]').forEach(card => {
         const reasons = JSON.parse(card.getAttribute('data-reasons'));
@@ -247,14 +246,13 @@ function setupRecommendationTooltips() {
     });
 }
 
+// Resaltar recomendaciones nuevas
 function highlightNewRecommendations() {
-    // Obtener el timestamp de la última visita
     const lastVisit = localStorage.getItem('lastHomeVisit') || 0;
     const now = Date.now();
     
-    // Destacar recomendaciones añadidas desde la última visita
     document.querySelectorAll('.movie-card.recommended').forEach(card => {
-        const movieId = card.getAttribute('data-movie-id');
+        const movieId = card.getAttribute('data-media-id');
         const movie = [...manualMovies, ...accionMovies, ...dramaMovies].find(m => m.id == movieId);
         
         if (movie && movie.addOrder * 1000 > lastVisit) {
@@ -262,10 +260,10 @@ function highlightNewRecommendations() {
         }
     });
     
-    // Actualizar el timestamp de visita
     localStorage.setItem('lastHomeVisit', now);
 }
 
+// Configurar carga diferida de imágenes
 function setupLazyLoading() {
     const lazyImages = document.querySelectorAll('.lazy-image');
     
@@ -297,6 +295,7 @@ function setupLazyLoading() {
     }
 }
 
+// Obtener películas "Continúa viendo"
 function getContinueWatchingMovies() {
     const continueWatching = [];
     const currentProfile = profileManager.getCurrentProfile();
@@ -308,52 +307,27 @@ function getContinueWatchingMovies() {
 
     for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
-        if (key.startsWith(`profile_${currentProfile.id}_progress_`) || 
-            key.startsWith(`profile_${currentProfile.id}_seriesProgress_`)) {
+        
+        if (key.startsWith(`profile_${currentProfile.id}_progress_`)) {
+            const movieId = key.split('_')[3];
+            const currentTime = parseFloat(localStorage.getItem(key));
+            const movie = [...manualMovies, ...accionMovies, ...dramaMovies].find(m => m.id == movieId);
             
-            const isSeries = key.includes('seriesProgress_');
-            const movieId = isSeries ? key.split('_')[4] : key.split('_')[3];
-            
-            let progressData;
-            if (isSeries) {
-                progressData = JSON.parse(localStorage.getItem(key));
-            } else {
-                progressData = {
-                    currentTime: parseFloat(localStorage.getItem(key)),
-                    duration: 120 * 60 // Duración por defecto para películas (2 horas)
-                };
-            }
-            
-            const movie = [...manualMovies, ...accionMovies, ...dramaMovies, ...hiddenMovies].find(m => m.id == movieId);
-
-            if (movie && progressData.currentTime > 0) {
-                // Validar que el progreso no sea mayor al 95% de la duración
-                const maxValidProgress = (progressData.duration || 120 * 60) * 0.90;
-                const validProgress = Math.min(progressData.currentTime, maxValidProgress);
-                
+            if (movie && currentTime > 0) {
                 continueWatching.push({
                     ...movie,
-                    progress: validProgress,
-                    duration: progressData.duration || 120 * 60
+                    progress: currentTime,
+                    duration: 120 * 60, // Duración por defecto (2 horas)
+                    type: 'movie'
                 });
             }
         }
     }
     
-    // Ordenar por progreso descendente y luego por última visualización
+    // Ordenar por último visto
     return continueWatching.sort((a, b) => {
-        const progressDiff = b.progress - a.progress;
-        if (progressDiff !== 0) return progressDiff;
-        
-        // Si el progreso es igual, ordenar por última visualización
-        const aKey = a.episodeNumber ? 
-            `profile_${currentProfile.id}_seriesProgress_${a.id}_${a.episodeNumber}` : 
-            `profile_${currentProfile.id}_progress_${a.id}`;
-            
-        const bKey = b.episodeNumber ? 
-            `profile_${currentProfile.id}_seriesProgress_${b.id}_${b.episodeNumber}` : 
-            `profile_${currentProfile.id}_progress_${b.id}`;
-            
+        const aKey = `profile_${currentProfile.id}_progress_${a.id}`;
+        const bKey = `profile_${currentProfile.id}_progress_${b.id}`;
         const aTimestamp = localStorage.getItem(aKey + '_timestamp') || 0;
         const bTimestamp = localStorage.getItem(bKey + '_timestamp') || 0;
         
@@ -361,6 +335,7 @@ function getContinueWatchingMovies() {
     });
 }
 
+// Mostrar modal de confirmación
 function showConfirmModal(title, callback) {
     const modal = document.getElementById('confirm-modal');
     const confirmMessage = document.getElementById('confirm-message');
@@ -414,14 +389,15 @@ function showConfirmModal(title, callback) {
     };
 }
 
+// Configurar botones de eliminación
 function setupRemoveButtons() {
     document.querySelectorAll('.remove-button').forEach(button => {
         button.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
             
-            const movieId = button.getAttribute('data-movie-id');
-            const movie = [...manualMovies, ...accionMovies, ...dramaMovies, ...hiddenMovies]
+            const movieId = button.getAttribute('data-media-id');
+            const movie = [...manualMovies, ...accionMovies, ...dramaMovies]
                          .find(m => m.id == movieId);
 
             if (!movie) return;
@@ -436,7 +412,7 @@ function setupRemoveButtons() {
                         
                         setTimeout(() => {
                             card.remove();
-                            removeFromContinueWatching(movieId);
+                            removeFromContinueWatching(movieId, 'movie');
                         }, 300);
                     }
                 }
@@ -445,26 +421,17 @@ function setupRemoveButtons() {
     });
 }
 
-function removeFromContinueWatching(movieId) {
+// Eliminar de "Continúa viendo"
+function removeFromContinueWatching(movieId, mediaType) {
     const currentProfile = profileManager.getCurrentProfile();
     if (!currentProfile) return;
     
-    const prefixes = [
-        `profile_${currentProfile.id}_progress_`,
-        `profile_${currentProfile.id}_seriesProgress_`
-    ];
-    
-    for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (prefixes.some(prefix => key.startsWith(prefix + movieId))) {
-            localStorage.removeItem(key);
-        }
-    }
-    
+    localStorage.removeItem(`profile_${currentProfile.id}_progress_${movieId}`);
     sessionStorage.setItem(`deleted_${movieId}`, 'true');
     showToast(`Película eliminada de "Continúa viendo"`, 'success');
 }
 
+// Mostrar notificación toast
 function showToast(message, type = 'info') {
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
@@ -481,6 +448,82 @@ function showToast(message, type = 'info') {
     }, 3000);
 }
 
+// Buscar películas
+function searchMovies(query) {
+    const normalizedQuery = query
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase();
+
+    const results = [...manualMovies, ...accionMovies, ...dramaMovies, ...hiddenMovies].filter(movie => {
+        const normalizedTitle = movie.title
+            .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase();
+        
+        return normalizedTitle.includes(normalizedQuery) ||
+               movie.year?.toString().includes(query) ||
+               (movie.genres && movie.genres.some(g => g.toLowerCase().includes(normalizedQuery)));
+    });
+
+    // Eliminar duplicados y ordenar por coincidencia exacta primero
+    const uniqueResults = [];
+    const seenIds = new Set();
+    
+    results.forEach(movie => {
+        if (!seenIds.has(movie.id)) {
+            seenIds.add(movie.id);
+            
+            const titleMatch = movie.title.toLowerCase() === query.toLowerCase();
+            if (titleMatch) {
+                uniqueResults.unshift(movie);
+            } else {
+                uniqueResults.push(movie);
+            }
+        }
+    });
+    
+    return uniqueResults;
+}
+
+// Mostrar resultados de búsqueda
+function displayResults(results) {
+    const searchResults = document.querySelector('.search-results');
+    searchResults.innerHTML = '';
+
+    if (results.length === 0) {
+        searchResults.innerHTML = '<div class="no-results">No se encontraron resultados</div>';
+        searchResults.style.display = 'block';
+        return;
+    }
+
+    results.forEach(movie => {
+        const itemElement = document.createElement('div');
+        itemElement.className = 'search-result-item';
+        
+        itemElement.innerHTML = `
+            <img src="${movie.image}" alt="${movie.title}" loading="lazy">
+            <div class="search-result-info">
+                <h3><i class="fas fa-film" style="margin-right: 5px;"></i>${movie.title}</h3>
+                ${movie.year ? `<p>${movie.year}</p>` : ''}
+                <p class="search-result-type">Película</p>
+                ${movie.genres ? `<div class="search-result-genres">${movie.genres.slice(0, 2).join(' • ')}</div>` : ''}
+            </div>
+        `;
+        
+        itemElement.addEventListener('click', () => {
+            const currentProfile = profileManager.getCurrentProfile();
+            if (currentProfile) {
+                localStorage.setItem(`profile_${currentProfile.id}_lastViewed`, movie.id);
+            }
+            window.location.href = movie.link || `detalles.html?type=movie&id=${movie.id}`;
+        });
+        
+        searchResults.appendChild(itemElement);
+    });
+
+    searchResults.style.display = 'block';
+}
+
+// Configurar búsqueda
 function setupSearch() {
     const searchIconButton = document.querySelector('.search-icon-button');
     const searchWrapper = document.querySelector('.search-wrapper');
@@ -532,67 +575,9 @@ function setupSearch() {
         searchResults.innerHTML = '';
         searchResults.style.display = 'none';
     }
-
-    function searchMovies(query) {
-        const normalizedQuery = query
-            .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-            .toLowerCase();
-
-        const allMovies = [...manualMovies, ...accionMovies, ...dramaMovies, ...hiddenMovies];
-        const seenTitles = new Set();
-        const uniqueMovies = [];
-
-        allMovies.forEach(movie => {
-            if (!seenTitles.has(movie.title)) {
-                seenTitles.add(movie.title);
-                uniqueMovies.push(movie);
-            }
-        });
-
-        return uniqueMovies.filter(movie => {
-            const normalizedTitle = movie.title
-                .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-                .toLowerCase();
-            return normalizedTitle.includes(normalizedQuery) ||
-                   movie.year?.toString().includes(query) ||
-                   (movie.genres && movie.genres.some(g => g.toLowerCase().includes(normalizedQuery)));
-        });
-    }
-
-    function displayResults(results) {
-        searchResults.innerHTML = '';
-
-        if (results.length === 0) {
-            searchResults.innerHTML = '<div class="no-results">No se encontraron resultados</div>';
-            searchResults.style.display = 'block';
-            return;
-        }
-
-        results.forEach(movie => {
-            const item = document.createElement('div');
-            item.className = 'search-result-item';
-            item.innerHTML = `
-                <img src="${movie.image}" alt="${movie.title}" loading="lazy">
-                <div class="search-result-info">
-                    <h3>${movie.title}</h3>
-                    ${movie.year ? `<p>${movie.year}</p>` : ''}
-                    ${movie.genres ? `<div class="search-result-genres">${movie.genres.slice(0, 2).join(' • ')}</div>` : ''}
-                </div>
-            `;
-            item.addEventListener('click', () => {
-                const currentProfile = profileManager.getCurrentProfile();
-                if (currentProfile) {
-                    localStorage.setItem(`profile_${currentProfile.id}_lastViewed`, movie.id);
-                }
-                window.location.href = movie.link;
-            });
-            searchResults.appendChild(item);
-        });
-
-        searchResults.style.display = 'block';
-    }
 }
 
+// Configurar actualización de recomendaciones
 function setupRecommendationUpdates() {
     profileManager.onProfileChange(() => {
         generarContenido(document.getElementById('content'), true);
@@ -607,8 +592,8 @@ function setupRecommendationUpdates() {
     }, 30000);
 }
 
+// Inicialización
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("[MoviesFunctions] Inicializando...");
     UserTracker.init();
     const content = document.getElementById('content');
     if (content) generarContenido(content);

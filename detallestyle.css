@@ -388,3 +388,152 @@ body, html, * {
         justify-content: center;
       }
     }
+    /* ==================== */
+/* ESTILOS PARA SERIES  */
+/* ==================== */
+
+/* Contenedor de temporadas */
+.seasons-container {
+    margin-top: 40px;
+    background-color: rgba(20, 20, 20, 0.8);
+    border-radius: 8px;
+    padding: 20px;
+    position: relative;
+    border-left: 4px solid transparent;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.seasons-container::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--primary), var(--primary-light));
+    border-radius: 8px 0 0 8px;
+}
+
+.seasons-container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: var(--primary);
+    font-weight: bold;
+}
+
+/* Temporadas individuales */
+.season {
+    margin-bottom: 30px;
+}
+
+.season h3 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    color: var(--text);
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Lista de episodios */
+.episodes-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+
+/* Estilos para cada episodio */
+.episode {
+    display: flex;
+    background-color: rgba(31, 31, 31, 0.7);
+    border-radius: 6px;
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.3s ease;
+}
+
+.episode:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    background-color: rgba(31, 31, 31, 0.9);
+}
+
+.episode-image {
+    position: relative;
+    min-width: 180px;
+    max-width: 180px;
+    height: 100px;
+}
+
+.episode-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.episode-number {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background-color: var(--primary);
+    color: #000;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+.episode-info {
+    padding: 12px;
+    flex-grow: 1;
+}
+
+.episode-title {
+    font-weight: bold;
+    font-size: 1rem;
+    margin-bottom: 6px;
+    color: var(--text);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.episode-date {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    display: block;
+}
+
+.episode-overview {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin: 0;
+}
+
+/* Responsive para episodios */
+@media (max-width: 768px) {
+    .episode {
+        flex-direction: column;
+    }
+    
+    .episode-image {
+        min-width: 100%;
+        max-width: 100%;
+        height: 150px;
+    }
+    
+    .episode-info {
+        padding: 15px;
+    }
+}

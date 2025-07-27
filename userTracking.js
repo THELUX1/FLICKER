@@ -1,6 +1,7 @@
 import { profileManager } from './profileManager.js';
 import { manualMovies, accionMovies, dramaMovies, hiddenMovies } from './moviesData.js';
 
+const DEBUG_MODE = false;
 const userTracking = {
     viewedMovies: [],
     likedMovies: [],
@@ -16,7 +17,6 @@ const userTracking = {
 
 class UserTracker {
     static init() {
-        console.log("[UserTracker] Inicializando sistema de seguimiento...");
         this.loadFromStorage();
         this.cleanOldData();
     }
@@ -27,13 +27,11 @@ class UserTracker {
         
         if (userTracking.preferencesUpdatedAt && 
             new Date(userTracking.preferencesUpdatedAt) < sixMonthsAgo) {
-            console.log("[UserTracker] Limpiando datos antiguos (>6 meses)");
             this.resetPreferences();
         }
     }
 
     static resetPreferences() {
-        console.log("[UserTracker] Reiniciando preferencias...");
         userTracking.watchedGenres = {};
         userTracking.likedGenres = {};
         userTracking.favoriteActors = {};
@@ -44,11 +42,9 @@ class UserTracker {
 
     static trackView(movie, watchMinutes = 0) {
         if (!movie || !movie.id) {
-            console.error("[UserTracker] Error: Intento de registrar vista sin datos válidos", movie);
+            console.error("[UserTracker] Error: Vista sin datos válidos", movie);
             return;
         }
-
-        console.log(`[UserTracker] Registrando vista: ${movie.title || 'Sin título'} (ID: ${movie.id})`);
         
         if (!userTracking.viewedMovies.includes(movie.id)) {
             userTracking.viewedMovies.push(movie.id);
@@ -81,11 +77,9 @@ class UserTracker {
     
     static trackLike(movie) {
         if (!movie || !movie.id) {
-            console.error("[UserTracker] Error: Intento de registrar 'Me gusta' sin datos válidos", movie);
+            console.error("[UserTracker] Error: 'Me gusta' sin datos válidos", movie);
             return;
         }
-
-        console.log(`[UserTracker] Registrando 'Me gusta': ${movie.title || 'Sin título'} (ID: ${movie.id})`);
         
         if (!userTracking.likedMovies.includes(movie.id)) {
             userTracking.likedMovies.push(movie.id);
@@ -103,11 +97,9 @@ class UserTracker {
     
     static trackDetailView(movie) {
         if (!movie || !movie.id) {
-            console.error("[UserTracker] Error: Intento de registrar vista de detalles sin datos válidos", movie);
+            console.error("[UserTracker] Error: Vista de detalles sin datos válidos", movie);
             return;
         }
-
-        console.log(`[UserTracker] Registrando vista de detalles: ${movie.title || 'Sin título'} (ID: ${movie.id})`);
         
         if (!userTracking.viewedDetails.includes(movie.id)) {
             userTracking.viewedDetails.push(movie.id);
@@ -128,9 +120,6 @@ class UserTracker {
         if (currentProfile) {
             userTracking.preferencesUpdatedAt = new Date().toISOString();
             localStorage.setItem(`profile_${currentProfile.id}_tracking`, JSON.stringify(userTracking));
-            console.log(`[UserTracker] Datos guardados para perfil: ${currentProfile.name}`);
-        } else {
-            console.warn("[UserTracker] No hay perfil activo para guardar datos");
         }
     }
     
@@ -141,9 +130,8 @@ class UserTracker {
             if (savedData) {
                 try {
                     Object.assign(userTracking, JSON.parse(savedData));
-                    console.log(`[UserTracker] Datos cargados para perfil: ${currentProfile.name}`);
                 } catch (e) {
-                    console.error("[UserTracker] Error al parsear datos guardados", e);
+                    console.error("[UserTracker] Error al cargar datos", e);
                     this.resetPreferences();
                 }
             }
@@ -154,63 +142,38 @@ class UserTracker {
         const viewedCount = userTracking.viewedMovies.length;
         const likedCount = Object.values(userTracking.likedGenres).reduce((a, b) => a + b, 0);
         const detailViews = userTracking.viewedDetails.length;
-        
-        const sufficient = (viewedCount + likedCount + detailViews) >= 3;
-        console.log(`[UserTracker] Verificando historial: 
-            Vistas=${viewedCount}, 
-            Likes=${likedCount}, 
-            Detalles=${detailViews} => 
-            ${sufficient ? 'SUFICIENTE' : 'INSUFICIENTE'}`);
-        
-        return sufficient;
+        return (viewedCount + likedCount + detailViews) >= 3;
     }
     
     static getTopGenres(limit = 3, by = 'watchTime') {
-        if (!this.hasSufficientHistory()) {
-            console.log("[UserTracker] Historial insuficiente para géneros top");
-            return [];
-        }
+        if (!this.hasSufficientHistory()) return [];
         
         const source = by === 'likes' ? userTracking.likedGenres : 
                       by === 'watchTime' ? userTracking.watchTime : 
                       userTracking.watchedGenres;
         
-        const topGenres = Object.entries(source)
+        return Object.entries(source)
             .sort((a, b) => b[1] - a[1])
             .slice(0, limit)
             .map(entry => entry[0]);
-        
-        console.log(`[UserTracker] Géneros top (${by}):`, topGenres);
-        return topGenres;
     }
     
     static getFavoriteActors(limit = 2) {
-        const actors = Object.entries(userTracking.favoriteActors)
+        return Object.entries(userTracking.favoriteActors)
             .sort((a, b) => b[1] - a[1])
             .slice(0, limit)
             .map(entry => entry[0]);
-        
-        console.log("[UserTracker] Actores favoritos:", actors);
-        return actors;
     }
     
     static getFavoriteDirectors(limit = 1) {
-        const directors = Object.entries(userTracking.favoriteDirectors)
+        return Object.entries(userTracking.favoriteDirectors)
             .sort((a, b) => b[1] - a[1])
             .slice(0, limit)
             .map(entry => entry[0]);
-        
-        console.log("[UserTracker] Directores favoritos:", directors);
-        return directors;
     }
     
     static getRecommendedMovies(allMovies, limit = 12) {
-        console.log("[UserTracker] Generando recomendaciones...");
-        
-        if (!this.hasSufficientHistory()) {
-            console.log("[UserTracker] Historial insuficiente para recomendaciones");
-            return [];
-        }
+        if (!this.hasSufficientHistory()) return [];
         
         const recommendations = [];
         const topGenres = this.getTopGenres(3, 'likes');
@@ -219,9 +182,7 @@ class UserTracker {
         const currentYear = new Date().getFullYear();
         
         allMovies.forEach(movie => {
-            if (!movie || !movie.id) return;
-            
-            if (userTracking.viewedMovies.includes(movie.id)) return;
+            if (!movie || !movie.id || userTracking.viewedMovies.includes(movie.id)) return;
             
             let score = 0;
             let reasons = [];
@@ -283,18 +244,13 @@ class UserTracker {
             }
         });
         
-        const finalRecommendations = recommendations
+        return recommendations
             .sort((a, b) => b.recommendationScore - a.recommendationScore)
             .slice(0, limit);
-        
-        console.log("[UserTracker] Recomendaciones generadas:", finalRecommendations);
-        return finalRecommendations;
     }
     
     static refreshRecommendations() {
-        console.log("[UserTracker] Actualizando recomendaciones...");
         this.saveToStorage();
-        
         if (typeof window !== 'undefined') {
             window.dispatchEvent(new CustomEvent('recommendationsUpdated'));
         }

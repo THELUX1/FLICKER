@@ -3,6 +3,30 @@ const hiddenMovies = [
 ];
 const manualMovies = [
 {
+      id: 1061474,
+          title: "Superman",
+          image: "https://s3.fiestareel.com/image/t/p/w500/ombsmhYUqR4qqOLOxAyr5V8hbyv.jpg",
+          link: "detalles.html?type=movie&id=1061474",
+          year: "2025",
+          genres: ["Ciencia ficción", "Acción", "Aventura"] // <-- Asegúrate de que esto esté definido
+      },
+{
+      id: 1287536,
+          title: "Dora y la Búsqueda del Sol Dorado",
+          image: "https://s3.fiestareel.com/image/t/p/w500/r3d6u2n7iPoWNsSWwlJJWrDblOH.jpg",
+          link: "detalles.html?type=movie&id=1287536",
+          year: "2025",
+          genres: ["Familia", "Comedia", "Familia"] // <-- Asegúrate de que esto esté definido
+      },
+      {
+      id: 1087192,
+          title: "Cómo entrenar a tu dragón",
+          image: "https://s3.fiestareel.com/image/t/p/w500/41dfWUWtg1kUZcJYe6Zk6ewxzMu.jpg",
+          link: "detalles.html?type=movie&id=1087192",
+          year: "2025",
+          genres: ["Fantasía", "Familia", "Acción"] // <-- Asegúrate de que esto esté definido
+      },
+{
           id: 1071585,
           title: "M3GAN 2.0",
           image: "https://s3.fiestareel.com/image/t/p/w500/4a63rQqIDTrYNdcnTXdPsQyxVLo.jpg",
@@ -37,7 +61,7 @@ const manualMovies = [
       {
           id: 1100988,
           title: "Exterminio: La evolución",
-          image: "https://media.themoviedb.org/t/p/w220_and_h330_face/hvIqaDUC48dwfd7taKczB7909Qg.jpg",
+          image: "https://s3.fiestareel.com/image/t/p/w500/giAiJSwOJcfA8Y4PCNMGAhfTSyA.jpg",
           link: "detalles.html?type=movie&id=1100988",
           year: "2025",
           genres: ["Terror","Suspenso","Ciencia ficción"]
@@ -57,6 +81,14 @@ const manualMovies = [
           link: "detalles.html?type=movie&id=803796",
           year: "2025",
           genres: ["Animación","Música","Fantasía", "Acción","Comedia"]
+      },
+      {
+      id: 1450599,
+          title: "K.O.",
+          image: "https://s.lupacine.com/image/t/p/w500/r46leE6PSzLR3pnVzaxx5Q30yUF.jpg",
+          link: "detalles.html?type=movie&id=1450599",
+          year: "2025",
+          genres: ["Acción", "Drama", "Aventura"] // <-- Asegúrate de que esto esté definido
       },
       {
           id: 1239193,
@@ -155,12 +187,12 @@ const manualMovies = [
           genres: ["Drama", "Música", "Historia"]
       },
       {
-          id: 850920,
-          title: "Escapada de espanto",
-          image: "https://s3.fiestareel.com/image/t/p/w500/5lMu14IMuHo0hKYCwCIogt7IioX.jpg",
-          link: "detalles.html?type=movie&id=850920",
-          year: "2025",
-          genres: ["Terror", "Comedia"]
+      id: 1069387,
+          title: "Pedro Páramo",
+          image: "https://s3.fiestareel.com/image/t/p/w500/gugzjPIalz5hy2RbVxqXCpXWanj.jpg",
+          link: "detalles.html?type=movie&id=1069387",
+          year: "2024",
+          genres: ["Drama", "Misterio", "Suspenso", "Terror","Fantasía", "Western"] // <-- Asegúrate de que esto esté definido
       },
       {
           id: 1061699,
@@ -171,12 +203,28 @@ const manualMovies = [
           genres: ["Drama", "Historia", "Bélica"]
       },
       {
+      id: 1241436,
+          title: "Tiempo de guerra",
+          image: "https://s3.fiestareel.com/image/t/p/w500/srj9rYrjefyWqkLc6l2xjTGeBGO.jpg",
+          link: "detalles.html?type=movie&id=1241436",
+          year: "2025",
+          genres: ["Bélica", "Acción"] // <-- Asegúrate de que esto esté definido
+      },
+      {
           id: 906126,
           title: "La sociedad de la nieve",
           image: "https://s3.fiestareel.com/image/t/p/w500/2e853FDVSIso600RqAMunPxiZjq.jpg",
           link: "detalles.html?type=movie&id=906126",
           year: "2023",
           genres: ["Historia", "Drama"]
+      },
+      {
+          id: 850920,
+          title: "Escapada de espanto",
+          image: "https://s3.fiestareel.com/image/t/p/w500/5lMu14IMuHo0hKYCwCIogt7IioX.jpg",
+          link: "detalles.html?type=movie&id=850920",
+          year: "2025",
+          genres: ["Terror", "Comedia"]
       },
       {
           id: 1075456,

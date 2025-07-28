@@ -141,7 +141,7 @@ const manualMovies = [
       {
           id: 1098006,
           title: "La fuente de la eterna juventud",
-          image: "https://s.lupacine.com/image/t/p/w500/4iWjGghUj2uyHo2Hyw8NFBvsNGm.jpg",
+          image: "https://s3.fiestareel.com/image/t/p/w500/4iWjGghUj2uyHo2Hyw8NFBvsNGm.jpg",
           link: "detalles.html?type=movie&id=1098006",
           year: "2025",
           genres: ["Aventura", "Fantasía", "Misterio"]
@@ -333,7 +333,7 @@ const manualMovies = [
       {
           id: 1244944,
           title: "La mujer de las sombras",
-          image: "https://s.lupacine.com/image/t/p/w500/n0WS2TsNcS6dtaZKzxipyO7LuCJ.jpg",
+          image: "https://s3.fiestareel.com/image/t/p/w500/n0WS2TsNcS6dtaZKzxipyO7LuCJ.jpg",
           link: "detalles.html?type=movie&id=1244944",
           year: "2025",
           genres: ["Terror", "Suspenso", "Misterio"]
@@ -389,7 +389,7 @@ const manualMovies = [
       {
           id: 1210938,
           title: "Revelación",
-          image: "https://s.lupacine.com/image/t/p/w500/ak0HlRVsVzh8mvwIUZpZr0z6uqW.jpg",
+          image: "https://s3.fiestareel.com/image/t/p/w500/ak0HlRVsVzh8mvwIUZpZr0z6uqW.jpg",
           link: "detalles.html?type=movie&id=1210938",
           year: "2025",
           genres: ["Suspenso", "Crímen", "Misterio"]

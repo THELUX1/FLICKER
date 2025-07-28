@@ -1,10 +1,38 @@
 // videos.js
 const peliculasDisponibles = {
+"1241436": {
+        "title": "Tiempo de guerra",
+        "360p": "https://v3.fiestareel.com/mov/2025/1241436-94559/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2025/1241436-94559/720/720p.m3u8"
+    },
+"1069387": {
+        "title": "Pedro Páramo",
+        "360p": "https://v3.fiestareel.com/mov/2024/1069387-155860/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2024/1069387-155860/720/720p.m3u8"
+    },
+"1061474": {
+        "title": "Superman",
+        "360p": "https://v3.fiestareel.com/mov/2025/1061474-109880/480/480p.m3u8",
+        "720p Cam": "https://v3.fiestareel.com/mov/2025/1061474-109880/720/720p.m3u8"
+    },
+"1450599": {
+        "title": "K.O.",
+        "360p": "https://v3.fiestareel.com/mov/2025/1450599-103378/480/480p.m3u8"
+    },
+"1287536": {
+        "title": "Dora y la Búsqueda del Sol Dorado",
+        "360p": "https://v3.fiestareel.com/mov/2025/1287536-110811/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2025/1287536-110811/720/720p.m3u8"
+    },
+"1087192": {
+        "title": "Cómo entrenar a tu dragón",
+        "360p": "https://v3.fiestareel.com/mov/2025/1087192-110804/480/480p.m3u8",
+        "720p": "https://v3.fiestareel.com/mov/2025/1087192-110804/720/720p.m3u8"
+    },
 "1011477": {
         "title": "Karate Kid: Leyendas",
         "360p": "https://v3.fiestareel.com/mov/2025/668489-94014/480/480p.m3u8",
-        "720p": "https://v3.fiestareel.com/mov/2025/668489-94014/720/720p.m3u8",
-        "1080p": "https://v3.fiestareel.com/mov/2025/668489-94014/720/720p.m3u8"
+        "720p": "https://v3.fiestareel.com/mov/2025/668489-94014/720/720p.m3u8"
     },
 "1234821": {
         "title": "Jurassic World: Renace",
@@ -188,9 +216,8 @@ const peliculasDisponibles = {
     },
 "986056": {
         "title": "Thunderbolts*",
-        "360p": "https://v3.fiestareel.com/mov/2025/986056-94322/480/480p.m3u8",
-        "720p": "https://v3.fiestareel.com/mov/2025/986056-94322/720/720p.m3u8",
-        "1080p": "https://v3.fiestareel.com/mov/2025/986056-94322/720/720p.m3u8"
+        "360p Cam": "https://v3.fiestareel.com/mov/2025/986056-94322/480/480p.m3u8",
+        "720p Cam": "https://v3.fiestareel.com/mov/2025/986056-94322/720/720p.m3u8"
     },
 "1233069": {
         "title": "Extraterritorial",

@@ -11,6 +11,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flicker</title>
+    <!-- Paso 5.1: Meta tags esenciales para PWA -->
+    <meta name="theme-color" content="#FFA500">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Flicker">
+    
+    <!-- Paso 5.2: Enlace al manifest.json -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Paso 5.3: Íconos para iOS/Android -->
+    <link rel="icon" href="/icons/icon-192x192.png">
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
+    
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -154,5 +167,49 @@
             }
         });
     </script>
+    <script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js')
+        .then(registration => console.log('SW registrado:', registration))
+        .catch(error => console.log('Error al registrar SW:', error));
+    });
+  }
+</script>
+<script>
+// Detectar si el navegador soporta PWA instalación
+let deferredPrompt;
+
+// Evento que se dispara cuando el navegador detecta que la PWA es instalable
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    
+    // Muestra un botón personalizado
+    const installButton = document.createElement('button');
+    installButton.id = 'install-button';
+    installButton.innerHTML = '<i class="fas fa-download"></i> Instalar Flicker';
+    installButton.style.display = 'block';
+    document.body.appendChild(installButton);
+    
+    // Al hacer clic, muestra el diálogo de instalación
+    installButton.addEventListener('click', () => {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+                console.log('Usuario aceptó la instalación');
+            }
+            deferredPrompt = null;
+            installButton.style.display = 'none';
+        });
+    });
+});
+
+// Oculta el botón si ya está instalado
+window.addEventListener('appinstalled', () => {
+    const installButton = document.getElementById('install-button');
+    if (installButton) installButton.style.display = 'none';
+});
+</script>
 </body>
 </html>

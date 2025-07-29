@@ -1086,3 +1086,22 @@ input:focus,
         padding: 10px 6px 5px;
     }
 }
+#install-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #FFA500, #FF8C00);
+    color: #121212;
+    border: none;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(255, 140, 0, 0.3);
+    z-index: 1000;
+    display: none; /* Inicialmente oculto */
+}
+
+#install-button i {
+    margin-right: 8px;
+}

@@ -3,7 +3,8 @@
   "short_name": "Flicker",
   "description": "Plataforma de streaming de películas y series",
   "start_url": "/index.html",
-  "display": "standalone",
+  "display": "fullscreen",  // ¡Clave para TV!
+  "orientation": "landscape",  // Obligatorio para TV
   "background_color": "#121212",
   "theme_color": "#FFA500",
   "icons": [

@@ -1,22 +1,26 @@
 {
-  "name": "Flicker",
-  "short_name": "Flicker",
-  "description": "Plataforma de streaming de películas y series",
-  "start_url": "/index.html",
+  "name": "FLICKER",
+  "short_name": "FLICKER",
+  "description": "Plataforma de streaming para TV y móviles",
+  "start_url": "/FLICKER/index.html",
+  "scope": "/FLICKER/",
   "display": "fullscreen",  // ¡Clave para TV!
   "orientation": "landscape",  // Obligatorio para TV
   "background_color": "#121212",
   "theme_color": "#FFA500",
   "icons": [
     {
-      "src": "icons/icon-192x192.png",
+      "src": "/FLICKER/icons/icon-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "icons/icon-512x512.png",
+      "src": "/FLICKER/icons/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
-  ]
+  ],
+  "categories": ["entertainment"],
+  "orientation": "landscape"
 }
